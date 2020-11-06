@@ -1,4 +1,4 @@
-openapi: 3.0.0
+dopenapi: 3.0.0
 info:
   title: Sites
   version: v1.0
@@ -7,7 +7,144 @@ servers:
     description: Production API
 paths: {}
 components:
-  schemas: {}
+  schemas:
+    Site-Object-Physical:
+      description: ''
+      type: object
+      properties:
+        id:
+          type: string
+          minLength: 1
+        code:
+          type: string
+          minLength: 1
+        name:
+          type: string
+          minLength: 1
+        description:
+          type: string
+          minLength: 1
+        type:
+          type: string
+          minLength: 1
+        address:
+          type: object
+          $ref: '#/components/schemas/Address-Object'
+        contacts: {}
+      required:
+        - id
+        - code
+        - name
+        - description
+        - type
+        - address
+    Site-Object-Generic:
+      description: A generic site object used in site listings
+      type: object
+      title: Generic Site Object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: The site's UUID
+        type:
+          type: string
+          enum:
+            - physical
+            - campus
+            - virtual
+          description: The type of site
+        code:
+          type: string
+          description: ''
+        name:
+          type: string
+        description:
+          type: string
+        address:
+          type:
+            - string
+            - 'null'
+          format: uuid
+          description: An associated address object attached to this site
+      required:
+        - id
+        - type
+        - code
+        - name
+    Address-Object:
+      description: ''
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: The address object UUID
+        lines:
+          type: array
+          minItems: 1
+          maxItems: 2
+          description: An array of address lines
+          items:
+            type: string
+        locality:
+          type: string
+        city:
+          type: string
+          minLength: 1
+        county:
+          type: string
+          minLength: 1
+        state:
+          type: string
+          minLength: 1
+        postcode:
+          type: number
+        country:
+          type: string
+        formatted:
+          type: string
+          minLength: 1
+        geolocation:
+          type: object
+          required:
+            - latitude
+            - longitude
+          properties:
+            latitude:
+              type: number
+            longitude:
+              type: number
+        timezone:
+          type: string
+          minLength: 1
+        offset:
+          type: number
+        designations:
+          type: object
+          required:
+            - primary_mailing
+            - primary_billing
+          properties:
+            primary_mailing:
+              type: boolean
+            primary_billing:
+              type: boolean
+      required:
+        - id
+        - lines
+        - locality
+        - city
+        - county
+        - state
+        - postcode
+        - country
+        - formatted
+        - geolocation
+        - timezone
+        - offset
+        - designations
+      title: Address Object
   securitySchemes:
     Bearer Token:
       type: http
