@@ -47,6 +47,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/User-Account'
                 type: object
+        '403':
+          description: Forbidden
       description: |-
         Create a new user and optionally assign a license and password
 
