@@ -19,6 +19,16 @@
       "type": "item",
       "title": "Users",
       "uri": "reference/User.v1.yaml"
+    },
+    {
+      "type": "item",
+      "title": "Sites",
+      "uri": "reference/Sites.v1.yaml"
+    },
+    {
+      "type": "item",
+      "title": "Configuration",
+      "uri": "reference/Config.v1.yaml"
     }
   ]
 }
