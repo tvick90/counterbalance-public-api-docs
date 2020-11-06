@@ -156,7 +156,10 @@ paths:
       responses:
         '201':
           description: Created
-      description: Create a new user and optionally assign a license and password
+      description: |-
+        Create a new user and optionally assign a license and password
+
+        > This body field `password` is only required if the `type` specified is equal to `seat` or `user`
       requestBody:
         content:
           application/json:
@@ -213,7 +216,10 @@ paths:
       responses: {}
       operationId: get-v1-user-userId
       parameters: []
-      description: Retrieve a user account by ID
+      description: |-
+        Retrieve a user account by ID
+
+        > This endpoint accepts `self` in place of a UUID
       security:
         - Bearer Token: []
     patch:
@@ -226,7 +232,10 @@ paths:
             application/json:
               schema:
                 type: object
-      description: Update a user account by ID
+      description: |-
+        Update a user account by ID
+
+        > This endpoint accepts `self` in place of a UUID
       requestBody:
         content:
           application/json:
@@ -335,7 +344,10 @@ paths:
       tags: []
       responses: {}
       operationId: get-v1-user-userId-roles
-      description: Retrieve a list of roles assigned to a user
+      description: |-
+        Retrieve a list of roles assigned to a user
+
+        > This endpoint accepts `self` in place of a UUID
       security:
         - Bearer Token: []
       parameters: []
@@ -444,15 +456,6 @@ paths:
           application/json:
             schema:
               type: object
-  /v1/user/self/permissions:
-    get:
-      summary: Get Own Permissions
-      tags: []
-      responses: {}
-      operationId: get-v1-self-permissions
-      security:
-        - Bearer Token: []
-    parameters: []
   '/v1/user/{userId}/permissions':
     parameters:
       - schema:
