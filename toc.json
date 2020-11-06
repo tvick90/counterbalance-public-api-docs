@@ -3,12 +3,12 @@
     {
       "type": "item",
       "title": "Welcome",
-      "uri": "docs/Welcome.md"
+      "uri": "Welcome.md"
     },
     {
       "type": "item",
       "title": "Responses and Errors",
-      "uri": "docs/Responses-and-Errors.md"
+      "uri": "Responses-and-Errors.md"
     },
     {
       "type": "item",
@@ -22,8 +22,13 @@
     },
     {
       "type": "item",
-      "title": "Sites",
+      "title": "Site Management",
       "uri": "reference/Sites.v1.yaml"
+    },
+    {
+      "type": "item",
+      "title": "Sites Fundamentals",
+      "uri": "docs/sites/Sites-Fundamentals.md"
     },
     {
       "type": "item",

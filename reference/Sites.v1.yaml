@@ -91,7 +91,7 @@ paths:
         name: siteId
         in: path
         required: true
-        description: The site's UUID
+        description: A valid site UUID
     get:
       summary: Get Site
       tags: []
@@ -124,7 +124,7 @@ paths:
             application/json:
               schema:
                 type: object
-                $ref: '../models/Error-Response.v1.yaml'
+                $ref: ../models/Error-Response.v1.yaml
       description: |-
         Update a site by ID
 
@@ -149,6 +149,56 @@ paths:
                   type: string
                   description: The description of the site
                   maxLength: 300
+  '/v1/site/address/{addressId}':
+    parameters:
+      - schema:
+          type: string
+        name: addressId
+        in: path
+        required: true
+        description: A valid address UUID
+    get:
+      summary: Get Address
+      tags: []
+      responses: {}
+      operationId: get-v1-site-address-addressId
+      description: Get an address by ID
+      security:
+        - Bearer Token: []
+    patch:
+      summary: Update Address
+      operationId: patch-v1-site-address-addressId
+      responses:
+        '200':
+          description: OK
+      description: Update an address by ID
+      parameters: []
+      security:
+        - Bearer Token: []
+    delete:
+      summary: Delete Address
+      operationId: delete-v1-site-address-addressId
+      responses:
+        '200':
+          description: OK
+      description: Delete an address by ID
+      security:
+        - Bearer Token: []
+  '/v1/site/address/{addressId}/operation':
+    parameters:
+      - schema:
+          type: string
+        name: addressId
+        in: path
+        required: true
+        description: A valid address UUID
+    post:
+      summary: Perform Address Operations
+      operationId: post-v1-site-address-addressId-operation
+      responses:
+        '200':
+          description: OK
+      description: Carry out various operations on an address object
 components:
   schemas:
     Site-Object-Complete:
