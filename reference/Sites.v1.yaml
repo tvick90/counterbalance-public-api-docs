@@ -5,7 +5,56 @@ info:
 servers:
   - url: 'https://api.counterbalance.io'
     description: Production API
-paths: {}
+paths:
+  /v1/site:
+    get:
+      summary: Create Site
+      tags: []
+      responses: {}
+      operationId: get-v1-site
+    post:
+      summary: Create New Site
+      operationId: post-v1-site
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: '#/components/schema/Site-Object-Physical'
+      description: Create a new site
+      security:
+        - Bearer Token: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  maxLength: 120
+                  description: The name of the new site
+                type:
+                  type: string
+                  enum:
+                    - physical
+                    - campus
+                    - virtual
+                  default: physical
+                  description: The type of site to create
+                code:
+                  type: string
+                  maxLength: 32
+                  description: A unique code to identify the site
+                description:
+                  type: string
+                  maxLength: 300
+                  description: A description of the site
+              required:
+                - name
+                - type
 components:
   schemas:
     Site-Object-Physical:
