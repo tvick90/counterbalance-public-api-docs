@@ -199,6 +199,28 @@ paths:
         '200':
           description: OK
       description: Carry out various operations on an address object
+  '/v1/site/{siteId}/address':
+    parameters:
+      - schema:
+          type: string
+        name: siteId
+        in: path
+        required: true
+        description: A valid site UUID
+    put:
+      summary: ''
+      operationId: put-v1-site-siteId-address
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: '#/components/schemas/Address-Object'
+      description: Create a new address object and attach it to the specified site
+      security:
+        - Bearer Token: []
 components:
   schemas:
     Site-Object-Complete:
