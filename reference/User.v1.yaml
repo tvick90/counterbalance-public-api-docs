@@ -9,7 +9,7 @@ servers:
 paths:
   /v1/user:
     get:
-      summary: Get User Listing
+      summary: Get User Account Listing
       tags: []
       responses:
         '200':
@@ -151,7 +151,7 @@ paths:
       security:
         - Bearer Token: []
     post:
-      summary: Create a New User
+      summary: Create New User
       operationId: post-v1-user
       responses:
         '200':
@@ -208,7 +208,7 @@ paths:
         required: true
         description: The user's UUID
     get:
-      summary: Get User by ID
+      summary: Get User Account
       tags: []
       responses: {}
       operationId: get-v1-user-userId
@@ -217,7 +217,7 @@ paths:
       security:
         - Bearer Token: []
     patch:
-      summary: Update User by ID
+      summary: Update User Account
       operationId: patch-v1-user-userId
       responses:
         '200':
@@ -255,7 +255,7 @@ paths:
       security:
         - Bearer Token: []
     delete:
-      summary: Delete User by ID
+      summary: Delete User Account
       operationId: delete-v1-user-userId
       responses:
         '204':
@@ -293,7 +293,7 @@ paths:
         required: true
         description: The user's UUID
     get:
-      summary: Get User Photo by ID
+      summary: Get User Photo
       tags: []
       responses:
         '200':
@@ -302,6 +302,22 @@ paths:
       operationId: get-v1-user-userId-photo
       description: Get a user's avatar photo by ID
       parameters: []
+    post:
+      summary: Upload a Custom Photo
+      operationId: post-v1-user-userId-photo
+      responses:
+        '200':
+          description: OK
+          headers: {}
+      security:
+        - Bearer Token: []
+      description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
   '/v1/user/{userId}/roles':
     parameters:
       - schema:
@@ -369,16 +385,67 @@ paths:
     get:
       summary: Get User Preferences
       tags: []
-      responses: {}
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+            application/xml:
+              schema:
+                type: object
+                properties: {}
+            multipart/form-data:
+              schema:
+                type: object
+                properties: {}
+            text/html:
+              schema:
+                type: object
+                properties: {}
+        '404':
+          description: Not Found
       operationId: get-v1-user-userId-preferences
       description: Get user preferences
+      security:
+        - Bearer Token: []
     patch:
-      summary: ''
+      summary: Update User Preferences
       operationId: patch-v1-user-self-preferences
       responses:
         '200':
           description: OK
       description: Update user preferences
+      security:
+        - Bearer Token: []
+  /v1/user/self/permissions:
+    get:
+      summary: Get Own Permissions
+      tags: []
+      responses: {}
+      operationId: get-v1-self-permissions
+    parameters: []
+  '/v1/user/{userId}/permissions':
+    parameters:
+      - schema:
+          type: string
+          format: uuid
+        name: userId
+        in: path
+        required: true
+        description: The user's UUID
+    get:
+      summary: Get User Permissions
+      tags: []
+      responses:
+        '200':
+          description: OK
+      operationId: get-v1-user-userId-permissions
+      description: ''
+      security:
+        - Bearer Token: []
 components:
   schemas:
     User-Account:
