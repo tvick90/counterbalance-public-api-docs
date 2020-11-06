@@ -150,6 +150,7 @@ paths:
       operationId: get-v1-user
       security:
         - Bearer Token: []
+      description: Return a list of user accounts available to the authenticated user
     post:
       summary: Create New User
       operationId: post-v1-user
@@ -231,6 +232,7 @@ paths:
           content:
             application/json:
               schema:
+                $ref: '#/components/schemas/User-Account'
                 type: object
       description: |-
         Update a user account by ID
@@ -289,9 +291,33 @@ paths:
       summary: Attach User Licensing
       operationId: put-v1-user-userId-license
       responses: {}
-      description: Assign user licensing
+      description: |-
+        Assign a license to a user.
+
+        > **Note** This body field `password` is only required if the `type` specified is equal to `seat` or `user`
+
+        > **Note** Downgrading a user to the `record_user` class will remove their login account
       security:
         - Bearer Token: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                type:
+                  type: string
+                  description: The type of license to assign the user
+                  enum:
+                    - record_user
+                    - user
+                    - seat
+                password:
+                  type: string
+                  format: password
+                  description: Required for "seat" and "user" types
+              required:
+                - type
   '/v1/user/{userId}/photo':
     parameters:
       - schema:
@@ -342,7 +368,14 @@ paths:
     get:
       summary: Get User's Assigned Roles
       tags: []
-      responses: {}
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
       operationId: get-v1-user-userId-roles
       description: |-
         Retrieve a list of roles assigned to a user
@@ -436,8 +469,6 @@ paths:
               schema:
                 type: object
                 properties: {}
-        '404':
-          description: Not Found
       operationId: get-v1-user-userId-preferences
       description: Get user preferences
       security:
