@@ -293,7 +293,9 @@ components:
                 usage:
                   type: number
                 quota:
-                  type: object
+                  type: 
+                    - object
+                    - 'null'
                   required:
                     - included
                     - purchased
@@ -348,7 +350,9 @@ components:
                 usage:
                   type: number
                 quota:
-                  type: object
+                  type:  
+                    - object
+                    - 'null'
                   required:
                     - included
                     - purchased
@@ -383,7 +387,9 @@ components:
                 usage:
                   type: number
                 quota:
-                  type: object
+                  type:  
+                    - object
+                    - 'null'
                   required:
                     - included
                     - purchased
@@ -438,7 +444,9 @@ components:
                 usage:
                   type: number
                 quota:
-                  type: object
+                  type:  
+                    - object
+                    - 'null'
                   required:
                     - included
                     - purchased
