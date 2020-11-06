@@ -2,6 +2,11 @@
   "items": [
     {
       "type": "item",
+      "title": "User-Licensing",
+      "uri": "docs/User-Licensing.md"
+    },
+    {
+      "type": "item",
       "title": "Tenants",
       "uri": "reference/Tenant.v1.yaml"
     },
