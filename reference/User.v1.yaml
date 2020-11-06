@@ -174,6 +174,7 @@ paths:
                 - email
                 - type
         description: Request body description...
+      parameters: []
   '/v1/user/{userId}':
     parameters:
       - schema:
@@ -190,6 +191,59 @@ paths:
       operationId: get-v1-user-userId
       parameters: []
       description: Retrieve a user account by ID
+    patch:
+      summary: ''
+      operationId: patch-v1-user-userId
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+      description: Update a user account by ID
+      requestBody:
+        content:
+          application/json:
+            schema:
+              description: ''
+              type: object
+              properties:
+                given_name:
+                  type: string
+                  minLength: 1
+                  description: The user's first name
+                family_name:
+                  type: string
+                  minLength: 1
+                  description: The user's last name
+                title:
+                  type: string
+                  description: The user's job title
+                  maxLength: 90
+                middle_name:
+                  type: string
+                  description: The user's middle name
+                preferred_given_name:
+                  type: string
+                  description: The user's preferred first name
+  '/v1/user/{userId}/license':
+    parameters:
+      - schema:
+          type: string
+          format: uuid
+        name: userId
+        in: path
+        required: true
+        style: matrix
+        description: The UUID of the user to license
+    put:
+      summary: Attach User Licensing
+      operationId: put-v1-user-userId-license
+      responses:
+        '200':
+          description: OK
+      description: Assign user licensing
 components:
   schemas:
     User-Account:
