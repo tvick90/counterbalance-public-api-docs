@@ -32,7 +32,14 @@ paths:
       parameters: []
       description: Retrieve a user account by ID
 components:
-  schemas: {}
+  schemas:
+    User-Account:
+      title: User-Account
+      type: object
+      properties:
+        id:
+          type: string
+      description: ''
   securitySchemes:
     Bearer Token:
       type: http
