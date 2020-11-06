@@ -9,11 +9,13 @@ servers:
 paths:
   /v1/tenant:
     get:
-      summary: Your GET endpoint
+      summary: Get Tenant Account
       tags: []
       responses: {}
       operationId: get-v1-tenant
       description: Get the tenant account of the authenticated user
+      security:
+        - Bearer Token: []
 components:
   schemas:
     Tenant-Account:

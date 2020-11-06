@@ -356,6 +356,20 @@ paths:
       description: Remove one or more roles from a user
       security:
         - Bearer Token: []
+  '/v1/user/{userId}/preferences':
+    parameters:
+      - schema:
+          type: string
+        name: userId
+        in: path
+        required: true
+        description: ''
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses: {}
+      operationId: get-v1-user-userId-preferences
+      description: ''
 components:
   schemas:
     User-Account:
