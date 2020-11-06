@@ -2,8 +2,209 @@ openapi: 3.0.0
 info:
   title: Tenants
   version: '1.0'
+  description: ''
 servers:
-  - url: 'http://localhost:3000'
-paths: {}
+  - url: 'https://api.counterbalance.io'
+    description: Production API
+paths:
+  /v1/tenant:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses: {}
+      operationId: get-v1-tenant
+      description: Get the tenant account of the authenticated user
 components:
-  schemas: {}
+  schemas:
+    Tenant-Account:
+      description: ''
+      type: object
+      properties:
+        id:
+          type: string
+          minLength: 1
+        name:
+          type: string
+          minLength: 1
+        flags:
+          type: object
+          properties:
+            active:
+              type: boolean
+            has_subscription:
+              type: boolean
+            has_billing_account:
+              type: boolean
+            locked:
+              type: boolean
+            confirmed:
+              type: boolean
+            deleted:
+              type: boolean
+        billing_id:
+          type:
+            - string
+            - 'null'
+          minLength: 1
+        locale:
+          type: string
+          minLength: 1
+        primary_contact:
+          type: object
+          properties:
+            id:
+              type: string
+              minLength: 1
+            name:
+              type: object
+              properties:
+                given:
+                  type: string
+                  minLength: 1
+                family:
+                  type: string
+                  minLength: 1
+                full:
+                  type: string
+                  minLength: 1
+            email:
+              type: string
+              minLength: 1
+            phone:
+              type: object
+              properties:
+                primary:
+                  type: object
+                  properties:
+                    type: {}
+                    number: {}
+        subscription:
+          type: object
+          required:
+            - active
+          properties:
+            tier:
+              type: number
+            sku:
+              type: string
+              minLength: 1
+            active:
+              type: boolean
+        trial:
+          type: object
+          required:
+            - status
+            - used
+            - active
+            - expired
+            - expires
+          properties:
+            status:
+              type: string
+              minLength: 1
+            used:
+              type: boolean
+            active:
+              type: boolean
+            expired:
+              type: boolean
+            expires:
+              type: number
+        addresses:
+          type: object
+          required:
+            - mailing
+          properties:
+            mailing:
+              type: string
+              minLength: 1
+            billing: {}
+        milestones:
+          type: object
+          required:
+            - account_created
+            - account_deleted
+            - account_confirmation
+            - onboarded
+            - accepted_terms
+            - accepted_billing_terms
+            - accepted_subscription_terms
+          properties:
+            account_created:
+              type: object
+              required:
+                - status
+                - timestamp
+              properties:
+                status:
+                  type: boolean
+                timestamp:
+                  type: number
+            account_deleted:
+              type: object
+              required:
+                - status
+                - timestamp
+              properties:
+                status:
+                  type: boolean
+                timestamp:
+                  type: number
+            account_confirmation:
+              type: object
+              required:
+                - status
+                - timestamp
+              properties:
+                status:
+                  type: boolean
+                timestamp:
+                  type: number
+            onboarded:
+              type: object
+              required:
+                - status
+                - timestamp
+              properties:
+                status:
+                  type: boolean
+                timestamp:
+                  type: number
+            accepted_terms:
+              type: object
+              required:
+                - status
+                - timestamp
+              properties:
+                status:
+                  type: boolean
+                timestamp:
+                  type: number
+            accepted_billing_terms:
+              type: object
+              required:
+                - status
+                - timestamp
+              properties:
+                status:
+                  type: boolean
+                timestamp:
+                  type: number
+            accepted_subscription_terms:
+              type: object
+              required:
+                - status
+                - timestamp
+              properties:
+                status:
+                  type: boolean
+                timestamp:
+                  type: number
+      required:
+        - trial
+        - addresses
+        - milestones
+  securitySchemes:
+    Bearer Token:
+      type: http
+      scheme: bearer
