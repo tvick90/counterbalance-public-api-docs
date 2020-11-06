@@ -1,3 +1,3 @@
-# User-Licensing
+# User Licensing
 
 The beginning of an awesome article...

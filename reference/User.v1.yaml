@@ -34,9 +34,14 @@ paths:
                           type: string
                           minLength: 1
                           description: ''
+                          format: uuid
                         license:
                           type: string
                           minLength: 1
+                          enum:
+                            - record_user
+                            - user
+                            - seat
                         flags:
                           type: object
                           properties:
@@ -94,14 +99,26 @@ paths:
                           type: string
                           minLength: 1
                         site:
-                          type: string
-                          minLength: 1
+                          type:
+                            - string
+                            - 'null'
+                          format: uuid
+                          default: 'null'
                         department:
-                          type: string
+                          type:
+                            - string
+                            - 'null'
                           minLength: 1
-                        manager: {}
-                        room: {}
-                        mail_stop: {}
+                          default: 'null'
+                          format: uuid
+                        manager:
+                          type:
+                            - string
+                            - 'null'
+                        room:
+                          type: string
+                        mail_stop:
+                          type: string
                         title:
                           type: string
                           minLength: 1
@@ -130,25 +147,6 @@ paths:
                 Response:
                   value: {}
           headers: {}
-        '403':
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                type: object
-                properties: {}
-        '503':
-          description: Service Unavailable
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: object
-                    properties:
-                      '':
-                        type: string
       operationId: get-v1-user
     post:
       summary: Create a New User
@@ -204,7 +202,7 @@ paths:
         name: userId
         in: path
         required: true
-        description: The UUID of the user to retrieve
+        description: The UUID of the user
     get:
       summary: Get User by ID
       tags: []
@@ -212,8 +210,14 @@ paths:
       operationId: get-v1-user-userId
       parameters: []
       description: Retrieve a user account by ID
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
     patch:
-      summary: ''
+      summary: Update User by ID
       operationId: patch-v1-user-userId
       responses:
         '200':
@@ -248,6 +252,17 @@ paths:
                 preferred_given_name:
                   type: string
                   description: The user's preferred first name
+    delete:
+      summary: Delete a User by ID
+      operationId: delete-v1-user-userId
+      responses:
+        '204':
+          description: No Content
+          content:
+            application/json:
+              schema:
+                type: 'null'
+      description: Delete a user by ID
   '/v1/user/{userId}/license':
     parameters:
       - schema:
@@ -268,23 +283,23 @@ paths:
 components:
   schemas:
     User-Account:
-      description: ''
+      description: A typical user account object
       type: object
+      title: Complete User Account
       properties:
         id:
           type: string
-          minLength: 1
+          format: uuid
+          description: The user's UUID
         license:
           type: string
-          minLength: 1
+          enum:
+            - record_user
+            - user
+            - seat
+          description: The assigned license class
         flags:
           type: object
-          required:
-            - active
-            - blocked
-            - licensed
-            - archived
-            - deleted
           properties:
             active:
               type: boolean
@@ -299,28 +314,23 @@ components:
         picture:
           type: string
           minLength: 1
+          description: The URL for the user's avatar photo
         auth: {}
         name:
           type: object
-          required:
-            - given
-            - preferred
-            - middle
-            - family
-            - full
-            - display
-            - short
           properties:
             given:
               type: string
-              minLength: 1
+              maxLength: 90
             preferred:
               type: string
+              maxLength: 90
             middle:
               type: string
+              maxLength: 90
             family:
               type: string
-              minLength: 1
+              maxLength: 90
             prefix: {}
             suffix: {}
             full:
@@ -331,9 +341,15 @@ components:
               minLength: 1
             short:
               type: string
+          required:
+            - full
+            - display
+            - short
         email:
           type: string
-          minLength: 1
+          format: email
+          maxLength: 120
+          description: The user's email address
         site:
           type: string
           minLength: 1
@@ -353,6 +369,14 @@ components:
           type: array
           items:
             type: object
+            properties:
+              id:
+                type: string
+              context:
+                type: string
+                enum:
+                  - Counterbalance ID
+                  - Microsoft 365
         milestones:
           type: object
           required:
@@ -424,12 +448,6 @@ components:
                 timestamp:
                   type: number
       required:
-        - id
-        - license
-        - flags
-        - picture
-        - name
-        - email
         - site
         - department
         - title
