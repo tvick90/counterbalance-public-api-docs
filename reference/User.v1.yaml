@@ -1,0 +1,21 @@
+openapi: 3.0.0
+info:
+  title: User
+  version: 1.1.1
+servers:
+  - url: 'http://localhost:3000'
+paths:
+  /v1/user:
+    get:
+      summary: Get User Listing
+      tags: []
+      responses:
+        '200':
+          description: OK
+      operationId: get-v1-user
+components:
+  schemas: {}
+  securitySchemes:
+    Bearer Token:
+      type: http
+      scheme: bearer
