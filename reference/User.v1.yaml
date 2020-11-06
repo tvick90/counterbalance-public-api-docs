@@ -10,10 +10,27 @@ paths:
     get:
       summary: Get User Listing
       tags: []
-      responses:
-        '200':
-          description: OK
+      responses: {}
       operationId: get-v1-user
+  '/v1/user/{userId}':
+    parameters:
+      - schema:
+          type: string
+          format: uuid
+          example: 49b9c723-b995-11ea-8c37-00155debc00d
+          minLength: 36
+          maxLength: 36
+        name: userId
+        in: path
+        required: true
+        description: The UUID of the user to retrieve
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses: {}
+      operationId: get-v1-user-userId
+      parameters: []
+      description: Retrieve a user account by ID
 components:
   schemas: {}
   securitySchemes:
