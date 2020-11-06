@@ -1,11 +1,11 @@
 openapi: 3.0.0
 info:
-  title: ''
+  title: Users
   version: 1.1.1
   description: Create and manage user accounts
 servers:
   - url: 'https://api.counterbalance.io'
-    description: Core API
+    description: Production API
 paths:
   /v1/user:
     get:
@@ -154,8 +154,8 @@ paths:
       summary: Create New User
       operationId: post-v1-user
       responses:
-        '200':
-          description: OK
+        '201':
+          description: Created
       description: Create a new user and optionally assign a license and password
       requestBody:
         content:
@@ -194,7 +194,7 @@ paths:
                 - family_name
                 - email
                 - type
-        description: Request body description...
+        description: '**Request** body description...'
       parameters: []
       security:
         - Bearer Token: []
@@ -383,6 +383,22 @@ paths:
       description: Remove one or more roles from a user
       security:
         - Bearer Token: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                roles:
+                  type: array
+                  minItems: 1
+                  uniqueItems: true
+                  maxItems: 10
+                  items:
+                    type: string
+              required:
+                - roles
+        description: ''
   /v1/user/self/preferences:
     parameters: []
     get:
@@ -423,12 +439,19 @@ paths:
       description: Update user preferences
       security:
         - Bearer Token: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
   /v1/user/self/permissions:
     get:
       summary: Get Own Permissions
       tags: []
       responses: {}
       operationId: get-v1-self-permissions
+      security:
+        - Bearer Token: []
     parameters: []
   '/v1/user/{userId}/permissions':
     parameters:
@@ -446,7 +469,10 @@ paths:
         '200':
           description: OK
       operationId: get-v1-user-userId-permissions
-      description: ''
+      description: |-
+        Retreieve permissions for a given user
+
+        > This endpoint accepts `self` in place of a UUID
       security:
         - Bearer Token: []
 components:
