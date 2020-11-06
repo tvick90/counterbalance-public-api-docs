@@ -210,12 +210,6 @@ paths:
       operationId: get-v1-user-userId
       parameters: []
       description: Retrieve a user account by ID
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties: {}
     patch:
       summary: Update User by ID
       operationId: patch-v1-user-userId
