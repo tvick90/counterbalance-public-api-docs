@@ -318,6 +318,9 @@ paths:
             schema:
               type: object
               properties: {}
+          application/octet-stream:
+            schema:
+              type: object
   '/v1/user/{userId}/roles':
     parameters:
       - schema:
