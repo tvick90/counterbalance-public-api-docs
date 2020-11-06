@@ -173,7 +173,7 @@ paths:
                 - family_name
                 - email
                 - type
-        description: ''
+        description: Request body description...
   '/v1/user/{userId}':
     parameters:
       - schema:
