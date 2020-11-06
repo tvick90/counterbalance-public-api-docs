@@ -1,0 +1,14 @@
+{
+  "items": [
+    {
+      "type": "item",
+      "title": "Tenants",
+      "uri": "reference/Tenant.v1.yaml"
+    },
+    {
+      "type": "item",
+      "title": "Users",
+      "uri": "reference/User.v1.yaml"
+    }
+  ]
+}
