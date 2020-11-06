@@ -11,8 +11,169 @@ paths:
     get:
       summary: Get User Listing
       tags: []
-      responses: {}
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                properties:
+                  count:
+                    type: number
+                  data:
+                    type: array
+                    uniqueItems: true
+                    minItems: 1
+                    items:
+                      required:
+                        - id
+                        - license
+                        - picture
+                        - email
+                        - site
+                        - department
+                        - title
+                        - employee_id
+                        - org_guid
+                      properties:
+                        id:
+                          type: string
+                          minLength: 1
+                        license:
+                          type: string
+                          minLength: 1
+                        flags:
+                          type: object
+                          properties:
+                            active:
+                              type: boolean
+                            blocked:
+                              type: boolean
+                            licensed:
+                              type: boolean
+                            archived:
+                              type: boolean
+                            deleted:
+                              type: boolean
+                          required:
+                            - active
+                            - blocked
+                            - licensed
+                            - archived
+                            - deleted
+                        picture:
+                          type: string
+                          minLength: 1
+                        name:
+                          type: object
+                          properties:
+                            given:
+                              type: string
+                              minLength: 1
+                            preferred:
+                              type: string
+                            middle:
+                              type: string
+                            family:
+                              type: string
+                              minLength: 1
+                            prefix: {}
+                            suffix: {}
+                            full:
+                              type: string
+                              minLength: 1
+                            display:
+                              type: string
+                              minLength: 1
+                            short:
+                              type: string
+                          required:
+                            - given
+                            - preferred
+                            - middle
+                            - family
+                            - full
+                            - display
+                            - short
+                        email:
+                          type: string
+                          minLength: 1
+                        site:
+                          type: string
+                          minLength: 1
+                        department:
+                          type: string
+                          minLength: 1
+                        manager: {}
+                        room: {}
+                        mail_stop: {}
+                        title:
+                          type: string
+                          minLength: 1
+                        employee_id:
+                          type: string
+                        org_guid:
+                          type: string
+                        links:
+                          type: array
+                          items:
+                            required: []
+                            properties: {}
+                required:
+                  - count
+                  - data
+              examples:
+                Response:
+                  value: {}
+          headers: {}
       operationId: get-v1-user
+    post:
+      summary: Create a New User
+      operationId: post-v1-user
+      responses:
+        '200':
+          description: OK
+      description: Create a new user and optionally assign a license and password
+      requestBody:
+        content:
+          application/json:
+            schema:
+              description: ''
+              type: object
+              properties:
+                given_name:
+                  type: string
+                  minLength: 1
+                  maxLength: 90
+                  description: The user's first name
+                family_name:
+                  type: string
+                  minLength: 1
+                  maxLength: 90
+                  description: The user's last name
+                email:
+                  type: string
+                  format: email
+                title:
+                  type: string
+                type:
+                  type: string
+                  enum:
+                    - record_user
+                    - seat
+                    - user
+                password:
+                  type: string
+                  format: password
+                  description: Required for "seat" and "user" types
+              required:
+                - given_name
+                - family_name
+                - email
+                - type
+        description: ''
   '/v1/user/{userId}':
     parameters:
       - schema:
