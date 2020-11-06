@@ -83,6 +83,30 @@ paths:
             schema:
               type: object
               properties: {}
+  '/v1/site/{siteId}':
+    parameters:
+      - schema:
+          type: string
+          format: uuid
+        name: siteId
+        in: path
+        required: true
+        description: The site's UUID
+    get:
+      summary: Get Site
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: '#/components/schemas/Site-Object-Physical'
+      operationId: get-v1-site-siteId
+      description: Get a site object by ID
+      security:
+        - Bearer Token: []
 components:
   schemas:
     Site-Object-Physical:
