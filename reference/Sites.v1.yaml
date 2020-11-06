@@ -8,10 +8,34 @@ servers:
 paths:
   /v1/site:
     get:
-      summary: Create Site
+      summary: Get Site Listing
       tags: []
-      responses: {}
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: number
+                    description: The number of site objects returned
+                  data:
+                    type: array
+                    minItems: 0
+                    uniqueItems: true
+                    description: An array of site objects
+                    items:
+                      type: object
+                      $ref: '#/components/schemas/Site-Object-Generic'
+                required:
+                  - count
+                  - data
       operationId: get-v1-site
+      security:
+        - Bearer Token: []
+      description: Get a listing of sites
     post:
       summary: Create New Site
       operationId: post-v1-site
@@ -22,7 +46,7 @@ paths:
             application/json:
               schema:
                 type: object
-                $ref: '#/components/schema/Site-Object-Physical'
+                $ref: '#/components/schemas/Site-Object-Physical'
       description: Create a new site
       security:
         - Bearer Token: []
@@ -55,6 +79,10 @@ paths:
               required:
                 - name
                 - type
+          application/xml:
+            schema:
+              type: object
+              properties: {}
 components:
   schemas:
     Site-Object-Physical:
