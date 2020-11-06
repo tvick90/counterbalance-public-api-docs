@@ -22,130 +22,15 @@ paths:
                 properties:
                   count:
                     type: number
+                    description: The number of account objects returned
                   data:
                     type: array
                     uniqueItems: true
-                    minItems: 1
                     description: An array of user account objects
-                    items:
-                      type: object
-                      properties:
-                        id:
-                          type: string
-                          minLength: 1
-                          description: ''
-                          format: uuid
-                        license:
-                          type: string
-                          minLength: 1
-                          enum:
-                            - record_user
-                            - user
-                            - seat
-                        flags:
-                          type: object
-                          properties:
-                            active:
-                              type: boolean
-                            blocked:
-                              type: boolean
-                            licensed:
-                              type: boolean
-                            archived:
-                              type: boolean
-                            deleted:
-                              type: boolean
-                          required:
-                            - active
-                            - blocked
-                            - licensed
-                            - archived
-                            - deleted
-                        picture:
-                          type: string
-                          minLength: 1
-                        name:
-                          type: object
-                          properties:
-                            given:
-                              type: string
-                              minLength: 1
-                            preferred:
-                              type: string
-                            middle:
-                              type: string
-                            family:
-                              type: string
-                              minLength: 1
-                            prefix: {}
-                            suffix: {}
-                            full:
-                              type: string
-                              minLength: 1
-                            display:
-                              type: string
-                              minLength: 1
-                            short:
-                              type: string
-                          required:
-                            - given
-                            - preferred
-                            - middle
-                            - family
-                            - full
-                            - display
-                            - short
-                        email:
-                          type: string
-                          minLength: 1
-                        site:
-                          type:
-                            - string
-                            - 'null'
-                          format: uuid
-                          default: 'null'
-                        department:
-                          type:
-                            - string
-                            - 'null'
-                          minLength: 1
-                          default: 'null'
-                          format: uuid
-                        manager:
-                          type:
-                            - string
-                            - 'null'
-                        room:
-                          type: string
-                        mail_stop:
-                          type: string
-                        title:
-                          type: string
-                          minLength: 1
-                        employee_id:
-                          type: string
-                        org_guid:
-                          type: string
-                        links:
-                          type: array
-                          items:
-                            type: object
-                      required:
-                        - id
-                        - license
-                        - picture
-                        - email
-                        - site
-                        - department
-                        - title
-                        - employee_id
-                        - org_guid
+                    $ref: '#/components/schemas/User-Account'
                 required:
                   - count
                   - data
-              examples:
-                Response:
-                  value: {}
           headers: {}
       operationId: get-v1-user
       security:
@@ -157,6 +42,11 @@ paths:
       responses:
         '201':
           description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User-Account'
+                type: object
       description: |-
         Create a new user and optionally assign a license and password
 
@@ -214,7 +104,14 @@ paths:
     get:
       summary: Get User Account
       tags: []
-      responses: {}
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User-Account'
+                type: object
       operationId: get-v1-user-userId
       parameters: []
       description: |-
