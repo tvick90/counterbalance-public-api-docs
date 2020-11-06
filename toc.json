@@ -11,26 +11,8 @@
       "uri": "docs/Responses-and-Errors.md"
     },
     {
-      "type": "divider",
-      "title": "Tenant Management"
-    },
-    {
       "type": "item",
-      "title": "Tenants",
-      "uri": "reference/Tenant.v1.yaml"
-    },
-    {
-      "type": "divider",
-      "title": "user"
-    },
-    {
-      "type": "item",
-      "title": "User Licensing",
-      "uri": "docs/user/User-Licensing.md"
-    },
-    {
-      "type": "item",
-      "title": "Tenants",
+      "title": "Tenant Management",
       "uri": "reference/Tenant.v1.yaml"
     },
     {
