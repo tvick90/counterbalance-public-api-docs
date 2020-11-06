@@ -46,7 +46,7 @@ paths:
             application/json:
               schema:
                 type: object
-                $ref: '#/components/schemas/Site-Object-Physical'
+                $ref: '#/components/schemas/Site-Object-Complete'
       description: Create a new site
       security:
         - Bearer Token: []
@@ -102,14 +102,56 @@ paths:
             application/json:
               schema:
                 type: object
-                $ref: '#/components/schemas/Site-Object-Physical'
+                $ref: '#/components/schemas/Site-Object-Complete'
       operationId: get-v1-site-siteId
       description: Get a site object by ID
       security:
         - Bearer Token: []
+    patch:
+      summary: Update Site
+      operationId: patch-v1-site-siteId
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: '#/components/schemas/Site-Object-Complete'
+        '404':
+          description: Site Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: '../models/Error-Response.v1.yaml'
+      description: |-
+        Update a site by ID
+
+        Use the `Update Address` endpoint to update the site's address
+      security:
+        - Bearer Token: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  maxLength: 120
+                  description: The name of the site
+                code:
+                  type: string
+                  description: The site's unique ID code
+                  maxLength: 32
+                description:
+                  type: string
+                  description: The description of the site
+                  maxLength: 300
 components:
   schemas:
-    Site-Object-Physical:
+    Site-Object-Complete:
       description: ''
       type: object
       properties:
@@ -158,10 +200,13 @@ components:
         code:
           type: string
           description: ''
+          maxLength: 32
         name:
           type: string
+          maxLength: 120
         description:
           type: string
+          maxLength: 300
         address:
           type:
             - string
