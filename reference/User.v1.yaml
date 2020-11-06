@@ -18,9 +18,6 @@ paths:
       - schema:
           type: string
           format: uuid
-          example: 49b9c723-b995-11ea-8c37-00155debc00d
-          minLength: 36
-          maxLength: 36
         name: userId
         in: path
         required: true
@@ -35,12 +32,173 @@ paths:
 components:
   schemas:
     User-Account:
-      title: User-Account
+      description: ''
       type: object
       properties:
         id:
           type: string
-      description: ''
+          minLength: 1
+        license:
+          type: string
+          minLength: 1
+        flags:
+          type: object
+          required:
+            - active
+            - blocked
+            - licensed
+            - archived
+            - deleted
+          properties:
+            active:
+              type: boolean
+            blocked:
+              type: boolean
+            licensed:
+              type: boolean
+            archived:
+              type: boolean
+            deleted:
+              type: boolean
+        picture:
+          type: string
+          minLength: 1
+        auth: {}
+        name:
+          type: object
+          required:
+            - given
+            - preferred
+            - middle
+            - family
+            - full
+            - display
+            - short
+          properties:
+            given:
+              type: string
+              minLength: 1
+            preferred:
+              type: string
+            middle:
+              type: string
+            family:
+              type: string
+              minLength: 1
+            prefix: {}
+            suffix: {}
+            full:
+              type: string
+              minLength: 1
+            display:
+              type: string
+              minLength: 1
+            short:
+              type: string
+        email:
+          type: string
+          minLength: 1
+        site:
+          type: string
+          minLength: 1
+        department:
+          type: string
+          minLength: 1
+        manager:
+          type: string
+          format: uuid
+          default: 'null'
+        room: {}
+        mail_stop: {}
+        title:
+          type: string
+          minLength: 1
+        links:
+          type: array
+          items:
+            type: object
+        milestones:
+          type: object
+          required:
+            - accepted_terms
+            - completed_onboarding
+            - account_created
+            - account_blocked
+            - account_archived
+            - license_assigned
+          properties:
+            accepted_terms:
+              type: object
+              required:
+                - status
+                - timestamp
+              properties:
+                status:
+                  type: boolean
+                timestamp:
+                  type: number
+            completed_onboarding:
+              type: object
+              required:
+                - status
+                - timestamp
+              properties:
+                status:
+                  type: boolean
+                timestamp:
+                  type: number
+            account_created:
+              type: object
+              required:
+                - status
+                - timestamp
+              properties:
+                status:
+                  type: boolean
+                timestamp:
+                  type: number
+            account_blocked:
+              type: object
+              required:
+                - status
+                - timestamp
+              properties:
+                status:
+                  type: boolean
+                timestamp:
+                  type: number
+            account_archived:
+              type: object
+              required:
+                - status
+                - timestamp
+              properties:
+                status:
+                  type: boolean
+                timestamp:
+                  type: number
+            license_assigned:
+              type: object
+              required:
+                - status
+                - timestamp
+              properties:
+                status:
+                  type: boolean
+                timestamp:
+                  type: number
+      required:
+        - id
+        - license
+        - flags
+        - picture
+        - name
+        - email
+        - site
+        - department
+        - title
+        - links
+        - milestones
   securitySchemes:
     Bearer Token:
       type: http
