@@ -1,9 +1,13 @@
 {
   "items": [
     {
+      "type": "divider",
+      "title": "user"
+    },
+    {
       "type": "item",
-      "title": "User-Licensing",
-      "uri": "docs/User-Licensing.md"
+      "title": "User Licensing",
+      "uri": "docs/user/User-Licensing.md"
     },
     {
       "type": "item",
