@@ -112,6 +112,73 @@ paths:
               schema:
                 $ref: '#/components/schemas/User-Account'
                 type: object
+              examples:
+                Response:
+                  value:
+                    id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+                    license: record_user
+                    flags:
+                      active: true
+                      blocked: true
+                      licensed: true
+                      archived: true
+                      deleted: true
+                    picture: string
+                    auth: null
+                    name:
+                      given: string
+                      preferred: string
+                      middle: string
+                      family: string
+                      prefix: null
+                      suffix: null
+                      full: string
+                      display: string
+                      short: string
+                    email: user@example.com
+                    site: string
+                    department: string
+                    manager: 'null'
+                    room: null
+                    mail_stop: null
+                    title: string
+                    links:
+                      - id: string
+                        context: Counterbalance ID
+                    milestones:
+                      accepted_terms:
+                        status: true
+                        timestamp: 0
+                      completed_onboarding:
+                        status: true
+                        timestamp: 0
+                      account_created:
+                        status: true
+                        timestamp: 0
+                      account_blocked:
+                        status: true
+                        timestamp: 0
+                      account_archived:
+                        status: true
+                        timestamp: 0
+                      license_assigned:
+                        status: true
+                        timestamp: 0
+        '404':
+          description: User Not Found
+          content:
+            application/json:
+              schema:
+                $ref: ../models/Error-Response.v1.yaml
+                type: object
+              examples:
+                Response:
+                  value:
+                    error:
+                      message: User not found
+                      console: A user with ID a840db76-d232-493a-ad8f-e69a1765b0ee could not be found in the database
+                      code: 404
+                    logging_hash: 096e35174f23ff80bf7732b122423bee59b952c1
       operationId: get-v1-user-userId
       parameters: []
       description: |-

@@ -1,0 +1,25 @@
+title: Error Response
+type: object
+properties:
+  error:
+    type: object
+    properties:
+      message:
+        type: string
+        description: The error that occurred
+      console:
+        type: string
+        description: Additional error output and further instruction
+      code:
+        type: number
+        description: The HTTP error code
+    required:
+      - message
+      - console
+      - code
+  logging_hash:
+    type:
+      - string
+      - 'null'
+    description: A logging entry ID for debugging
+description: A typical error response
