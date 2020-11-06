@@ -1,7 +1,8 @@
 openapi: 3.0.0
 info:
-  title: User
+  title: Users
   version: 1.1.1
+  description: ''
 servers:
   - url: 'https://api.counterbalance.io'
     description: Core API
@@ -25,7 +26,7 @@ paths:
         required: true
         description: The UUID of the user to retrieve
     get:
-      summary: Your GET endpoint
+      summary: Get User by ID
       tags: []
       responses: {}
       operationId: get-v1-user-userId
