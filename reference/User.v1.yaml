@@ -326,6 +326,14 @@ paths:
       responses:
         '200':
           description: OK
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+              examples: {}
       requestBody:
         content:
           application/json:
@@ -356,20 +364,21 @@ paths:
       description: Remove one or more roles from a user
       security:
         - Bearer Token: []
-  '/v1/user/{userId}/preferences':
-    parameters:
-      - schema:
-          type: string
-        name: userId
-        in: path
-        required: true
-        description: ''
+  /v1/user/self/preferences:
+    parameters: []
     get:
-      summary: Your GET endpoint
+      summary: Get User Preferences
       tags: []
       responses: {}
       operationId: get-v1-user-userId-preferences
-      description: ''
+      description: Get user preferences
+    patch:
+      summary: ''
+      operationId: patch-v1-user-self-preferences
+      responses:
+        '200':
+          description: OK
+      description: Update user preferences
 components:
   schemas:
     User-Account:

@@ -16,6 +16,12 @@ paths:
       description: Get the tenant account of the authenticated user
       security:
         - Bearer Token: []
+  /v1/tenant/quota:
+    get:
+      summary: Get Tenant Quota Summary
+      tags: []
+      responses: {}
+      operationId: get-v1-tenant-quota
 components:
   schemas:
     Tenant-Account:
@@ -206,6 +212,352 @@ components:
         - trial
         - addresses
         - milestones
+      title: Tenant Account
+    Tenant-Quota-Summary:
+      description: ''
+      type: object
+      title: Tenant Quota Summary
+      properties:
+        tenant:
+          type: object
+          required:
+            - id
+            - subscription_sku
+            - billing_id
+          properties:
+            id:
+              type: string
+              minLength: 1
+            subscription_sku:
+              type:
+                - string
+                - 'null'
+              minLength: 1
+            billing_id:
+              type:
+                - string
+                - 'null'
+              minLength: 1
+        quotas:
+          type: object
+          required:
+            - seat
+            - user
+            - record_user
+            - department
+            - site
+            - domain
+            - managed_device
+          properties:
+            seat:
+              type: object
+              required:
+                - usage
+                - quota
+                - remaining
+                - status
+              properties:
+                usage:
+                  type: number
+                quota:
+                  type:
+                    - object
+                    - 'null'
+                  properties:
+                    included:
+                      type: number
+                    purchased:
+                      type: number
+                    total:
+                      type: number
+                remaining:
+                  type: number
+                status:
+                  type: object
+                  required:
+                    - can_add_more
+                    - is_exceeded
+                  properties:
+                    can_add_more:
+                      type: boolean
+                    is_exceeded:
+                      type: boolean
+            user:
+              type: object
+              required:
+                - usage
+                - quota
+                - remaining
+                - status
+              properties:
+                usage:
+                  type: number
+                quota:
+                  type: object
+                  required:
+                    - included
+                    - purchased
+                    - total
+                  properties:
+                    included:
+                      type: number
+                    purchased:
+                      type: number
+                    total:
+                      type: number
+                remaining:
+                  type: number
+                status:
+                  type: object
+                  required:
+                    - can_add_more
+                    - is_exceeded
+                  properties:
+                    can_add_more:
+                      type: boolean
+                    is_exceeded:
+                      type: boolean
+            record_user:
+              type: object
+              required:
+                - usage
+                - status
+              properties:
+                usage:
+                  type: number
+                quota: {}
+                remaining: {}
+                status:
+                  type: object
+                  required:
+                    - can_add_more
+                    - is_exceeded
+                  properties:
+                    can_add_more:
+                      type: boolean
+                    is_exceeded:
+                      type: boolean
+            department:
+              type: object
+              required:
+                - usage
+                - quota
+                - remaining
+                - status
+              properties:
+                usage:
+                  type: number
+                quota:
+                  type: object
+                  required:
+                    - included
+                    - purchased
+                    - total
+                  properties:
+                    included:
+                      type: number
+                    purchased:
+                      type: number
+                    total:
+                      type: number
+                remaining:
+                  type: number
+                status:
+                  type: object
+                  required:
+                    - can_add_more
+                    - is_exceeded
+                  properties:
+                    can_add_more:
+                      type: boolean
+                    is_exceeded:
+                      type: boolean
+            site:
+              type: object
+              required:
+                - usage
+                - quota
+                - remaining
+                - status
+              properties:
+                usage:
+                  type: number
+                quota:
+                  type: object
+                  required:
+                    - included
+                    - purchased
+                    - total
+                  properties:
+                    included:
+                      type: number
+                    purchased:
+                      type: number
+                    total:
+                      type: number
+                remaining:
+                  type: number
+                status:
+                  type: object
+                  required:
+                    - can_add_more
+                    - is_exceeded
+                  properties:
+                    can_add_more:
+                      type: boolean
+                    is_exceeded:
+                      type: boolean
+            domain:
+              type: object
+              required:
+                - usage
+                - status
+              properties:
+                usage:
+                  type: number
+                quota: {}
+                remaining: {}
+                status:
+                  type: object
+                  required:
+                    - can_add_more
+                    - is_exceeded
+                  properties:
+                    can_add_more:
+                      type: boolean
+                    is_exceeded:
+                      type: boolean
+            managed_device:
+              type: object
+              required:
+                - usage
+                - quota
+                - remaining
+                - status
+              properties:
+                usage:
+                  type: number
+                quota:
+                  type: object
+                  required:
+                    - included
+                    - purchased
+                    - total
+                  properties:
+                    included:
+                      type: number
+                    purchased:
+                      type: number
+                    total:
+                      type: number
+                remaining:
+                  type: number
+                status:
+                  type: object
+                  required:
+                    - can_add_more
+                    - is_exceeded
+                  properties:
+                    can_add_more:
+                      type: boolean
+                    is_exceeded:
+                      type: boolean
+        subscription:
+          type: object
+          required:
+            - base
+            - purchased_items
+          properties:
+            base:
+              type: object
+              required:
+                - id
+                - name
+                - tier
+                - enabled
+                - billing_frequency
+                - seat_price
+                - included_quotas
+                - included_features
+              properties:
+                id:
+                  type: string
+                  minLength: 1
+                name:
+                  type: string
+                  minLength: 1
+                tier:
+                  type: number
+                enabled:
+                  type: boolean
+                billing_frequency:
+                  type: string
+                  minLength: 1
+                seat_price:
+                  type: number
+                included_quotas:
+                  type: object
+                  required:
+                    - seat
+                    - user
+                    - department
+                    - site
+                    - building
+                    - managed_device
+                    - device_templates
+                  properties:
+                    seat:
+                      type: number
+                    user:
+                      type: number
+                    record_user: {}
+                    department:
+                      type: number
+                    domain: {}
+                    site:
+                      type: number
+                    building:
+                      type: number
+                    managed_device:
+                      type: number
+                    device_templates:
+                      type: number
+                included_features:
+                  type: array
+                  items:
+                    type: object
+            purchased_items:
+              type: array
+              uniqueItems: true
+              minItems: 1
+              items:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    minLength: 1
+                  product:
+                    type: string
+                    minLength: 1
+                  plan:
+                    type: string
+                    minLength: 1
+                  quantity:
+                    type: number
+                required:
+                  - id
+                  - product
+                  - plan
+                  - quantity
+        features:
+          type: array
+          items:
+            type: object
+      required:
+        - tenant
+        - quotas
+        - subscription
+        - features
   securitySchemes:
     Bearer Token:
       type: http
