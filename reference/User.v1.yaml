@@ -26,21 +26,14 @@ paths:
                     type: array
                     uniqueItems: true
                     minItems: 1
+                    description: An array of user account objects
                     items:
-                      required:
-                        - id
-                        - license
-                        - picture
-                        - email
-                        - site
-                        - department
-                        - title
-                        - employee_id
-                        - org_guid
+                      type: object
                       properties:
                         id:
                           type: string
                           minLength: 1
+                          description: ''
                         license:
                           type: string
                           minLength: 1
@@ -119,8 +112,17 @@ paths:
                         links:
                           type: array
                           items:
-                            required: []
-                            properties: {}
+                            type: object
+                      required:
+                        - id
+                        - license
+                        - picture
+                        - email
+                        - site
+                        - department
+                        - title
+                        - employee_id
+                        - org_guid
                 required:
                   - count
                   - data
@@ -128,6 +130,25 @@ paths:
                 Response:
                   value: {}
           headers: {}
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '503':
+          description: Service Unavailable
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      '':
+                        type: string
       operationId: get-v1-user
     post:
       summary: Create a New User
