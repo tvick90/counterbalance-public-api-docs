@@ -1,6 +1,25 @@
 {
   "items": [
     {
+      "type": "item",
+      "title": "Welcome",
+      "uri": "docs/Welcome.md"
+    },
+    {
+      "type": "item",
+      "title": "Responses and Errors",
+      "uri": "docs/Responses-and-Errors.md"
+    },
+    {
+      "type": "divider",
+      "title": "Tenant Management"
+    },
+    {
+      "type": "item",
+      "title": "Tenants",
+      "uri": "reference/Tenant.v1.yaml"
+    },
+    {
       "type": "divider",
       "title": "user"
     },
