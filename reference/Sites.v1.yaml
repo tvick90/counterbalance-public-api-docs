@@ -495,7 +495,21 @@ paths:
             application/json:
               schema:
                 type: object
-                properties: {}
+                $ref: '#/components/schemas/Timezone-Details'
+              examples:
+                Response:
+                  value:
+                    id: America/Chicago
+                    current:
+                      wall_time: 1604715167
+                      utc_offset: -21600
+                      is_dst: false
+                      tag: CST
+                    names:
+                      ISO6391_language_code: en
+                      generic: Central Time
+                      standard: Central Standard Time
+                      daylight: Central Daylight Time
       description: Retreieve timezone information for a specified IANA Timezone ID
       requestBody:
         content:
@@ -508,6 +522,10 @@ paths:
                   description: A valid IANA timezone ID
               required:
                 - timezone
+            examples:
+              Example:
+                value:
+                  timezone: America/Chicago
 components:
   schemas:
     Site-Object-Complete:
