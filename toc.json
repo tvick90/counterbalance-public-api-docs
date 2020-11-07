@@ -8,12 +8,37 @@
     {
       "type": "item",
       "title": "Responses and Errors",
-      "uri": "Responses-and-Errors.md"
+      "uri": "docs/Responses-and-Errors.md"
+    },
+    {
+      "type": "item",
+      "title": "Authentication",
+      "uri": "docs/Authentication.md"
+    },
+    {
+      "type": "item",
+      "title": "Help & Support",
+      "uri": "docs/Help-and-Support.md"
     },
     {
       "type": "item",
       "title": "Tenant Management",
       "uri": "reference/Tenant.v1.yaml"
+    },
+    {
+      "type": "item",
+      "title": "Tenant Fundamentals",
+      "uri": "docs/Tenant-Fundamentals.md"
+    },
+    {
+      "type": "item",
+      "title": "Quotas",
+      "uri": "docs/Quotas.md"
+    },
+    {
+      "type": "item",
+      "title": "Preferences",
+      "uri": "docs/Tenant-Prefs.md"
     },
     {
       "type": "item",
