@@ -11,11 +11,169 @@ paths:
     get:
       summary: Get Tenant Account
       tags: []
-      responses: {}
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: '#/components/schemas/Tenant-Account'
+              examples:
+                Response:
+                  value:
+                    id: d6797ebf-5b00-4a59-b3e5-19711b4c55bb
+                    name: Figgis Agency
+                    flags:
+                      active: true
+                      has_subscription: true
+                      has_billing_account: true
+                      locked: false
+                      confirmed: true
+                      deleted: false
+                    billing_id: cus_GZBdOM86hQZldD
+                    locale: en-us
+                    primary_contact:
+                      id: 1b17e73b-4cf7-4b47-a0f8-46f878ef7bf1
+                      name:
+                        given: Cyril
+                        family: Figgis
+                        full: Cyril Figgis
+                      email: cyril@figgisagency.com
+                      phone:
+                        primary:
+                          type: null
+                          number: null
+                    subscription:
+                      tier: 3
+                      sku: plan_GvzroFXIrnFYdH
+                      active: true
+                    trial:
+                      status: Never Started
+                      used: false
+                      active: false
+                      expired: false
+                      expires: 0
+                    addresses:
+                      mailing: f3643601-d122-47c5-893c-1f108c07d840
+                      billing: null
+                    milestones:
+                      account_created:
+                        status: true
+                        timestamp: 1517451002
+                      account_deleted:
+                        status: false
+                        timestamp: 0
+                      account_confirmation:
+                        status: true
+                        timestamp: 1580183430
+                      onboarded:
+                        status: true
+                        timestamp: 1580183430
+                      accepted_terms:
+                        status: false
+                        timestamp: 0
+                      accepted_billing_terms:
+                        status: false
+                        timestamp: 0
+                      accepted_subscription_terms:
+                        status: false
+                        timestamp: 0
       operationId: get-v1-tenant
-      description: Get the tenant account of the authenticated user
+      description: Retrieve the tenant account of the authenticated user
       security:
         - Bearer Token: []
+    post:
+      summary: Create Tenant Account
+      operationId: post-v1-tenant
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success_message:
+                    type: string
+              examples:
+                Response:
+                  value:
+                    success_message: The new tenant account was created! Email confirmation required.
+      description: |-
+        Signup for and create a new tenant account
+
+        > Once an account is created, it must be confirmed before it can be used
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                given_name:
+                  type: string
+                family_name:
+                  type: string
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+                  format: password
+                company_name:
+                  type: string
+                accept_terms:
+                  type: boolean
+              required:
+                - given_name
+                - family_name
+                - email
+                - password
+                - company_name
+                - accept_terms
+            examples:
+              Example:
+                value:
+                  given_name: Taylor
+                  family_name: Vick
+                  email: hello@counterbalanceio
+                  password: Se@ttle1!
+                  company_name: Counterbalance Software
+                  accept_terms: true
+    patch:
+      summary: Update Tenant Account
+      operationId: patch-v1-tenant
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: '#/components/schemas/Tenant-Account'
+      description: Update the tenant account of the authenticated user
+      security:
+        - Bearer Token: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  maxLength: 240
+                  description: Your tenant company name
+                primary_contact:
+                  type: string
+                  format: uuid
+                  description: The UUID of the user designated as the primary contact for your account
+            examples:
+              Example:
+                value:
+                  name: Figgis Agency
+                  primary_contact: 5152763b-7d76-4d22-8484-ff27da40fe98
+        description: ''
   /v1/tenant/quota:
     get:
       summary: Get Tenant Quota Summary
@@ -293,7 +451,7 @@ components:
                 usage:
                   type: number
                 quota:
-                  type: 
+                  type:
                     - object
                     - 'null'
                   required:
@@ -350,7 +508,7 @@ components:
                 usage:
                   type: number
                 quota:
-                  type:  
+                  type:
                     - object
                     - 'null'
                   required:
@@ -387,7 +545,7 @@ components:
                 usage:
                   type: number
                 quota:
-                  type:  
+                  type:
                     - object
                     - 'null'
                   required:
@@ -444,7 +602,7 @@ components:
                 usage:
                   type: number
                 quota:
-                  type:  
+                  type:
                     - object
                     - 'null'
                   required:

@@ -635,6 +635,49 @@ components:
         - title
         - links
         - milestones
+    User-Preferences:
+      description: User adjustable platform data
+      type: object
+      properties:
+        shell:
+          type: object
+          required:
+            - theme
+            - nav
+            - pagination
+            - disabled_applications
+          properties:
+            theme:
+              type: string
+              minLength: 1
+            nav:
+              type: object
+              required:
+                - collapsed
+              properties:
+                collapsed:
+                  type: boolean
+                disabled_applications:
+                  type: array
+                  items:
+                    type: string
+            pagination:
+              type: object
+              required:
+                - enabled
+                - default_limit
+              properties:
+                enabled:
+                  type: boolean
+                default_limit:
+                  type: number
+            disabled_applications:
+              type: array
+              items:
+                type: object
+      required:
+        - shell
+      title: User Preferences
   securitySchemes:
     Bearer Token:
       type: http
