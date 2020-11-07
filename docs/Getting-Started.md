@@ -1,4 +1,4 @@
-# Making Requests
+# Getting Started
 The Counterbalance API is crafted around REST and the REST architectural style to provide developers with a stateless and language ­agnostic interface. The API leverages HTTP verbs and response codes, JWT authentication, and resource-oriented URLs.
 
 ---
@@ -39,6 +39,6 @@ For example, the request:
 GET https://api.counterbalance.io/v1/user/497f6eca-6276-4993-bfeb-53cbbbba6f08 HTTP/1.1
 ```
 
-Will return the user account object for the user with UUID `497f6eca-6276-4993-bfeb-53cbbbba6f08` in JSON format
+Returns the user account object for the user with UUID `497f6eca-6276-4993-bfeb-53cbbbba6f08` in JSON format
 
 ### Forming a Request Body

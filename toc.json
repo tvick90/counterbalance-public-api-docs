@@ -7,7 +7,12 @@
     },
     {
       "type": "item",
-      "title": "Responses and Errors",
+      "title": "Making Requests",
+      "uri": "docs/Making-Requests.md"
+    },
+    {
+      "type": "item",
+      "title": "Responses & Errors",
       "uri": "docs/Responses-and-Errors.md"
     },
     {
