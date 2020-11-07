@@ -1,6 +1,6 @@
 # Help & Support
 
-The beginning of an awesome article...
+#### Counterbalance support is available 24/7 via email and during normal business hours via phone
 
 <!--
 type: tab
