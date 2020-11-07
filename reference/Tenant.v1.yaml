@@ -328,6 +328,21 @@ paths:
       description: Retreieve the platform preferences for the authenticated user's tenant account
       security:
         - Bearer Token: []
+  /v1/tenant/deletion-pin:
+    post:
+      summary: Set Deletion PIN
+      operationId: post-v1-tenant-deletion-pin
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: '#/components/schemas/Tenant-Deletion-PIN'
+      description: Sets a deletion PIN that allows Counterbalance Support to permanently delete a tenant account
+      security:
+        - Bearer Token: []
 components:
   schemas:
     Tenant-Account:
@@ -957,6 +972,19 @@ components:
               items:
                 type: string
       title: Tenant Account Preferences
+    Tenant-Deletion-PIN:
+      description: ''
+      type: object
+      properties:
+        pin:
+          type: string
+          minLength: 8
+          maxLength: 8
+          description: An eight-character deletion PIN
+      x-examples:
+        Example:
+          pin: 71VIFU22
+      title: Tenant Deletion PIN
   securitySchemes:
     Bearer Token:
       type: http
