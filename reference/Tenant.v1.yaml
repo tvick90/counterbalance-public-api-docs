@@ -867,6 +867,32 @@ components:
         - quotas
         - subscription
         - features
+    Tenant-Preferences:
+      description: ''
+      type: object
+      properties:
+        display_name_format:
+          type: string
+          minLength: 1
+        shell:
+          type: object
+          properties:
+            theme:
+              type: string
+              minLength: 1
+            pagination:
+              type: object
+              properties:
+                enabled:
+                  type: boolean
+                default_limit:
+                  type: number
+                  default: 10
+            disabled_applications:
+              type: array
+              items:
+                type: string
+      title: Tenant Account Preferences
   securitySchemes:
     Bearer Token:
       type: http
