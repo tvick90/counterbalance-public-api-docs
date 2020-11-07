@@ -65,6 +65,16 @@ paths:
               schema:
                 type: object
                 $ref: '#/components/schemas/Site-Object-Complete'
+              examples:
+                Response:
+                  value:
+                    id: 799ef189-c32b-48b4-9eb8-4787ebe37f2a
+                    code: ''
+                    name: My First Site
+                    description: ''
+                    type: physical
+                    address: null
+                    contacts: null
       description: Create a new site
       security:
         - Bearer Token: []
@@ -97,10 +107,16 @@ paths:
               required:
                 - name
                 - type
+            examples:
+              Example:
+                value:
+                  name: My First Site
+                  type: physical
           application/xml:
             schema:
               type: object
               properties: {}
+        description: ''
   '/v1/site/{siteId}':
     parameters:
       - schema:
