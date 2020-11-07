@@ -80,7 +80,7 @@ paths:
                         status: false
                         timestamp: 0
       operationId: get-v1-tenant
-      description: Retrieve the tenant account of the authenticated user
+      description: Retrieve the tenant account for the authenticated user
       security:
         - Bearer Token: []
     post:
@@ -101,9 +101,10 @@ paths:
                   value:
                     success_message: The new tenant account was created! Email confirmation required.
       description: |-
-        Signup for and create a new tenant account
+        Create a new tenant account
 
-        > Once an account is created, it must be confirmed before it can be used
+        <!-- theme: warning -->
+        > _**Note** Once an account is created, it must be confirmed before it can be used_
       requestBody:
         content:
           application/json:
@@ -261,7 +262,7 @@ paths:
       description: |-
         Confirm a newly-created tenant account
 
-        > A confirm operation can only be completed by the user who created the tenant acccount
+        > _**Note** A confirm operation can only be completed by the user who created the tenant acccount_
       security:
         - Bearer Token: []
       requestBody:
@@ -271,16 +272,17 @@ paths:
               type: object
               properties:
                 code:
-                  type: number
-                  minimum: 6
-                  maximum: 6
+                  type: string
                   description: A six-digit confirmation code
+                  minLength: 6
+                  maxLength: 6
+                  default: '645881'
               required:
                 - code
             examples:
               Example:
                 value:
-                  code: 123456
+                  code: '645881'
   /v1/tenant/onboarding:
     parameters: []
     post:
@@ -300,7 +302,7 @@ paths:
                 Response:
                   value:
                     success_message: Onboarding has been completed!
-      description: Marks the tenant account as having been onboarded
+      description: Mark the tenant account for the authenticated user as having completed onboarding
       security:
         - Bearer Token: []
       requestBody:
@@ -325,7 +327,7 @@ paths:
                 type: object
                 $ref: '#/components/schemas/Tenant-Preferences'
       operationId: get-v1-tenant-preferences
-      description: Retreieve the platform preferences for the authenticated user's tenant account
+      description: Retrieve platform preferences set for the authenticated user's tenant account
       security:
         - Bearer Token: []
   /v1/tenant/deletion-pin:
@@ -340,7 +342,7 @@ paths:
               schema:
                 type: object
                 $ref: '#/components/schemas/Tenant-Deletion-PIN'
-      description: Sets a deletion PIN that allows Counterbalance Support to permanently delete a tenant account
+      description: Set a deletion PIN that allows Counterbalance Support to permanently delete a tenant account
       security:
         - Bearer Token: []
 components:
