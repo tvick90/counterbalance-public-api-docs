@@ -2,6 +2,8 @@
 
 All responses are returned in JSON format unless otherwise specified. The returned content will always be identified with a `Content-Type` header.
 
+---
+
 ## Status Codes
 
 All possible status codes are outlined below.
@@ -30,10 +32,11 @@ Code | Response | Description
 **409** | `Conflict` | The provided combination of parameters results in a conflict and the resource cannot be updated. The error message output will provide additional information as to why the call cannot be completed.
 **5XX** | _`varies`_ | The API encountered an internal error when processing the request. The error message provided may provide additional information. Retrying the request after a few minutes may be successful.
 
+---
 
 ## Error Logging
 
-Most errors are automatically logged and reported and these errors will return a `logging_hash` entry ID in the error response body.
+Most errors are automatically logged and reported. These errors will return a `logging_hash` entry ID in the error response body.
 
 ```json
 {
@@ -50,10 +53,16 @@ This entry ID is also added as a header in the response.
 X-Counterbalance-Log-Hash: 034dd6ad00770337bb07e906d919ed50f8884e86
 ```
 
+---
+
 ## Additional Response Headers
 
 The following table outlines additional headers that may be included in API responses.
 
 Header | Description
 -------|------------
-`X-Counterbalance-Compute-Node` | The API container that processed this request
+`X-Counterbalance-Compute-Node` | The API container that processed the request
+`X-Counterbalance-Gateway-Node` | The API gateway node that served the request
+`X-Counterbalance-Request-ID`   | The request correlation ID
+`X-Counterbalance-Log-Hash`     | The error reporting log entry ID. _Only included if the entry was logged in the error reporting system._
+
