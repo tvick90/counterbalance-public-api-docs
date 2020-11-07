@@ -219,7 +219,7 @@ paths:
                     id: f3643601-d122-47c5-893c-1f108c07d840
                     lines:
                       - 80 80th Street S
-                      - Suite 650
+                      - Suite 800
                     locality: Loring Park
                     city: Minneapolis
                     county: Hennepin
@@ -273,6 +273,11 @@ paths:
                 offset:
                   description: UTC Offset in seconds
                   type: number
+            examples:
+              Example:
+                value:
+                  extended_address: Suite 800
+        description: ''
     delete:
       summary: Delete Address
       operationId: delete-v1-site-address-addressId
