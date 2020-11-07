@@ -33,6 +33,23 @@ paths:
                 required:
                   - count
                   - data
+              examples:
+                Example:
+                  value:
+                    count: 2
+                    data:
+                      - id: 799ef189-c32b-48b4-9eb8-4787ebe37f2a
+                        type: physical
+                        code: USSEA
+                        name: 'Seattle, WA HQ'
+                        description: 'Seattle, WA Headquarters'
+                        address: f88879fa-eb4e-4ac2-9dad-d3650919fdef
+                      - id: f11a1a42-75ba-4cab-a053-4fab48933a4f
+                        type: physical
+                        code: USMSP
+                        name: 'Minneapolis, MN'
+                        description: 'Minneapolis, MN Regional HQ'
+                        address: 8ac7d5dc-803d-40ac-bc37-16c0dbffe5d8
       operationId: get-v1-site
       security:
         - Bearer Token: []
@@ -104,6 +121,34 @@ paths:
               schema:
                 type: object
                 $ref: '#/components/schemas/Site-Object-Complete'
+              examples:
+                Response:
+                  value:
+                    id: 799ef189-c32b-48b4-9eb8-4787ebe37f2a
+                    code: USSEA
+                    name: 'Seattle, WA HQ'
+                    description: 'Seattle, WA Headquarters'
+                    type: physical
+                    address:
+                      id: f88879fa-eb4e-4ac2-9dad-d3650919fdef
+                      lines:
+                        - 400 Broad Street
+                      locality: ''
+                      city: Seattle
+                      county: King
+                      state: WA
+                      postcode: 98109
+                      country: ''
+                      formatted: '400 Broad Street, Seattle, WA 98119'
+                      geolocation:
+                        latitude: 47.6205
+                        longitude: -122.34927
+                      timezone: America/Los_Angeles
+                      offset: -8
+                      designations:
+                        primary_mailing: false
+                        primary_billing: false
+                    contacts: null
       operationId: get-v1-site-siteId
       description: Get a site object by ID
       security:
@@ -119,13 +164,34 @@ paths:
               schema:
                 type: object
                 $ref: '#/components/schemas/Site-Object-Complete'
-        '404':
-          description: Site Not Found
-          content:
-            application/json:
-              schema:
-                type: object
-                $ref: ../models/Error-Response.v1.yaml
+              examples:
+                Response:
+                  value:
+                    id: 799ef189-c32b-48b4-9eb8-4787ebe37f2a
+                    code: SEA
+                    name: Seattle HQ
+                    description: 'Seattle, WA Headquarters'
+                    type: physical
+                    address:
+                      id: f88879fa-eb4e-4ac2-9dad-d3650919fdef
+                      lines:
+                        - 400 Broad Street
+                      locality: ''
+                      city: Seattle
+                      county: King
+                      state: WA
+                      postcode: 98109
+                      country: ''
+                      formatted: '400 Broad Street, Seattle, WA 98119'
+                      geolocation:
+                        latitude: 47.6205
+                        longitude: -122.34927
+                      timezone: America/Los_Angeles
+                      offset: -8
+                      designations:
+                        primary_mailing: false
+                        primary_billing: false
+                    contacts: null
       description: |-
         Update a site by ID
 
@@ -150,6 +216,24 @@ paths:
                   type: string
                   description: The description of the site
                   maxLength: 300
+            examples:
+              Example:
+                value:
+                  name: Seattle HQ
+                  code: SEA
+    delete:
+      summary: Delete Site
+      operationId: delete-v1-site-siteId
+      responses:
+        '204':
+          description: No Content
+          content:
+            application/json:
+              schema:
+                type: 'null'
+      description: Delete a site by ID
+      security:
+        - Bearer Token: []
   '/v1/site/address/{addressId}':
     parameters:
       - schema:
@@ -282,8 +366,12 @@ paths:
       summary: Delete Address
       operationId: delete-v1-site-address-addressId
       responses:
-        '200':
-          description: OK
+        '204':
+          description: No Content
+          content:
+            application/json:
+              schema:
+                type: 'null'
       description: Delete an address by ID
       security:
         - Bearer Token: []
@@ -396,6 +484,30 @@ paths:
                   country: US
                   postcode: '98119'
                   timezone: America/Los_Angeles
+  /v1/site/utilities/timezone-details:
+    post:
+      summary: Get Timezone Details
+      operationId: post-v1-site-utilities-timezone-details
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      description: Retreieve timezone information for a specified IANA Timezone ID
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                timezone:
+                  type: string
+                  description: A valid IANA timezone ID
+              required:
+                - timezone
 components:
   schemas:
     Site-Object-Complete:
@@ -539,6 +651,68 @@ components:
         - offset
         - designations
       title: Address Object
+    Timezone-Details:
+      description: ''
+      type: object
+      properties:
+        id:
+          type: string
+          minLength: 1
+        current:
+          type: object
+          properties:
+            wall_time:
+              type: number
+            utc_offset:
+              type: number
+            is_dst:
+              type: boolean
+            tag:
+              type: string
+              minLength: 1
+          required:
+            - wall_time
+            - utc_offset
+            - is_dst
+            - tag
+        names:
+          type: object
+          properties:
+            ISO6391_language_code:
+              type: string
+              minLength: 1
+            generic:
+              type: string
+              minLength: 1
+            standard:
+              type: string
+              minLength: 1
+            daylight:
+              type: string
+              minLength: 1
+          required:
+            - ISO6391_language_code
+            - generic
+            - standard
+            - daylight
+      required:
+        - id
+        - current
+        - names
+      x-examples:
+        Example:
+          id: America/Chicago
+          current:
+            wall_time: 1604715167
+            utc_offset: -21600
+            is_dst: false
+            tag: CST
+          names:
+            ISO6391_language_code: en
+            generic: Central Time
+            standard: Central Standard Time
+            daylight: Central Daylight Time
+      title: Timezone Details
   securitySchemes:
     Bearer Token:
       type: http
