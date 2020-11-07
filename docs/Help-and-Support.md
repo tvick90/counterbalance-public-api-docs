@@ -1,3 +1,3 @@
-# Support
+# Help & Support
 
 The beginning of an awesome article...

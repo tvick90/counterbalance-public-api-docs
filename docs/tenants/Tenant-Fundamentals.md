@@ -30,14 +30,22 @@ Every new tenant must be confirmed before it can be used. During account creatio
 
 ## Closing & Deleting a Tenant Account
 
-A Counterbalance account can be closed at any time. The user-initiated deletion process using the DELETE endpoint provides a seven day grace period before the account data is deleted permanently. 
+A Counterbalance account can be closed at any time using the Delete Tenant Account endpoint. 
+
+There are two options for deleting
+
+<!-- theme: warning -->
+> _**Note** Any billing accounts associated with the tenant account must be closed prior to account deletion. _
+
+### Self-Service Account Deletion
+
+The user-initiated deletion process using the DELETE endpoint provides a seven day grace period before the account data is deleted permanently. 
 
 The tenant's primary contact will receive two email reminders at 72 hours and 24 hours before an account data is permanently deleted.
 
 A final email will be sent to the primary contact after the deletion has been processed and all data has been permanently removed. 
 
-<!-- theme: warning -->
-> _**Warning** Any billing accounts associated with the tenant account must be closed prior to account deletion. _
+
 
 
 ### Re-Activating a Deleted Account

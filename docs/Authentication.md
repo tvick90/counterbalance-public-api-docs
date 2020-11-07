@@ -1,3 +1,11 @@
 # Authentication
 
-The beginning of an awesome article...
+In general, most endpoints will require authentication. To authenticate, add an `Authorization` header with a valid **Bearer** token.
+```
+Authorization: Bearer eyJ...w5c
+```
+Each endpoint will indicate whether authentication is needed for that particular operation.
+
+## Obtain a Token
+
+Coming soon...
