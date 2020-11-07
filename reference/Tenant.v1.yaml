@@ -331,7 +331,7 @@ paths:
 components:
   schemas:
     Tenant-Account:
-      description: ''
+      description: The tenant account object
       type: object
       properties:
         id:
@@ -519,6 +519,65 @@ components:
         - addresses
         - milestones
       title: Tenant Account
+      x-examples:
+        Example:
+          id: d6797ebf-5b00-4a59-b3e5-19711b4c55bb
+          name: Figgis Agency
+          flags:
+            active: true
+            has_subscription: true
+            has_billing_account: true
+            locked: false
+            confirmed: true
+            deleted: false
+          billing_id: cus_GZBdOM86hQZldD
+          locale: en-us
+          primary_contact:
+            id: 1b17e73b-4cf7-4b47-a0f8-46f878ef7bf1
+            name:
+              given: Cyril
+              family: Figgis
+              full: Cyril Figgis
+            email: cyril@figgisagency.com
+            phone:
+              primary:
+                type: null
+                number: null
+          subscription:
+            tier: 3
+            sku: plan_GvzroFXIrnFYdH
+            active: true
+          trial:
+            status: Never Started
+            used: false
+            active: false
+            expired: false
+            expires: 0
+          addresses:
+            mailing: f3643601-d122-47c5-893c-1f108c07d840
+            billing: null
+          milestones:
+            account_created:
+              status: true
+              timestamp: 1517451002
+            account_deleted:
+              status: false
+              timestamp: 0
+            account_confirmation:
+              status: true
+              timestamp: 1580183430
+            onboarded:
+              status: true
+              timestamp: 1580183430
+            accepted_terms:
+              status: false
+              timestamp: 0
+            accepted_billing_terms:
+              status: false
+              timestamp: 0
+            accepted_subscription_terms:
+              status: false
+              timestamp: 0
     Tenant-Quota-Summary:
       description: ''
       type: object
