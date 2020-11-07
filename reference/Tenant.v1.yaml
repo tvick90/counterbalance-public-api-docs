@@ -319,6 +319,11 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: '#/components/schemas/Tenant-Preferences'
       operationId: get-v1-tenant-preferences
       description: Retreieve the platform preferences for the authenticated user's tenant account
       security:
