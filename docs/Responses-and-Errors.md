@@ -16,7 +16,7 @@ Code | Response | Description
 -----|----------|---------
 **200** | `Ok` | The request was completed successfully. Response body will vary.
 **201** | `Created` | In response to a PUT or POST request, the resource was created successfully. The new resource's ID will be returned in the response body.
-**204** | `No Content` | The request was completed successfully and there is no response body to return. Such as when an object has been deleted. 
+**204** | `No Content` | The request was completed successfully and there is no response body to return. Such as when an object has been deleted. The response body will be _null_.
 
 
 ### Errors
@@ -63,6 +63,6 @@ Header | Description
 -------|------------
 `X-Counterbalance-Compute-Node` | The API container that processed the request
 `X-Counterbalance-Gateway-Node` | The API gateway node that served the request
-`X-Counterbalance-Request-ID`   | The request correlation ID
+`X-Counterbalance-Request-ID`   | _For internal use_
 `X-Counterbalance-Log-Hash`     | The error reporting log entry ID. _Only included if the entry was logged in the error reporting system._
 
