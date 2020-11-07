@@ -197,7 +197,7 @@ paths:
             application/json:
               schema:
                 type: object
-                $ref: '../models/Error-Response.v1.yaml'
+                $ref: ../models/Error-Response.v1.yaml
       operationId: get-v1-site-address-addressId
       description: Get an address by ID
       security:
@@ -208,10 +208,49 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: '#/components/schemas/Address-Object'
       description: Update an address by ID
       parameters: []
       security:
         - Bearer Token: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                description:
+                  type: string
+                  description: ''
+                address:
+                  type: string
+                  description: Address line one
+                extended_address:
+                  type: string
+                  description: Address line two
+                locality:
+                  type: string
+                  description: The neighborhood name
+                city:
+                  type: string
+                county:
+                  type: string
+                state:
+                  type: string
+                postcode:
+                  type: number
+                country:
+                  type: string
+                timezone:
+                  type: string
+                  description: IANA timezone ID
+                offset:
+                  description: UTC Offset in seconds
+                  type: number
     delete:
       summary: Delete Address
       operationId: delete-v1-site-address-addressId
