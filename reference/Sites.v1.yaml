@@ -161,7 +161,36 @@ paths:
     get:
       summary: Get Address
       tags: []
-      responses: {}
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: '#/components/schemas/Address-Object'
+              examples:
+                Response:
+                  value:
+                    id: f3643601-d122-47c5-893c-1f108c07d840
+                    lines:
+                      - 80 80th Street S
+                      - Suite 650
+                    locality: Loring Park
+                    city: Minneapolis
+                    county: Hennepin
+                    state: MN
+                    postcode: 55403
+                    country: USA
+                    formatted: '80 80th Street S, Suite 650, Minneapolis, MN 55403'
+                    geolocation:
+                      latitude: 44.97191
+                      longitude: -93.28492
+                    timezone: America/Chicago
+                    offset: -21600
+                    designations:
+                      primary_mailing: true
+                      primary_billing: false
       operationId: get-v1-site-address-addressId
       description: Get an address by ID
       security:
