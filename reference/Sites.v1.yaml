@@ -191,6 +191,13 @@ paths:
                     designations:
                       primary_mailing: true
                       primary_billing: false
+        '404':
+          description: Address Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: '../models/Error-Response.v1.yaml'
       operationId: get-v1-site-address-addressId
       description: Get an address by ID
       security:
