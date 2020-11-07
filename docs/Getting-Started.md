@@ -1,5 +1,5 @@
 # Getting Started
-The Counterbalance API is crafted around REST and the REST architectural style to provide developers with a stateless and language ­agnostic interface. The API leverages HTTP verbs and response codes, JWT authentication, and resource-oriented URLs.
+The Counterbalance Core API is crafted around REST and the REST architectural style to provide developers with a stateless and language ­agnostic interface. The API leverages HTTP verbs and response codes, JWT authentication, and resource-oriented URLs.
 
 ---
 

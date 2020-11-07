@@ -2,11 +2,6 @@
   "items": [
     {
       "type": "item",
-      "title": "Welcome",
-      "uri": "docs/Welcome.md"
-    },
-    {
-      "type": "item",
       "title": "Getting Started",
       "uri": "docs/Getting-Started.md"
     },
