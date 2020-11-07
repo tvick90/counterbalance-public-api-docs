@@ -2,6 +2,7 @@ openapi: 3.0.0
 info:
   title: Sites
   version: v1.0
+  description: ''
 servers:
   - url: 'https://api.counterbalance.io'
     description: Production API
@@ -208,7 +209,7 @@ paths:
         required: true
         description: A valid site UUID
     put:
-      summary: ''
+      summary: Add Address to Site
       operationId: put-v1-site-siteId-address
       responses:
         '201':
@@ -221,6 +222,78 @@ paths:
       description: Create a new address object and attach it to the specified site
       security:
         - Bearer Token: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                description:
+                  type: string
+                  maxLength: 300
+                  description: A description of the address
+                street:
+                  type: array
+                  maxItems: 2
+                  minItems: 1
+                  description: 'An array of address lines, up to two'
+                  items: {}
+                city:
+                  type: string
+                  maxLength: 120
+                  description: The city name
+                state:
+                  type: string
+                  maxLength: 2
+                  description: The state name abbreviation
+                locality:
+                  type: string
+                  maxLength: 96
+                  description: The name of the neighborhood
+                geocode:
+                  type: boolean
+                  description: Switch to enable/disable address geocoding
+                county:
+                  type: string
+                  description: The name of the county
+                  maxLength: 120
+                country:
+                  type: string
+                  description: 'The ISO 3166 alpha-2 country code (US, CA, UK, etc)'
+                  maxLength: 2
+                postcode:
+                  type: string
+                  maxLength: 10
+                  description: '*Required if Geocode is disabled*'
+                timezone:
+                  type: string
+                  maxLength: 90
+                  description: An IANA timezone code for the address
+              required:
+                - street
+                - city
+                - state
+            examples:
+              Example with Geocoding:
+                value:
+                  description: Main Address
+                  street:
+                    - 400 Broad Street
+                  city: Seattle
+                  state: WA
+              Example without Geocoding:
+                value:
+                  geocode: false
+                  description: Main Address
+                  street:
+                    - 400 Broad Street
+                  city: Seattle
+                  state: WA
+                  locality: Lower Queen Anne
+                  county: King
+                  country: US
+                  postcode: '98119'
+                  timezone: America/Los_Angeles
 components:
   schemas:
     Site-Object-Complete:
@@ -253,6 +326,7 @@ components:
         - description
         - type
         - address
+      title: Typical Site Object
     Site-Object-Generic:
       description: A generic site object used in site listings
       type: object
