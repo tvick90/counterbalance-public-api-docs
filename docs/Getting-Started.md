@@ -4,7 +4,7 @@ The Counterbalance API is crafted around REST and the REST architectural style t
 ---
 
 ## Making Requests
-The API host is always `https://api.counterbalance.io/v1/`
+The API host is `https://api.counterbalance.io/v1/`
 
 > _**Note** The API is only available via HTTPS_
 
@@ -17,11 +17,11 @@ The API supports the `GET`,`POST`,`PUT`,`PATCH`,`DELETE`, & `OPTIONS` verbs. Gen
 
 Verb | Description
 -----|------------
-`GET`     | Retrieves a single resource or a group of resources
-`POST`    | Creates a new resource
-`PUT`     | Creates a new resource within or attached to an existing resource
-`PATCH`   | Updates an existing resource
-`DELETE`  | Removes an existing resource
+`GET`     | Retrieves existing resources
+`POST`    | Creates a new resource and returns it
+`PUT`     | Creates a new resource within or attached to an existing resource and returns the new resource
+`PATCH`   | Updates an existing resource and returns the updated resource
+`DELETE`  | Removes an existing resource and returns nothing
 `OPTIONS` | List available verbs against a resource
 
 ### Responses
@@ -34,9 +34,24 @@ The API is crafted around simple, resource-oriented URLs. Resource objects are a
 
 For example, the request:
 ```
-GET https://api.counterbalance.io/v1/user/497f6eca-6276-4993-bfeb-53cbbbba6f08 HTTP/1.1
+GET https://api.counterbalance.io/v1/foo/497f6eca-6276-4993-bfeb-53cbbbba6f08 HTTP/1.1
 ```
 
-Returns the user account object for the user with UUID `497f6eca-6276-4993-bfeb-53cbbbba6f08` in JSON format
+Returns the _foo_ object with UUID `497f6eca-6276-4993-bfeb-53cbbbba6f08` in JSON format
+
+### URL Parameters
+URL query paramaters are not currently supported.
 
 ### Forming a Request Body
+When submitting non-binary data via a `POST`, `PUT`, or `PATCH` endpoint, the data payload must be in JSON.
+```
+POST https://api.counterbalance.io/v1/foo HTTP/1.1
+Content-Type: application/json
+```
+```json
+{
+  "bar": "baz"
+}
+```
+
+

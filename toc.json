@@ -37,7 +37,7 @@
     },
     {
       "type": "item",
-      "title": "Quotas",
+      "title": "Quotas & Resource Authorization",
       "uri": "docs/tenants/Quotas.md"
     },
     {
