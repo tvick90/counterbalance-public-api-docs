@@ -281,6 +281,48 @@ paths:
               Example:
                 value:
                   code: 123456
+  /v1/tenant/onboarding:
+    parameters: []
+    post:
+      summary: Complete Tenant Onboarding
+      operationId: post-v1-tenant-onboarding
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success_message:
+                    type: string
+              examples:
+                Response:
+                  value:
+                    success_message: Onboarding has been completed!
+      description: Marks the tenant account as having been onboarded
+      security:
+        - Bearer Token: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: 'null'
+            examples:
+              Example:
+                value: {}
+        description: '*No request body is necesssary for this request*'
+  /v1/tenant/preferences:
+    get:
+      summary: Get Tenant Preferences
+      tags: []
+      responses:
+        '200':
+          description: OK
+      operationId: get-v1-tenant-preferences
+      description: Retreieve the platform preferences for the authenticated user's tenant account
+      security:
+        - Bearer Token: []
 components:
   schemas:
     Tenant-Account:
