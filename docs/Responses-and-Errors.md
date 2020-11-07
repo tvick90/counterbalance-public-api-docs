@@ -1,6 +1,6 @@
 # Responses & Errors
 
-All responses are returned in JSON format unless otherwise specified. The returned content will always be identified with a `Content-Type` header.
+The API returns data in a variety of formats depending on the endpoint used. When exchanging non-binary data, the API accepts and returns JSON. The returned content will always be identified with a `Content-Type` header.
 
 ---
 

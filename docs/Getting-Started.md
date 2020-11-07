@@ -24,10 +24,8 @@ Verb | Description
 `DELETE`  | Removes an existing resource
 `OPTIONS` | List available verbs against a resource
 
-Standard responses and errors are documented in [Responses & Errors](./Responses-and-Errors.md)
-
-### Data Format
-The API returns data in a variety of formats depending on the endpoint used. When exchanging non-binary data, the API accepts and returns JSON. 
+### Responses
+Working with responses and errors is documented in [Responses & Errors](./Responses-and-Errors.md)
 
 ---
 
