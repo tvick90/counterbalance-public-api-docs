@@ -331,7 +331,7 @@ paths:
 components:
   schemas:
     Tenant-Account:
-      description: The tenant account object
+      description: ''
       type: object
       properties:
         id:
