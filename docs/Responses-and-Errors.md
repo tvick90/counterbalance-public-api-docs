@@ -61,8 +61,8 @@ The following table outlines additional headers that may be included in API resp
 
 Header | Description
 -------|------------
-`X-Counterbalance-Compute-Node` | The API container that processed the request
-`X-Counterbalance-Gateway-Node` | The API gateway node that served the request
+`X-Counterbalance-Compute-Node` | The API node that processed the request
+`X-Counterbalance-Gateway-Node` | The API gateway that served the request
 `X-Counterbalance-Request-ID`   | _For internal use_
 `X-Counterbalance-Log-Hash`     | The error reporting log entry ID. _Only included if the entry was logged in the error reporting system._
 
