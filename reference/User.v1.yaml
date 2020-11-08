@@ -14,7 +14,8 @@ paths:
   /v1/user:
     get:
       summary: Get User Account Listing
-      tags: []
+      tags:
+        - User Accounts
       responses:
         '200':
           description: OK
@@ -135,13 +136,13 @@ paths:
                           - context: Microsoft 365
                             id: 201e0cc6-9b88-4908-a69e-60e88b4d9ff7
           headers: {}
-      operationId: get-v1-user
+      operationId: get-user-list
       security:
         - Bearer Token: []
       description: Return a list of user accounts available to the authenticated user
     post:
       summary: Create New User
-      operationId: post-v1-user
+      operationId: create-user
       responses:
         '201':
           description: Created
@@ -149,7 +150,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/User-Account'
-                type: object
       description: |-
         Create a new user and optionally assign a license and password
 
@@ -195,6 +195,8 @@ paths:
       parameters: []
       security:
         - Bearer Token: []
+      tags:
+        - User Accounts
   '/v1/user/{userId}':
     parameters:
       - schema:
@@ -206,7 +208,8 @@ paths:
         description: A valid user account UUID
     get:
       summary: Get User Account
-      tags: []
+      tags:
+        - User Accounts
       responses:
         '200':
           description: OK
@@ -214,7 +217,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/User-Account'
-                type: object
               examples:
                 Response:
                   value:
@@ -267,7 +269,7 @@ paths:
                       license_assigned:
                         status: true
                         timestamp: 0
-      operationId: get-v1-user-userId
+      operationId: get-user-account
       parameters: []
       description: |-
         Retrieve a user account by ID
@@ -277,7 +279,7 @@ paths:
         - Bearer Token: []
     patch:
       summary: Update User Account
-      operationId: patch-v1-user-userId
+      operationId: update-user-account
       responses:
         '200':
           description: OK
@@ -285,7 +287,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/User-Account'
-                type: object
       description: |-
         Update a user account by ID
 
@@ -321,9 +322,11 @@ paths:
                   description: The user's assigned site
       security:
         - Bearer Token: []
+      tags:
+        - User Accounts
     delete:
       summary: Delete User Account
-      operationId: delete-v1-user-userId
+      operationId: delete-user-account
       responses:
         '204':
           description: No Content
@@ -334,6 +337,8 @@ paths:
       description: Delete a user by ID
       security:
         - Bearer Token: []
+      tags:
+        - User Accounts
   '/v1/user/{userId}/license':
     parameters:
       - schema:
@@ -345,7 +350,7 @@ paths:
         description: A valid user account UUID
     put:
       summary: Attach User Licensing
-      operationId: put-v1-user-userId-license
+      operationId: assign-user-license
       responses: {}
       description: |-
         Assign a license to a user.
@@ -385,7 +390,8 @@ paths:
         description: A valid user account UUID
     get:
       summary: Get User Photo
-      tags: []
+      tags:
+        - User Photo
       responses:
         '200':
           description: OK
@@ -412,6 +418,8 @@ paths:
           application/octet-stream:
             schema:
               type: object
+      tags:
+        - User Photo
   '/v1/user/{userId}/roles/{roleId}':
     parameters:
       - schema:
@@ -429,7 +437,8 @@ paths:
         description: A valid role ID
     get:
       summary: Get User's Assigned Roles
-      tags: []
+      tags:
+        - Roles
       responses:
         '200':
           description: OK
@@ -491,6 +500,8 @@ paths:
         - Bearer Token: []
       parameters: []
       description: Assign one or more roles to a user
+      tags:
+        - Roles
     delete:
       summary: Remove User Roles
       operationId: delete-v1-user-userId-roles
@@ -508,11 +519,14 @@ paths:
       description: Remove one or more roles from a user
       security:
         - Bearer Token: []
+      tags:
+        - Roles
   /v1/user/self/preferences:
     parameters: []
     get:
       summary: Get User Preferences
-      tags: []
+      tags:
+        - User Preferences
       responses:
         '200':
           description: OK
@@ -551,6 +565,8 @@ paths:
           application/json:
             schema:
               type: object
+      tags:
+        - User Preferences
   '/v1/user/{userId}/permissions':
     parameters:
       - schema:
@@ -562,14 +578,14 @@ paths:
         description: A valid user account UUID
     get:
       summary: Get User Permissions
-      tags: []
+      tags:
+        - Permissions
       responses:
         '200':
           description: OK
           content:
             application/json:
               schema:
-                type: array
                 $ref: '#/components/schemas/User-Permissions'
               examples:
                 Example:
@@ -590,9 +606,9 @@ paths:
 components:
   schemas:
     User-Account:
-      description: A typical user account object
+      description: ''
       type: object
-      title: Complete User Account
+      title: User Account Object Model
       properties:
         id:
           type: string
@@ -760,8 +776,61 @@ components:
         - title
         - links
         - milestones
+      x-examples:
+        example-1:
+          id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+          license: record_user
+          flags:
+            active: true
+            blocked: true
+            licensed: true
+            archived: true
+            deleted: true
+          picture: string
+          auth: null
+          name:
+            given: string
+            preferred: string
+            middle: string
+            family: string
+            prefix: null
+            suffix: null
+            full: string
+            display: string
+            short: string
+          email: user@example.com
+          site: string
+          department: string
+          manager: 'null'
+          room: null
+          mail_stop: null
+          title: string
+          links:
+            - id: string
+              context: Counterbalance ID
+          milestones:
+            accepted_terms:
+              status: true
+              timestamp: 0
+            completed_onboarding:
+              status: true
+              timestamp: 0
+            account_created:
+              status: true
+              timestamp: 0
+            account_blocked:
+              status: true
+              timestamp: 0
+            account_archived:
+              status: true
+              timestamp: 0
+            license_assigned:
+              status: true
+              timestamp: 0
+      x-tags:
+        - User Accounts
     User-Preferences:
-      description: User adjustable platform data
+      description: ''
       type: object
       properties:
         shell:
@@ -802,9 +871,24 @@ components:
                 type: object
       required:
         - shell
-      title: User Preferences
+      title: User Preferences Object Model
+      x-examples:
+        Example:
+          shell:
+            theme: string
+            nav:
+              collapsed: true
+              disabled_applications:
+                - string
+            pagination:
+              enabled: true
+              default_limit: 0
+            disabled_applications:
+              - {}
+      x-tags:
+        - User Preferences
     User-Permissions:
-      title: User Account Permissions
+      title: User Account Permissions Object Model
       type: array
       description: An array of user account permission strings
       x-examples:
@@ -817,8 +901,10 @@ components:
           - 'user:account:*'
       items:
         type: string
+      x-tags:
+        - Permissions
     User-Assigned-Roles:
-      title: User Assigned Roles
+      title: User Assigned Roles Object Model
       type: object
       description: ''
       properties:
@@ -830,8 +916,16 @@ components:
         Example:
           roles:
             - rol_ef4g...
+      x-tags:
+        - Roles
   securitySchemes:
     Bearer Token:
       type: http
       scheme: bearer
       description: ''
+tags:
+  - name: User Accounts
+  - name: User Photo
+  - name: User Preferences
+  - name: Permissions
+  - name: Roles
