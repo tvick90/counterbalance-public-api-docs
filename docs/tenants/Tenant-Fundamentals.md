@@ -9,7 +9,7 @@ Each tenant account is assigned a unique **Tenant ID**.
 blah blah I need to fill this section in 
 
 ## Account Confirmation
-Every new tenant must be confirmed before it can be used. During account creation, a six-digit code is emailed to the new user. This code must be entered by the user who created the account via the Confirm a Tenant Account endpoint.
+Every new tenant must be confirmed before it can be used. During account creation, a six-digit code is emailed to the new user. This code must be entered by the user who created the account via the [Confirm a Tenant Account](../../reference/Tenant.v1.yaml/paths/~1v1~1tenant~1confirm/post) endpoint.
 
 <!-- theme: info -->
 > ###### _Note_
