@@ -11,7 +11,7 @@ This documentation walks through the API endpoints and their usage.
 ## Making Requests
 The API is crafted around REST and the REST architectural style to provide developers with a stateless and language ­agnostic interface.
 
-The API host is `https://api.counterbalance.io/v1/`
+The root API host is `https://api.counterbalance.io/`
 
 > _**Note** The API is only available via HTTPS_
 
