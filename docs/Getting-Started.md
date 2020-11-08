@@ -13,7 +13,8 @@ The API is crafted around REST and the REST architectural style to provide devel
 
 The root API host is `https://api.counterbalance.io/`
 
-> _**Note** The API is only available via HTTPS_
+<!-- theme: success -->
+> _The API is only available via HTTPS_
 
 The API employs simple, resource-oriented URLs. Resource objects are accessed and manipulated in predictable ways via their UUID and common HTTP verbs.
 
