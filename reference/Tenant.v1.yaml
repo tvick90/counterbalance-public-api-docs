@@ -3,6 +3,10 @@ info:
   title: Tenant Management
   version: '1.0'
   description: Endpoints for creating and managing Counterbalance tenant accounts
+  termsOfService: 'https://www.counterbalance.io/legal/api-terms'
+  contact:
+    name: Taylor Vick
+    email: support@counterbalance.io
 servers:
   - url: 'https://api.counterbalance.io'
     description: Production API
@@ -10,14 +14,14 @@ paths:
   /v1/tenant:
     get:
       summary: Get Tenant Account
-      tags: []
+      tags:
+        - Tenant Account
       responses:
         '200':
           description: OK
           content:
             application/json:
               schema:
-                type: object
                 $ref: '#/components/schemas/Tenant-Account'
               examples:
                 Response:
@@ -141,6 +145,8 @@ paths:
                   password: Se@ttle1!
                   company_name: Counterbalance Software
                   accept_terms: true
+      tags:
+        - Tenant Account
     patch:
       summary: Update Tenant Account
       operationId: patch-v1-tenant
@@ -150,7 +156,6 @@ paths:
           content:
             application/json:
               schema:
-                type: object
                 $ref: '#/components/schemas/Tenant-Account'
               examples:
                 Response:
@@ -235,10 +240,22 @@ paths:
                   name: Figgis Agency
                   primary_contact: 5152763b-7d76-4d22-8484-ff27da40fe98
         description: ''
+      tags:
+        - Tenant Account
+    delete:
+      summary: Delete Tenant Account
+      operationId: delete-v1-tenant
+      responses:
+        '200':
+          description: OK
+      description: Delete the tenant account of the authenticated user
+      tags:
+        - Tenant Account
   /v1/tenant/quota:
     get:
       summary: Get Tenant Quota Summary
-      tags: []
+      tags:
+        - Tenant Quota
       responses: {}
       operationId: get-v1-tenant-quota
   /v1/tenant/confirm:
@@ -283,6 +300,8 @@ paths:
               Example:
                 value:
                   code: '645881'
+      tags:
+        - Tenant Operations
   /v1/tenant/onboarding:
     parameters: []
     post:
@@ -312,19 +331,21 @@ paths:
               type: 'null'
             examples:
               Example:
-                value: {}
+                value: null
         description: '*No request body is necesssary for this request*'
+      tags:
+        - Tenant Operations
   /v1/tenant/preferences:
     get:
       summary: Get Tenant Preferences
-      tags: []
+      tags:
+        - Tenant Preferences
       responses:
         '200':
           description: OK
           content:
             application/json:
               schema:
-                type: object
                 $ref: '#/components/schemas/Tenant-Preferences'
       operationId: get-v1-tenant-preferences
       description: Retrieve platform preferences set for the authenticated user's tenant account
@@ -340,11 +361,12 @@ paths:
           content:
             application/json:
               schema:
-                type: object
                 $ref: '#/components/schemas/Tenant-Deletion-PIN'
       description: Set a deletion PIN that allows Counterbalance Support to permanently delete a tenant account
       security:
         - Bearer Token: []
+      tags:
+        - Tenant Operations
 components:
   schemas:
     Tenant-Account:
@@ -991,3 +1013,8 @@ components:
     Bearer Token:
       type: http
       scheme: bearer
+tags:
+  - name: Tenant Account
+  - name: Tenant Operations
+  - name: Tenant Quota
+  - name: Tenant Preferences

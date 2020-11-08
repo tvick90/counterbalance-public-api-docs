@@ -3,6 +3,10 @@ info:
   title: Users
   version: 1.1.1
   description: Create and manage user accounts
+  termsOfService: 'https://www.counterbalance.io/legal/api-terms'
+  contact:
+    name: Taylor Vick
+    email: support@counterbalance.io
 servers:
   - url: 'https://api.counterbalance.io'
     description: Production API
