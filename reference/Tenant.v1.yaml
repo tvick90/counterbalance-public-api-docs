@@ -557,7 +557,7 @@ components:
         - trial
         - addresses
         - milestones
-      title: Tenant Account
+      title: Tenant Account Model
       x-examples:
         Example:
           id: d6797ebf-5b00-4a59-b3e5-19711b4c55bb
@@ -617,6 +617,8 @@ components:
             accepted_subscription_terms:
               status: false
               timestamp: 0
+      x-tags:
+        - Tenant Account
     Tenant-Quota-Summary:
       description: ''
       type: object
@@ -995,7 +997,9 @@ components:
               type: array
               items:
                 type: string
-      title: Tenant Account Preferences
+      title: Tenant Preferences Object Model
+      x-tags:
+        - Tenant Preferences
     Tenant-Deletion-PIN:
       description: ''
       type: object
@@ -1008,7 +1012,9 @@ components:
       x-examples:
         Example:
           pin: 71VIFU22
-      title: Tenant Deletion PIN
+      title: Tenant Deletion PIN Request Body
+      x-tags:
+        - Tenant Operations
   securitySchemes:
     Bearer Token:
       type: http
