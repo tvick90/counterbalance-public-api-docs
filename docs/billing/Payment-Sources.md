@@ -1,3 +1,3 @@
-# Platform Preferences
+# Payment-SOurces
 
 The beginning of an awesome article...

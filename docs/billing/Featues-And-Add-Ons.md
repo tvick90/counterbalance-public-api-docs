@@ -1,3 +1,3 @@
-# Platform Preferences
+# Featues-And-Add-Ons
 
 The beginning of an awesome article...

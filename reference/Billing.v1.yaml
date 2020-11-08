@@ -1,0 +1,10 @@
+openapi: 3.0.0
+info:
+  title: Subscription & Billing
+  version: '1.0'
+  description: Manage tenant account subscriptions and an associated billing account including payment methods
+servers:
+  - url: 'http://localhost:3000'
+paths: {}
+components:
+  schemas: {}

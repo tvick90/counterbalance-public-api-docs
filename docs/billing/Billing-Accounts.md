@@ -1,3 +1,3 @@
-# Platform Preferences
+# Billing-Accounts
 
 The beginning of an awesome article...

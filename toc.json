@@ -42,13 +42,44 @@
     },
     {
       "type": "item",
-      "title": "Preferences",
+      "title": "Platform Preferences",
       "uri": "docs/tenants/Tenant-Prefs.md"
     },
     {
       "type": "item",
       "title": "Users",
       "uri": "reference/User.v1.yaml"
+    },
+    {
+      "type": "item",
+      "title": "Subscription & Billing",
+      "uri": "reference/Billing.v1.yaml"
+    },
+    {
+      "type": "item",
+      "title": "Core Subscription",
+      "uri": "docs/billing/Core-Subscription.md"
+    },
+    {
+      "type": "group",
+      "title": "Billing Account",
+      "items": [
+        {
+          "type": "item",
+          "title": "Create & Manage Billing",
+          "uri": "docs/billing/Billing-Accounts.md"
+        },
+        {
+          "type": "item",
+          "title": "Payment Sources",
+          "uri": "docs/billing/Payment-Sources.md"
+        },
+        {
+          "type": "item",
+          "title": "Invoices & Receipts",
+          "uri": "docs/billing/Invoices-and-Receipts.md"
+        }
+      ]
     },
     {
       "type": "item",

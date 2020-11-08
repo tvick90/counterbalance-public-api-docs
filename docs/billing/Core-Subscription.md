@@ -1,3 +1,3 @@
-# Platform Preferences
+# Core-Subscription
 
 The beginning of an awesome article...
