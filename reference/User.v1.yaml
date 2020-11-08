@@ -455,6 +455,20 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: '#/components/schemas/User-Permissions'
+              examples:
+                Example:
+                  value:
+                    - 'billing:account:view'
+                    - 'console:view'
+                    - 'hardware:device:read'
+                    - 'sites:*'
+                    - 'tenant:*'
+                    - 'user:account:*'
       operationId: get-v1-user-userId-permissions
       description: |-
         Retreieve permissions for a given user
@@ -678,6 +692,20 @@ components:
       required:
         - shell
       title: User Preferences
+    User-Permissions:
+      title: User Account Permissions
+      type: array
+      description: ''
+      x-examples:
+        Example:
+          - 'billing:account:view'
+          - 'console:view'
+          - 'hardware:device:read'
+          - 'sites:*'
+          - 'tenant:*'
+          - 'user:account:*'
+      items:
+        type: string
   securitySchemes:
     Bearer Token:
       type: http
