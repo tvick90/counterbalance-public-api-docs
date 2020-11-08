@@ -31,10 +31,109 @@ paths:
                     type: array
                     uniqueItems: true
                     description: An array of user account objects
-                    $ref: '#/components/schemas/User-Account'
+                    items:
+                      $ref: '#/components/schemas/User-Account'
                 required:
                   - count
                   - data
+              examples:
+                Example:
+                  value:
+                    count: 3
+                    data:
+                      - id: 5391c363-70f0-46bb-abd2-4eecd1574201
+                        license: record_user
+                        flags:
+                          active: true
+                          blocked: false
+                          licensed: false
+                          archived: false
+                          deleted: false
+                        picture: 'https://api.counterbalance.io/v1/user/5391c363-70f0-46bb-abd2-4eecd1574201/photo'
+                        name:
+                          given: Diego
+                          preferred: ''
+                          middle: ''
+                          family: Siciliano
+                          prefix: null
+                          suffix: null
+                          full: Diego Siciliano
+                          display: Diego Siciliano
+                          short: ''
+                        email: diegos@peterbalance.com
+                        site: null
+                        department: null
+                        manager: null
+                        room: null
+                        mail_stop: null
+                        title: ''
+                        employee_id: ''
+                        org_guid: ''
+                        links: []
+                      - id: 131acd64-f270-4718-80df-1821475d80ac
+                        license: record_user
+                        flags:
+                          active: true
+                          blocked: false
+                          licensed: false
+                          archived: false
+                          deleted: false
+                        picture: 'https://api.counterbalance.io/v1/user/131acd64-f270-4718-80df-1821475d80ac/photo'
+                        name:
+                          given: Adele
+                          preferred: ''
+                          middle: ''
+                          family: Vance
+                          prefix: null
+                          suffix: null
+                          full: Adele Vance
+                          display: Adele Vance
+                          short: ''
+                        email: AdeleV@peterbalance.com
+                        site: null
+                        department: null
+                        manager: null
+                        room: null
+                        mail_stop: null
+                        title: Retail Manager
+                        employee_id: ''
+                        org_guid: ''
+                        links:
+                          - context: Microsoft 365
+                            id: 73d3606d-5ace-4edf-a026-de32714a596a
+                      - id: ce48daca-f044-48e6-ad20-0c6e53db12da
+                        license: seat
+                        flags:
+                          active: true
+                          blocked: false
+                          licensed: true
+                          archived: false
+                          deleted: false
+                        picture: 'https://api.counterbalance.io/v1/user/ce48daca-f044-48e6-ad20-0c6e53db12da/photo'
+                        name:
+                          given: Alex
+                          preferred: ''
+                          middle: ''
+                          family: Wilbur
+                          prefix: null
+                          suffix: null
+                          full: Alex Wilbur
+                          display: Alex Wilbur
+                          short: ''
+                        email: alexw@peterbalance.com
+                        site: null
+                        department: 1f3da4db-3364-4f58-b8bd-4fee1398a6e1
+                        manager: null
+                        room: null
+                        mail_stop: null
+                        title: ''
+                        employee_id: ''
+                        org_guid: ''
+                        links:
+                          - context: Counterbalance ID
+                            id: auth0|5e93ab33f346950c46b694d5
+                          - context: Microsoft 365
+                            id: 201e0cc6-9b88-4908-a69e-60e88b4d9ff7
           headers: {}
       operationId: get-v1-user
       security:
@@ -54,7 +153,7 @@ paths:
       description: |-
         Create a new user and optionally assign a license and password
 
-        > This body field `password` is only required if the `type` specified is equal to `seat` or `user`
+        > _This body field `password` is only required if the `type` specified is equal to `seat` or `user`_
       requestBody:
         content:
           application/json:
@@ -104,7 +203,7 @@ paths:
         name: userId
         in: path
         required: true
-        description: A valid user UUID
+        description: A valid user account UUID
     get:
       summary: Get User Account
       tags: []
@@ -243,7 +342,7 @@ paths:
         name: userId
         in: path
         required: true
-        description: The user's UUID
+        description: A valid user account UUID
     put:
       summary: Attach User Licensing
       operationId: put-v1-user-userId-license
@@ -283,7 +382,7 @@ paths:
         name: userId
         in: path
         required: true
-        description: The user's UUID
+        description: A valid user account UUID
     get:
       summary: Get User Photo
       tags: []
@@ -313,7 +412,7 @@ paths:
           application/octet-stream:
             schema:
               type: object
-  '/v1/user/{userId}/roles':
+  '/v1/user/{userId}/roles/{roleId}':
     parameters:
       - schema:
           type: string
@@ -321,7 +420,13 @@ paths:
         name: userId
         in: path
         required: true
-        description: The user's UUID
+        description: A valid user account UUID
+      - schema:
+          type: string
+        name: roleId
+        in: path
+        required: true
+        description: A valid role ID
     get:
       summary: Get User's Assigned Roles
       tags: []
@@ -331,8 +436,12 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties: {}
+                $ref: '#/components/schemas/User-Assigned-Roles'
+              examples:
+                Example:
+                  value:
+                    roles:
+                      - rol_ef4g...
       operationId: get-v1-user-userId-roles
       description: |-
         Retrieve a list of roles assigned to a user
@@ -347,14 +456,15 @@ paths:
       responses:
         '200':
           description: OK
-        '404':
-          description: Not Found
           content:
             application/json:
               schema:
-                type: object
-                properties: {}
-              examples: {}
+                $ref: '#/components/schemas/User-Assigned-Roles'
+              examples:
+                Example:
+                  value:
+                    roles:
+                      - rol_ef4g...
       requestBody:
         content:
           application/json:
@@ -371,6 +481,11 @@ paths:
                     type: string
               required:
                 - roles
+            examples:
+              Example:
+                value:
+                  roles:
+                    - rol_ef4g...
         description: ''
       security:
         - Bearer Token: []
@@ -382,25 +497,17 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User-Assigned-Roles'
+              examples:
+                Example:
+                  value:
+                    roles: []
       description: Remove one or more roles from a user
       security:
         - Bearer Token: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                roles:
-                  type: array
-                  minItems: 1
-                  uniqueItems: true
-                  maxItems: 10
-                  items:
-                    type: string
-              required:
-                - roles
-        description: ''
   /v1/user/self/preferences:
     parameters: []
     get:
@@ -452,18 +559,32 @@ paths:
         name: userId
         in: path
         required: true
-        description: The user's UUID
+        description: A valid user account UUID
     get:
       summary: Get User Permissions
       tags: []
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                $ref: '#/components/schemas/User-Permissions'
+              examples:
+                Example:
+                  value:
+                    - 'billing:account:view'
+                    - 'console:view'
+                    - 'hardware:device:read'
+                    - 'sites:*'
+                    - 'tenant:*'
+                    - 'user:account:*'
       operationId: get-v1-user-userId-permissions
       description: |-
-        Retreieve permissions for a given user
+        Retrieve permissions for a given user
 
-        > This endpoint accepts `self` in place of a UUID
+        > _This endpoint accepts `self` in place of a UUID_
       security:
         - Bearer Token: []
 components:
@@ -682,6 +803,33 @@ components:
       required:
         - shell
       title: User Preferences
+    User-Permissions:
+      title: User Account Permissions
+      type: array
+      description: An array of user account permission strings
+      x-examples:
+        Example:
+          - 'billing:account:view'
+          - 'console:view'
+          - 'hardware:device:read'
+          - 'sites:*'
+          - 'tenant:*'
+          - 'user:account:*'
+      items:
+        type: string
+    User-Assigned-Roles:
+      title: User Assigned Roles
+      type: object
+      description: ''
+      properties:
+        roles:
+          type: array
+          items:
+            type: string
+      x-examples:
+        Example:
+          roles:
+            - rol_ef4g...
   securitySchemes:
     Bearer Token:
       type: http
