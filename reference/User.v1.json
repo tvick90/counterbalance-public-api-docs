@@ -193,7 +193,7 @@
           "name": "userId",
           "in": "path",
           "required": true,
-          "description": "A valid user account UUID"
+          "description": "A valid user account UUID _unless indicated otherwise_"
         }
       ],
       "get": {
@@ -304,7 +304,7 @@
             }
           }
         },
-        "description": "Update a specified user account by ID\n\n<!-- theme: success -->\n> _**Note:** This endpoint accepts `self` in place of a UUID_\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\nWhen using a UUID:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`user:*`,`user:account:update`\n* Licensed Feature: `user_base`\n\nWhen using self:\n* Permissions _(at least one):_ `*`,`user:*`,`user:self:*`,`user:self:update`",
+        "description": "Update a specified user account by ID\n\n<!-- theme: success -->\n> _**Note:** This endpoint accepts `self` in place of a UUID_\n\nSome body fields are marked as _**required**._ This indicates that if they are included in the body of a request, they cannot be empty strings or null values.\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\nWhen using a UUID:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`user:*`,`user:account:update`\n* Licensed Feature: `user_base`\n\nWhen using self:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`user:*`,`user:self:*`,`user:self:update`\n\n",
         "requestBody": {
           "content": {
             "application/json": {
@@ -341,7 +341,11 @@
                     "format": "uuid",
                     "description": "The user's assigned site"
                   }
-                }
+                },
+                "required": [
+                  "given_name",
+                  "family_name"
+                ]
               }
             }
           }
