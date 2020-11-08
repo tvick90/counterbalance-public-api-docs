@@ -27,10 +27,109 @@ paths:
                     type: array
                     uniqueItems: true
                     description: An array of user account objects
-                    $ref: '#/components/schemas/User-Account'
+                    items:
+                      $ref: '#/components/schemas/User-Account'
                 required:
                   - count
                   - data
+              examples:
+                Example:
+                  value:
+                    count: 3
+                    data:
+                      - id: 5391c363-70f0-46bb-abd2-4eecd1574201
+                        license: record_user
+                        flags:
+                          active: true
+                          blocked: false
+                          licensed: false
+                          archived: false
+                          deleted: false
+                        picture: 'https://api.counterbalance.io/v1/user/5391c363-70f0-46bb-abd2-4eecd1574201/photo'
+                        name:
+                          given: Diego
+                          preferred: ''
+                          middle: ''
+                          family: Siciliano
+                          prefix: null
+                          suffix: null
+                          full: Diego Siciliano
+                          display: Diego Siciliano
+                          short: ''
+                        email: diegos@peterbalance.com
+                        site: null
+                        department: null
+                        manager: null
+                        room: null
+                        mail_stop: null
+                        title: ''
+                        employee_id: ''
+                        org_guid: ''
+                        links: []
+                      - id: 131acd64-f270-4718-80df-1821475d80ac
+                        license: record_user
+                        flags:
+                          active: true
+                          blocked: false
+                          licensed: false
+                          archived: false
+                          deleted: false
+                        picture: 'https://api.counterbalance.io/v1/user/131acd64-f270-4718-80df-1821475d80ac/photo'
+                        name:
+                          given: Adele
+                          preferred: ''
+                          middle: ''
+                          family: Vance
+                          prefix: null
+                          suffix: null
+                          full: Adele Vance
+                          display: Adele Vance
+                          short: ''
+                        email: AdeleV@peterbalance.com
+                        site: null
+                        department: null
+                        manager: null
+                        room: null
+                        mail_stop: null
+                        title: Retail Manager
+                        employee_id: ''
+                        org_guid: ''
+                        links:
+                          - context: Microsoft 365
+                            id: 73d3606d-5ace-4edf-a026-de32714a596a
+                      - id: ce48daca-f044-48e6-ad20-0c6e53db12da
+                        license: seat
+                        flags:
+                          active: true
+                          blocked: false
+                          licensed: true
+                          archived: false
+                          deleted: false
+                        picture: 'https://api.counterbalance.io/v1/user/ce48daca-f044-48e6-ad20-0c6e53db12da/photo'
+                        name:
+                          given: Alex
+                          preferred: ''
+                          middle: ''
+                          family: Wilbur
+                          prefix: null
+                          suffix: null
+                          full: Alex Wilbur
+                          display: Alex Wilbur
+                          short: ''
+                        email: alexw@peterbalance.com
+                        site: null
+                        department: 1f3da4db-3364-4f58-b8bd-4fee1398a6e1
+                        manager: null
+                        room: null
+                        mail_stop: null
+                        title: ''
+                        employee_id: ''
+                        org_guid: ''
+                        links:
+                          - context: Counterbalance ID
+                            id: auth0|5e93ab33f346950c46b694d5
+                          - context: Microsoft 365
+                            id: 201e0cc6-9b88-4908-a69e-60e88b4d9ff7
           headers: {}
       operationId: get-v1-user
       security:
@@ -50,7 +149,7 @@ paths:
       description: |-
         Create a new user and optionally assign a license and password
 
-        > This body field `password` is only required if the `type` specified is equal to `seat` or `user`
+        > _This body field `password` is only required if the `type` specified is equal to `seat` or `user`_
       requestBody:
         content:
           application/json:
@@ -100,7 +199,7 @@ paths:
         name: userId
         in: path
         required: true
-        description: A valid user UUID
+        description: A valid user account UUID
     get:
       summary: Get User Account
       tags: []
@@ -239,7 +338,7 @@ paths:
         name: userId
         in: path
         required: true
-        description: The user's UUID
+        description: A valid user account UUID
     put:
       summary: Attach User Licensing
       operationId: put-v1-user-userId-license
@@ -279,7 +378,7 @@ paths:
         name: userId
         in: path
         required: true
-        description: The user's UUID
+        description: A valid user account UUID
     get:
       summary: Get User Photo
       tags: []
@@ -317,7 +416,7 @@ paths:
         name: userId
         in: path
         required: true
-        description: The user's UUID
+        description: A valid user account UUID
     get:
       summary: Get User's Assigned Roles
       tags: []
@@ -695,7 +794,7 @@ components:
     User-Permissions:
       title: User Account Permissions
       type: array
-      description: 'An array of user account permission strings'
+      description: An array of user account permission strings
       x-examples:
         Example:
           - 'billing:account:view'
