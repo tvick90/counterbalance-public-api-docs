@@ -51,9 +51,9 @@
                   ]
                 },
                 "examples": {
-                  "Example": {
+                  "Response": {
                     "value": {
-                      "count": 3,
+                      "count": 1,
                       "data": [
                         {
                           "id": "5391c363-70f0-46bb-abd2-4eecd1574201",
@@ -87,86 +87,6 @@
                           "employee_id": "",
                           "org_guid": "",
                           "links": []
-                        },
-                        {
-                          "id": "131acd64-f270-4718-80df-1821475d80ac",
-                          "license": "record_user",
-                          "flags": {
-                            "active": true,
-                            "blocked": false,
-                            "licensed": false,
-                            "archived": false,
-                            "deleted": false
-                          },
-                          "picture": "https://api.counterbalance.io/v1/user/131acd64-f270-4718-80df-1821475d80ac/photo",
-                          "name": {
-                            "given": "Adele",
-                            "preferred": "",
-                            "middle": "",
-                            "family": "Vance",
-                            "prefix": null,
-                            "suffix": null,
-                            "full": "Adele Vance",
-                            "display": "Adele Vance",
-                            "short": ""
-                          },
-                          "email": "AdeleV@peterbalance.com",
-                          "site": null,
-                          "department": null,
-                          "manager": null,
-                          "room": null,
-                          "mail_stop": null,
-                          "title": "Retail Manager",
-                          "employee_id": "",
-                          "org_guid": "",
-                          "links": [
-                            {
-                              "context": "Microsoft 365",
-                              "id": "73d3606d-5ace-4edf-a026-de32714a596a"
-                            }
-                          ]
-                        },
-                        {
-                          "id": "ce48daca-f044-48e6-ad20-0c6e53db12da",
-                          "license": "seat",
-                          "flags": {
-                            "active": true,
-                            "blocked": false,
-                            "licensed": true,
-                            "archived": false,
-                            "deleted": false
-                          },
-                          "picture": "https://api.counterbalance.io/v1/user/ce48daca-f044-48e6-ad20-0c6e53db12da/photo",
-                          "name": {
-                            "given": "Alex",
-                            "preferred": "",
-                            "middle": "",
-                            "family": "Wilbur",
-                            "prefix": null,
-                            "suffix": null,
-                            "full": "Alex Wilbur",
-                            "display": "Alex Wilbur",
-                            "short": ""
-                          },
-                          "email": "alexw@peterbalance.com",
-                          "site": null,
-                          "department": "1f3da4db-3364-4f58-b8bd-4fee1398a6e1",
-                          "manager": null,
-                          "room": null,
-                          "mail_stop": null,
-                          "title": "",
-                          "employee_id": "",
-                          "org_guid": "",
-                          "links": [
-                            {
-                              "context": "Counterbalance ID",
-                              "id": "auth0|5e93ab33f346950c46b694d5"
-                            },
-                            {
-                              "context": "Microsoft 365",
-                              "id": "201e0cc6-9b88-4908-a69e-60e88b4d9ff7"
-                            }
-                          ]
                         }
                       ]
                     }
@@ -183,7 +103,7 @@
             "Bearer Token": []
           }
         ],
-        "description": "Retrieve a list of user accounts available to the authenticated user\n\n**Pre-requisites** \n\nThe following pre-requisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`user:*`,`user:account:list`\n* Licensed Feature: `user_base`\n\n**Returned User Scope**\n\nThis is a scoped endpoint and the data returned may not be a complete, conclusive listing of all resources in a tenant account.\n\nUsers with `*` & `user:*` permission scopes will always have access to the complete resource data set in a tenant."
+        "description": "Retrieve a list of user accounts available to the authenticated user\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`user:*`,`user:account:list`\n* Licensed Feature: `user_base`\n\n**Returned User Scope**\n\nThis is a scoped endpoint and the data returned may not be a complete, conclusive listing of all resources in the tenant account.\n\nUsers with `*` & `user:*` permission scopes will always have access to the complete resource data set in the tenant."
       },
       "post": {
         "summary": "Create New User",
@@ -362,7 +282,7 @@
         },
         "operationId": "get-user-account",
         "parameters": [],
-        "description": "Retrieve a user account by ID\n\n> _This endpoint accepts `self` in place of a UUID_",
+        "description": "Retrieve a specified user account by ID\n\n<!-- theme: success -->\n> _**Note:** This endpoint accepts `self` in place of a UUID_\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\nWhen using a UUID:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`user:*`,`user:account:read`\n* Licensed Feature: `user_base`\n\nWhen using self:\n* Permissions _(at least one):_ `*`,`user:*`,`user:self:*`,`user:self:read`",
         "security": [
           {
             "Bearer Token": []
@@ -384,7 +304,7 @@
             }
           }
         },
-        "description": "Update a user account by ID\n\n> This endpoint accepts `self` in place of a UUID",
+        "description": "Update a specified user account by ID\n\n<!-- theme: success -->\n> _**Note:** This endpoint accepts `self` in place of a UUID_\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\nWhen using a UUID:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`user:*`,`user:account:update`\n* Licensed Feature: `user_base`\n\nWhen using self:\n* Permissions _(at least one):_ `*`,`user:*`,`user:self:*`,`user:self:update`",
         "requestBody": {
           "content": {
             "application/json": {
@@ -1171,7 +1091,8 @@
           }
         },
         "x-tags": [
-          "User Accounts"
+          "User Accounts",
+          "Object Models"
         ]
       },
       "User-Preferences": {
@@ -1278,7 +1199,8 @@
           "type": "string"
         },
         "x-tags": [
-          "Permissions"
+          "Permissions",
+          "Object Models"
         ]
       },
       "User-Assigned-Roles": {
@@ -1301,7 +1223,8 @@
           }
         },
         "x-tags": [
-          "Roles"
+          "Roles",
+          "Object Models"
         ]
       }
     },
