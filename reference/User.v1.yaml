@@ -379,6 +379,8 @@ paths:
                   description: Required for "seat" and "user" types
               required:
                 - type
+      tags:
+        - User Licensing
   '/v1/user/{userId}/photo':
     parameters:
       - schema:
@@ -929,3 +931,4 @@ tags:
   - name: User Preferences
   - name: Permissions
   - name: Roles
+  - name: User Licensing
