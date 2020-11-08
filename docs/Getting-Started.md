@@ -35,7 +35,6 @@ Verb | Description
 `PATCH`   | Updates an existing resource and returns the updated resource
 `DELETE`  | Removes an existing resource and returns nothing
 `OPTIONS` | List available verbs against a resource
-###### _Possible _
 
 ### Authenticating Requests
 The authentication requirement for each endpoint varies. If authentication is required, an Authorization header must be provided as described in [Authentication](./Authentication.md).
