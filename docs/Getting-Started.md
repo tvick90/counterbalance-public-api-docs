@@ -1,12 +1,9 @@
 # Getting Started
-
-#### The **Counterbalance Core API** provides powerful, programmatic access to the Counterbalance platform and its feature-rich IT management toolset.  
+The **Counterbalance Core API** provides powerful, programmatic access to the Counterbalance platform and powers its feature-rich IT management UI.  
 
 Everything that is possible via the Counterbalance System Console and End-User Portal (and more) is powered by this API. 
 
 This documentation walks through the API endpoints and their usage.
-
----
 
 ## Making Requests
 The API is crafted around REST and the REST architectural style to provide developers with a stateless and language ­agnostic interface.
@@ -37,10 +34,15 @@ Verb | Description
 `DELETE`  | Removes an existing resource and returns nothing
 `OPTIONS` | List available verbs against a resource
 
-### Authenticating Requests
+## Authenticating Requests
 The authentication requirement for each endpoint varies. If authentication is required, an Authorization header must be provided as described in [Authentication](./Authentication.md).
 
-### Submitting Data
+### Request Authorization
+Some API endpoints require a paid subscription. If a request is made to a paid feature that is not available, a `403 Forbidden` response will be returned. 
+
+Additionally, some platform resources and features are measured against a licensed quota limit. If an attempt is made to add additional resources once a quota limit has been reached, a `403 Forbidden` response will be returned. 
+
+## Submitting Data
 When submitting non-binary data via a `POST`, `PUT`, or `PATCH` endpoint, the data payload must be in JSON.
 ```
 POST https://api.counterbalance.io/v1/foo HTTP/1.1

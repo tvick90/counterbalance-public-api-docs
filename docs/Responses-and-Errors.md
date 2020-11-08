@@ -2,8 +2,6 @@
 
 The API returns data in a variety of formats depending on the endpoint used. When exchanging non-binary data, the API accepts and returns JSON. The returned content will always be identified with a `Content-Type` header.
 
----
-
 ## Status Codes
 
 All possible status codes are outlined below.
@@ -32,8 +30,6 @@ Code | Response | Description
 **409** | `Conflict` | The provided combination of parameters results in a conflict and the resource cannot be updated. The error message output will provide additional information as to why the call cannot be completed.
 **5XX** | _`varies`_ | The API encountered an internal error when processing the request. The error message provided may provide additional information. Retrying the request after a few minutes may be successful.
 
----
-
 ## Error Logging
 
 Most errors are automatically logged and reported. These errors will return a `logging_hash` entry ID in the error response body.
@@ -52,8 +48,6 @@ This entry ID is also added as a header in the response.
 ```
 X-Counterbalance-Log-Hash: 034dd6ad00770337bb07e906d919ed50f8884e86
 ```
-
----
 
 ## Additional Response Headers
 
