@@ -22,4 +22,3 @@ properties:
       - string
       - 'null'
     description: A logging entry ID for debugging
-description: A typical error response

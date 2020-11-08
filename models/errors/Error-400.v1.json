@@ -1,0 +1,14 @@
+{
+  "title": "HTTP 400 Error",
+  "$ref": "../Error-Response.v1.yaml",
+  "x-examples": {
+    "Bad Request": {
+      "error": {
+        "message": "string",
+        "console": "string",
+        "code": 0
+      },
+      "logging_hash": null
+    }
+  }
+}

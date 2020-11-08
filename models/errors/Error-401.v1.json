@@ -1,0 +1,20 @@
+{
+  "title": "HTTP 401 Unauthorized Error",
+  "$ref": "../Error-Response.v1.yaml",
+  "x-examples": {
+    "No Token": {
+      "error": {
+        "message": "No token provided",
+        "console": "No Authorization header was provided with the request",
+        "code": 401
+      }
+    },
+    "Expired Token": {
+      "error": {
+        "message": "Token expired",
+        "console": "The token provided has expired",
+        "code": 401
+      }
+    }
+  }
+}

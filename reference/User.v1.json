@@ -3,7 +3,7 @@
   "info": {
     "title": "Users",
     "version": "1.1.1",
-    "description": "The Users API provides endpoints for user account management, including:\n* Creating and managing user accounts, permission groups, and departments\n* Assigning user roles and managing authentication\n* Allocating and managing user licensing and quotas\n\n\n**User Types**\n\nUser accounts are of one of the following three types depending on the licensing assigned. \n\n* A `seat` is a licensed system administrator account with access to the Counterbalance Console\n* A `record_user` is a _\"placeholder\"_ user account for a user that is tracked via Counterbalance but does not hold a license and cannot actively interact with the platform\n\n\n** Assigning Licensing **\n\nThe user license can be adjusted using the \n\nIf insufficient quota exists for the specified license type, a `403 Forbidden` error will be thrown and the license will not be assigned. ",
+    "description": "The Users API provides endpoints for user account management, including:\n* Creating and managing user accounts, permission groups, and departments\n* Updating user photos\n* Assigning user roles & permissions\n* Tracking and auditing platform access\n* Allocating and managing user licensing\n* Maintaining personal platform preferences\n\n**User Types**\n\nUser accounts are of one of the following three types depending on the licensing assigned. \n\n* A `seat` is a licensed system administrator account with access to the Counterbalance Console\n* A `record_user` is a _\"placeholder\"_ user account for a user that is tracked via Counterbalance but does not hold a license and cannot actively interact with the platform\n\n** Assigning Licensing **\n\nThe user license can be adjusted using the \n\nIf insufficient quota exists for the specified license type, a `403 Forbidden` error will be thrown and the license will not be assigned. \n\n<!-- theme: danger -->\n> Here is my danger callout!",
     "termsOfService": "https://www.counterbalance.io/legal/api-terms",
     "contact": {
       "name": "Taylor Vick",
@@ -183,7 +183,7 @@
             "Bearer Token": []
           }
         ],
-        "description": "**This endpoint returns a list of user accounts available to the authenticated user**\n\nRequired Permissions: `*`,`user:*`,`user:account:list`\n\n```\nPermissions: *, user:*, user:account:list\n```"
+        "description": "Retrieve a list of user accounts available to the authenticated user\n\n**Pre-requisites** \n\nThe following pre-requisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`user:*`,`user:account:list`\n* Licensed Feature: `user_base`\n\n**Returned User Scope**\n\nThis is a scoped endpoint and the data returned may not be a complete, conclusive listing of all resources in a tenant account.\n\nUsers with `*` & `user:*` permission scopes will always have access to the complete resource data set in a tenant."
       },
       "post": {
         "summary": "Create New User",
