@@ -2,18 +2,22 @@
 
 #### The **Counterbalance Core API** provides powerful, programmatic access to the Counterbalance platform and its feature-rich IT management toolset.  
 
-Everything that is possible via the Counterbalance Syetm Console and End-User Portal is powered by this API. 
+Everything that is possible via the Counterbalance System Console and End-User Portal (and more) is powered by this API. 
 
-The Counterbalance Core API is crafted around REST and the REST architectural style to provide developers with a stateless and language ­agnostic interface. The API leverages HTTP verbs and response codes, JWT authentication, and resource-oriented URLs.
+ The API leverages HTTP verbs and response codes, JWT authentication, and resource-oriented URLs.
 
 This documentation walks through the API endpoints and their usage.
 
-#### See Also
-* 
+##### Additional Resources
+
+##### [Counterbalance System Console](https://app.counterbalance.io)
+##### [Counterbalance Privacy Policy](https://app.counterbalance.io)
 
 ---
 
 ## Making Requests
+The Counterbalance Core API is crafted around REST and the REST architectural style to provide developers with a stateless and language ­agnostic interface.
+
 The API host is `https://api.counterbalance.io/v1/`
 
 > _**Note** The API is only available via HTTPS_
