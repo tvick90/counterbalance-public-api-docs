@@ -1,0 +1,1336 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Users",
+    "version": "1.1.1",
+    "description": "The Users API provides endpoints for user account management, including:\n* Creating and managing user accounts, permission groups, and departments\n* Assigning user roles and managing authentication\n* Allocating and managing user licensing and quotas\n\n\n**User Types**\n\nUser accounts are of one of the following three types depending on the licensing assigned. \n\n* A `seat` is a licensed system administrator account with access to the Counterbalance Console\n* A `record_user` is a _\"placeholder\"_ user account for a user that is tracked via Counterbalance but does not hold a license and cannot actively interact with the platform\n\n\n** Assigning Licensing **\n\nThe user license can be adjusted using the \n\nIf insufficient quota exists for the specified license type, a `403 Forbidden` error will be thrown and the license will not be assigned. ",
+    "termsOfService": "https://www.counterbalance.io/legal/api-terms",
+    "contact": {
+      "name": "Taylor Vick",
+      "email": "support@counterbalance.io"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://api.counterbalance.io",
+      "description": "Production API"
+    }
+  ],
+  "paths": {
+    "/v1/user": {
+      "get": {
+        "summary": "Get User Account Listing",
+        "tags": [
+          "User Accounts"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "count": {
+                      "type": "number",
+                      "description": "The number of account objects returned"
+                    },
+                    "data": {
+                      "type": "array",
+                      "uniqueItems": true,
+                      "description": "An array of user account objects",
+                      "items": {
+                        "$ref": "#/components/schemas/User-Account"
+                      }
+                    }
+                  },
+                  "required": [
+                    "count",
+                    "data"
+                  ]
+                },
+                "examples": {
+                  "Example": {
+                    "value": {
+                      "count": 3,
+                      "data": [
+                        {
+                          "id": "5391c363-70f0-46bb-abd2-4eecd1574201",
+                          "license": "record_user",
+                          "flags": {
+                            "active": true,
+                            "blocked": false,
+                            "licensed": false,
+                            "archived": false,
+                            "deleted": false
+                          },
+                          "picture": "https://api.counterbalance.io/v1/user/5391c363-70f0-46bb-abd2-4eecd1574201/photo",
+                          "name": {
+                            "given": "Diego",
+                            "preferred": "",
+                            "middle": "",
+                            "family": "Siciliano",
+                            "prefix": null,
+                            "suffix": null,
+                            "full": "Diego Siciliano",
+                            "display": "Diego Siciliano",
+                            "short": ""
+                          },
+                          "email": "diegos@peterbalance.com",
+                          "site": null,
+                          "department": null,
+                          "manager": null,
+                          "room": null,
+                          "mail_stop": null,
+                          "title": "",
+                          "employee_id": "",
+                          "org_guid": "",
+                          "links": []
+                        },
+                        {
+                          "id": "131acd64-f270-4718-80df-1821475d80ac",
+                          "license": "record_user",
+                          "flags": {
+                            "active": true,
+                            "blocked": false,
+                            "licensed": false,
+                            "archived": false,
+                            "deleted": false
+                          },
+                          "picture": "https://api.counterbalance.io/v1/user/131acd64-f270-4718-80df-1821475d80ac/photo",
+                          "name": {
+                            "given": "Adele",
+                            "preferred": "",
+                            "middle": "",
+                            "family": "Vance",
+                            "prefix": null,
+                            "suffix": null,
+                            "full": "Adele Vance",
+                            "display": "Adele Vance",
+                            "short": ""
+                          },
+                          "email": "AdeleV@peterbalance.com",
+                          "site": null,
+                          "department": null,
+                          "manager": null,
+                          "room": null,
+                          "mail_stop": null,
+                          "title": "Retail Manager",
+                          "employee_id": "",
+                          "org_guid": "",
+                          "links": [
+                            {
+                              "context": "Microsoft 365",
+                              "id": "73d3606d-5ace-4edf-a026-de32714a596a"
+                            }
+                          ]
+                        },
+                        {
+                          "id": "ce48daca-f044-48e6-ad20-0c6e53db12da",
+                          "license": "seat",
+                          "flags": {
+                            "active": true,
+                            "blocked": false,
+                            "licensed": true,
+                            "archived": false,
+                            "deleted": false
+                          },
+                          "picture": "https://api.counterbalance.io/v1/user/ce48daca-f044-48e6-ad20-0c6e53db12da/photo",
+                          "name": {
+                            "given": "Alex",
+                            "preferred": "",
+                            "middle": "",
+                            "family": "Wilbur",
+                            "prefix": null,
+                            "suffix": null,
+                            "full": "Alex Wilbur",
+                            "display": "Alex Wilbur",
+                            "short": ""
+                          },
+                          "email": "alexw@peterbalance.com",
+                          "site": null,
+                          "department": "1f3da4db-3364-4f58-b8bd-4fee1398a6e1",
+                          "manager": null,
+                          "room": null,
+                          "mail_stop": null,
+                          "title": "",
+                          "employee_id": "",
+                          "org_guid": "",
+                          "links": [
+                            {
+                              "context": "Counterbalance ID",
+                              "id": "auth0|5e93ab33f346950c46b694d5"
+                            },
+                            {
+                              "context": "Microsoft 365",
+                              "id": "201e0cc6-9b88-4908-a69e-60e88b4d9ff7"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "operationId": "get-user-list",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ],
+        "description": "**This endpoint returns a list of user accounts available to the authenticated user**\n\nRequired Permissions: `*`,`user:*`,`user:account:list`\n\n```\nPermissions: *, user:*, user:account:list\n```"
+      },
+      "post": {
+        "summary": "Create New User",
+        "operationId": "create-user",
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User-Account"
+                }
+              }
+            }
+          }
+        },
+        "description": "Create a new user and optionally assign a license and password\n\n> _This body field `password` is only required if the `type` specified is equal to `seat` or `user`_",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "description": "",
+                "type": "object",
+                "properties": {
+                  "given_name": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 90,
+                    "description": "The user's first name"
+                  },
+                  "family_name": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 90,
+                    "description": "The user's last name"
+                  },
+                  "email": {
+                    "type": "string",
+                    "format": "email"
+                  },
+                  "title": {
+                    "type": "string"
+                  },
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "record_user",
+                      "seat",
+                      "user"
+                    ]
+                  },
+                  "password": {
+                    "type": "string",
+                    "format": "password",
+                    "description": "Required for \"seat\" and \"user\" types"
+                  }
+                },
+                "required": [
+                  "given_name",
+                  "family_name",
+                  "email",
+                  "type"
+                ]
+              }
+            }
+          },
+          "description": ""
+        },
+        "parameters": [],
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ],
+        "tags": [
+          "User Accounts"
+        ]
+      }
+    },
+    "/v1/user/{userId}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": "userId",
+          "in": "path",
+          "required": true,
+          "description": "A valid user account UUID"
+        }
+      ],
+      "get": {
+        "summary": "Get User Account",
+        "tags": [
+          "User Accounts"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User-Account"
+                },
+                "examples": {
+                  "Response": {
+                    "value": {
+                      "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                      "license": "record_user",
+                      "flags": {
+                        "active": true,
+                        "blocked": true,
+                        "licensed": true,
+                        "archived": true,
+                        "deleted": true
+                      },
+                      "picture": "string",
+                      "auth": null,
+                      "name": {
+                        "given": "string",
+                        "preferred": "string",
+                        "middle": "string",
+                        "family": "string",
+                        "prefix": null,
+                        "suffix": null,
+                        "full": "string",
+                        "display": "string",
+                        "short": "string"
+                      },
+                      "email": "user@example.com",
+                      "site": "string",
+                      "department": "string",
+                      "manager": "null",
+                      "room": null,
+                      "mail_stop": null,
+                      "title": "string",
+                      "links": [
+                        {
+                          "id": "string",
+                          "context": "Counterbalance ID"
+                        }
+                      ],
+                      "milestones": {
+                        "accepted_terms": {
+                          "status": true,
+                          "timestamp": 0
+                        },
+                        "completed_onboarding": {
+                          "status": true,
+                          "timestamp": 0
+                        },
+                        "account_created": {
+                          "status": true,
+                          "timestamp": 0
+                        },
+                        "account_blocked": {
+                          "status": true,
+                          "timestamp": 0
+                        },
+                        "account_archived": {
+                          "status": true,
+                          "timestamp": 0
+                        },
+                        "license_assigned": {
+                          "status": true,
+                          "timestamp": 0
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-user-account",
+        "parameters": [],
+        "description": "Retrieve a user account by ID\n\n> _This endpoint accepts `self` in place of a UUID_",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ]
+      },
+      "patch": {
+        "summary": "Update User Account",
+        "operationId": "update-user-account",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User-Account"
+                }
+              }
+            }
+          }
+        },
+        "description": "Update a user account by ID\n\n> This endpoint accepts `self` in place of a UUID",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "description": "",
+                "type": "object",
+                "properties": {
+                  "given_name": {
+                    "type": "string",
+                    "description": "The user's first name"
+                  },
+                  "middle_name": {
+                    "type": "string",
+                    "description": "The user's middle name"
+                  },
+                  "family_name": {
+                    "type": "string",
+                    "description": "The user's last name"
+                  },
+                  "preferred_given_name": {
+                    "type": "string",
+                    "description": "The user's preferred first name"
+                  },
+                  "title": {
+                    "type": "string",
+                    "description": "The user's job title",
+                    "maxLength": 90
+                  },
+                  "site": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "format": "uuid",
+                    "description": "The user's assigned site"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ],
+        "tags": [
+          "User Accounts"
+        ]
+      },
+      "delete": {
+        "summary": "Delete User Account",
+        "operationId": "delete-user-account",
+        "responses": {
+          "204": {
+            "description": "No Content",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "null"
+                }
+              }
+            }
+          }
+        },
+        "description": "Delete a user by ID",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ],
+        "tags": [
+          "User Accounts"
+        ]
+      }
+    },
+    "/v1/user/{userId}/license": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": "userId",
+          "in": "path",
+          "required": true,
+          "description": "A valid user account UUID"
+        }
+      ],
+      "put": {
+        "summary": "Attach User Licensing",
+        "operationId": "assign-user-license",
+        "responses": {},
+        "description": "Assign a license to a user.\n\n> **Note** This body field `password` is only required if the `type` specified is equal to `seat` or `user`\n\n> **Note** Downgrading a user to the `record_user` class will remove their login account",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "description": "The type of license to assign the user",
+                    "enum": [
+                      "record_user",
+                      "user",
+                      "seat"
+                    ]
+                  },
+                  "password": {
+                    "type": "string",
+                    "format": "password",
+                    "description": "Required for \"seat\" and \"user\" types"
+                  }
+                },
+                "required": [
+                  "type"
+                ]
+              }
+            }
+          }
+        },
+        "tags": [
+          "User Licensing"
+        ]
+      }
+    },
+    "/v1/user/{userId}/photo": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": "userId",
+          "in": "path",
+          "required": true,
+          "description": "A valid user account UUID"
+        }
+      ],
+      "get": {
+        "summary": "Get User Photo",
+        "tags": [
+          "User Photo"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {}
+          }
+        },
+        "operationId": "get-v1-user-userId-photo",
+        "description": "Get a user's avatar photo by ID",
+        "parameters": []
+      },
+      "post": {
+        "summary": "Upload a Custom Photo",
+        "operationId": "post-v1-user-userId-photo",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ],
+        "description": "",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              }
+            },
+            "application/octet-stream": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "tags": [
+          "User Photo"
+        ]
+      }
+    },
+    "/v1/user/{userId}/roles/{roleId}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": "userId",
+          "in": "path",
+          "required": true,
+          "description": "A valid user account UUID"
+        },
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "roleId",
+          "in": "path",
+          "required": true,
+          "description": "A valid role ID"
+        }
+      ],
+      "get": {
+        "summary": "Get User's Assigned Roles",
+        "tags": [
+          "Roles"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User-Assigned-Roles"
+                },
+                "examples": {
+                  "Example": {
+                    "value": {
+                      "roles": [
+                        "rol_ef4g..."
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-v1-user-userId-roles",
+        "description": "Retrieve a list of roles assigned to a user\n\n> This endpoint accepts `self` in place of a UUID",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ],
+        "parameters": []
+      },
+      "put": {
+        "summary": "Assign User Roles",
+        "operationId": "put-v1-user-userId-roles",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User-Assigned-Roles"
+                },
+                "examples": {
+                  "Example": {
+                    "value": {
+                      "roles": [
+                        "rol_ef4g..."
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "roles": {
+                    "type": "array",
+                    "description": "An array of role IDs to add",
+                    "uniqueItems": true,
+                    "minItems": 1,
+                    "maxItems": 10,
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "required": [
+                  "roles"
+                ]
+              },
+              "examples": {
+                "Example": {
+                  "value": {
+                    "roles": [
+                      "rol_ef4g..."
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "description": ""
+        },
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ],
+        "parameters": [],
+        "description": "Assign one or more roles to a user",
+        "tags": [
+          "Roles"
+        ]
+      },
+      "delete": {
+        "summary": "Remove User Roles",
+        "operationId": "delete-v1-user-userId-roles",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User-Assigned-Roles"
+                },
+                "examples": {
+                  "Example": {
+                    "value": {
+                      "roles": []
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "Remove one or more roles from a user",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ],
+        "tags": [
+          "Roles"
+        ]
+      }
+    },
+    "/v1/user/self/preferences": {
+      "parameters": [],
+      "get": {
+        "summary": "Get User Preferences",
+        "tags": [
+          "User Preferences"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              },
+              "multipart/form-data": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              },
+              "text/html": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-v1-user-userId-preferences",
+        "description": "Get user preferences",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ]
+      },
+      "patch": {
+        "summary": "Update User Preferences",
+        "operationId": "patch-v1-user-self-preferences",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "description": "Update user preferences",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "tags": [
+          "User Preferences"
+        ]
+      }
+    },
+    "/v1/user/{userId}/permissions": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": "userId",
+          "in": "path",
+          "required": true,
+          "description": "A valid user account UUID"
+        }
+      ],
+      "get": {
+        "summary": "Get User Permissions",
+        "tags": [
+          "Permissions"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User-Permissions"
+                },
+                "examples": {
+                  "Example": {
+                    "value": [
+                      "billing:account:view",
+                      "console:view",
+                      "hardware:device:read",
+                      "sites:*",
+                      "tenant:*",
+                      "user:account:*"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-v1-user-userId-permissions",
+        "description": "Retrieve permissions for a given user\n\n> _This endpoint accepts `self` in place of a UUID_",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "User-Account": {
+        "description": "",
+        "type": "object",
+        "title": "User Account Object Model",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The user's UUID"
+          },
+          "license": {
+            "type": "string",
+            "enum": [
+              "record_user",
+              "user",
+              "seat"
+            ],
+            "description": "The assigned license class"
+          },
+          "flags": {
+            "type": "object",
+            "properties": {
+              "active": {
+                "type": "boolean"
+              },
+              "blocked": {
+                "type": "boolean"
+              },
+              "licensed": {
+                "type": "boolean"
+              },
+              "archived": {
+                "type": "boolean"
+              },
+              "deleted": {
+                "type": "boolean"
+              }
+            }
+          },
+          "picture": {
+            "type": "string",
+            "minLength": 1,
+            "description": "The URL for the user's avatar photo"
+          },
+          "auth": {},
+          "name": {
+            "type": "object",
+            "properties": {
+              "given": {
+                "type": "string",
+                "maxLength": 90
+              },
+              "preferred": {
+                "type": "string",
+                "maxLength": 90
+              },
+              "middle": {
+                "type": "string",
+                "maxLength": 90
+              },
+              "family": {
+                "type": "string",
+                "maxLength": 90
+              },
+              "prefix": {},
+              "suffix": {},
+              "full": {
+                "type": "string",
+                "minLength": 1
+              },
+              "display": {
+                "type": "string",
+                "minLength": 1
+              },
+              "short": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "full",
+              "display",
+              "short"
+            ]
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "maxLength": 120,
+            "description": "The user's email address"
+          },
+          "site": {
+            "type": "string",
+            "minLength": 1
+          },
+          "department": {
+            "type": "string",
+            "minLength": 1
+          },
+          "manager": {
+            "type": "string",
+            "format": "uuid",
+            "default": "null"
+          },
+          "room": {},
+          "mail_stop": {},
+          "title": {
+            "type": "string",
+            "minLength": 1
+          },
+          "links": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "context": {
+                  "type": "string",
+                  "enum": [
+                    "Counterbalance ID",
+                    "Microsoft 365"
+                  ]
+                }
+              }
+            }
+          },
+          "milestones": {
+            "type": "object",
+            "required": [
+              "accepted_terms",
+              "completed_onboarding",
+              "account_created",
+              "account_blocked",
+              "account_archived",
+              "license_assigned"
+            ],
+            "properties": {
+              "accepted_terms": {
+                "type": "object",
+                "required": [
+                  "status",
+                  "timestamp"
+                ],
+                "properties": {
+                  "status": {
+                    "type": "boolean"
+                  },
+                  "timestamp": {
+                    "type": "number"
+                  }
+                }
+              },
+              "completed_onboarding": {
+                "type": "object",
+                "required": [
+                  "status",
+                  "timestamp"
+                ],
+                "properties": {
+                  "status": {
+                    "type": "boolean"
+                  },
+                  "timestamp": {
+                    "type": "number"
+                  }
+                }
+              },
+              "account_created": {
+                "type": "object",
+                "required": [
+                  "status",
+                  "timestamp"
+                ],
+                "properties": {
+                  "status": {
+                    "type": "boolean"
+                  },
+                  "timestamp": {
+                    "type": "number"
+                  }
+                }
+              },
+              "account_blocked": {
+                "type": "object",
+                "required": [
+                  "status",
+                  "timestamp"
+                ],
+                "properties": {
+                  "status": {
+                    "type": "boolean"
+                  },
+                  "timestamp": {
+                    "type": "number"
+                  }
+                }
+              },
+              "account_archived": {
+                "type": "object",
+                "required": [
+                  "status",
+                  "timestamp"
+                ],
+                "properties": {
+                  "status": {
+                    "type": "boolean"
+                  },
+                  "timestamp": {
+                    "type": "number"
+                  }
+                }
+              },
+              "license_assigned": {
+                "type": "object",
+                "required": [
+                  "status",
+                  "timestamp"
+                ],
+                "properties": {
+                  "status": {
+                    "type": "boolean"
+                  },
+                  "timestamp": {
+                    "type": "number"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "required": [
+          "site",
+          "department",
+          "title",
+          "links",
+          "milestones"
+        ],
+        "x-examples": {
+          "example-1": {
+            "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+            "license": "record_user",
+            "flags": {
+              "active": true,
+              "blocked": true,
+              "licensed": true,
+              "archived": true,
+              "deleted": true
+            },
+            "picture": "string",
+            "auth": null,
+            "name": {
+              "given": "string",
+              "preferred": "string",
+              "middle": "string",
+              "family": "string",
+              "prefix": null,
+              "suffix": null,
+              "full": "string",
+              "display": "string",
+              "short": "string"
+            },
+            "email": "user@example.com",
+            "site": "string",
+            "department": "string",
+            "manager": "null",
+            "room": null,
+            "mail_stop": null,
+            "title": "string",
+            "links": [
+              {
+                "id": "string",
+                "context": "Counterbalance ID"
+              }
+            ],
+            "milestones": {
+              "accepted_terms": {
+                "status": true,
+                "timestamp": 0
+              },
+              "completed_onboarding": {
+                "status": true,
+                "timestamp": 0
+              },
+              "account_created": {
+                "status": true,
+                "timestamp": 0
+              },
+              "account_blocked": {
+                "status": true,
+                "timestamp": 0
+              },
+              "account_archived": {
+                "status": true,
+                "timestamp": 0
+              },
+              "license_assigned": {
+                "status": true,
+                "timestamp": 0
+              }
+            }
+          }
+        },
+        "x-tags": [
+          "User Accounts"
+        ]
+      },
+      "User-Preferences": {
+        "description": "",
+        "type": "object",
+        "properties": {
+          "shell": {
+            "type": "object",
+            "required": [
+              "theme",
+              "nav",
+              "pagination",
+              "disabled_applications"
+            ],
+            "properties": {
+              "theme": {
+                "type": "string",
+                "minLength": 1
+              },
+              "nav": {
+                "type": "object",
+                "required": [
+                  "collapsed"
+                ],
+                "properties": {
+                  "collapsed": {
+                    "type": "boolean"
+                  },
+                  "disabled_applications": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "pagination": {
+                "type": "object",
+                "required": [
+                  "enabled",
+                  "default_limit"
+                ],
+                "properties": {
+                  "enabled": {
+                    "type": "boolean"
+                  },
+                  "default_limit": {
+                    "type": "number"
+                  }
+                }
+              },
+              "disabled_applications": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        },
+        "required": [
+          "shell"
+        ],
+        "title": "User Preferences Object Model",
+        "x-examples": {
+          "Example": {
+            "shell": {
+              "theme": "string",
+              "nav": {
+                "collapsed": true,
+                "disabled_applications": [
+                  "string"
+                ]
+              },
+              "pagination": {
+                "enabled": true,
+                "default_limit": 0
+              },
+              "disabled_applications": [
+                {}
+              ]
+            }
+          }
+        },
+        "x-tags": [
+          "User Preferences"
+        ]
+      },
+      "User-Permissions": {
+        "title": "User Account Permissions Object Model",
+        "type": "array",
+        "description": "An array of user account permission strings",
+        "x-examples": {
+          "Example": [
+            "billing:account:view",
+            "console:view",
+            "hardware:device:read",
+            "sites:*",
+            "tenant:*",
+            "user:account:*"
+          ]
+        },
+        "items": {
+          "type": "string"
+        },
+        "x-tags": [
+          "Permissions"
+        ]
+      },
+      "User-Assigned-Roles": {
+        "title": "User Assigned Roles Object Model",
+        "type": "object",
+        "description": "",
+        "properties": {
+          "roles": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "x-examples": {
+          "Example": {
+            "roles": [
+              "rol_ef4g..."
+            ]
+          }
+        },
+        "x-tags": [
+          "Roles"
+        ]
+      }
+    },
+    "securitySchemes": {
+      "Bearer Token": {
+        "type": "http",
+        "scheme": "bearer",
+        "description": ""
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "User Accounts"
+    },
+    {
+      "name": "User Photo"
+    },
+    {
+      "name": "User Preferences"
+    },
+    {
+      "name": "Permissions"
+    },
+    {
+      "name": "Roles"
+    },
+    {
+      "name": "User Licensing"
+    }
+  ]
+}

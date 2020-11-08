@@ -48,7 +48,7 @@
     {
       "type": "item",
       "title": "Users",
-      "uri": "reference/User.v1.yaml"
+      "uri": "reference/User.v1.json"
     },
     {
       "type": "item",
