@@ -115,6 +115,90 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/User-Account"
+                },
+                "examples": {
+                  "Response": {
+                    "value": {
+                      "id": "73f180ba-caa3-4e49-a68c-f643b5e7bf79",
+                      "license": "record_user",
+                      "flags": {
+                        "active": true,
+                        "blocked": false,
+                        "licensed": false,
+                        "archived": false,
+                        "deleted": false
+                      },
+                      "picture": "https://api.counterbalance.io/v1/user/73f180ba-caa3-4e49-a68c-f643b5e7bf79/photo",
+                      "auth": null,
+                      "name": {
+                        "given": "Megan",
+                        "preferred": "",
+                        "middle": "",
+                        "family": "Bowen",
+                        "prefix": null,
+                        "suffix": null,
+                        "full": "Megan Bowen",
+                        "display": "Megan Bowen",
+                        "short": ""
+                      },
+                      "email": "meganb@peterbalance.com",
+                      "site": null,
+                      "department": null,
+                      "manager": null,
+                      "room": null,
+                      "mail_stop": null,
+                      "title": "",
+                      "links": [],
+                      "milestones": {
+                        "accepted_terms": {
+                          "status": false,
+                          "timestamp": 0
+                        },
+                        "completed_onboarding": {
+                          "status": false,
+                          "timestamp": 0
+                        },
+                        "account_created": {
+                          "status": true,
+                          "timestamp": 1604882067
+                        },
+                        "account_blocked": {
+                          "status": false,
+                          "timestamp": 0
+                        },
+                        "account_archived": {
+                          "status": false,
+                          "timestamp": 0
+                        },
+                        "license_assigned": {
+                          "status": false,
+                          "timestamp": 0
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../models/Error-Response.v1.yaml"
+                },
+                "examples": {
+                  "Invalid User Type": {
+                    "value": {
+                      "error": {
+                        "message": "Invalid user type",
+                        "console": "foo is not a valid user type",
+                        "code": 400
+                      },
+                      "logging_hash": "7420265096f60cd5015ab814f670ef15bbaeb61a"
+                    }
+                  }
                 }
               }
             }
@@ -167,6 +251,27 @@
                   "email",
                   "type"
                 ]
+              },
+              "examples": {
+                "Example": {
+                  "value": {
+                    "given_name": "Megan",
+                    "family_name": "Bowen",
+                    "email": "meganb@peterbalance.com",
+                    "type": "record_user",
+                    "title": ""
+                  }
+                },
+                "Example w/ Password": {
+                  "value": {
+                    "given_name": "Megan",
+                    "family_name": "Bowen",
+                    "email": "meganb@peterbalance.com",
+                    "type": "seat",
+                    "title": "",
+                    "password": "Se@ttle1!"
+                  }
+                }
               }
             }
           },
@@ -289,6 +394,28 @@
                 }
               }
             }
+          },
+          "404": {
+            "description": "User Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../models/Error-Response.v1.yaml"
+                },
+                "examples": {
+                  "User Not Found": {
+                    "value": {
+                      "error": {
+                        "message": "User not found",
+                        "console": "A user with ID 54d71164-9ea1-4a58-a232-930df7418c4c could not be found in the database",
+                        "code": 404
+                      },
+                      "logging_hash": "daa4ceb0a1d0434987e2e536318f4140ad537560"
+                    }
+                  }
+                }
+              }
+            }
           }
         },
         "operationId": "get-user-account",
@@ -310,6 +437,28 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/User-Account"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../models/Error-Response.v1.yaml"
+                },
+                "examples": {
+                  "User Not Found": {
+                    "value": {
+                      "error": {
+                        "message": "User not found",
+                        "console": "A user with ID 54d71164-9ea1-4a58-a232-930df7418c4c could not be found in the database",
+                        "code": 404
+                      },
+                      "logging_hash": "daa4ceb0a1d0434987e2e536318f4140ad537560"
+                    }
+                  }
                 }
               }
             }
@@ -380,6 +529,28 @@
               "application/json": {
                 "schema": {
                   "type": "null"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../models/Error-Response.v1.yaml"
+                },
+                "examples": {
+                  "User Not Found": {
+                    "value": {
+                      "error": {
+                        "message": "User not found",
+                        "console": "A user with ID 54d71164-9ea1-4a58-a232-930df7418c4c could not be found in the database",
+                        "code": 404
+                      },
+                      "logging_hash": "daa4ceb0a1d0434987e2e536318f4140ad537560"
+                    }
+                  }
                 }
               }
             }
@@ -507,6 +678,50 @@
               "application/json": {
                 "schema": {
                   "$ref": "../models/Error-Response.v1.yaml"
+                },
+                "examples": {
+                  "License Already Activated": {
+                    "value": {
+                      "error": {
+                        "message": "License already activated",
+                        "console": "Adele Vance is already assigned a record_user license and it cannot be assigned again",
+                        "code": 400
+                      },
+                      "logging_hash": "212b317605514926303d36e9a341ef7ea46d0c08"
+                    }
+                  },
+                  "Inactive User Account": {
+                    "value": {
+                      "error": {
+                        "message": "Inactive user account",
+                        "console": "Adele Vance is not an active user and cannot be assigned a license",
+                        "code": 400
+                      },
+                      "logging_hash": "212b317605514926303d36e9a341ef7ea46d0c08"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../models/Error-Response.v1.yaml"
+                },
+                "examples": {
+                  "User Not Found": {
+                    "value": {
+                      "error": {
+                        "message": "User not found",
+                        "console": "A user with ID 131acd64-f270-4718-80df-1821475d80ac could not be found in the database",
+                        "code": 400
+                      },
+                      "logging_hash": "212b317605514926303d36e9a341ef7ea46d0c08"
+                    }
+                  }
                 }
               }
             }
