@@ -103,7 +103,7 @@
             "Bearer Token": []
           }
         ],
-        "description": "Retrieve a list of user accounts available to the authenticated user\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`user:*`,`user:account:list`\n* Licensed Feature: `user_base`\n\n**Returned User Scope**\n\nThis is a scoped endpoint and the data returned may not be a complete, conclusive listing of all resources in the tenant account.\n\nUsers with `*` & `user:*` permission scopes will always have access to the complete resource data set in the tenant."
+        "description": "Retrieve a list of user accounts available to the authenticated user\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`user:*`,`user:account:*`,`user:account:list`\n* Licensed Feature: `user_base`\n\n**Returned User Scope**\n\nThis is a scoped endpoint and the data returned may not be a complete, conclusive listing of all resources in the tenant account.\n\nUsers with `*` & `user:*` permission scopes will always have access to the complete resource data set in the tenant."
       },
       "post": {
         "summary": "Create New User",
@@ -204,7 +204,7 @@
             }
           }
         },
-        "description": "Create a new user and optionally assign a license and password\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`user:*`,`user:account:create`\n* Licensed Feature: `user_base`\n* If adding a license, adequate quota of the requested type\n\n**Defining the User Type**\n\nThe field `type` may be one of either `record_user` _(non-licensed user)_, `seat` _(licensed system administrator)_, or `user` _(licensed end user)_.\n\nThe `type` field may be omitted and will default to `record_user`\n\n**Setting the User Password**\n\nThe `password` field is required when the user type specified is either `seat` or `user`. In all other cases, it is ignored.",
+        "description": "Create a new user and optionally assign a license and password\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`user:*`,`user:account:*`,`user:account:create`\n* Licensed Feature: `user_base`\n* If adding a license, adequate quota of the requested type\n\n**Defining the User Type**\n\nThe field `type` may be one of either `record_user` _(non-licensed user)_, `seat` _(licensed system administrator)_, or `user` _(licensed end user)_.\n\nThe `type` field may be omitted and will default to `record_user`\n\n**Setting the User Password**\n\nThe `password` field is required when the user type specified is either `seat` or `user`. In all other cases, it is ignored.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -420,7 +420,7 @@
         },
         "operationId": "get-user-account",
         "parameters": [],
-        "description": "Retrieve a specified user account by ID\n\n<!-- theme: success -->\n> _**Note:** This endpoint accepts `self` in place of a UUID_\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\nWhen using a UUID:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`user:*`,`user:account:read`\n* Licensed Feature: `user_base`\n\nWhen using self:\n* Permissions _(at least one):_ `*`,`user:*`,`user:self:*`,`user:self:read`",
+        "description": "Retrieve a specified user account by ID\n\n<!-- theme: success -->\n> _**Note:** This endpoint accepts `self` in place of a UUID_\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\nWhen using a UUID:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`user:*`,`user:account:*`,`user:account:read`\n* Licensed Feature: `user_base`\n\nWhen using self:\n* Permissions _(at least one):_ `*`,`user:*`,`user:self:*`,`user:self:read`",
         "security": [
           {
             "Bearer Token": []
@@ -464,7 +464,7 @@
             }
           }
         },
-        "description": "Update a specified user account by ID\n\n<!-- theme: success -->\n> _**Note:** This endpoint accepts `self` in place of a UUID_\n\nSome body fields are marked as _**required**._ This indicates that if they are included in the body of a request, they cannot be empty strings or null values.\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\nWhen using a UUID:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`user:*`,`user:account:update`\n* Licensed Feature: `user_base`\n\nWhen using self:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`user:*`,`user:self:*`,`user:self:update`\n\n",
+        "description": "Update a specified user account by ID\n\n<!-- theme: success -->\n> _**Note:** This endpoint accepts `self` in place of a UUID_\n\nSome body fields are marked as _**required**._ This indicates that if they are included in the body of a request, they cannot be empty strings or null values.\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\nWhen using a UUID:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`user:*`,`user:account:*`,`user:account:update`\n* Licensed Feature: `user_base`\n\nWhen using self:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`user:*`,`user:self:*`,`user:self:update`\n\n",
         "requestBody": {
           "content": {
             "application/json": {
@@ -524,14 +524,7 @@
         "operationId": "delete-user-account",
         "responses": {
           "204": {
-            "description": "No Content",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "null"
-                }
-              }
-            }
+            "description": "No Content"
           },
           "404": {
             "description": "User Not Found",
@@ -556,7 +549,7 @@
             }
           }
         },
-        "description": "Delete a user by ID",
+        "description": "Delete a user by ID\n\n_**October 2020** This endpoint is under active development. Documentation will continue to be updated. _\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`user:*`,`user:account:*`,`user:account:delete`\n* Licensed Feature: `user_base`\n\n",
         "security": [
           {
             "Bearer Token": []
@@ -795,11 +788,19 @@
         "responses": {
           "200": {
             "description": "OK",
-            "headers": {}
+            "headers": {},
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "null"
+                },
+                "examples": {}
+              }
+            }
           }
         },
-        "operationId": "get-v1-user-userId-photo",
-        "description": "Get a user's avatar photo by ID",
+        "operationId": "get-user-photo",
+        "description": "Get a specified user's photo in PNG format\n\n**Prerequisites** \n\n_None_\n\nThis is a public endpoint and does not require authentication.",
         "parameters": []
       },
       "post": {
@@ -816,21 +817,16 @@
             "Bearer Token": []
           }
         ],
-        "description": "Upload a custom avatar photo",
+        "description": "Upload a custom user photo\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`user:*`,`user:account:*`,`user:account:update`\n* Licensed Feature: `user_base`\n\n**Photo Requirements**\n\nThe uploaded photo must meet the following criteria:\n\n* `jpeg` or `png` format\n* It must be square\n* Larger than 250px and smaller than 1000px \n",
         "requestBody": {
           "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {}
-              }
-            },
             "application/octet-stream": {
               "schema": {
-                "type": "object"
+                "type": "null"
               }
             }
-          }
+          },
+          "description": "POST a JPEG or PNG fle as binary data"
         },
         "tags": [
           "User Photo"
@@ -1009,8 +1005,25 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {}
+                  "$ref": "#/components/schemas/User-Preferences"
+                },
+                "examples": {
+                  "Response": {
+                    "value": {
+                      "shell": {
+                        "theme": "#161d1b",
+                        "nav": {
+                          "collapsed": true,
+                          "disabled_applications": []
+                        },
+                        "pagination": {
+                          "enabled": false,
+                          "default_limit": 10
+                        },
+                        "disabled_applications": []
+                      }
+                    }
+                  }
                 }
               },
               "application/xml": {
@@ -1034,8 +1047,8 @@
             }
           }
         },
-        "operationId": "get-v1-user-userId-preferences",
-        "description": "Get user preferences",
+        "operationId": "get-user-preferences",
+        "description": "Get the preferences for the currently authenticated user\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`console:view`",
         "security": [
           {
             "Bearer Token": []
@@ -1050,7 +1063,7 @@
             "description": "OK"
           }
         },
-        "description": "Update user preferences",
+        "description": "Update the preferences for the currently authenticated user\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`console:view`",
         "security": [
           {
             "Bearer Token": []
