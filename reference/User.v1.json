@@ -103,7 +103,7 @@
             "Bearer Token": []
           }
         ],
-        "description": "Retrieve a list of user accounts available to the authenticated user\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`user:*`,`user:account:*`,`user:account:list`\n* Licensed Feature: `user_base`\n\n**Returned User Scope**\n\nThis is a scoped endpoint and the data returned may not be a complete, conclusive listing of all resources in the tenant account.\n\nUsers with `*` & `user:*` permission scopes will always have access to the complete resource data set in the tenant."
+        "description": "Retrieve a list of user accounts available to the authenticated user\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`user:*`,`user:account:*`,`user:account:list`\n* Licensed Feature: `user_base`\n\n**Variations**\n\nThis endpoint returns user accounts that are actively being managed. To access accounts that have been archived or deleted, modify the URL as shown:\n\n* Archived Users: `/v1/user/archived`\n* Deleted Users: `/v1/user/deleted`\n\n**Returned User Scope**\n\nThis is a scoped endpoint and the data returned may not be a complete, conclusive listing of all resources in the tenant account.\n\nUsers with `*` & `user:*` permission scopes will always have access to the complete resource data set in the tenant."
       },
       "post": {
         "summary": "Create New User",
