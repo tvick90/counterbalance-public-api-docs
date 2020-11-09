@@ -103,7 +103,49 @@
             "Bearer Token": []
           }
         ],
-        "description": "Retrieve a list of user accounts available to the authenticated user\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`user:*`,`user:account:*`,`user:account:list`\n* Licensed Feature: `user_base`\n\n**Variations**\n\nThis endpoint returns user accounts that are actively being managed. To access accounts that have been archived or deleted, modify the URL as shown:\n\n* Archived Users: `/v1/user/archived`\n* Deleted Users: `/v1/user/deleted`\n\n**Returned User Scope**\n\nThis is a scoped endpoint and the data returned may not be a complete, conclusive listing of all resources in the tenant account.\n\nUsers with `*` & `user:*` permission scopes will always have access to the complete resource data set in the tenant."
+        "description": "Retrieve a list of user accounts available to the authenticated user\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`user:*`,`user:account:*`,`user:account:list`\n* Licensed Feature: `user_base`\n\n**Variations**\n\nIf the `status` query paramter is not included with the request, only active user accounts are returned. \n\nQuery paramters are stacked. That is, if you specify a specific site and department, then only users that match BOTH of these parameters will be returned.\n\n**Returned User Scope**\n\nThis is a scoped endpoint and the data returned may not be a complete, conclusive listing of all resources in the tenant account.\n\nUsers with `*` & `user:*` permission scopes will always have access to the complete resource data set in the tenant.",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "enum": [
+                "active",
+                "archived",
+                "deleted",
+                "all"
+              ]
+            },
+            "in": "query",
+            "name": "status",
+            "description": ""
+          },
+          {
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "in": "query",
+            "name": "site",
+            "description": "Return only the users assigned to the specified site ID"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "in": "query",
+            "name": "department",
+            "description": "Return only the users assigned to the specified department ID"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "auth_only",
+            "description": "Return only the users with active auth accounts"
+          }
+        ]
       },
       "post": {
         "summary": "Create New User",
@@ -286,7 +328,8 @@
         "tags": [
           "User Accounts"
         ]
-      }
+      },
+      "parameters": []
     },
     "/v1/user/{userId}": {
       "parameters": [
@@ -1133,6 +1176,77 @@
           }
         ]
       }
+    },
+    "/v1/department": {
+      "get": {
+        "summary": "List Departments",
+        "tags": [
+          "Departments"
+        ],
+        "responses": {},
+        "operationId": "get-departments"
+      },
+      "post": {
+        "summary": "Create New Department",
+        "operationId": "create-department",
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        },
+        "description": "",
+        "tags": [
+          "Departments"
+        ]
+      },
+      "parameters": []
+    },
+    "/v1/department/{departmentId}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "departmentId",
+          "in": "path",
+          "required": true,
+          "description": "A valid department UUID"
+        }
+      ],
+      "get": {
+        "summary": "Get Department",
+        "tags": [
+          "Departments"
+        ],
+        "responses": {},
+        "operationId": "get-v1-department-departmentId",
+        "description": ""
+      },
+      "patch": {
+        "summary": "Update Department",
+        "operationId": "update-department",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "Departments"
+        ]
+      },
+      "delete": {
+        "summary": "Delete Department",
+        "operationId": "delete-department",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "description": "",
+        "tags": [
+          "Departments"
+        ]
+      }
     }
   },
   "components": {
@@ -1672,6 +1786,9 @@
     },
     {
       "name": "User Licensing"
+    },
+    {
+      "name": "Departments"
     }
   ]
 }
