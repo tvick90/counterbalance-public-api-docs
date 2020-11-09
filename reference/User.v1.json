@@ -810,6 +810,97 @@
         ]
       }
     },
+    "/v1/user/self/preferences": {
+      "parameters": [],
+      "get": {
+        "summary": "Get User Preferences",
+        "tags": [
+          "User Preferences"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User-Preferences"
+                },
+                "examples": {
+                  "Response": {
+                    "value": {
+                      "shell": {
+                        "theme": "#161d1b",
+                        "nav": {
+                          "collapsed": true,
+                          "disabled_applications": []
+                        },
+                        "pagination": {
+                          "enabled": false,
+                          "default_limit": 10
+                        },
+                        "disabled_applications": []
+                      }
+                    }
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              },
+              "multipart/form-data": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              },
+              "text/html": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-user-preferences",
+        "description": "Get the preferences for the currently authenticated user\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`console:view`",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ]
+      },
+      "patch": {
+        "summary": "Update User Preferences",
+        "operationId": "patch-v1-user-self-preferences",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "description": "Update the preferences for the currently authenticated user\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`console:view`",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "tags": [
+          "User Preferences"
+        ]
+      }
+    },
     "/v1/user/{userId}/photo": {
       "parameters": [
         {
@@ -873,6 +964,57 @@
         },
         "tags": [
           "User Photo"
+        ]
+      }
+    },
+    "/v1/user/{userId}/permissions": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": "userId",
+          "in": "path",
+          "required": true,
+          "description": "A valid user account UUID"
+        }
+      ],
+      "get": {
+        "summary": "Get User Permissions",
+        "tags": [
+          "Permissions"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User-Permissions"
+                },
+                "examples": {
+                  "Example": {
+                    "value": [
+                      "billing:account:view",
+                      "console:view",
+                      "hardware:device:read",
+                      "sites:*",
+                      "tenant:*",
+                      "user:account:*"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-v1-user-userId-permissions",
+        "description": "Retrieve permissions for a given user\n\n> _This endpoint accepts `self` in place of a UUID_",
+        "security": [
+          {
+            "Bearer Token": []
+          }
         ]
       }
     },
@@ -1032,148 +1174,6 @@
         ],
         "tags": [
           "Roles"
-        ]
-      }
-    },
-    "/v1/user/self/preferences": {
-      "parameters": [],
-      "get": {
-        "summary": "Get User Preferences",
-        "tags": [
-          "User Preferences"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/User-Preferences"
-                },
-                "examples": {
-                  "Response": {
-                    "value": {
-                      "shell": {
-                        "theme": "#161d1b",
-                        "nav": {
-                          "collapsed": true,
-                          "disabled_applications": []
-                        },
-                        "pagination": {
-                          "enabled": false,
-                          "default_limit": 10
-                        },
-                        "disabled_applications": []
-                      }
-                    }
-                  }
-                }
-              },
-              "application/xml": {
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              },
-              "multipart/form-data": {
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              },
-              "text/html": {
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
-          }
-        },
-        "operationId": "get-user-preferences",
-        "description": "Get the preferences for the currently authenticated user\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`console:view`",
-        "security": [
-          {
-            "Bearer Token": []
-          }
-        ]
-      },
-      "patch": {
-        "summary": "Update User Preferences",
-        "operationId": "patch-v1-user-self-preferences",
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        },
-        "description": "Update the preferences for the currently authenticated user\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`console:view`",
-        "security": [
-          {
-            "Bearer Token": []
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object"
-              }
-            }
-          }
-        },
-        "tags": [
-          "User Preferences"
-        ]
-      }
-    },
-    "/v1/user/{userId}/permissions": {
-      "parameters": [
-        {
-          "schema": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "name": "userId",
-          "in": "path",
-          "required": true,
-          "description": "A valid user account UUID"
-        }
-      ],
-      "get": {
-        "summary": "Get User Permissions",
-        "tags": [
-          "Permissions"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/User-Permissions"
-                },
-                "examples": {
-                  "Example": {
-                    "value": [
-                      "billing:account:view",
-                      "console:view",
-                      "hardware:device:read",
-                      "sites:*",
-                      "tenant:*",
-                      "user:account:*"
-                    ]
-                  }
-                }
-              }
-            }
-          }
-        },
-        "operationId": "get-v1-user-userId-permissions",
-        "description": "Retrieve permissions for a given user\n\n> _This endpoint accepts `self` in place of a UUID_",
-        "security": [
-          {
-            "Bearer Token": []
-          }
         ]
       }
     },
