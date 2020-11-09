@@ -1376,73 +1376,141 @@
           "milestones"
         ],
         "x-examples": {
-          "example-1": {
-            "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
-            "license": "record_user",
+          "Seat Example": {
+            "id": "ce48daca-f044-48e6-ad20-0c6e53db12da",
+            "license": "seat",
             "flags": {
               "active": true,
-              "blocked": true,
+              "blocked": false,
               "licensed": true,
-              "archived": true,
-              "deleted": true
+              "archived": false,
+              "deleted": false
             },
-            "picture": "string",
-            "auth": null,
+            "picture": "https://api.counterbalance.io/v1/user/ce48daca-f044-48e6-ad20-0c6e53db12da/photo",
+            "auth": {
+              "email_verified": true,
+              "last_login": 1604815512,
+              "last_password_reset": 0,
+              "last_ip": "67.168.168.228",
+              "total_logins": 78,
+              "is_blocked": false
+            },
             "name": {
-              "given": "string",
-              "preferred": "string",
-              "middle": "string",
-              "family": "string",
+              "given": "Alex",
+              "preferred": "",
+              "middle": "",
+              "family": "Wilbur",
               "prefix": null,
               "suffix": null,
-              "full": "string",
-              "display": "string",
-              "short": "string"
+              "full": "Alex Wilbur",
+              "display": "Alex Wilbur",
+              "short": ""
             },
-            "email": "user@example.com",
-            "site": "string",
-            "department": "string",
-            "manager": "null",
+            "email": "alexw@peterbalance.com",
+            "site": null,
+            "department": "1f3da4db-3364-4f58-b8bd-4fee1398a6e1",
+            "manager": null,
             "room": null,
             "mail_stop": null,
-            "title": "string",
+            "title": "",
             "links": [
               {
-                "id": "string",
-                "context": "Counterbalance ID"
+                "context": "Counterbalance ID",
+                "id": "auth0|5e93ab33f346950c46b694d5"
+              },
+              {
+                "context": "Microsoft 365",
+                "id": "201e0cc6-9b88-4908-a69e-60e88b4d9ff7"
               }
             ],
             "milestones": {
               "accepted_terms": {
                 "status": true,
-                "timestamp": 0
+                "timestamp": 1586735922
               },
               "completed_onboarding": {
-                "status": true,
+                "status": false,
                 "timestamp": 0
               },
               "account_created": {
                 "status": true,
-                "timestamp": 0
+                "timestamp": 1586735922
               },
               "account_blocked": {
-                "status": true,
+                "status": false,
                 "timestamp": 0
               },
               "account_archived": {
-                "status": true,
+                "status": false,
                 "timestamp": 0
               },
               "license_assigned": {
                 "status": true,
+                "timestamp": 1586735923
+              }
+            }
+          },
+          "Record User Example": {
+            "id": "73f180ba-caa3-4e49-a68c-f643b5e7bf79",
+            "license": "record_user",
+            "flags": {
+              "active": true,
+              "blocked": false,
+              "licensed": false,
+              "archived": false,
+              "deleted": false
+            },
+            "picture": "https://api.counterbalance.io/v1/user/73f180ba-caa3-4e49-a68c-f643b5e7bf79/photo",
+            "auth": null,
+            "name": {
+              "given": "Megan",
+              "preferred": "",
+              "middle": "",
+              "family": "Bowen",
+              "prefix": null,
+              "suffix": null,
+              "full": "Megan Bowen",
+              "display": "Megan Bowen",
+              "short": ""
+            },
+            "email": "meganb@peterbalance.com",
+            "site": null,
+            "department": null,
+            "manager": null,
+            "room": null,
+            "mail_stop": null,
+            "title": "",
+            "links": [],
+            "milestones": {
+              "accepted_terms": {
+                "status": false,
+                "timestamp": 0
+              },
+              "completed_onboarding": {
+                "status": false,
+                "timestamp": 0
+              },
+              "account_created": {
+                "status": true,
+                "timestamp": 1604882067
+              },
+              "account_blocked": {
+                "status": false,
+                "timestamp": 0
+              },
+              "account_archived": {
+                "status": false,
+                "timestamp": 0
+              },
+              "license_assigned": {
+                "status": false,
                 "timestamp": 0
               }
             }
           }
         },
         "x-tags": [
-          "User Accounts",
-          "Object Models"
+          "User Accounts"
         ]
       },
       "User-Preferences": {
