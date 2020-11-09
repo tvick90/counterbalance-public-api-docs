@@ -19,7 +19,7 @@
   "paths": {
     "/v1/user": {
       "get": {
-        "summary": "Get User Account Listing",
+        "summary": "List User Accounts",
         "tags": [
           "User Accounts"
         ],
