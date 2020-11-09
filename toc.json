@@ -52,31 +52,6 @@
     },
     {
       "type": "item",
-      "title": "Create & Manage Users",
-      "uri": "docs/user/User-Fundamentals.md"
-    },
-    {
-      "type": "item",
-      "title": "Permission Groups",
-      "uri": "docs/user/Permission-Groups.md"
-    },
-    {
-      "type": "item",
-      "title": "User Licensing",
-      "uri": "docs/user/Licensing.md"
-    },
-    {
-      "type": "item",
-      "title": "Assign Roles & Manage Authorization",
-      "uri": "docs/user/Roles-Authorization.md"
-    },
-    {
-      "type": "item",
-      "title": "Passwords & Authentication",
-      "uri": "docs/user/Credentials-Authentication.md"
-    },
-    {
-      "type": "item",
       "title": "Subscription & Billing",
       "uri": "reference/Billing.v1.yaml"
     },

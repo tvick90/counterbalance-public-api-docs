@@ -1,3 +1,0 @@
-# Create & Manage Users
-
-The beginning of an awesome article...
