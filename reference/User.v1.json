@@ -1259,6 +1259,28 @@
           "Departments"
         ]
       }
+    },
+    "/v1/user/group": {
+      "get": {
+        "summary": "List User Groups",
+        "tags": [
+          "Groups"
+        ],
+        "responses": {},
+        "operationId": "get-v1-user-group"
+      },
+      "post": {
+        "summary": "Create User Group",
+        "operationId": "post-v1-user-group",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "Groups"
+        ]
+      }
     }
   },
   "components": {
@@ -1801,6 +1823,9 @@
     },
     {
       "name": "Departments"
+    },
+    {
+      "name": "Groups"
     }
   ]
 }
