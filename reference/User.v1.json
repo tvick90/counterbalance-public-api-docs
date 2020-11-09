@@ -120,7 +120,7 @@
             }
           }
         },
-        "description": "Create a new user and optionally assign a license and password\n\n> _This body field `password` is only required if the `type` specified is equal to `seat` or `user`_",
+        "description": "Create a new user and optionally assign a license and password\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`user:*`,`user:account:create`\n* Licensed Feature: `user_base`\n* If adding a license, adequate quota of the requested type\n\n**Defining the User Type**\n\nThe field `type` may be one of either `record_user` _(non-licensed user)_, `seat` _(licensed system administrator)_, or `user` _(licensed end user)_.\n\nThe `type` field may be omitted and will default to `record_user`\n\n**Setting the User Password**\n\nThe `password` field is required when the user type specified is either `seat` or `user`. In all other cases, it is ignored.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -212,65 +212,76 @@
                 "examples": {
                   "Response": {
                     "value": {
-                      "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
-                      "license": "record_user",
+                      "id": "ce48daca-f044-48e6-ad20-0c6e53db12da",
+                      "license": "seat",
                       "flags": {
                         "active": true,
-                        "blocked": true,
+                        "blocked": false,
                         "licensed": true,
-                        "archived": true,
-                        "deleted": true
+                        "archived": false,
+                        "deleted": false
                       },
-                      "picture": "string",
-                      "auth": null,
+                      "picture": "https://api.counterbalance.io/v1/user/ce48daca-f044-48e6-ad20-0c6e53db12da/photo",
+                      "auth": {
+                        "email_verified": true,
+                        "last_login": 1604815512,
+                        "last_password_reset": 0,
+                        "last_ip": "67.168.168.228",
+                        "total_logins": 78,
+                        "is_blocked": false
+                      },
                       "name": {
-                        "given": "string",
-                        "preferred": "string",
-                        "middle": "string",
-                        "family": "string",
+                        "given": "Alex",
+                        "preferred": "",
+                        "middle": "",
+                        "family": "Wilbur",
                         "prefix": null,
                         "suffix": null,
-                        "full": "string",
-                        "display": "string",
-                        "short": "string"
+                        "full": "Alex Wilbur",
+                        "display": "Alex Wilbur",
+                        "short": ""
                       },
-                      "email": "user@example.com",
-                      "site": "string",
-                      "department": "string",
-                      "manager": "null",
+                      "email": "alexw@peterbalance.com",
+                      "site": null,
+                      "department": "1f3da4db-3364-4f58-b8bd-4fee1398a6e1",
+                      "manager": null,
                       "room": null,
                       "mail_stop": null,
-                      "title": "string",
+                      "title": "",
                       "links": [
                         {
-                          "id": "string",
-                          "context": "Counterbalance ID"
+                          "context": "Counterbalance ID",
+                          "id": "auth0|5e93ab33f346950c46b694d5"
+                        },
+                        {
+                          "context": "Microsoft 365",
+                          "id": "201e0cc6-9b88-4908-a69e-60e88b4d9ff7"
                         }
                       ],
                       "milestones": {
                         "accepted_terms": {
                           "status": true,
-                          "timestamp": 0
+                          "timestamp": 1586735922
                         },
                         "completed_onboarding": {
-                          "status": true,
+                          "status": false,
                           "timestamp": 0
                         },
                         "account_created": {
                           "status": true,
-                          "timestamp": 0
+                          "timestamp": 1586735922
                         },
                         "account_blocked": {
-                          "status": true,
+                          "status": false,
                           "timestamp": 0
                         },
                         "account_archived": {
-                          "status": true,
+                          "status": false,
                           "timestamp": 0
                         },
                         "license_assigned": {
                           "status": true,
-                          "timestamp": 0
+                          "timestamp": 1586735923
                         }
                       }
                     }
@@ -399,10 +410,109 @@
         }
       ],
       "put": {
-        "summary": "Attach User Licensing",
-        "operationId": "assign-user-license",
-        "responses": {},
-        "description": "Assign a license to a user.\n\n> **Note** This body field `password` is only required if the `type` specified is equal to `seat` or `user`\n\n> **Note** Downgrading a user to the `record_user` class will remove their login account",
+        "summary": "Assign User Licensing",
+        "operationId": "assign-user-licensing",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User-Account"
+                },
+                "examples": {
+                  "Response": {
+                    "value": {
+                      "id": "ce48daca-f044-48e6-ad20-0c6e53db12da",
+                      "license": "seat",
+                      "flags": {
+                        "active": true,
+                        "blocked": false,
+                        "licensed": true,
+                        "archived": false,
+                        "deleted": false
+                      },
+                      "picture": "https://api.counterbalance.io/v1/user/ce48daca-f044-48e6-ad20-0c6e53db12da/photo",
+                      "auth": {
+                        "email_verified": true,
+                        "last_login": 1604815512,
+                        "last_password_reset": 0,
+                        "last_ip": "67.168.168.228",
+                        "total_logins": 78,
+                        "is_blocked": false
+                      },
+                      "name": {
+                        "given": "Alex",
+                        "preferred": "",
+                        "middle": "",
+                        "family": "Wilbur",
+                        "prefix": null,
+                        "suffix": null,
+                        "full": "Alex Wilbur",
+                        "display": "Alex Wilbur",
+                        "short": ""
+                      },
+                      "email": "alexw@peterbalance.com",
+                      "site": null,
+                      "department": "1f3da4db-3364-4f58-b8bd-4fee1398a6e1",
+                      "manager": null,
+                      "room": null,
+                      "mail_stop": null,
+                      "title": "",
+                      "links": [
+                        {
+                          "context": "Counterbalance ID",
+                          "id": "auth0|5e93ab33f346950c46b694d5"
+                        },
+                        {
+                          "context": "Microsoft 365",
+                          "id": "201e0cc6-9b88-4908-a69e-60e88b4d9ff7"
+                        }
+                      ],
+                      "milestones": {
+                        "accepted_terms": {
+                          "status": true,
+                          "timestamp": 1586735922
+                        },
+                        "completed_onboarding": {
+                          "status": false,
+                          "timestamp": 0
+                        },
+                        "account_created": {
+                          "status": true,
+                          "timestamp": 1586735922
+                        },
+                        "account_blocked": {
+                          "status": false,
+                          "timestamp": 0
+                        },
+                        "account_archived": {
+                          "status": false,
+                          "timestamp": 0
+                        },
+                        "license_assigned": {
+                          "status": true,
+                          "timestamp": 1586735923
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../models/Error-Response.v1.yaml"
+                }
+              }
+            }
+          }
+        },
+        "description": "Set the license type for the spcified user\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`tenant:*`,`tenant:licensing:*`,`tenant:licensing:assign`\n* Licensed Feature: `user_base`\n* Adequate quota of the requested type\n\n**Setting the License Type**\n\nThe field `type` must be either `record_user` _(non-licensed user)_, `seat` _(licensed system administrator)_, or `user` _(licensed end user)_.\n\n<!-- theme: danger -->\n> _**Danger!** Downgrading a user to the `record_user` license will delete the user's Counterbalance ID account_\n\n**Setting the User Password**\n\nThe `password` field is required when the user type specified is either `seat` or `user`. In all other cases, it is ignored.\n\n**Notifying the User**\n\nComing soon...\n",
         "security": [
           {
             "Bearer Token": []
@@ -432,6 +542,14 @@
                 "required": [
                   "type"
                 ]
+              },
+              "examples": {
+                "Example": {
+                  "value": {
+                    "type": "seat",
+                    "password": "Se@ttle1!"
+                  }
+                }
               }
             }
           }
@@ -483,7 +601,7 @@
             "Bearer Token": []
           }
         ],
-        "description": "",
+        "description": "Upload a custom avatar photo",
         "requestBody": {
           "content": {
             "application/json": {
