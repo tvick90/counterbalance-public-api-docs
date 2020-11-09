@@ -967,77 +967,15 @@
         ]
       }
     },
-    "/v1/user/{userId}/permissions": {
+    "/v1/user/{userId}/roles": {
       "parameters": [
-        {
-          "schema": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "name": "userId",
-          "in": "path",
-          "required": true,
-          "description": "A valid user account UUID"
-        }
-      ],
-      "get": {
-        "summary": "Get User Permissions",
-        "tags": [
-          "Permissions"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/User-Permissions"
-                },
-                "examples": {
-                  "Example": {
-                    "value": [
-                      "billing:account:view",
-                      "console:view",
-                      "hardware:device:read",
-                      "sites:*",
-                      "tenant:*",
-                      "user:account:*"
-                    ]
-                  }
-                }
-              }
-            }
-          }
-        },
-        "operationId": "get-v1-user-userId-permissions",
-        "description": "Retrieve permissions for a given user\n\n> _This endpoint accepts `self` in place of a UUID_",
-        "security": [
-          {
-            "Bearer Token": []
-          }
-        ]
-      }
-    },
-    "/v1/user/{userId}/roles/{roleId}": {
-      "parameters": [
-        {
-          "schema": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "name": "userId",
-          "in": "path",
-          "required": true,
-          "description": "A valid user account UUID"
-        },
         {
           "schema": {
             "type": "string"
           },
-          "name": "roleId",
+          "name": "userId",
           "in": "path",
-          "required": true,
-          "description": "A valid role ID"
+          "required": true
         }
       ],
       "get": {
@@ -1074,7 +1012,30 @@
           }
         ],
         "parameters": []
-      },
+      }
+    },
+    "/v1/user/{userId}/roles/{roleId}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": "userId",
+          "in": "path",
+          "required": true,
+          "description": "A valid user account UUID"
+        },
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "roleId",
+          "in": "path",
+          "required": true,
+          "description": "A valid role ID"
+        }
+      ],
       "put": {
         "summary": "Assign User Roles",
         "operationId": "put-v1-user-userId-roles",
@@ -1174,6 +1135,57 @@
         ],
         "tags": [
           "Roles"
+        ]
+      }
+    },
+    "/v1/user/{userId}/permissions": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": "userId",
+          "in": "path",
+          "required": true,
+          "description": "A valid user account UUID"
+        }
+      ],
+      "get": {
+        "summary": "Get User Permissions",
+        "tags": [
+          "Permissions"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User-Permissions"
+                },
+                "examples": {
+                  "Example": {
+                    "value": [
+                      "billing:account:view",
+                      "console:view",
+                      "hardware:device:read",
+                      "sites:*",
+                      "tenant:*",
+                      "user:account:*"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-v1-user-userId-permissions",
+        "description": "Retrieve permissions for a given user\n\n> _This endpoint accepts `self` in place of a UUID_",
+        "security": [
+          {
+            "Bearer Token": []
+          }
         ]
       }
     },
