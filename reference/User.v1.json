@@ -800,7 +800,7 @@
           }
         },
         "operationId": "get-user-photo",
-        "description": "Get a specified user's photo in PNG format\n\n**Prerequisites** \n\n_None_\n\nThis is a public endpoint and does not require authentication.",
+        "description": "Get a specified user's photo in PNG format\n\n**Prerequisites** \n\n_None_\n\nThis is a public endpoint and does not require authentication.\n\n**Using this Endpoint in HTML**\n\nThis endpoint can be used as the `src` attribute of an HTML `img` tag.\n```html\n<img src=\"https://api.counterbalance.io/v1/user/{userId}/photo\">\n```",
         "parameters": []
       },
       "post": {
