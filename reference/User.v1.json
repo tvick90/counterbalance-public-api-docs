@@ -536,6 +536,22 @@
                     "description": "The user's job title",
                     "maxLength": 90
                   },
+                  "employee_id": {
+                    "type": "string",
+                    "description": "The user's employee ID"
+                  },
+                  "user_org_guid": {
+                    "type": "string",
+                    "description": "The user's alternate GUID"
+                  },
+                  "room": {
+                    "type": "string",
+                    "description": "The user's office or room number"
+                  },
+                  "mail_stop": {
+                    "type": "string",
+                    "description": "The user's mail stop"
+                  },
                   "site": {
                     "type": [
                       "string",
@@ -543,6 +559,14 @@
                     ],
                     "format": "uuid",
                     "description": "The user's assigned site"
+                  },
+                  "manager": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "format": "uuid",
+                    "description": "The user's manager"
                   }
                 },
                 "required": [
