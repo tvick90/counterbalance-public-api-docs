@@ -536,6 +536,22 @@
                     "description": "The user's job title",
                     "maxLength": 90
                   },
+                  "employee_id": {
+                    "type": "string",
+                    "description": "The user's employee ID"
+                  },
+                  "user_org_guid": {
+                    "type": "string",
+                    "description": "The user's alternate GUID"
+                  },
+                  "room": {
+                    "type": "string",
+                    "description": "The user's office or room number"
+                  },
+                  "mail_stop": {
+                    "type": "string",
+                    "description": "The user's mail stop"
+                  },
                   "site": {
                     "type": [
                       "string",
@@ -543,6 +559,14 @@
                     ],
                     "format": "uuid",
                     "description": "The user's assigned site"
+                  },
+                  "manager": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "format": "uuid",
+                    "description": "The user's manager"
                   }
                 },
                 "required": [
@@ -967,23 +991,21 @@
         ]
       }
     },
-    "/v1/user/{userId}/permissions": {
+    "/v1/user/{userId}/roles": {
       "parameters": [
         {
           "schema": {
-            "type": "string",
-            "format": "uuid"
+            "type": "string"
           },
           "name": "userId",
           "in": "path",
-          "required": true,
-          "description": "A valid user account UUID"
+          "required": true
         }
       ],
       "get": {
-        "summary": "Get User Permissions",
+        "summary": "Get User's Assigned Roles",
         "tags": [
-          "Permissions"
+          "Roles"
         ],
         "responses": {
           "200": {
@@ -991,31 +1013,29 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/User-Permissions"
+                  "$ref": "#/components/schemas/User-Assigned-Roles"
                 },
                 "examples": {
                   "Example": {
-                    "value": [
-                      "billing:account:view",
-                      "console:view",
-                      "hardware:device:read",
-                      "sites:*",
-                      "tenant:*",
-                      "user:account:*"
-                    ]
+                    "value": {
+                      "roles": [
+                        "rol_ef4g..."
+                      ]
+                    }
                   }
                 }
               }
             }
           }
         },
-        "operationId": "get-v1-user-userId-permissions",
-        "description": "Retrieve permissions for a given user\n\n> _This endpoint accepts `self` in place of a UUID_",
+        "operationId": "get-v1-user-userId-roles",
+        "description": "Retrieve a list of roles assigned to a user\n\n> This endpoint accepts `self` in place of a UUID",
         "security": [
           {
             "Bearer Token": []
           }
-        ]
+        ],
+        "parameters": []
       }
     },
     "/v1/user/{userId}/password": {
@@ -1104,41 +1124,6 @@
           "description": "A valid role ID"
         }
       ],
-      "get": {
-        "summary": "Get User's Assigned Roles",
-        "tags": [
-          "Roles"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/User-Assigned-Roles"
-                },
-                "examples": {
-                  "Example": {
-                    "value": {
-                      "roles": [
-                        "rol_ef4g..."
-                      ]
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "operationId": "get-v1-user-userId-roles",
-        "description": "Retrieve a list of roles assigned to a user\n\n> This endpoint accepts `self` in place of a UUID",
-        "security": [
-          {
-            "Bearer Token": []
-          }
-        ],
-        "parameters": []
-      },
       "put": {
         "summary": "Assign User Roles",
         "operationId": "put-v1-user-userId-roles",
@@ -1241,6 +1226,57 @@
         ]
       }
     },
+    "/v1/user/{userId}/permissions": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": "userId",
+          "in": "path",
+          "required": true,
+          "description": "A valid user account UUID"
+        }
+      ],
+      "get": {
+        "summary": "Get User Permissions",
+        "tags": [
+          "Permissions"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User-Permissions"
+                },
+                "examples": {
+                  "Example": {
+                    "value": [
+                      "billing:account:view",
+                      "console:view",
+                      "hardware:device:read",
+                      "sites:*",
+                      "tenant:*",
+                      "user:account:*"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-v1-user-userId-permissions",
+        "description": "Retrieve permissions for a given user\n\n> _This endpoint accepts `self` in place of a UUID_",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ]
+      }
+    },
     "/v1/department": {
       "get": {
         "summary": "List Departments",
@@ -1309,6 +1345,28 @@
         "description": "",
         "tags": [
           "Departments"
+        ]
+      }
+    },
+    "/v1/user/group": {
+      "get": {
+        "summary": "List User Groups",
+        "tags": [
+          "Groups"
+        ],
+        "responses": {},
+        "operationId": "get-v1-user-group"
+      },
+      "post": {
+        "summary": "Create User Group",
+        "operationId": "post-v1-user-group",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "Groups"
         ]
       }
     }
@@ -1853,6 +1911,9 @@
     },
     {
       "name": "Departments"
+    },
+    {
+      "name": "Groups"
     }
   ]
 }
