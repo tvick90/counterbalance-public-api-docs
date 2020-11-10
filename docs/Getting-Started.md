@@ -34,14 +34,6 @@ Verb | Description
 `DELETE`  | Removes an existing resource and returns nothing
 `OPTIONS` | List available verbs against a resource
 
-## Authenticating Requests
-The authentication requirement for each endpoint varies. If authentication is required, an Authorization header must be provided as described in [Authentication](./Authentication.md).
-
-### Request Authorization
-Some API endpoints require a paid subscription. If a request is made to a paid feature that is not available, a `403 Forbidden` response will be returned. 
-
-Additionally, some platform resources and features are measured against a licensed quota limit. If an attempt is made to add additional resources once a quota limit has been reached, a `403 Forbidden` response will be returned. 
-
 ## Submitting Data
 When submitting non-binary data via a `POST`, `PUT`, or `PATCH` endpoint, the data payload must be in JSON.
 ```
@@ -56,13 +48,16 @@ Content-Type: application/json
 
 Procedures for submitting other types of data to the API are documented on a per-endpoint basis. 
 
-### Responses
-Working with responses and errors is documented in [Responses & Errors](./Responses-and-Errors.md)
+### Query Parameters
+Some endpoints permit URL query parameters to
 
-### URL Parameters
-URL query paramaters are not currently supported.
+## Authenticating Requests
+The authentication requirement for each endpoint varies. If authentication is required, an Authorization header must be provided as described in [Authentication](./Authentication.md).
 
+### Request Authorization
+Some API endpoints require a paid subscription. If a request is made to a paid feature that is not available, a `403 Forbidden` response will be returned. 
 
+Additionally, some platform resources and features are measured against a licensed quota limit. If an attempt is made to add additional resources once a quota limit has been reached, a `403 Forbidden` response will be returned.
 
 ## Additional Resources
 
