@@ -1,7 +1,5 @@
 # Getting Started
-The **Counterbalance Core API** provides powerful, programmatic access to the Counterbalance platform and powers its feature-rich IT management UI.  
-
-Everything that is possible via the Counterbalance System Console and End-User Portal (and more) is powered by this API. 
+The **Counterbalance Core API** provides powerful, programmatic access to the Counterbalance platform and powers its feature-rich IT management UI. Everything that is possible via the [Counterbalance System Console](https://app.counterbalance.io) and End-User Portal (and more) is powered by this API. 
 
 This documentation walks through the API endpoints and their usage.
 
@@ -20,10 +18,13 @@ For example, the request:
 GET https://api.counterbalance.io/v1/foo/497f6eca-6276-4993-bfeb-53cbbbba6f08 HTTP/1.1
 ```
 
-Returns the _foo_ object identified by UUID `497f6eca-6276-4993-bfeb-53cbbbba6f08` in JSON format
+Returns the _foo_ object with UUID `497f6eca-6276-4993-bfeb-53cbbbba6f08`
 
 ### Supported HTTP Operations
 The API supports the `GET`,`POST`,`PUT`,`PATCH`,`DELETE`, & `OPTIONS` verbs. General usage of these verbs is outlined in the following table.
+
+### Query Parameters
+Some endpoints permit URL query parameters to
 
 Verb | Description
 -----|------------
@@ -48,9 +49,6 @@ Content-Type: application/json
 
 Procedures for submitting other types of data to the API are documented on a per-endpoint basis. 
 
-### Query Parameters
-Some endpoints permit URL query parameters to
-
 ## Authenticating Requests
 The authentication requirement for each endpoint varies. If authentication is required, an Authorization header must be provided as described in [Authentication](./Authentication.md).
 
@@ -58,10 +56,4 @@ The authentication requirement for each endpoint varies. If authentication is re
 Some API endpoints require a paid subscription. If a request is made to a paid feature that is not available, a `403 Forbidden` response will be returned. 
 
 Additionally, some platform resources and features are measured against a licensed quota limit. If an attempt is made to add additional resources once a quota limit has been reached, a `403 Forbidden` response will be returned.
-
-## Additional Resources
-
-##### [Counterbalance System Console](https://app.counterbalance.io)
-##### [Counterbalance Privacy Policy](https://app.counterbalance.io)
-
 
