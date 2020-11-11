@@ -32,21 +32,6 @@
     },
     {
       "type": "item",
-      "title": "Tenant Fundamentals",
-      "uri": "docs/tenants/Tenant-Fundamentals.md"
-    },
-    {
-      "type": "item",
-      "title": "Quotas & Resource Authorization",
-      "uri": "docs/tenants/Quotas.md"
-    },
-    {
-      "type": "item",
-      "title": "Platform Preferences",
-      "uri": "docs/tenants/Tenant-Prefs.md"
-    },
-    {
-      "type": "item",
       "title": "Users",
       "uri": "reference/User.v1.json"
     },
