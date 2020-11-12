@@ -23,9 +23,6 @@ Returns the _foo_ object with UUID `497f6eca-6276-4993-bfeb-53cbbbba6f08`
 ### Supported HTTP Operations
 The API supports the `GET`,`POST`,`PUT`,`PATCH`,`DELETE`, & `OPTIONS` verbs. General usage of these verbs is outlined in the following table.
 
-### Query Parameters
-Some endpoints permit URL query parameters to
-
 Verb | Description
 -----|------------
 `GET`     | Retrieves existing resources
@@ -34,6 +31,9 @@ Verb | Description
 `PATCH`   | Updates an existing resource and returns the updated resource
 `DELETE`  | Removes an existing resource and returns nothing
 `OPTIONS` | List available verbs against a resource
+
+### Query Parameters
+Some endpoints permit URL query parameters to
 
 ## Submitting Data
 When submitting non-binary data via a `POST`, `PUT`, or `PATCH` endpoint, the data payload must be in JSON.
@@ -50,7 +50,7 @@ Content-Type: application/json
 Procedures for submitting other types of data to the API are documented on a per-endpoint basis. 
 
 ## Authenticating Requests
-The authentication requirement for each endpoint varies. If authentication is required, an Authorization header must be provided as described in [Authentication](./Authentication.md).
+The authentication requirement for each endpoint varies. If authentication is required, authorization must be provided as described in [Authentication](./Authentication.md).
 
 ### Request Authorization
 Some API endpoints require a paid subscription. If a request is made to a paid feature that is not available, a `403 Forbidden` response will be returned. 
