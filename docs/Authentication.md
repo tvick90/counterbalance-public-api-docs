@@ -4,7 +4,6 @@ In general, most endpoints will require authentication. To authenticate, add an 
 ```
 Authorization: Bearer eyJg...fw5c
 ```
-Each endpoint will indicate whether authentication is needed for that particular operation.
 
 ## Obtain a Token
 

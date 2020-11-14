@@ -9,7 +9,7 @@ title: Via Email
 
 ### support@counterbalance.io
 
-#### Response within 24 business hours
+_Response within 24 business hours_
 
 
 <!--
