@@ -1880,6 +1880,84 @@
           "Roles",
           "Object Models"
         ]
+      },
+      "User-Roles-Manifest": {
+        "title": "User Roles Manifest",
+        "type": "object",
+        "description": "",
+        "properties": {
+          "rev": {
+            "type": "string",
+            "description": "The release version of the manifest"
+          },
+          "roles": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/User-Roles-Manifest-Item"
+            }
+          }
+        },
+        "required": [
+          "rev",
+          "roles"
+        ]
+      },
+      "User-Roles-Manifest-Item": {
+        "title": "User Roles Manifest Item",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The Role ID in Auth0"
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the role"
+          },
+          "description": {
+            "type": "string",
+            "description": "The description of the role"
+          },
+          "enabled": {
+            "type": "boolean",
+            "description": "Indicates if the role is enabled and available for assignment"
+          },
+          "attributes": {
+            "type": "object",
+            "required": [
+              "management_assigned_only",
+              "system_assigned_only",
+              "self_removable"
+            ],
+            "properties": {
+              "management_assigned_only": {
+                "type": "boolean",
+                "description": "Indicates if the role can only be assigned via the management API. These roles are not displayed in the Console UI and cannot be assigned via the core API"
+              },
+              "system_assigned_only": {
+                "description": "Indicates if the role is assigned by default or by some system action. If this is TRUE, self_removable is generally also TRUE",
+                "type": "boolean"
+              },
+              "self_removable": {
+                "description": "Indicates if the user can remove the role from themselves. If FALSE, the user must have the role removed by another user with the necessary privilege",
+                "type": "boolean"
+              }
+            }
+          },
+          "assignment_prerequisite_roles": {
+            "type": "array",
+            "description": "An inclusive list of roles that must be previously assigned to the user before the role can be assigned. ",
+            "items": {}
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "description",
+          "enabled",
+          "attributes",
+          "assignment_prerequisite_roles"
+        ]
       }
     },
     "securitySchemes": {
