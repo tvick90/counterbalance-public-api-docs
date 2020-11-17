@@ -1927,7 +1927,8 @@
             "required": [
               "management_assigned_only",
               "system_assigned_only",
-              "self_removable"
+              "self_removable",
+              "subscription_required"
             ],
             "properties": {
               "management_assigned_only": {
@@ -1941,6 +1942,10 @@
               "self_removable": {
                 "description": "Indicates if the user can remove the role from themselves. If FALSE, the user must have the role removed by another user with the necessary privilege",
                 "type": "boolean"
+              },
+              "subscription_required": {
+                "type": "boolean",
+                "description": "Indicates if a tenant subscription is required to assign this role"
               }
             }
           },
