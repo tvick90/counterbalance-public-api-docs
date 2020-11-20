@@ -20,7 +20,9 @@
     "/v1/site": {
       "get": {
         "summary": "Get Site Listing",
-        "tags": [],
+        "tags": [
+          "Manage Sites"
+        ],
         "responses": {
           "200": {
             "description": "OK",
@@ -175,7 +177,10 @@
             }
           },
           "description": ""
-        }
+        },
+        "tags": [
+          "Manage Sites"
+        ]
       }
     },
     "/v1/site/{siteId}": {
@@ -193,7 +198,9 @@
       ],
       "get": {
         "summary": "Get Site",
-        "tags": [],
+        "tags": [
+          "Manage Sites"
+        ],
         "responses": {
           "200": {
             "description": "OK",
@@ -340,7 +347,10 @@
               }
             }
           }
-        }
+        },
+        "tags": [
+          "Manage Sites"
+        ]
       },
       "delete": {
         "summary": "Delete Site",
@@ -362,6 +372,9 @@
           {
             "Bearer Token": []
           }
+        ],
+        "tags": [
+          "Manage Sites"
         ]
       }
     },
@@ -379,7 +392,9 @@
       ],
       "get": {
         "summary": "Get Address",
-        "tags": [],
+        "tags": [
+          "Addresses"
+        ],
         "responses": {
           "200": {
             "description": "OK",
@@ -548,7 +563,10 @@
             }
           },
           "description": ""
-        }
+        },
+        "tags": [
+          "Addresses"
+        ]
       },
       "delete": {
         "summary": "Delete Address",
@@ -570,6 +588,9 @@
           {
             "Bearer Token": []
           }
+        ],
+        "tags": [
+          "Addresses"
         ]
       }
     },
@@ -662,7 +683,10 @@
               }
             }
           }
-        }
+        },
+        "tags": [
+          "Addresses"
+        ]
       }
     },
     "/v1/site/{siteId}/address": {
@@ -793,7 +817,10 @@
               }
             }
           }
-        }
+        },
+        "tags": [
+          "Addresses"
+        ]
       }
     },
     "/v1/site/utilities/timezone-details": {
@@ -901,7 +928,10 @@
           "type",
           "address"
         ],
-        "title": "Typical Site Object"
+        "title": "Typical Site Object",
+        "x-tags": [
+          "Object Models"
+        ]
       },
       "Site-Object-Generic": {
         "description": "A generic site object used in site listings",
@@ -949,6 +979,9 @@
           "type",
           "code",
           "name"
+        ],
+        "x-tags": [
+          "Object Models"
         ]
       },
       "Address-Object": {
@@ -1047,7 +1080,10 @@
           "offset",
           "designations"
         ],
-        "title": "Address Object"
+        "title": "Address Object",
+        "x-tags": [
+          "Object Models"
+        ]
       },
       "Timezone-Details": {
         "description": "",
@@ -1131,7 +1167,10 @@
             }
           }
         },
-        "title": "Timezone Details"
+        "title": "Timezone Details",
+        "x-tags": [
+          "Object Models"
+        ]
       }
     },
     "securitySchemes": {
@@ -1140,5 +1179,13 @@
         "scheme": "bearer"
       }
     }
-  }
+  },
+  "tags": [
+    {
+      "name": "Manage Sites"
+    },
+    {
+      "name": "Addresses"
+    }
+  ]
 }
