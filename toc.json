@@ -69,48 +69,12 @@
     {
       "type": "item",
       "title": "Sites",
-      "uri": "reference/Sites.v1.yaml"
+      "uri": "reference/Sites.v1.json"
     },
     {
       "type": "item",
-      "title": "Site Types",
-      "uri": "docs/sites/Sites-Fundamentals.md"
-    },
-    {
-      "type": "group",
-      "title": "Site Components",
-      "items": [
-        {
-          "type": "item",
-          "title": "Building",
-          "uri": "docs/sites/components/Building.md"
-        },
-        {
-          "type": "item",
-          "title": "Region",
-          "uri": "docs/sites/components/Region.md"
-        },
-        {
-          "type": "item",
-          "title": "Zone",
-          "uri": "docs/sites/components/Zone.md"
-        }
-      ]
-    },
-    {
-      "type": "item",
-      "title": "Addresses",
-      "uri": "docs/sites/Addresses.md"
-    },
-    {
-      "type": "item",
-      "title": "Contacts",
-      "uri": "docs/sites/Addresses.md"
-    },
-    {
-      "type": "item",
-      "title": "System",
-      "uri": "reference/Config.v1.yaml"
+      "title": "Hardware Management",
+      "uri": "reference/Hardware.v1.json"
     }
   ]
 }

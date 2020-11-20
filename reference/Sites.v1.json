@@ -20,9 +20,7 @@
     "/v1/site": {
       "get": {
         "summary": "Get Site Listing",
-        "tags": [
-
-        ],
+        "tags": [],
         "responses": {
           "200": {
             "description": "OK",
@@ -80,12 +78,10 @@
             }
           }
         },
-        "operationId": "get-v1-site",
+        "operationId": "get-site-list",
         "security": [
           {
-            "Bearer Token": [
-
-            ]
+            "Bearer Token": []
           }
         ],
         "description": "Get a listing of sites"
@@ -122,9 +118,7 @@
         "description": "Create a new site",
         "security": [
           {
-            "Bearer Token": [
-
-            ]
+            "Bearer Token": []
           }
         ],
         "requestBody": {
@@ -176,8 +170,7 @@
             "application/xml": {
               "schema": {
                 "type": "object",
-                "properties": {
-                }
+                "properties": {}
               }
             }
           },
@@ -200,9 +193,7 @@
       ],
       "get": {
         "summary": "Get Site",
-        "tags": [
-
-        ],
+        "tags": [],
         "responses": {
           "200": {
             "description": "OK",
@@ -255,9 +246,7 @@
         "description": "Get a site object by ID",
         "security": [
           {
-            "Bearer Token": [
-
-            ]
+            "Bearer Token": []
           }
         ]
       },
@@ -315,9 +304,7 @@
         "description": "Update a site by ID\n\nUse the `Update Address` endpoint to update the site's address",
         "security": [
           {
-            "Bearer Token": [
-
-            ]
+            "Bearer Token": []
           }
         ],
         "requestBody": {
@@ -373,9 +360,7 @@
         "description": "Delete a site by ID",
         "security": [
           {
-            "Bearer Token": [
-
-            ]
+            "Bearer Token": []
           }
         ]
       }
@@ -394,9 +379,7 @@
       ],
       "get": {
         "summary": "Get Address",
-        "tags": [
-
-        ],
+        "tags": [],
         "responses": {
           "200": {
             "description": "OK",
@@ -453,9 +436,7 @@
         "description": "Get an address by ID",
         "security": [
           {
-            "Bearer Token": [
-
-            ]
+            "Bearer Token": []
           }
         ]
       },
@@ -504,14 +485,10 @@
           }
         },
         "description": "Update an address by ID",
-        "parameters": [
-
-        ],
+        "parameters": [],
         "security": [
           {
-            "Bearer Token": [
-
-            ]
+            "Bearer Token": []
           }
         ],
         "requestBody": {
@@ -591,9 +568,7 @@
         "description": "Delete an address by ID",
         "security": [
           {
-            "Bearer Token": [
-
-            ]
+            "Bearer Token": []
           }
         ]
       }
@@ -657,9 +632,7 @@
         "description": "Carry out various operations on an address object",
         "security": [
           {
-            "Bearer Token": [
-
-            ]
+            "Bearer Token": []
           }
         ],
         "requestBody": {
@@ -723,9 +696,7 @@
         "description": "Create a new address object and attach it to the specified site",
         "security": [
           {
-            "Bearer Token": [
-
-            ]
+            "Bearer Token": []
           }
         ],
         "requestBody": {
@@ -744,8 +715,7 @@
                     "maxItems": 2,
                     "minItems": 1,
                     "description": "An array of address lines, up to two",
-                    "items": {
-                    }
+                    "items": {}
                   },
                   "city": {
                     "type": "string",
@@ -921,8 +891,7 @@
             "type": "object",
             "$ref": "#/components/schemas/Address-Object"
           },
-          "contacts": {
-          }
+          "contacts": {}
         },
         "required": [
           "id",
