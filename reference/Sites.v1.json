@@ -922,7 +922,33 @@
         "tags": [
           "Buildings"
         ],
-        "responses": {},
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "count": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Building-Object"
+                      }
+                    }
+                  },
+                  "required": [
+                    "count",
+                    "data"
+                  ]
+                }
+              }
+            }
+          }
+        },
         "operationId": "list-site-buildings",
         "description": "Retrieve a list of buildings associated with the specified site\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:building:*`,`sites:building:list`",
         "security": [
@@ -969,18 +995,8 @@
         ]
       }
     },
-    "/v1/site/{siteId}/building/{buildingId}": {
+    "/v1/site/building/{buildingId}": {
       "parameters": [
-        {
-          "schema": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "name": "siteId",
-          "in": "path",
-          "required": true,
-          "description": "A valid site UUID"
-        },
         {
           "schema": {
             "type": "string",
@@ -997,13 +1013,28 @@
         "tags": [
           "Buildings"
         ],
-        "responses": {},
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Building-Object"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
         "operationId": "get-building",
         "security": [
           {
             "Bearer Token": []
           }
-        ]
+        ],
+        "description": "Retrieve a list of buildings associated with the specified site\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:building:*`,`sites:building:list`"
       },
       "patch": {
         "summary": "Update Building",
