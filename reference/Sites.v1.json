@@ -922,11 +922,86 @@
         ],
         "responses": {},
         "operationId": "list-site-buildings",
-        "description": "Retrieve a list of buildings associated with the specified site\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:building:*`,`sites:building:list`\n* Licensed Feature: `sites_base` + `sites_buildings`\n\n**Variations**\n\nIf the `type` query paramter is not included with the request, all sites are returned. \n\n**Returned Site Scope**\n\nThis is a scoped endpoint and the data returned may not be a complete, conclusive listing of all resources in the tenant account.\n\nUsers with `*` & `sites:*` permission scopes will always have access to the complete resource data set in the tenant."
+        "description": "Retrieve a list of buildings associated with the specified site\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:building:*`,`sites:building:list`\n* Licensed Feature: `sites_base` + `sites_buildings`\n\n**Variations**\n\nIf the `type` query paramter is not included with the request, all sites are returned. \n\n**Returned Site Scope**\n\nThis is a scoped endpoint and the data returned may not be a complete, conclusive listing of all resources in the tenant account.\n\nUsers with `*` & `sites:*` permission scopes will always have access to the complete resource data set in the tenant.",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ]
       },
       "post": {
         "summary": "Create New Building",
         "operationId": "create-building",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                },
+                "examples": {
+                  "Invalid Site Type": {
+                    "value": {
+                      "error": {
+                        "message": "string",
+                        "console": "string",
+                        "code": 0
+                      },
+                      "logging_hash": null
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Buildings"
+        ],
+        "description": "",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ]
+      }
+    },
+    "/v1/site/{siteId}/building/{buildingId}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "siteId",
+          "in": "path",
+          "required": true
+        },
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "buildingId",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "get": {
+        "summary": "Get Building",
+        "tags": [
+          "Buildings"
+        ],
+        "responses": {},
+        "operationId": "get-building",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ]
+      },
+      "patch": {
+        "summary": "Update Building",
+        "operationId": "update-building",
         "responses": {
           "200": {
             "description": "OK"
@@ -935,7 +1010,26 @@
         "tags": [
           "Buildings"
         ],
-        "description": ""
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ]
+      },
+      "delete": {
+        "summary": "Delete Building",
+        "operationId": "delete-building",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "description": "",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ]
       }
     }
   },
@@ -1222,6 +1316,38 @@
         "x-tags": [
           "Object Models"
         ]
+      },
+      "Building-Object": {
+        "title": "Building",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "code": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "address": {
+            "$ref": "#/components/schemas/Address-Object"
+          },
+          "attributes": {
+            "type": "object",
+            "properties": {
+              "floor_count": {
+                "type": "integer"
+              },
+              "area": {
+                "type": "string"
+              }
+            }
+          }
+        }
       }
     },
     "securitySchemes": {
