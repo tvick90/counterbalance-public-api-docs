@@ -52,7 +52,7 @@
                   ]
                 },
                 "examples": {
-                  "Example": {
+                  "Response": {
                     "value": {
                       "count": 2,
                       "data": [
@@ -69,7 +69,7 @@
                           "type": "physical",
                           "code": "USMSP",
                           "name": "Minneapolis, MN",
-                          "description": "Minneapolis, MN Regional HQ",
+                          "description": "Minneapolis, MN Regional Office",
                           "address": "8ac7d5dc-803d-40ac-bc37-16c0dbffe5d8"
                         }
                       ]
@@ -86,11 +86,25 @@
             "Bearer Token": []
           }
         ],
-        "description": "Get a listing of sites"
+        "description": "Retrieve a list of sites available to the authenticated user\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:site:*`,`sites:site:list`\n* Licensed Feature: `sites_base` and/or `sites_virtual`\n\n**Variations**\n\nIf the `type` query paramter is not included with the request, all sites are returned. \n\n**Returned Site Scope**\n\nThis is a scoped endpoint and the data returned may not be a complete, conclusive listing of all resources in the tenant account.\n\nUsers with `*` & `sites:*` permission scopes will always have access to the complete resource data set in the tenant.",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "enum": [
+                "physical",
+                "virtual"
+              ]
+            },
+            "in": "query",
+            "name": "type",
+            "description": "Return only sites of the specified type"
+          }
+        ]
       },
       "post": {
         "summary": "Create New Site",
-        "operationId": "post-v1-site",
+        "operationId": "create-site",
         "responses": {
           "201": {
             "description": "Created",
@@ -117,7 +131,7 @@
             }
           }
         },
-        "description": "Create a new site",
+        "description": "Create a new site\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:site:*`,`sites:site:create`\n* Licensed Feature: \n  - `sites_base` to add physical sites and addresses\n  - `sites_virtual` to add virtual sites\n* Adequate quota of the requested type",
         "security": [
           {
             "Bearer Token": []
@@ -826,7 +840,7 @@
     "/v1/site/utilities/timezone-details": {
       "post": {
         "summary": "Get Timezone Details",
-        "operationId": "post-v1-site-utilities-timezone-details",
+        "operationId": "get-timezone-details",
         "responses": {
           "200": {
             "description": "OK",
@@ -884,7 +898,44 @@
               }
             }
           }
+        },
+        "tags": [
+          "Utilities"
+        ]
+      }
+    },
+    "/v1/site/{siteId}/building": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "siteId",
+          "in": "path",
+          "required": true
         }
+      ],
+      "get": {
+        "summary": "List Buildings",
+        "tags": [
+          "Buildings"
+        ],
+        "responses": {},
+        "operationId": "list-site-buildings",
+        "description": "Retrieve a list of buildings associated with the specified site\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:building:*`,`sites:building:list`\n* Licensed Feature: `sites_base` + `sites_buildings`\n\n**Variations**\n\nIf the `type` query paramter is not included with the request, all sites are returned. \n\n**Returned Site Scope**\n\nThis is a scoped endpoint and the data returned may not be a complete, conclusive listing of all resources in the tenant account.\n\nUsers with `*` & `sites:*` permission scopes will always have access to the complete resource data set in the tenant."
+      },
+      "post": {
+        "summary": "Create New Building",
+        "operationId": "create-building",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "Buildings"
+        ],
+        "description": ""
       }
     }
   },
@@ -1186,6 +1237,12 @@
     },
     {
       "name": "Addresses"
+    },
+    {
+      "name": "Utilities"
+    },
+    {
+      "name": "Buildings"
     }
   ]
 }
