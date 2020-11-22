@@ -938,17 +938,50 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object"
+                  "$ref": "#/components/schemas/Building-Object"
+                },
+                "examples": {}
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../models/Error-Response.v1.yaml"
                 },
                 "examples": {
                   "Invalid Site Type": {
                     "value": {
                       "error": {
-                        "message": "string",
-                        "console": "string",
-                        "code": 0
+                        "message": "Invalid site type",
+                        "console": "Buildings can only be added to physical sites",
+                        "code": 400
                       },
-                      "logging_hash": null
+                      "logging_hash": "daa4ceb0a1d0434987e2e536318f4140ad537560"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../models/Error-Response.v1.yaml"
+                },
+                "examples": {
+                  "Site Not Found": {
+                    "value": {
+                      "error": {
+                        "message": "Site not found",
+                        "console": "Site not found",
+                        "code": 404
+                      },
+                      "logging_hash": "daa4ceb0a1d0434987e2e536318f4140ad537560"
                     }
                   }
                 }
@@ -964,7 +997,45 @@
           {
             "Bearer Token": []
           }
-        ]
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "maxLength": 96,
+                    "description": "A unique name for the new building"
+                  },
+                  "code": {
+                    "type": "string",
+                    "maxLength": 32,
+                    "description": "A unique code to identify the building"
+                  },
+                  "description": {
+                    "type": "string",
+                    "maxLength": 120,
+                    "description": "A description of the new building"
+                  },
+                  "floor_count": {
+                    "type": "integer",
+                    "maximum": 999,
+                    "description": "THe number of floors in the building"
+                  },
+                  "area": {
+                    "type": "string",
+                    "description": "The square footage of the building"
+                  }
+                },
+                "required": [
+                  "name"
+                ]
+              }
+            }
+          }
+        }
       }
     },
     "/v1/site/{siteId}/building/{buildingId}": {
