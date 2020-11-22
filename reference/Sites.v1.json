@@ -908,11 +908,13 @@
       "parameters": [
         {
           "schema": {
-            "type": "string"
+            "type": "string",
+            "format": "uuid"
           },
           "name": "siteId",
           "in": "path",
-          "required": true
+          "required": true,
+          "description": "A valid site UUID"
         }
       ],
       "get": {
@@ -920,9 +922,35 @@
         "tags": [
           "Buildings"
         ],
-        "responses": {},
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "count": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Building-Object"
+                      }
+                    }
+                  },
+                  "required": [
+                    "count",
+                    "data"
+                  ]
+                }
+              }
+            }
+          }
+        },
         "operationId": "list-site-buildings",
-        "description": "Retrieve a list of buildings associated with the specified site\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:building:*`,`sites:building:list`\n* Licensed Feature: `sites_base` + `sites_buildings`\n\n**Variations**\n\nIf the `type` query paramter is not included with the request, all sites are returned. \n\n**Returned Site Scope**\n\nThis is a scoped endpoint and the data returned may not be a complete, conclusive listing of all resources in the tenant account.\n\nUsers with `*` & `sites:*` permission scopes will always have access to the complete resource data set in the tenant.",
+        "description": "Retrieve a list of buildings associated with the specified site\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:building:*`,`sites:building:list`",
         "security": [
           {
             "Bearer Token": []
@@ -992,7 +1020,7 @@
         "tags": [
           "Buildings"
         ],
-        "description": "",
+        "description": "Retrieve a list of buildings associated with the specified site\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:building:*`,`sites:building:list`\n* Licensed Feature: `sites_base` + `sites_buildings`\n\n**Variations**\n\nIf the `type` query paramter is not included with the request, all sites are returned. \n\n**Returned Site Scope**\n\nThis is a scoped endpoint and the data returned may not be a complete, conclusive listing of all resources in the tenant account.\n\nUsers with `*` & `sites:*` permission scopes will always have access to the complete resource data set in the tenant.",
         "security": [
           {
             "Bearer Token": []
@@ -1038,23 +1066,17 @@
         }
       }
     },
-    "/v1/site/{siteId}/building/{buildingId}": {
+    "/v1/site/building/{buildingId}": {
       "parameters": [
         {
           "schema": {
-            "type": "string"
-          },
-          "name": "siteId",
-          "in": "path",
-          "required": true
-        },
-        {
-          "schema": {
-            "type": "string"
+            "type": "string",
+            "format": "uuid"
           },
           "name": "buildingId",
           "in": "path",
-          "required": true
+          "required": true,
+          "description": "A valid building UUID"
         }
       ],
       "get": {
@@ -1062,13 +1084,28 @@
         "tags": [
           "Buildings"
         ],
-        "responses": {},
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Building-Object"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
         "operationId": "get-building",
         "security": [
           {
             "Bearer Token": []
           }
-        ]
+        ],
+        "description": "Retrieve a list of buildings associated with the specified site\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:building:*`,`sites:building:list`"
       },
       "patch": {
         "summary": "Update Building",
@@ -1100,6 +1137,9 @@
           {
             "Bearer Token": []
           }
+        ],
+        "tags": [
+          "Buildings"
         ]
       }
     }
