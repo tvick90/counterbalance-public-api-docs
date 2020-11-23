@@ -1672,12 +1672,13 @@
             }
           }
         },
-        "operationId": "get-site-weather-forecast",
+        "operationId": "get-weather-forecast",
         "description": "Retrieve a detailed daily weather forecast\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`weather:*`,`sites:weather:forecast`\n* Licensed Feature: `weather_forecasts`\n\n**Specifying the Location**\n\nWeather forecasts can be obtained for a specified set of coordinates or by specifying a geocoded address object ID. Either the `coordinates` or `address` query parameters must be passed, but not both.\n\nIf the specified address ID has not been geocoded, an error will be returned.\n\n<!-- theme: warning-->\n> _Passing both `coordinates` and `address` will result in an error_\n\n**Units**\n\nBy default, data is returned in Imperial units. To return data in Metric units, pass the `metric` query parameter and set it to _true_. \n\n**Language**\n\nBy default, data is returned in English. To return data in another language, pass the `langugage` query parameter and set it to a valid IETF language code",
         "parameters": [
           {
             "schema": {
-              "type": "string"
+              "type": "string",
+              "default": "47.620506,-122.349277"
             },
             "in": "query",
             "name": "coordinates",
