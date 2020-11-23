@@ -379,6 +379,31 @@
                 }
               }
             }
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../models/Error-Response.v1.yaml"
+                },
+                "examples": {
+                  "Site Not Empty": {
+                    "value": {
+                      "error": {
+                        "message": "Site is not empty",
+                        "console": "Remove 2 building(s) before deleting this site",
+                        "code": 409
+                      },
+                      "logging_hash": null
+                    }
+                  }
+                }
+              }
+            }
           }
         },
         "description": "Delete a site by ID",
@@ -724,8 +749,35 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
                   "$ref": "#/components/schemas/Address-Object"
+                },
+                "examples": {
+                  "Response": {
+                    "value": {
+                      "id": "06283d43-1da3-42c7-ae96-8b304cb4cbb9",
+                      "lines": [
+                        "140 4th Ave N",
+                        "Suite 210"
+                      ],
+                      "locality": "South Lake Union",
+                      "city": "Seattle",
+                      "county": "King",
+                      "state": "WA",
+                      "postcode": 98109,
+                      "country": "USA",
+                      "formatted": "140 4th Ave N, Suite 210, Seattle, WA 98109",
+                      "geolocation": {
+                        "latitude": 47.61916,
+                        "longitude": -122.34801
+                      },
+                      "timezone": "America/Los_Angeles",
+                      "offset": -28800,
+                      "designations": {
+                        "primary_mailing": false,
+                        "primary_billing": false
+                      }
+                    }
+                  }
                 }
               }
             }
@@ -944,6 +996,37 @@
                     "count",
                     "data"
                   ]
+                },
+                "examples": {
+                  "Response": {
+                    "value": {
+                      "count": 2,
+                      "data": [
+                        {
+                          "id": "6c65fd9f-3ff3-4e70-bec7-35ab4e73f47d",
+                          "name": "Building 1 (South)",
+                          "code": "SEA1",
+                          "description": "South building",
+                          "address": "9286897f-d334-4cc0-ba12-e822b8aad653",
+                          "attributes": {
+                            "floor_count": 1,
+                            "area": ""
+                          }
+                        },
+                        {
+                          "id": "cf724f7e-2a88-4932-9e51-88c7eb532bdf",
+                          "name": "Building 2 (North)",
+                          "code": "SEA2",
+                          "description": "South Building",
+                          "address": "06283d43-1da3-42c7-ae96-8b304cb4cbb9",
+                          "attributes": {
+                            "floor_count": 1,
+                            "area": ""
+                          }
+                        }
+                      ]
+                    }
+                  }
                 }
               }
             }
@@ -961,14 +1044,50 @@
         "summary": "Create New Building",
         "operationId": "create-building",
         "responses": {
-          "200": {
-            "description": "OK",
+          "201": {
+            "description": "Created",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Building-Object"
                 },
-                "examples": {}
+                "examples": {
+                  "Response": {
+                    "value": {
+                      "id": "string",
+                      "name": "string",
+                      "code": "string",
+                      "description": "string",
+                      "address": {
+                        "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                        "lines": [
+                          "string"
+                        ],
+                        "locality": "string",
+                        "city": "string",
+                        "county": "string",
+                        "state": "string",
+                        "postcode": 0,
+                        "country": "string",
+                        "formatted": "string",
+                        "geolocation": {
+                          "latitude": 0,
+                          "longitude": 0
+                        },
+                        "timezone": "string",
+                        "offset": 0,
+                        "designations": {
+                          "primary_mailing": true,
+                          "primary_billing": true
+                        }
+                      },
+                      "attributes": {
+                        "floor_count": 0,
+                        "area": "string"
+                      }
+                    }
+                  }
+                }
               }
             }
           },
@@ -1020,7 +1139,7 @@
         "tags": [
           "Buildings"
         ],
-        "description": "Retrieve a list of buildings associated with the specified site\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:building:*`,`sites:building:list`\n* Licensed Feature: `sites_base` + `sites_buildings`\n\n**Variations**\n\nIf the `type` query paramter is not included with the request, all sites are returned. \n\n**Returned Site Scope**\n\nThis is a scoped endpoint and the data returned may not be a complete, conclusive listing of all resources in the tenant account.\n\nUsers with `*` & `sites:*` permission scopes will always have access to the complete resource data set in the tenant.",
+        "description": "Retrieve a list of buildings associated with the specified site\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:building:*`,`sites:building:list`\n* Licensed Feature: `sites_base` + `sites_buildings`",
         "security": [
           {
             "Bearer Token": []
@@ -1091,12 +1210,69 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Building-Object"
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "id": "6c65fd9f-3ff3-4e70-bec7-35ab4e73f47d",
+                      "code": "SEA1",
+                      "name": "Building 1 (South)",
+                      "description": "South building",
+                      "address": {
+                        "id": "9286897f-d334-4cc0-ba12-e822b8aad653",
+                        "lines": [
+                          "635 Elliot Ave W",
+                          "Suite 200"
+                        ],
+                        "locality": "",
+                        "city": "Seattle",
+                        "county": "King",
+                        "state": "WA",
+                        "postcode": 98119,
+                        "country": "USA",
+                        "formatted": "635 Elliot Ave W, Suite 200, Seattle, WA 98119",
+                        "geolocation": {
+                          "latitude": 47.62589,
+                          "longitude": -122.36816
+                        },
+                        "timezone": "America/Los_Angeles",
+                        "offset": -28800,
+                        "designations": {
+                          "primary_mailing": false,
+                          "primary_billing": false
+                        }
+                      },
+                      "attributes": {
+                        "floor_count": 4,
+                        "area": ""
+                      }
+                    }
+                  }
                 }
               }
             }
           },
           "404": {
-            "description": "Not Found"
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../models/Error-Response.v1.yaml"
+                },
+                "examples": {
+                  "Building Not Found": {
+                    "value": {
+                      "error": {
+                        "message": "Building ID not found",
+                        "console": "The building ID 1c5ed793-8d23-439e-bce4-ef07ab88d402 could not be found in the database",
+                        "code": 404
+                      },
+                      "logging_hash": null
+                    }
+                  }
+                }
+              }
+            }
           }
         },
         "operationId": "get-building",
@@ -1105,7 +1281,7 @@
             "Bearer Token": []
           }
         ],
-        "description": "Retrieve a list of buildings associated with the specified site\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:building:*`,`sites:building:list`"
+        "description": "Retrieve the specified building\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:building:*`,`sites:building:read`"
       },
       "patch": {
         "summary": "Update Building",
@@ -1122,7 +1298,8 @@
           {
             "Bearer Token": []
           }
-        ]
+        ],
+        "description": "Update the specified building\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:building:*`,`sites:building:read`\n* Licensed Feature: `sites_enhanced`"
       },
       "delete": {
         "summary": "Delete Building",
@@ -1140,6 +1317,418 @@
         ],
         "tags": [
           "Buildings"
+        ]
+      }
+    },
+    "/v1/site/weather/forecast": {
+      "get": {
+        "summary": "Get Weather Forecast",
+        "tags": [
+          "Weather"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Weather-Forecast"
+                },
+                "examples": {
+                  "Response (Imperial Units)": {
+                    "value": {
+                      "effective_coordinates": {
+                        "latitude": "44.98588",
+                        "longitude": "-93.28069"
+                      },
+                      "units": "imperial",
+                      "summary": "Snow between late tonight and tomorrow morning will accumulate 1-2 inches before changing to rain",
+                      "forecasts": [
+                        {
+                          "date": 1606136400,
+                          "sources": [
+                            "AccuWeather"
+                          ],
+                          "air_quality": {
+                            "airquality": {
+                              "value": 75,
+                              "rating": "Moderate",
+                              "rating_value": 2
+                            },
+                            "grass": {
+                              "value": 0,
+                              "rating": "Low",
+                              "rating_value": 1
+                            },
+                            "mold": {
+                              "value": 0,
+                              "rating": "Low",
+                              "rating_value": 1
+                            },
+                            "ragweed": {
+                              "value": 0,
+                              "rating": "Low",
+                              "rating_value": 1
+                            },
+                            "tree": {
+                              "value": 0,
+                              "rating": "Low",
+                              "rating_value": 1
+                            },
+                            "uvindex": {
+                              "value": 2,
+                              "rating": "Low",
+                              "rating_value": 1
+                            }
+                          },
+                          "hours_of_sun": 7,
+                          "temperature": {
+                            "minimum": {
+                              "value": 30,
+                              "unit": "F"
+                            },
+                            "maximum": {
+                              "value": 38,
+                              "unit": "F"
+                            }
+                          },
+                          "day": {
+                            "icon": 3,
+                            "phrases": {
+                              "long": "Times of clouds and sun",
+                              "short": "Times of clouds and sun"
+                            },
+                            "is_raining": false,
+                            "probabilities": {
+                              "precipitation": 4,
+                              "thunderstorm": 0,
+                              "rain": 3,
+                              "snow": 1,
+                              "ice": 0
+                            },
+                            "wind": {
+                              "direction": {
+                                "degrees": 122,
+                                "localized": "ESE"
+                              },
+                              "speed": {
+                                "value": 4,
+                                "unit": "mi/h"
+                              },
+                              "gust": {
+                                "value": 10,
+                                "unit": "mi/h",
+                                "direction": "SE"
+                              }
+                            },
+                            "cloud_cover": 29
+                          },
+                          "night": {
+                            "icon": 22,
+                            "phrases": {
+                              "long": "Plenty of clouds with a coating to an inch of snow late",
+                              "short": "Overcast with snow late"
+                            },
+                            "is_raining": true,
+                            "probabilities": {
+                              "precipitation": 75,
+                              "thunderstorm": 0,
+                              "rain": 10,
+                              "snow": 75,
+                              "ice": 3
+                            },
+                            "wind": {
+                              "direction": {
+                                "degrees": 139,
+                                "localized": "SE"
+                              },
+                              "speed": {
+                                "value": 9,
+                                "unit": "mi/h"
+                              },
+                              "gust": {
+                                "value": 13,
+                                "unit": "mi/h",
+                                "direction": "SE"
+                              }
+                            },
+                            "cloud_cover": 97
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  "Response (Metric Units)": {
+                    "value": {
+                      "effective_coordinates": {
+                        "latitude": "44.98588",
+                        "longitude": "-93.28069"
+                      },
+                      "units": "metric",
+                      "summary": "Snow between late tonight and tomorrow morning will accumulate 3-6 cm before changing to rain",
+                      "forecasts": [
+                        {
+                          "date": 1606136400,
+                          "sources": [
+                            "AccuWeather"
+                          ],
+                          "air_quality": {
+                            "airquality": {
+                              "value": 75,
+                              "rating": "Moderate",
+                              "rating_value": 2
+                            },
+                            "grass": {
+                              "value": 0,
+                              "rating": "Low",
+                              "rating_value": 1
+                            },
+                            "mold": {
+                              "value": 0,
+                              "rating": "Low",
+                              "rating_value": 1
+                            },
+                            "ragweed": {
+                              "value": 0,
+                              "rating": "Low",
+                              "rating_value": 1
+                            },
+                            "tree": {
+                              "value": 0,
+                              "rating": "Low",
+                              "rating_value": 1
+                            },
+                            "uvindex": {
+                              "value": 2,
+                              "rating": "Low",
+                              "rating_value": 1
+                            }
+                          },
+                          "hours_of_sun": 7,
+                          "temperature": {
+                            "minimum": {
+                              "value": -1,
+                              "unit": "C"
+                            },
+                            "maximum": {
+                              "value": 3,
+                              "unit": "C"
+                            }
+                          },
+                          "day": {
+                            "icon": 3,
+                            "phrases": {
+                              "long": "Times of clouds and sun",
+                              "short": "Times of clouds and sun"
+                            },
+                            "is_raining": false,
+                            "probabilities": {
+                              "precipitation": 4,
+                              "thunderstorm": 0,
+                              "rain": 3,
+                              "snow": 1,
+                              "ice": 0
+                            },
+                            "wind": {
+                              "direction": {
+                                "degrees": 122,
+                                "localized": "ESE"
+                              },
+                              "speed": {
+                                "value": 7,
+                                "unit": "km/h"
+                              },
+                              "gust": {
+                                "value": 16,
+                                "unit": "km/h",
+                                "direction": "SE"
+                              }
+                            },
+                            "cloud_cover": 29
+                          },
+                          "night": {
+                            "icon": 22,
+                            "phrases": {
+                              "long": "Plenty of clouds with 1-3 cm of snow late",
+                              "short": "Overcast, late snow, 1-3 cm"
+                            },
+                            "is_raining": true,
+                            "probabilities": {
+                              "precipitation": 75,
+                              "thunderstorm": 0,
+                              "rain": 10,
+                              "snow": 75,
+                              "ice": 3
+                            },
+                            "wind": {
+                              "direction": {
+                                "degrees": 139,
+                                "localized": "SE"
+                              },
+                              "speed": {
+                                "value": 14,
+                                "unit": "km/h"
+                              },
+                              "gust": {
+                                "value": 22,
+                                "unit": "km/h",
+                                "direction": "SE"
+                              }
+                            },
+                            "cloud_cover": 97
+                          }
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../models/Error-Response.v1.yaml"
+                },
+                "examples": {
+                  "Too Many Parameters": {
+                    "value": {
+                      "error": {
+                        "message": "Invalid request",
+                        "console": "Specify either coordinates or an address ID, but not both",
+                        "code": 400
+                      },
+                      "logging_hash": null
+                    }
+                  },
+                  "Not Enough Parameters": {
+                    "value": {
+                      "error": {
+                        "message": "Invalid request",
+                        "console": "Specify either coordinates or an address ID",
+                        "code": 400
+                      },
+                      "logging_hash": null
+                    }
+                  },
+                  "Invalid Duration": {
+                    "value": {
+                      "error": {
+                        "message": "9 is not a valid duration",
+                        "console": "Invalid duration value. Allowed value(s): 1, 5, 10, or 15",
+                        "code": 400
+                      },
+                      "logging_hash": null
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../models/Error-Response.v1.yaml"
+                },
+                "examples": {
+                  "Address Not Found": {
+                    "value": {
+                      "error": {
+                        "message": "Address not found",
+                        "console": "The address ID 8ac7d5dc-803d-40ac-bc37-16c0dbffe5d8 could not be found in the database",
+                        "code": 404
+                      },
+                      "logging_hash": null
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../models/Error-Response.v1.yaml"
+                },
+                "examples": {
+                  "Invalid Address Geocoding": {
+                    "value": {
+                      "error": {
+                        "message": "Invalid address geocoding",
+                        "console": "The address ID 8ac7d5dc-803d-40ac-bc37-16c0dbffe5d8 is not geocoded and we have no coordinates to check",
+                        "code": 409
+                      },
+                      "logging_hash": null
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-site-weather-forecast",
+        "description": "Retrieve a detailed daily weather forecast\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`weather:*`,`sites:weather:forecast`\n* Licensed Feature: `weather_forecasts`\n\n**Specifying the Location**\n\nWeather forecasts can be obtained for a specified set of coordinates or by specifying a geocoded address object ID. Either the `coordinates` or `address` query parameters must be passed, but not both.\n\nIf the specified address ID has not been geocoded, an error will be returned.\n\n<!-- theme: warning-->\n> _Passing both `coordinates` and `address` will result in an error_\n\n**Units**\n\nBy default, data is returned in Imperial units. To return data in Metric units, pass the `metric` query parameter and set it to _true_. \n\n**Language**\n\nBy default, data is returned in English. To return data in another language, pass the `langugage` query parameter and set it to a valid IETF language code",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "coordinates",
+            "description": "Get the weather forecast for the specified lat/lon position"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "in": "query",
+            "name": "address",
+            "description": "Get the weather forecast for the specified address ID"
+          },
+          {
+            "schema": {
+              "type": "integer",
+              "default": 5,
+              "enum": [
+                1,
+                5,
+                10,
+                15
+              ]
+            },
+            "in": "query",
+            "name": "duration",
+            "description": "The number of forecast outlook days to return"
+          },
+          {
+            "schema": {
+              "type": "boolean",
+              "default": "false"
+            },
+            "in": "query",
+            "name": "metric",
+            "description": "Return the results with metric units instead of imperial units"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "language",
+            "description": "Language in which search results should be returned. Should be one of supported IETF language tags, case insensitive."
+          }
+        ],
+        "security": [
+          {
+            "Bearer Token": []
+          }
         ]
       }
     }
@@ -1458,7 +2047,762 @@
               }
             }
           }
-        }
+        },
+        "x-tags": [
+          "Object Models"
+        ]
+      },
+      "Forecast-Day-Details": {
+        "description": "",
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "number"
+          },
+          "sources": {
+            "type": "array",
+            "items": {
+              "required": [],
+              "properties": {}
+            }
+          },
+          "air_quality": {
+            "type": "object",
+            "properties": {
+              "airquality": {
+                "type": "object",
+                "properties": {
+                  "value": {
+                    "type": "number"
+                  },
+                  "rating": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "rating_value": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "value",
+                  "rating",
+                  "rating_value"
+                ]
+              },
+              "grass": {
+                "type": "object",
+                "properties": {
+                  "value": {
+                    "type": "number"
+                  },
+                  "rating": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "rating_value": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "value",
+                  "rating",
+                  "rating_value"
+                ]
+              },
+              "mold": {
+                "type": "object",
+                "properties": {
+                  "value": {
+                    "type": "number"
+                  },
+                  "rating": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "rating_value": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "value",
+                  "rating",
+                  "rating_value"
+                ]
+              },
+              "ragweed": {
+                "type": "object",
+                "properties": {
+                  "value": {
+                    "type": "number"
+                  },
+                  "rating": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "rating_value": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "value",
+                  "rating",
+                  "rating_value"
+                ]
+              },
+              "tree": {
+                "type": "object",
+                "properties": {
+                  "value": {
+                    "type": "number"
+                  },
+                  "rating": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "rating_value": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "value",
+                  "rating",
+                  "rating_value"
+                ]
+              },
+              "uvindex": {
+                "type": "object",
+                "properties": {
+                  "value": {
+                    "type": "number"
+                  },
+                  "rating": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "rating_value": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "value",
+                  "rating",
+                  "rating_value"
+                ]
+              }
+            },
+            "required": [
+              "airquality",
+              "grass",
+              "mold",
+              "ragweed",
+              "tree",
+              "uvindex"
+            ]
+          },
+          "hours_of_sun": {
+            "type": "number"
+          },
+          "temperature": {
+            "type": "object",
+            "properties": {
+              "minimum": {
+                "type": "object",
+                "properties": {
+                  "value": {
+                    "type": "number"
+                  },
+                  "unit": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "value",
+                  "unit"
+                ]
+              },
+              "maximum": {
+                "type": "object",
+                "properties": {
+                  "value": {
+                    "type": "number"
+                  },
+                  "unit": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "value",
+                  "unit"
+                ]
+              }
+            },
+            "required": [
+              "minimum",
+              "maximum"
+            ]
+          },
+          "day": {
+            "type": "object",
+            "properties": {
+              "icon": {
+                "type": "number"
+              },
+              "phrases": {
+                "type": "object",
+                "properties": {
+                  "long": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "short": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "long",
+                  "short"
+                ]
+              },
+              "is_raining": {
+                "type": "boolean"
+              },
+              "probabilities": {
+                "type": "object",
+                "properties": {
+                  "precipitation": {
+                    "type": "number"
+                  },
+                  "thunderstorm": {
+                    "type": "number"
+                  },
+                  "rain": {
+                    "type": "number"
+                  },
+                  "snow": {
+                    "type": "number"
+                  },
+                  "ice": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "precipitation",
+                  "thunderstorm",
+                  "rain",
+                  "snow",
+                  "ice"
+                ]
+              },
+              "wind": {
+                "type": "object",
+                "properties": {
+                  "direction": {
+                    "type": "object",
+                    "properties": {
+                      "degrees": {
+                        "type": "number"
+                      },
+                      "localized": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "required": [
+                      "degrees",
+                      "localized"
+                    ]
+                  },
+                  "speed": {
+                    "type": "object",
+                    "properties": {
+                      "value": {
+                        "type": "number"
+                      },
+                      "unit": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "required": [
+                      "value",
+                      "unit"
+                    ]
+                  },
+                  "gust": {
+                    "type": "object",
+                    "properties": {
+                      "value": {
+                        "type": "number"
+                      },
+                      "unit": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "direction": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "required": [
+                      "value",
+                      "unit",
+                      "direction"
+                    ]
+                  }
+                },
+                "required": [
+                  "direction",
+                  "speed",
+                  "gust"
+                ]
+              },
+              "cloud_cover": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "icon",
+              "phrases",
+              "is_raining",
+              "probabilities",
+              "wind",
+              "cloud_cover"
+            ]
+          },
+          "night": {
+            "type": "object",
+            "properties": {
+              "icon": {
+                "type": "number"
+              },
+              "phrases": {
+                "type": "object",
+                "properties": {
+                  "long": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "short": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "long",
+                  "short"
+                ]
+              },
+              "is_raining": {
+                "type": "boolean"
+              },
+              "probabilities": {
+                "type": "object",
+                "properties": {
+                  "precipitation": {
+                    "type": "number"
+                  },
+                  "thunderstorm": {
+                    "type": "number"
+                  },
+                  "rain": {
+                    "type": "number"
+                  },
+                  "snow": {
+                    "type": "number"
+                  },
+                  "ice": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "precipitation",
+                  "thunderstorm",
+                  "rain",
+                  "snow",
+                  "ice"
+                ]
+              },
+              "wind": {
+                "type": "object",
+                "properties": {
+                  "direction": {
+                    "type": "object",
+                    "properties": {
+                      "degrees": {
+                        "type": "number"
+                      },
+                      "localized": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "required": [
+                      "degrees",
+                      "localized"
+                    ]
+                  },
+                  "speed": {
+                    "type": "object",
+                    "properties": {
+                      "value": {
+                        "type": "number"
+                      },
+                      "unit": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "required": [
+                      "value",
+                      "unit"
+                    ]
+                  },
+                  "gust": {
+                    "type": "object",
+                    "properties": {
+                      "value": {
+                        "type": "number"
+                      },
+                      "unit": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "direction": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "required": [
+                      "value",
+                      "unit",
+                      "direction"
+                    ]
+                  }
+                },
+                "required": [
+                  "direction",
+                  "speed",
+                  "gust"
+                ]
+              },
+              "cloud_cover": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "icon",
+              "phrases",
+              "is_raining",
+              "probabilities",
+              "wind",
+              "cloud_cover"
+            ]
+          }
+        },
+        "required": [
+          "date",
+          "sources",
+          "air_quality",
+          "hours_of_sun",
+          "temperature",
+          "day",
+          "night"
+        ],
+        "title": "Forecast Day Details",
+        "x-examples": {
+          "Example": {
+            "date": 1606136400,
+            "sources": [
+              "AccuWeather"
+            ],
+            "air_quality": {
+              "airquality": {
+                "value": 75,
+                "rating": "Moderate",
+                "rating_value": 2
+              },
+              "grass": {
+                "value": 0,
+                "rating": "Low",
+                "rating_value": 1
+              },
+              "mold": {
+                "value": 0,
+                "rating": "Low",
+                "rating_value": 1
+              },
+              "ragweed": {
+                "value": 0,
+                "rating": "Low",
+                "rating_value": 1
+              },
+              "tree": {
+                "value": 0,
+                "rating": "Low",
+                "rating_value": 1
+              },
+              "uvindex": {
+                "value": 2,
+                "rating": "Low",
+                "rating_value": 1
+              }
+            },
+            "hours_of_sun": 7,
+            "temperature": {
+              "minimum": {
+                "value": 30,
+                "unit": "F"
+              },
+              "maximum": {
+                "value": 38,
+                "unit": "F"
+              }
+            },
+            "day": {
+              "icon": 3,
+              "phrases": {
+                "long": "Times of clouds and sun",
+                "short": "Times of clouds and sun"
+              },
+              "is_raining": false,
+              "probabilities": {
+                "precipitation": 4,
+                "thunderstorm": 0,
+                "rain": 3,
+                "snow": 1,
+                "ice": 0
+              },
+              "wind": {
+                "direction": {
+                  "degrees": 122,
+                  "localized": "ESE"
+                },
+                "speed": {
+                  "value": 4,
+                  "unit": "mi/h"
+                },
+                "gust": {
+                  "value": 10,
+                  "unit": "mi/h",
+                  "direction": "SE"
+                }
+              },
+              "cloud_cover": 29
+            },
+            "night": {
+              "icon": 22,
+              "phrases": {
+                "long": "Plenty of clouds with a coating to an inch of snow late",
+                "short": "Overcast with snow late"
+              },
+              "is_raining": true,
+              "probabilities": {
+                "precipitation": 75,
+                "thunderstorm": 0,
+                "rain": 10,
+                "snow": 75,
+                "ice": 3
+              },
+              "wind": {
+                "direction": {
+                  "degrees": 139,
+                  "localized": "SE"
+                },
+                "speed": {
+                  "value": 9,
+                  "unit": "mi/h"
+                },
+                "gust": {
+                  "value": 13,
+                  "unit": "mi/h",
+                  "direction": "SE"
+                }
+              },
+              "cloud_cover": 97
+            }
+          }
+        },
+        "x-tags": [
+          "Object Models"
+        ]
+      },
+      "Weather-Forecast": {
+        "description": "",
+        "type": "object",
+        "properties": {
+          "effective_coordinates": {
+            "type": "object",
+            "required": [
+              "latitude",
+              "longitude"
+            ],
+            "properties": {
+              "latitude": {
+                "type": "string",
+                "minLength": 1
+              },
+              "longitude": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "units": {
+            "type": "string",
+            "minLength": 1
+          },
+          "summary": {
+            "type": "string",
+            "minLength": 1
+          },
+          "forecasts": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "": {
+                  "$ref": "#/components/schemas/Forecast-Day-Details"
+                }
+              }
+            }
+          }
+        },
+        "required": [
+          "effective_coordinates",
+          "units",
+          "summary",
+          "forecasts"
+        ],
+        "x-examples": {
+          "Example": {
+            "effective_coordinates": {
+              "latitude": "44.98588",
+              "longitude": "-93.28069"
+            },
+            "units": "imperial",
+            "summary": "Snow between late tonight and tomorrow morning will accumulate 1-2 inches before changing to rain",
+            "forecasts": [
+              {
+                "date": 1606136400,
+                "sources": [
+                  "AccuWeather"
+                ],
+                "air_quality": {
+                  "airquality": {
+                    "value": 75,
+                    "rating": "Moderate",
+                    "rating_value": 2
+                  },
+                  "grass": {
+                    "value": 0,
+                    "rating": "Low",
+                    "rating_value": 1
+                  },
+                  "mold": {
+                    "value": 0,
+                    "rating": "Low",
+                    "rating_value": 1
+                  },
+                  "ragweed": {
+                    "value": 0,
+                    "rating": "Low",
+                    "rating_value": 1
+                  },
+                  "tree": {
+                    "value": 0,
+                    "rating": "Low",
+                    "rating_value": 1
+                  },
+                  "uvindex": {
+                    "value": 2,
+                    "rating": "Low",
+                    "rating_value": 1
+                  }
+                },
+                "hours_of_sun": 7,
+                "temperature": {
+                  "minimum": {
+                    "value": 30,
+                    "unit": "F"
+                  },
+                  "maximum": {
+                    "value": 38,
+                    "unit": "F"
+                  }
+                },
+                "day": {
+                  "icon": 3,
+                  "phrases": {
+                    "long": "Times of clouds and sun",
+                    "short": "Times of clouds and sun"
+                  },
+                  "is_raining": false,
+                  "probabilities": {
+                    "precipitation": 4,
+                    "thunderstorm": 0,
+                    "rain": 3,
+                    "snow": 1,
+                    "ice": 0
+                  },
+                  "wind": {
+                    "direction": {
+                      "degrees": 122,
+                      "localized": "ESE"
+                    },
+                    "speed": {
+                      "value": 4,
+                      "unit": "mi/h"
+                    },
+                    "gust": {
+                      "value": 10,
+                      "unit": "mi/h",
+                      "direction": "SE"
+                    }
+                  },
+                  "cloud_cover": 29
+                },
+                "night": {
+                  "icon": 22,
+                  "phrases": {
+                    "long": "Plenty of clouds with a coating to an inch of snow late",
+                    "short": "Overcast with snow late"
+                  },
+                  "is_raining": true,
+                  "probabilities": {
+                    "precipitation": 75,
+                    "thunderstorm": 0,
+                    "rain": 10,
+                    "snow": 75,
+                    "ice": 3
+                  },
+                  "wind": {
+                    "direction": {
+                      "degrees": 139,
+                      "localized": "SE"
+                    },
+                    "speed": {
+                      "value": 9,
+                      "unit": "mi/h"
+                    },
+                    "gust": {
+                      "value": 13,
+                      "unit": "mi/h",
+                      "direction": "SE"
+                    }
+                  },
+                  "cloud_cover": 97
+                }
+              }
+            ]
+          }
+        },
+        "title": "Weather Forecast",
+        "x-tags": [
+          "Object Models"
+        ]
       }
     },
     "securitySchemes": {
@@ -1480,6 +2824,9 @@
     },
     {
       "name": "Buildings"
+    },
+    {
+      "name": "Weather"
     }
   ]
 }
