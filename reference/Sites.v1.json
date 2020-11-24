@@ -2350,6 +2350,31 @@
           "effective_coordinates",
           "current",
           "names"
+        ],
+        "title": "Timezone Details",
+        "x-examples": {
+          "Example": {
+            "id": "Europe/Berlin",
+            "effective_coordinates": [
+              "52.5535101",
+              "13.2911232"
+            ],
+            "current": {
+              "wall_time": 1606190613,
+              "utc_offset": 3600,
+              "is_dst": false,
+              "tag": "CET"
+            },
+            "names": {
+              "ISO6391_language_code": "en",
+              "generic": "Central European Time",
+              "standard": "Central European Standard Time",
+              "daylight": "Central European Summer Time"
+            }
+          }
+        },
+        "x-tags": [
+          "Object Models"
         ]
       },
       "Building-Object": {
@@ -3502,7 +3527,10 @@
             }
           }
         },
-        "title": "Weather Current Conditions"
+        "title": "Weather Current Conditions",
+        "x-tags": [
+          "Object Models"
+        ]
       }
     },
     "securitySchemes": {
