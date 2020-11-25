@@ -1890,7 +1890,7 @@
           }
         },
         "operationId": "get-current-weather-conditions",
-        "description": "Retrieve detaild current weather conditions\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:weather:*`,`sites:weather:currently`\n* Licensed Feature: `weather_conditions`\n\n**Specifying the Location**\n\nWeather conditions can be obtained for a specified set of coordinates or by specifying a geocoded address object ID. Either the `coordinates` or `address` query parameters must be passed, but not both.\n\nIf the specified address ID has not been geocoded, an error will be returned.\n\n<!-- theme: warning-->\n> _Parameters `coordinates` and `address` are mutually exclusive. Passing more than one will result in an error_\n\n**Units**\n\nBy default, data is returned in Imperial units. To return data in Metric units, pass the `metric` query parameter and set it to _true_. \n\n**Language**\n\nBy default, data is returned in English. To return data in another language, pass the `langugage` query parameter and set it to a valid IETF language code",
+        "description": "Retrieve detailed current weather conditions\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:weather:*`,`sites:weather:currently`\n* Licensed Feature: `weather_conditions`\n\n**Specifying the Location**\n\nWeather conditions can be obtained for a specified set of coordinates or by specifying a geocoded address object ID. Either the `coordinates` or `address` query parameters must be passed, but not both.\n\nIf the specified address ID has not been geocoded, an error will be returned.\n\n<!-- theme: warning-->\n> _Parameters `coordinates` and `address` are mutually exclusive. Passing more than one will result in an error_\n\n**Units**\n\nBy default, data is returned in Imperial units. To return data in Metric units, pass the `metric` query parameter and set it to _true_. \n\n**Language**\n\nBy default, data is returned in English. To return data in another language, pass the `langugage` query parameter and set it to a valid IETF language code",
         "parameters": [
           {
             "schema": {
@@ -1918,6 +1918,168 @@
             "in": "query",
             "name": "metric",
             "description": "Return the results with metric units instead of imperial units"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "language",
+            "description": "Language in which search results should be returned. Should be one of supported IETF language tags, case insensitive."
+          }
+        ],
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ]
+      }
+    },
+    "/v1/site/weather/alerts": {
+      "get": {
+        "summary": "Get Weather Alerts",
+        "tags": [
+          "Weather"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Weather-Alerts"
+                },
+                "examples": {
+                  "Response": {
+                    "value": {
+                      "count": 1,
+                      "effective_coordinates": {
+                        "latitude": 47.8877148,
+                        "longitude": -124.6237354
+                      },
+                      "data": [
+                        {
+                          "id": 2203972,
+                          "category": "FLOOD",
+                          "description": "High Surf Advisory",
+                          "source": "U.S. National Weather Service",
+                          "areas": [
+                            {
+                              "name": "North Coast",
+                              "summary": "High Surf Advisory in effect from 10:00 PM PST until Wednesday, 10:00 PM PST.  Source: U.S. National Weather Service",
+                              "status": "New",
+                              "span": {
+                                "start": 1606284000,
+                                "end": 1606370400
+                              },
+                              "details": "...HIGH SURF ADVISORY IN EFFECT FROM 10 PM THIS EVENING TO 10 PM\nPST WEDNESDAY...\n\n* WHAT...Large breaking waves of 18 to 21 feet expected in the\n  surf zone.\n\n* WHERE...North Coast and Central Coast.\n\n* WHEN...From 10 PM this evening to 10 PM PST Wednesday.\n\n* IMPACTS...Dangerous conditions along the coast and in the surf\n  zone. Localized beach erosion may also occur due to large waves.\n\nPRECAUTIONARY/PREPAREDNESS ACTIONS...\n\nLarge waves may break and run up beaches farther than usual. Keep\nyour distance from the coastline and never turn your back on the\nocean.\n\nInexperienced swimmers should remain out of the water due to\ndangerous surf conditions.\n\n&&"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../models/Error-Response.v1.yaml"
+                },
+                "examples": {
+                  "No Parameters": {
+                    "value": {
+                      "error": {
+                        "message": "Invalid request",
+                        "console": "Specify either coordinates or an address ID",
+                        "code": 400
+                      },
+                      "logging_hash": null
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../models/Error-Response.v1.yaml"
+                },
+                "examples": {
+                  "Address Not Found": {
+                    "value": {
+                      "error": {
+                        "message": "Address not found",
+                        "console": "The address ID 8ac7d5dc-803d-40ac-bc37-16c0dbffe5d8 could not be found in the database",
+                        "code": 404
+                      },
+                      "logging_hash": null
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../models/Error-Response.v1.yaml"
+                },
+                "examples": {
+                  "Invalid Parameter Combination": {
+                    "value": {
+                      "error": {
+                        "message": "Invalid request",
+                        "console": "Parameters coordinates and address are mutually exclusive. Specify only one.",
+                        "code": 409
+                      },
+                      "logging_hash": null
+                    }
+                  },
+                  "Invalid Address Geocoding": {
+                    "value": {
+                      "error": {
+                        "message": "Invalid address geocoding",
+                        "console": "The address ID 8ac7d5dc-803d-40ac-bc37-16c0dbffe5d8 is not geocoded and we have no coordinates to check",
+                        "code": 409
+                      },
+                      "logging_hash": null
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-v1-site-weather-alerts",
+        "description": "Retrieve current sever weather alerts and advisories\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:weather:*`,`sites:weather:alerts`\n* Licensed Feature: `weather_alerts`\n\n**Specifying the Location**\n\nWeather alerts and advisories can be obtained for a specified set of coordinates or by specifying a geocoded address object ID. Either the `coordinates` or `address` query parameters must be passed, but not both.\n\nIf the specified address ID has not been geocoded, an error will be returned.\n\n<!-- theme: warning-->\n> _Parameters `coordinates` and `address` are mutually exclusive. Passing more than one will result in an error_\n\n**Language**\n\nBy default, data is returned in English. To return data in another language, pass the `langugage` query parameter and set it to a valid IETF language code.\n\n<!-- theme: warning-->\n> _The API supports any valid IETF language code but alert data may not be available in the specified language_",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "default": "47.620506,-122.349277"
+            },
+            "in": "query",
+            "name": "coordinates",
+            "description": "Get weather alerts for the specified lat/lon position"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "in": "query",
+            "name": "address",
+            "description": "Get weather alerts for the specified address ID"
           },
           {
             "schema": {
@@ -3528,6 +3690,174 @@
           }
         },
         "title": "Weather Current Conditions",
+        "x-tags": [
+          "Object Models"
+        ]
+      },
+      "Weather-Alerts": {
+        "description": "",
+        "type": "object",
+        "title": "Weather Alert Listing",
+        "x-tags": [
+          "Object Models"
+        ],
+        "properties": {
+          "count": {
+            "type": "number"
+          },
+          "effective_coordinates": {
+            "type": "object",
+            "required": [
+              "latitude",
+              "longitude"
+            ],
+            "properties": {
+              "latitude": {
+                "type": "number"
+              },
+              "longitude": {
+                "type": "number"
+              }
+            }
+          },
+          "data": {
+            "type": "array",
+            "uniqueItems": true,
+            "minItems": 1,
+            "items": {
+              "$ref": "#/components/schemas/Weather-Alert-Detail"
+            }
+          }
+        },
+        "required": [
+          "count",
+          "effective_coordinates",
+          "data"
+        ],
+        "x-examples": {
+          "Example": {
+            "count": 1,
+            "effective_coordinates": {
+              "latitude": 47.8877148,
+              "longitude": -124.6237354
+            },
+            "data": [
+              {
+                "id": 2203972,
+                "category": "FLOOD",
+                "description": "High Surf Advisory",
+                "source": "U.S. National Weather Service",
+                "areas": [
+                  {
+                    "name": "North Coast",
+                    "summary": "High Surf Advisory in effect from 10:00 PM PST until Wednesday, 10:00 PM PST.  Source: U.S. National Weather Service",
+                    "status": "New",
+                    "span": {
+                      "start": 1606284000,
+                      "end": 1606370400
+                    },
+                    "details": "...HIGH SURF ADVISORY IN EFFECT FROM 10 PM THIS EVENING TO 10 PM\nPST WEDNESDAY...\n\n* WHAT...Large breaking waves of 18 to 21 feet expected in the\n  surf zone.\n\n* WHERE...North Coast and Central Coast.\n\n* WHEN...From 10 PM this evening to 10 PM PST Wednesday.\n\n* IMPACTS...Dangerous conditions along the coast and in the surf\n  zone. Localized beach erosion may also occur due to large waves.\n\nPRECAUTIONARY/PREPAREDNESS ACTIONS...\n\nLarge waves may break and run up beaches farther than usual. Keep\nyour distance from the coastline and never turn your back on the\nocean.\n\nInexperienced swimmers should remain out of the water due to\ndangerous surf conditions.\n\n&&"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      },
+      "Weather-Alert-Detail": {
+        "description": "",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "category": {
+            "type": "string",
+            "minLength": 1
+          },
+          "description": {
+            "type": "string",
+            "minLength": 1
+          },
+          "source": {
+            "type": "string",
+            "minLength": 1
+          },
+          "areas": {
+            "type": "array",
+            "uniqueItems": true,
+            "minItems": 1,
+            "items": {
+              "required": [
+                "name",
+                "summary",
+                "status",
+                "details"
+              ],
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "summary": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "status": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "span": {
+                  "type": "object",
+                  "properties": {
+                    "start": {
+                      "type": "number"
+                    },
+                    "end": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "start",
+                    "end"
+                  ]
+                },
+                "details": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            }
+          }
+        },
+        "required": [
+          "id",
+          "category",
+          "description",
+          "source",
+          "areas"
+        ],
+        "x-examples": {
+          "Example": {
+            "id": 2203972,
+            "category": "FLOOD",
+            "description": "High Surf Advisory",
+            "source": "U.S. National Weather Service",
+            "areas": [
+              {
+                "name": "North Coast",
+                "summary": "High Surf Advisory in effect from 10:00 PM PST until Wednesday, 10:00 PM PST.  Source: U.S. National Weather Service",
+                "status": "New",
+                "span": {
+                  "start": 1606284000,
+                  "end": 1606370400
+                },
+                "details": "...HIGH SURF ADVISORY IN EFFECT FROM 10 PM THIS EVENING TO 10 PM\nPST WEDNESDAY...\n\n* WHAT...Large breaking waves of 18 to 21 feet expected in the\n  surf zone.\n\n* WHERE...North Coast and Central Coast.\n\n* WHEN...From 10 PM this evening to 10 PM PST Wednesday.\n\n* IMPACTS...Dangerous conditions along the coast and in the surf\n  zone. Localized beach erosion may also occur due to large waves.\n\nPRECAUTIONARY/PREPAREDNESS ACTIONS...\n\nLarge waves may break and run up beaches farther than usual. Keep\nyour distance from the coastline and never turn your back on the\nocean.\n\nInexperienced swimmers should remain out of the water due to\ndangerous surf conditions.\n\n&&"
+              }
+            ]
+          }
+        },
+        "title": "Weather Alert Details",
         "x-tags": [
           "Object Models"
         ]
