@@ -640,7 +640,7 @@
       ],
       "post": {
         "summary": "Perform Address Operations",
-        "operationId": "post-v1-site-address-addressId-operation",
+        "operationId": "address-operations",
         "responses": {
           "200": {
             "description": "OK",
@@ -654,7 +654,7 @@
                     "value": {
                       "id": "f3643601-d122-47c5-893c-1f108c07d840",
                       "lines": [
-                        "80 80th Street S",
+                        "80 8th Street S",
                         "Suite 650"
                       ],
                       "locality": "Loring Park",
@@ -663,7 +663,7 @@
                       "state": "MN",
                       "postcode": 55403,
                       "country": "USA",
-                      "formatted": "80 80th Street S, Suite 650, Minneapolis, MN 55403",
+                      "formatted": "80 8th Street S, Suite 650, Minneapolis, MN 55403",
                       "geolocation": {
                         "latitude": 44.97191,
                         "longitude": -93.28492
@@ -720,21 +720,11 @@
         ]
       }
     },
-    "/v1/site/{siteId}/address": {
-      "parameters": [
-        {
-          "schema": {
-            "type": "string"
-          },
-          "name": "siteId",
-          "in": "path",
-          "required": true,
-          "description": "A valid site UUID"
-        }
-      ],
+    "/v1/site/address": {
+      "parameters": [],
       "put": {
-        "summary": "Add Address to Site",
-        "operationId": "put-v1-site-siteId-address",
+        "summary": "Add Address to Site or Building",
+        "operationId": "create-address",
         "responses": {
           "201": {
             "description": "Created",
@@ -775,7 +765,7 @@
             }
           }
         },
-        "description": "Create a new address object and attach it to the specified site",
+        "description": "Create a new address object and attach it to the specified site or building\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ \n  \n  _When specifying a site ID:_ `*`,`sites:*`,`sites:site:*`,`sites:site:update`\n  \n  _When specifying a building ID:_ `*`,`sites:*`,`sites:building:*`,`sites:building:update`\n\n\n**Address Geocoding**\n\nBy default, new addresses are geocoded to determine their GPS coordinates, timezone, and to fill-in various extended properties such as the locality, country, and ZIP or postcode. \n\nGeocoding is an optional process and can be skipped by setting `geocode` to `false` in the request body. If geocoding is skipped, the following additional body parameters become required: `county`, `country`, `postcode`, `timezone`",
         "security": [
           {
             "Bearer Token": []
@@ -825,8 +815,8 @@
                   },
                   "country": {
                     "type": "string",
-                    "description": "The ISO 3166 alpha-2 country code (US, CA, UK, etc)",
-                    "maxLength": 2
+                    "description": "The ISO 3166 alpha-3 country code (USA, CAN, etc)",
+                    "maxLength": 3
                   },
                   "postcode": {
                     "type": "string",
@@ -837,6 +827,14 @@
                     "type": "string",
                     "maxLength": 90,
                     "description": "An IANA timezone code for the address"
+                  },
+                  "latitude": {
+                    "type": "string",
+                    "description": "The longitude value of the address"
+                  },
+                  "longitude": {
+                    "type": "string",
+                    "description": "The latitude value of the address"
                   }
                 },
                 "required": [
@@ -867,7 +865,7 @@
                     "state": "WA",
                     "locality": "Lower Queen Anne",
                     "county": "King",
-                    "country": "US",
+                    "country": "USA",
                     "postcode": "98119",
                     "timezone": "America/Los_Angeles"
                   }
@@ -878,6 +876,26 @@
         },
         "tags": [
           "Addresses"
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "in": "query",
+            "name": "site",
+            "description": "A valid site UUID"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "in": "query",
+            "name": "building",
+            "description": "A valid building UUID"
+          }
         ]
       }
     },
@@ -955,6 +973,28 @@
                 }
               }
             }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../models/Error-Response.v1.yaml"
+                },
+                "examples": {
+                  "Site Not Found": {
+                    "value": {
+                      "error": {
+                        "message": "Site not found",
+                        "console": "Site not found",
+                        "code": 404
+                      },
+                      "logging_hash": "daa4ceb0a1d0434987e2e536318f4140ad537560"
+                    }
+                  }
+                }
+              }
+            }
           }
         },
         "operationId": "list-site-buildings",
@@ -979,36 +1019,14 @@
                 "examples": {
                   "Response": {
                     "value": {
-                      "id": "string",
-                      "name": "string",
-                      "code": "string",
-                      "description": "string",
-                      "address": {
-                        "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
-                        "lines": [
-                          "string"
-                        ],
-                        "locality": "string",
-                        "city": "string",
-                        "county": "string",
-                        "state": "string",
-                        "postcode": 0,
-                        "country": "string",
-                        "formatted": "string",
-                        "geolocation": {
-                          "latitude": 0,
-                          "longitude": 0
-                        },
-                        "timezone": "string",
-                        "offset": 0,
-                        "designations": {
-                          "primary_mailing": true,
-                          "primary_billing": true
-                        }
-                      },
+                      "id": "c68e0256-bbcc-4d3b-9e45-53223a240939",
+                      "code": "BLDG-A",
+                      "name": "Building A",
+                      "description": "Primary building",
+                      "address": null,
                       "attributes": {
-                        "floor_count": 0,
-                        "area": "string"
+                        "floor_count": 1,
+                        "area": ""
                       }
                     }
                   }
@@ -1064,7 +1082,7 @@
         "tags": [
           "Buildings"
         ],
-        "description": "Retrieve a list of buildings associated with the specified site\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:building:*`,`sites:building:list`\n* Licensed Feature: `sites_base` + `sites_buildings`",
+        "description": "Retrieve a list of buildings associated with the specified site\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:building:*`,`sites:building:list`\n* Licensed Feature: `sites_enhanced`",
         "security": [
           {
             "Bearer Token": []
@@ -1094,7 +1112,7 @@
                   "floor_count": {
                     "type": "integer",
                     "maximum": 999,
-                    "description": "THe number of floors in the building"
+                    "description": "The number of floors in the building"
                   },
                   "area": {
                     "type": "string",
@@ -1104,6 +1122,15 @@
                 "required": [
                   "name"
                 ]
+              },
+              "examples": {
+                "Example": {
+                  "value": {
+                    "name": "Building A",
+                    "code": "BLDG-A",
+                    "description": "Primary building"
+                  }
+                }
               }
             }
           }
@@ -1137,7 +1164,7 @@
                   "$ref": "#/components/schemas/Building-Object"
                 },
                 "examples": {
-                  "example-1": {
+                  "Response": {
                     "value": {
                       "id": "6c65fd9f-3ff3-4e70-bec7-35ab4e73f47d",
                       "code": "SEA1",
@@ -1206,14 +1233,59 @@
             "Bearer Token": []
           }
         ],
-        "description": "Retrieve the specified building\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:building:*`,`sites:building:read`"
+        "description": "Retrieve the specified building\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:building:*`,`sites:building:read`\n* Licensed Feature: `sites_enhanced`"
       },
       "patch": {
         "summary": "Update Building",
         "operationId": "update-building",
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Building-Object"
+                },
+                "examples": {
+                  "Response": {
+                    "value": {
+                      "id": "6c65fd9f-3ff3-4e70-bec7-35ab4e73f47d",
+                      "code": "SEA1",
+                      "name": "Building 1 (South)",
+                      "description": "South building near the water tower",
+                      "address": {
+                        "id": "9286897f-d334-4cc0-ba12-e822b8aad653",
+                        "lines": [
+                          "635 Elliot Ave W",
+                          "Suite 200"
+                        ],
+                        "locality": "",
+                        "city": "Seattle",
+                        "county": "King",
+                        "state": "WA",
+                        "postcode": 98119,
+                        "country": "USA",
+                        "formatted": "635 Elliot Ave W, Suite 200, Seattle, WA 98119",
+                        "geolocation": {
+                          "latitude": 47.62589,
+                          "longitude": -122.36816
+                        },
+                        "timezone": "America/Los_Angeles",
+                        "offset": -28800,
+                        "designations": {
+                          "primary_mailing": false,
+                          "primary_billing": false
+                        }
+                      },
+                      "attributes": {
+                        "floor_count": 4,
+                        "area": "5,760 SQ FT"
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         },
         "tags": [
@@ -1224,7 +1296,51 @@
             "Bearer Token": []
           }
         ],
-        "description": "Update the specified building\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:building:*`,`sites:building:read`\n* Licensed Feature: `sites_enhanced`"
+        "description": "Update the specified building\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:building:*`,`sites:building:read`\n* Licensed Feature: `sites_enhanced`",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "The name of the building",
+                    "maxLength": 96
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "The description of the building",
+                    "maxLength": 120
+                  },
+                  "code": {
+                    "type": "string",
+                    "description": "The building's unique code",
+                    "maxLength": 32
+                  },
+                  "floor_count": {
+                    "type": "number",
+                    "description": "The number of floors in the building",
+                    "maximum": 999
+                  },
+                  "area": {
+                    "type": "string",
+                    "description": "The square footage of the building"
+                  }
+                }
+              },
+              "examples": {
+                "Example": {
+                  "value": {
+                    "floor_count": 4,
+                    "description": "South building near the water tower",
+                    "area": "5,760 SQ FT"
+                  }
+                }
+              }
+            }
+          }
+        }
       },
       "delete": {
         "summary": "Delete Building",
