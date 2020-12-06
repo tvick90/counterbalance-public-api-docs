@@ -1,0 +1,61 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Telemetry & Logging",
+    "version": "1.0",
+    "description": "Telemetry and logging allows the collection of data from gateways and on-site systems"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000"
+    }
+  ],
+  "paths": {
+    "/v1/telemetry/point": {
+      "get": {
+        "summary": "List Data Points",
+        "tags": [
+          "Data Points"
+        ],
+        "responses": {},
+        "operationId": "get-v1-telemetry-point",
+        "description": ""
+      },
+      "post": {
+        "summary": "Create Data Point",
+        "operationId": "create-telemetry-point",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "description": "Create a new telemetry point definition",
+        "tags": [
+          "Data Points"
+        ]
+      }
+    },
+    "/v1/telemetry/logger": {
+      "get": {
+        "summary": "Get Logger Listing",
+        "tags": [
+          "Loggers"
+        ],
+        "responses": {},
+        "operationId": "get-loggers",
+        "description": "Retrieve a list of loggers"
+      }
+    }
+  },
+  "components": {
+    "schemas": {}
+  },
+  "tags": [
+    {
+      "name": "Loggers"
+    },
+    {
+      "name": "Data Points"
+    }
+  ]
+}

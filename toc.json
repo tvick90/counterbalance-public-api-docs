@@ -27,8 +27,18 @@
     },
     {
       "type": "item",
-      "title": "Tenant Management",
-      "uri": "reference/Tenant.v1.yaml"
+      "title": "Gateways & Infrastructure",
+      "uri": "reference/Infrastructure.v1.json"
+    },
+    {
+      "type": "item",
+      "title": "Sites",
+      "uri": "reference/Sites.v1.json"
+    },
+    {
+      "type": "item",
+      "title": "Telemetry & Data Logging",
+      "uri": "reference/Telemetry.v1.json"
     },
     {
       "type": "item",
@@ -42,39 +52,8 @@
     },
     {
       "type": "item",
-      "title": "Core Subscription",
-      "uri": "docs/billing/Core-Subscription.md"
-    },
-    {
-      "type": "group",
-      "title": "Billing Account",
-      "items": [
-        {
-          "type": "item",
-          "title": "Create & Manage Billing",
-          "uri": "docs/billing/Billing-Accounts.md"
-        },
-        {
-          "type": "item",
-          "title": "Payment Sources",
-          "uri": "docs/billing/Payment-Sources.md"
-        },
-        {
-          "type": "item",
-          "title": "Invoices & Receipts",
-          "uri": "docs/billing/Invoices-and-Receipts.md"
-        }
-      ]
-    },
-    {
-      "type": "item",
-      "title": "Sites",
-      "uri": "reference/Sites.v1.json"
-    },
-    {
-      "type": "item",
-      "title": "Hardware Management",
-      "uri": "reference/Hardware.v1.json"
+      "title": "Account Management",
+      "uri": "reference/Tenant.v1.yaml"
     }
   ]
 }
