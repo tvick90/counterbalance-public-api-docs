@@ -98,6 +98,30 @@
             "in": "query",
             "name": "type",
             "description": "Return only sites of the specified type"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "code",
+            "description": "Return only sites with a matching code. Accepts * wildcard searches."
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "name",
+            "description": "Return only sites with a matching name. Accepts * wildcard searches."
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "description",
+            "description": "Return only sites with a matching description. Accepts * wildcard searches."
           }
         ]
       },
