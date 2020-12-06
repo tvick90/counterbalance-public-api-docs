@@ -16,7 +16,16 @@
       "description": "Production API"
     }
   ],
-  "paths": {},
+  "paths": {
+    "/v1/hardware/gateway": {
+      "get": {
+        "summary": "Your GET endpoint",
+        "tags": [],
+        "responses": {},
+        "operationId": "get-v1-hardware-gateway"
+      }
+    }
+  },
   "components": {
     "schemas": {}
   }

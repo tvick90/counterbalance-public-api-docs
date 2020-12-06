@@ -1,0 +1,148 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Infrastructure",
+    "version": "1.0",
+    "description": "The Infrastructure API "
+  },
+  "servers": [
+    {
+      "url": "https://api.counterbalance.io",
+      "description": "Production API"
+    }
+  ],
+  "paths": {
+    "/v1/infrastructure/gateway": {
+      "get": {
+        "summary": "Get Gateway Listing",
+        "tags": [
+          "Gateways"
+        ],
+        "responses": {},
+        "operationId": "get-gateway",
+        "description": "Get a list of available gateway devices"
+      },
+      "post": {
+        "summary": "Create Gateway",
+        "operationId": "post-v1-infrastructure-gateway",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "description": "Create a new gateway",
+        "tags": [
+          "Gateways"
+        ]
+      }
+    },
+    "/v1/infrastructure/gateway/{gatewayId}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "gatewayId",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "get": {
+        "summary": "Get Gateway Details",
+        "responses": {},
+        "operationId": "get-v1-infrastructure-gateway-gatewayId",
+        "tags": [
+          "Gateways"
+        ]
+      }
+    },
+    "/v1/infrastructure/token": {
+      "get": {
+        "summary": "List Tokens",
+        "tags": [
+          "Infrastructure Tokens"
+        ],
+        "responses": {},
+        "operationId": "list-token",
+        "description": "List all available infrastructure tokens"
+      },
+      "post": {
+        "summary": "Create a New Token",
+        "operationId": "create-token",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "description": "",
+        "tags": [
+          "Infrastructure Tokens"
+        ]
+      }
+    },
+    "/v1/infrastructure/token/{tokenId}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "tokenId",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "get": {
+        "summary": "Get Token Details",
+        "tags": [
+          "Infrastructure Tokens"
+        ],
+        "responses": {},
+        "operationId": "get-token",
+        "description": ""
+      },
+      "patch": {
+        "summary": "Update Token Details",
+        "operationId": "update-token",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "Infrastructure Tokens"
+        ],
+        "description": ""
+      },
+      "delete": {
+        "summary": "Delete a Token",
+        "operationId": "delete-token",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "Infrastructure Tokens"
+        ],
+        "description": ""
+      }
+    }
+  },
+  "components": {
+    "schemas": {},
+    "securitySchemes": {
+      "Bearer Token": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Gateways"
+    },
+    {
+      "name": "Infrastructure Tokens"
+    }
+  ]
+}
