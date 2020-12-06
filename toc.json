@@ -42,6 +42,11 @@
     },
     {
       "type": "item",
+      "title": "Equipment",
+      "uri": "reference/Equipment.v1.json"
+    },
+    {
+      "type": "item",
       "title": "Users",
       "uri": "reference/User.v1.json"
     },

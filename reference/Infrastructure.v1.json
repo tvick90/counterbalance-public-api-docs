@@ -59,12 +59,12 @@
     "/v1/infrastructure/token": {
       "get": {
         "summary": "List Tokens",
-        "tags": [
-          "Infrastructure Tokens"
-        ],
         "responses": {},
         "operationId": "list-token",
-        "description": "List all available infrastructure tokens"
+        "description": "List all available infrastructure tokens",
+        "tags": [
+          "Hardware Tokens"
+        ]
       },
       "post": {
         "summary": "Create a New Token",
@@ -76,7 +76,7 @@
         },
         "description": "",
         "tags": [
-          "Infrastructure Tokens"
+          "Hardware Tokens"
         ]
       }
     },
@@ -93,12 +93,12 @@
       ],
       "get": {
         "summary": "Get Token Details",
-        "tags": [
-          "Infrastructure Tokens"
-        ],
         "responses": {},
         "operationId": "get-token",
-        "description": ""
+        "description": "",
+        "tags": [
+          "Hardware Tokens"
+        ]
       },
       "patch": {
         "summary": "Update Token Details",
@@ -108,10 +108,10 @@
             "description": "OK"
           }
         },
+        "description": "",
         "tags": [
-          "Infrastructure Tokens"
-        ],
-        "description": ""
+          "Hardware Tokens"
+        ]
       },
       "delete": {
         "summary": "Delete a Token",
@@ -121,10 +121,67 @@
             "description": "OK"
           }
         },
+        "description": "",
         "tags": [
-          "Infrastructure Tokens"
+          "Hardware Tokens"
+        ]
+      }
+    },
+    "/v1/infrastructure/controller": {
+      "get": {
+        "summary": "List DDC Controllers",
+        "tags": [
+          "Controllers"
         ],
+        "responses": {},
+        "operationId": "get-v1-infrastructure-controller"
+      },
+      "post": {
+        "summary": "Create DDC Controller",
+        "operationId": "create-ddc-controller",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "Controllers"
+        ],
+        "description": "Create a new DDC controller"
+      }
+    },
+    "/v1/infrastructure/controller/{controllerId}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "controllerId",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "get": {
+        "summary": "Get DDC Controller Details",
+        "tags": [
+          "Controllers"
+        ],
+        "responses": {},
+        "operationId": "get-controller",
         "description": ""
+      },
+      "patch": {
+        "summary": "Update DDC Controller",
+        "operationId": "update-controller",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "description": "",
+        "tags": [
+          "Controllers"
+        ]
       }
     }
   },
@@ -142,7 +199,10 @@
       "name": "Gateways"
     },
     {
-      "name": "Infrastructure Tokens"
+      "name": "Hardware Tokens"
+    },
+    {
+      "name": "Controllers"
     }
   ]
 }

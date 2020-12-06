@@ -9,8 +9,123 @@
       "url": "http://localhost:3000"
     }
   ],
-  "paths": {},
+  "paths": {
+    "/v1/equipment": {
+      "get": {
+        "summary": "List Equipment",
+        "tags": [
+          "Equipment"
+        ],
+        "responses": {},
+        "operationId": "list-equipment",
+        "description": ""
+      },
+      "post": {
+        "summary": "Create Equipment",
+        "operationId": "post-v1-equipment",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "description": "",
+        "tags": [
+          "Equipment"
+        ]
+      }
+    },
+    "/v1/equipment/{equipmentId}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "equipmentId",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "get": {
+        "summary": "Get Equipment Details",
+        "tags": [
+          "Equipment"
+        ],
+        "responses": {},
+        "operationId": "get-equipment-details",
+        "description": "Retrieve equipment details"
+      }
+    },
+    "/v1/equipment/classifications": {
+      "get": {
+        "summary": "List Equipment Classifications",
+        "tags": [
+          "Classifications"
+        ],
+        "responses": {},
+        "operationId": "list-equipment-classifications",
+        "description": ""
+      },
+      "post": {
+        "summary": "Create Equipment Classification",
+        "operationId": "create-equipment-classifications",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "description": "Create a new equipment class",
+        "tags": [
+          "Classifications"
+        ]
+      }
+    },
+    "/v1/equipment/{equipmentId}/component": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "equipmentId",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "get": {
+        "summary": "Get Equipment Components",
+        "tags": [
+          "Components"
+        ],
+        "responses": {},
+        "operationId": "list-equipment-components",
+        "description": ""
+      },
+      "put": {
+        "summary": "Create New Equipment Component",
+        "operationId": "create-equipment-component",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "description": "Create a new component for the specified equipment",
+        "tags": [
+          "Components"
+        ]
+      }
+    }
+  },
   "components": {
     "schemas": {}
-  }
+  },
+  "tags": [
+    {
+      "name": "Equipment"
+    },
+    {
+      "name": "Classifications"
+    },
+    {
+      "name": "Components"
+    }
+  ]
 }
