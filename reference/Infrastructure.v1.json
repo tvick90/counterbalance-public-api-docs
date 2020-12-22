@@ -3,7 +3,7 @@
   "info": {
     "title": "Infrastructure",
     "version": "1.0",
-    "description": "The Infrastructure API "
+    "description": "The Infrastructure API provides endpoints for gateway and field controller management, including:\n* Registering & managing site gateways\n* Creating & managing DDC field controllers\n\n**Managing Site Gateways**\n\nA site gateway is a physical device placed on the BAS network and provides the connection to the Counterbalance cloud. A site gateway must first be purchased and registered with a tenant account before it will be accessible in the console and this process is outlined in the Register Gateway endpoint.\n\n**Quotas and Licensing**\n\nSite management is a paid feature. Physical sites are subject to quota availability. Virtual sites and buildings are not measured against a pre-defined quota but require a seperate license. These requirments are outlined in the various endpoint docs.\n\nIf insufficient quota or licensing exists for the specified site type, a `403 Forbidden` error will be thrown and the site will not be created. "
   },
   "servers": [
     {
@@ -14,7 +14,7 @@
   "paths": {
     "/v1/infrastructure/gateway": {
       "get": {
-        "summary": "Get Gateway Listing",
+        "summary": "List Gateways",
         "tags": [
           "Gateways"
         ],
@@ -23,16 +23,21 @@
         "description": "Get a list of available gateway devices"
       },
       "post": {
-        "summary": "Create Gateway",
+        "summary": "Register Gateway",
         "operationId": "post-v1-infrastructure-gateway",
         "responses": {
           "200": {
             "description": "OK"
           }
         },
-        "description": "Create a new gateway",
+        "description": "Register a configured site gateway and attach it to a tenant account\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* A configured site gateway with Internet access\n* Permissions _(at least one):_ `*`,`infrastructure:*`,`infrastructure:gateway:*`,`infrastructure:gateway:register`\n* Adequate site gateway quota\n\n**Registration Process**\n\nA new site gateway is registered via the gateway's local UI. Calling this endpoint by any other means will result in a dysfunctional gateway.",
         "tags": [
           "Gateways"
+        ],
+        "security": [
+          {
+            "Bearer Token": []
+          }
         ]
       }
     },
@@ -48,27 +53,16 @@
         }
       ],
       "get": {
-        "summary": "Get Gateway Details",
+        "summary": "Get Gateway",
         "responses": {},
         "operationId": "get-v1-infrastructure-gateway-gatewayId",
         "tags": [
           "Gateways"
         ]
-      }
-    },
-    "/v1/infrastructure/token": {
-      "get": {
-        "summary": "List Tokens",
-        "responses": {},
-        "operationId": "list-token",
-        "description": "List all available infrastructure tokens",
-        "tags": [
-          "Hardware Tokens"
-        ]
       },
-      "post": {
-        "summary": "Create a New Token",
-        "operationId": "create-token",
+      "patch": {
+        "summary": "Update Gateway",
+        "operationId": "patch-v1-infrastructure-gateway-gatewayId",
         "responses": {
           "200": {
             "description": "OK"
@@ -76,55 +70,41 @@
         },
         "description": "",
         "tags": [
-          "Hardware Tokens"
+          "Gateways"
+        ]
+      },
+      "delete": {
+        "summary": "Delete Gateway",
+        "operationId": "delete-v1-infrastructure-gateway-gatewayId",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "Gateways"
         ]
       }
     },
-    "/v1/infrastructure/token/{tokenId}": {
+    "/v1/infrastructure/gateway/{gatewayId}/devices": {
       "parameters": [
         {
           "schema": {
             "type": "string"
           },
-          "name": "tokenId",
+          "name": "gatewayId",
           "in": "path",
           "required": true
         }
       ],
       "get": {
-        "summary": "Get Token Details",
+        "summary": "List Active DDC Controllers",
+        "tags": [
+          "Controllers"
+        ],
         "responses": {},
-        "operationId": "get-token",
-        "description": "",
-        "tags": [
-          "Hardware Tokens"
-        ]
-      },
-      "patch": {
-        "summary": "Update Token Details",
-        "operationId": "update-token",
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        },
-        "description": "",
-        "tags": [
-          "Hardware Tokens"
-        ]
-      },
-      "delete": {
-        "summary": "Delete a Token",
-        "operationId": "delete-token",
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        },
-        "description": "",
-        "tags": [
-          "Hardware Tokens"
-        ]
+        "operationId": "get-v1-infrastructure-gateway-gatewayId-devices",
+        "description": "List the available controllers on the specified gateway"
       }
     },
     "/v1/infrastructure/controller": {
@@ -186,7 +166,79 @@
     }
   },
   "components": {
-    "schemas": {},
+    "schemas": {
+      "Gateway-Details": {
+        "title": "Gateway Details",
+        "type": "object",
+        "description": "",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The gateway UUID"
+          },
+          "serial": {
+            "type": "string",
+            "description": "The serial number of the gateway"
+          },
+          "description": {
+            "type": "string",
+            "description": "A brief description of the gateway"
+          },
+          "registration_timestamp": {
+            "type": "integer"
+          },
+          "network": {
+            "type": "object",
+            "description": "Gateway network configuration information",
+            "required": [
+              "address",
+              "mask",
+              "gateway",
+              "nameservers"
+            ],
+            "properties": {
+              "address": {
+                "type": "string"
+              },
+              "mask": {
+                "type": "string"
+              },
+              "gateway": {
+                "type": "string"
+              },
+              "nameservers": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "hostname": {
+            "type": "string",
+            "description": "The hostname of the gateway on the LAN"
+          },
+          "bacnet_id": {
+            "type": "integer",
+            "description": "The BACnet instance ID of the gateway on the LAN"
+          },
+          "online": {
+            "type": "boolean",
+            "description": "The tunnel status of the gateway"
+          }
+        },
+        "required": [
+          "id",
+          "serial",
+          "registration_timestamp",
+          "network",
+          "hostname",
+          "bacnet_id",
+          "online"
+        ]
+      }
+    },
     "securitySchemes": {
       "Bearer Token": {
         "type": "http",
