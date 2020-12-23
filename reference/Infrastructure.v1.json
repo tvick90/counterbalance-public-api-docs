@@ -94,16 +94,22 @@
           },
           "name": "gatewayId",
           "in": "path",
-          "required": true
+          "required": true,
+          "description": "A valid gateway ID"
         }
       ],
       "get": {
-        "summary": "List Active DDC Controllers",
+        "summary": "List Available Field Controllers",
         "responses": {},
         "operationId": "get-v1-infrastructure-gateway-gatewayId-devices",
-        "description": "List the available controllers on the specified gateway",
+        "description": "List the available field controllers on the specified gateway\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* A configured site gateway with Internet access\n* Permissions _(at least one):_ `*`,`infrastructure:*`,`infrastructure:gateway:*`,`infrastructure:gateway:query`",
         "tags": [
           "Gateways"
+        ],
+        "security": [
+          {
+            "Bearer Token": []
+          }
         ]
       }
     },
@@ -161,6 +167,37 @@
         "description": "",
         "tags": [
           "Field Controllers"
+        ]
+      }
+    },
+    "/v1/infrastructure/gateway/{gatewayId}/whois": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "gatewayId",
+          "in": "path",
+          "required": true,
+          "description": "A valid gateway ID"
+        }
+      ],
+      "post": {
+        "summary": "Send BACnet Who-Is",
+        "operationId": "send-whois",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "Gateways"
+        ],
+        "description": "Send a BACnet Who-Is to the network and review responsive field controllers\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* A configured site gateway with Internet access\n* Permissions _(at least one):_ `*`,`infrastructure:*`,`infrastructure:gateway:*`,`infrastructure:gateway:query`\n",
+        "security": [
+          {
+            "Bearer Token": []
+          }
         ]
       }
     }
