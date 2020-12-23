@@ -99,22 +99,22 @@
       ],
       "get": {
         "summary": "List Active DDC Controllers",
-        "tags": [
-          "Controllers"
-        ],
         "responses": {},
         "operationId": "get-v1-infrastructure-gateway-gatewayId-devices",
-        "description": "List the available controllers on the specified gateway"
+        "description": "List the available controllers on the specified gateway",
+        "tags": [
+          "Gateways"
+        ]
       }
     },
     "/v1/infrastructure/controller": {
       "get": {
         "summary": "List DDC Controllers",
-        "tags": [
-          "Controllers"
-        ],
         "responses": {},
-        "operationId": "get-v1-infrastructure-controller"
+        "operationId": "get-v1-infrastructure-controller",
+        "tags": [
+          "Field Controllers"
+        ]
       },
       "post": {
         "summary": "Create DDC Controller",
@@ -124,10 +124,10 @@
             "description": "OK"
           }
         },
+        "description": "Create a new DDC controller",
         "tags": [
-          "Controllers"
-        ],
-        "description": "Create a new DDC controller"
+          "Field Controllers"
+        ]
       }
     },
     "/v1/infrastructure/controller/{controllerId}": {
@@ -143,12 +143,12 @@
       ],
       "get": {
         "summary": "Get DDC Controller Details",
-        "tags": [
-          "Controllers"
-        ],
         "responses": {},
         "operationId": "get-controller",
-        "description": ""
+        "description": "",
+        "tags": [
+          "Field Controllers"
+        ]
       },
       "patch": {
         "summary": "Update DDC Controller",
@@ -160,7 +160,7 @@
         },
         "description": "",
         "tags": [
-          "Controllers"
+          "Field Controllers"
         ]
       }
     }
@@ -254,7 +254,7 @@
       "name": "Hardware Tokens"
     },
     {
-      "name": "Controllers"
+      "name": "Field Controllers"
     }
   ]
 }
