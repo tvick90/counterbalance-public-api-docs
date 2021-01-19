@@ -7,7 +7,8 @@
   },
   "servers": [
     {
-      "url": "http://localhost:3000"
+      "url": "https://api.counterbalance.io",
+      "description": "Production API"
     }
   ],
   "paths": {
@@ -44,6 +45,33 @@
         "responses": {},
         "operationId": "get-loggers",
         "description": "Retrieve a list of loggers"
+      }
+    },
+    "/v1/telemetry/datapoint/{datapointId}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "datapointId",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "get": {
+        "summary": "Get Data Point Details",
+        "tags": [],
+        "responses": {},
+        "operationId": "get-v1-telemetry-datapoint-datapointId"
+      },
+      "delete": {
+        "summary": "Delete Data Point",
+        "operationId": "delete-v1-telemetry-datapoint-datapointId",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
       }
     }
   },

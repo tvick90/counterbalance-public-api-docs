@@ -18,9 +18,25 @@
         "tags": [
           "Gateways"
         ],
-        "responses": {},
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Gateway-Listing"
+                }
+              }
+            }
+          }
+        },
         "operationId": "get-gateway",
-        "description": "Get a list of available gateway devices"
+        "description": "Get a list of available gateway devices\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`infrastructure:*`,`infrastructure:gateway:*`,`infrastructure:gateway:list`",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ]
       },
       "post": {
         "summary": "Create Gateway",
@@ -148,7 +164,53 @@
       ],
       "get": {
         "summary": "List Available Field Controllers",
-        "responses": {},
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Gateway-Devices"
+                },
+                "examples": {
+                  "Response": {
+                    "value": {
+                      "count": 2,
+                      "data": {
+                        "managed_devices": [
+                          {
+                            "id": "341efcb4-b884-47b5-af5e-aa44ddb6f22a",
+                            "name": "US SEA Node 02",
+                            "description": "AHU-1 Controller",
+                            "location": "AHU-1 Controller",
+                            "site": "c0142a11-62d1-460a-9be5-9e7881ae7b58",
+                            "online": true,
+                            "bacnet": {
+                              "id": 10200,
+                              "name": "USSEA-HVAC-BMSNODE02"
+                            }
+                          }
+                        ],
+                        "unmanaged_devices": [
+                          {
+                            "device_id": "10100",
+                            "device_name": "USSEA-HVAC-BMSNODE01"
+                          }
+                        ],
+                        "online_devices": [
+                          "10100",
+                          "10200"
+                        ],
+                        "offline_devices": [],
+                        "new_devices_available": true
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
         "operationId": "get-v1-infrastructure-gateway-gatewayId-devices",
         "description": "List the available field controllers on the specified gateway\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* A configured site gateway with Internet access\n* Permissions _(at least one):_ `*`,`infrastructure:*`,`infrastructure:gateway:*`,`infrastructure:gateway:query`",
         "tags": [
@@ -174,14 +236,76 @@
         "summary": "Register Field Controller",
         "operationId": "create-ddc-controller",
         "responses": {
-          "200": {
-            "description": "OK"
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Field-Controller-Details"
+                }
+              }
+            }
           }
         },
-        "description": "Create a new DDC controller",
+        "description": "Create a new DDC controller definition\n\n",
         "tags": [
           "Field Controllers"
-        ]
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "description": "",
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "The name of the new controller"
+                  },
+                  "gateway": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "A valid gateway ID that can access the new controller",
+                    "format": "uuid"
+                  },
+                  "instance": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "The controller instance number"
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "A brief description of the new controller"
+                  },
+                  "location": {
+                    "type": "string",
+                    "description": "A brief description of the controller's location"
+                  },
+                  "site": {
+                    "type": "string",
+                    "format": "uuid",
+                    "description": "A valid site UUID to assign the new controller"
+                  }
+                },
+                "required": [
+                  "name",
+                  "gateway",
+                  "instance"
+                ]
+              },
+              "examples": {
+                "Example": {
+                  "value": {
+                    "name": "USSEA-HVAC-BMSNODE01",
+                    "gateway": "87e2c5f6-d961-4464-87c0-ec52863da975",
+                    "instance": "10100"
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/v1/infrastructure/controller/{controllerId}": {
@@ -197,11 +321,37 @@
       ],
       "get": {
         "summary": "Get Field Controller Details",
-        "responses": {},
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Field-Controller-Details"
+                }
+              }
+            }
+          }
+        },
         "operationId": "get-controller",
         "description": "",
         "tags": [
           "Field Controllers"
+        ],
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "boolean"
+            },
+            "in": "query",
+            "name": "bacnet",
+            "description": "Include online and BACnet data"
+          }
         ]
       },
       "patch": {
@@ -385,6 +535,945 @@
         "x-tags": [
           "Object Models"
         ]
+      },
+      "Gateway-Devices": {
+        "description": "",
+        "type": "object",
+        "properties": {
+          "count": {
+            "type": "number",
+            "description": "The number of devices available"
+          },
+          "data": {
+            "type": "object",
+            "required": [
+              "managed_devices",
+              "unmanaged_devices",
+              "online_devices",
+              "offline_devices",
+              "new_devices_available"
+            ],
+            "properties": {
+              "managed_devices": {
+                "type": "array",
+                "uniqueItems": true,
+                "minItems": 1,
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "name": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "description": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "location": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "site": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "online": {
+                      "type": "boolean"
+                    },
+                    "bacnet": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "number"
+                        },
+                        "name": {
+                          "type": "string",
+                          "minLength": 1
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "name"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "name",
+                    "description",
+                    "location",
+                    "site",
+                    "online"
+                  ]
+                }
+              },
+              "unmanaged_devices": {
+                "type": "array",
+                "uniqueItems": true,
+                "minItems": 1,
+                "description": "An array of devies available but not yet managed",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "device_id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "device_name": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "device_id",
+                    "device_name"
+                  ]
+                }
+              },
+              "online_devices": {
+                "type": "array",
+                "description": "A list of BACnet device instance IDs that are online",
+                "items": {
+                  "type": "object"
+                }
+              },
+              "offline_devices": {
+                "type": "array",
+                "description": "A list of BACnet device instance IDs that are managed and not responding",
+                "items": {
+                  "type": "object"
+                }
+              },
+              "new_devices_available": {
+                "type": "boolean",
+                "description": "Indicates if new devices are available for management"
+              }
+            }
+          }
+        },
+        "required": [
+          "count",
+          "data"
+        ],
+        "title": "Gateway Device Listing",
+        "x-examples": {
+          "Example": {
+            "count": 2,
+            "data": {
+              "managed_devices": [
+                {
+                  "id": "341efcb4-b884-47b5-af5e-aa44ddb6f22a",
+                  "name": "US SEA Node 02",
+                  "description": "AHU-1 Controller",
+                  "location": "AHU-1 Controller",
+                  "site": "c0142a11-62d1-460a-9be5-9e7881ae7b58",
+                  "online": true,
+                  "bacnet": {
+                    "id": 10200,
+                    "name": "USSEA-HVAC-BMSNODE02"
+                  }
+                }
+              ],
+              "unmanaged_devices": [
+                {
+                  "device_id": "10100",
+                  "device_name": "USSEA-HVAC-BMSNODE01"
+                }
+              ],
+              "online_devices": [
+                "10100",
+                "10200"
+              ],
+              "offline_devices": [],
+              "new_devices_available": true
+            }
+          }
+        }
+      },
+      "Field-Controller-Details": {
+        "description": "",
+        "type": "object",
+        "title": "Field Controller Details",
+        "x-examples": {
+          "Example": {
+            "id": "341efcb4-b884-47b5-af5e-aa44ddb6f22a",
+            "tenant": "1d1776fe-0437-426c-a796-06e2b5eaccf6",
+            "gateway": "87e2c5f6-d961-4464-87c0-ec52863da975",
+            "created": 1610379813,
+            "name": "US SEA Node 02",
+            "description": "AHU-1 Controller",
+            "location": "Mech Room 126",
+            "instance_id": 10200,
+            "site": "c0142a11-62d1-460a-9be5-9e7881ae7b58",
+            "is_online": null,
+            "is_ostracized": false,
+            "bacnet": {
+              "object": {
+                "name": "USSEA-HVAC-BMSNODE02",
+                "description": "AHU-1",
+                "instance": "10200"
+              },
+              "protocol": {
+                "version": 1,
+                "revision": 7,
+                "max_master": 127,
+                "device_id": "10200",
+                "max_segments_accepted": 16,
+                "apdu": {
+                  "timeout": 15000,
+                  "retries": 1,
+                  "segment_timeout": 15000,
+                  "max_length": 1476
+                },
+                "services_supported": {
+                  "atomic-read-file": true,
+                  "confirmed-text-message": true,
+                  "unconfirmed-text-message": true,
+                  "time-synchronization": true,
+                  "confirmed-event-notification": true,
+                  "reinitialize-device": true,
+                  "who-is": true,
+                  "who-has": true,
+                  "unconfirmed-event-notification": true,
+                  "subscribe-cov-property": false,
+                  "vt-data": false,
+                  "unconfirmed-private-transfer": false,
+                  "create-object": true,
+                  "delete-object": true,
+                  "read-property-conditional": false,
+                  "add-list-element": true,
+                  "vt-open": false,
+                  "remove-list-element": true,
+                  "get-event-information": true,
+                  "confirmed-cov-notification": true,
+                  "i-am": true,
+                  "device-communication-control": true,
+                  "acknowledge-alarm": true,
+                  "get-alarm-summary": true,
+                  "i-have": true,
+                  "subscribe-cov": true,
+                  "confirmed-private-transfer": true,
+                  "vt-close": false,
+                  "request-key": false,
+                  "read-property-multiple": true,
+                  "write-property": true,
+                  "life-safety-operation": false,
+                  "read-property": true,
+                  "atomic-write-file": true,
+                  "utc-time-synchronization": false,
+                  "get-enrollment-summary": true,
+                  "write-property-multiple": true,
+                  "unconfirmed-cov-notification": true,
+                  "read-range": true,
+                  "authenticate": false
+                },
+                "object_types_supported": {
+                  "averaging": false,
+                  "multi-state-input": false,
+                  "schedule": true,
+                  "multi-state-output": true,
+                  "binary-output": true,
+                  "analog-value": true,
+                  "life-safety-point": false,
+                  "group": false,
+                  "notification-class": true,
+                  "analog-input": true,
+                  "file": true,
+                  "command": true,
+                  "life-safety-zone": false,
+                  "binary-input": true,
+                  "loop": false,
+                  "multi-state-value": true,
+                  "analog-output": true,
+                  "calendar": true,
+                  "event-enrollment": true,
+                  "pulse-converter": false,
+                  "device": true,
+                  "trend-log": true,
+                  "binary-value": true,
+                  "program": false,
+                  "accumulator": false
+                }
+              },
+              "hardware": {
+                "make": "Siemens Industry Inc., Bldg Tech",
+                "model": "Siemens BACnet Field Panel",
+                "vendor_id": 7,
+                "location": "MAINT SHOP",
+                "firmware_revision": "PXCE V3.4 BACnet 4.3g"
+              },
+              "system": {
+                "application_software_version": "BCE1265_0039",
+                "status": "operational",
+                "date": "2021-01-19",
+                "time": "7:15:41.89"
+              }
+            }
+          }
+        },
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "tenant": {
+            "type": "string",
+            "minLength": 1
+          },
+          "gateway": {
+            "type": "string",
+            "minLength": 1
+          },
+          "created": {
+            "type": "number"
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "description": {
+            "type": "string",
+            "minLength": 1
+          },
+          "location": {
+            "type": "string",
+            "minLength": 1
+          },
+          "instance_id": {
+            "type": "number"
+          },
+          "site": {
+            "type": "string",
+            "minLength": 1
+          },
+          "is_online": {
+            "type": [
+              "boolean",
+              "null"
+            ]
+          },
+          "is_ostracized": {
+            "type": "boolean"
+          },
+          "bacnet": {
+            "$ref": "#/components/schemas/Field-Controller-BACnet-Details"
+          }
+        },
+        "required": [
+          "id",
+          "tenant",
+          "gateway",
+          "created",
+          "name",
+          "description",
+          "location",
+          "instance_id",
+          "site",
+          "is_ostracized"
+        ]
+      },
+      "Field-Controller-BACnet-Details": {
+        "description": "",
+        "type": "object",
+        "properties": {
+          "object": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "description": {
+                "type": "string",
+                "minLength": 1
+              },
+              "instance": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "name",
+              "description",
+              "instance"
+            ]
+          },
+          "protocol": {
+            "type": "object",
+            "properties": {
+              "version": {
+                "type": "number"
+              },
+              "revision": {
+                "type": "number"
+              },
+              "max_master": {
+                "type": "number"
+              },
+              "device_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "max_segments_accepted": {
+                "type": "number"
+              },
+              "apdu": {
+                "type": "object",
+                "properties": {
+                  "timeout": {
+                    "type": "number"
+                  },
+                  "retries": {
+                    "type": "number"
+                  },
+                  "segment_timeout": {
+                    "type": "number"
+                  },
+                  "max_length": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "timeout",
+                  "retries",
+                  "segment_timeout",
+                  "max_length"
+                ]
+              },
+              "services_supported": {
+                "type": "object",
+                "properties": {
+                  "atomic-read-file": {
+                    "type": "boolean"
+                  },
+                  "confirmed-text-message": {
+                    "type": "boolean"
+                  },
+                  "unconfirmed-text-message": {
+                    "type": "boolean"
+                  },
+                  "time-synchronization": {
+                    "type": "boolean"
+                  },
+                  "confirmed-event-notification": {
+                    "type": "boolean"
+                  },
+                  "reinitialize-device": {
+                    "type": "boolean"
+                  },
+                  "who-is": {
+                    "type": "boolean"
+                  },
+                  "who-has": {
+                    "type": "boolean"
+                  },
+                  "unconfirmed-event-notification": {
+                    "type": "boolean"
+                  },
+                  "subscribe-cov-property": {
+                    "type": "boolean"
+                  },
+                  "vt-data": {
+                    "type": "boolean"
+                  },
+                  "unconfirmed-private-transfer": {
+                    "type": "boolean"
+                  },
+                  "create-object": {
+                    "type": "boolean"
+                  },
+                  "delete-object": {
+                    "type": "boolean"
+                  },
+                  "read-property-conditional": {
+                    "type": "boolean"
+                  },
+                  "add-list-element": {
+                    "type": "boolean"
+                  },
+                  "vt-open": {
+                    "type": "boolean"
+                  },
+                  "remove-list-element": {
+                    "type": "boolean"
+                  },
+                  "get-event-information": {
+                    "type": "boolean"
+                  },
+                  "confirmed-cov-notification": {
+                    "type": "boolean"
+                  },
+                  "i-am": {
+                    "type": "boolean"
+                  },
+                  "device-communication-control": {
+                    "type": "boolean"
+                  },
+                  "acknowledge-alarm": {
+                    "type": "boolean"
+                  },
+                  "get-alarm-summary": {
+                    "type": "boolean"
+                  },
+                  "i-have": {
+                    "type": "boolean"
+                  },
+                  "subscribe-cov": {
+                    "type": "boolean"
+                  },
+                  "confirmed-private-transfer": {
+                    "type": "boolean"
+                  },
+                  "vt-close": {
+                    "type": "boolean"
+                  },
+                  "request-key": {
+                    "type": "boolean"
+                  },
+                  "read-property-multiple": {
+                    "type": "boolean"
+                  },
+                  "write-property": {
+                    "type": "boolean"
+                  },
+                  "life-safety-operation": {
+                    "type": "boolean"
+                  },
+                  "read-property": {
+                    "type": "boolean"
+                  },
+                  "atomic-write-file": {
+                    "type": "boolean"
+                  },
+                  "utc-time-synchronization": {
+                    "type": "boolean"
+                  },
+                  "get-enrollment-summary": {
+                    "type": "boolean"
+                  },
+                  "write-property-multiple": {
+                    "type": "boolean"
+                  },
+                  "unconfirmed-cov-notification": {
+                    "type": "boolean"
+                  },
+                  "read-range": {
+                    "type": "boolean"
+                  },
+                  "authenticate": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "atomic-read-file",
+                  "confirmed-text-message",
+                  "unconfirmed-text-message",
+                  "time-synchronization",
+                  "confirmed-event-notification",
+                  "reinitialize-device",
+                  "who-is",
+                  "who-has",
+                  "unconfirmed-event-notification",
+                  "subscribe-cov-property",
+                  "vt-data",
+                  "unconfirmed-private-transfer",
+                  "create-object",
+                  "delete-object",
+                  "read-property-conditional",
+                  "add-list-element",
+                  "vt-open",
+                  "remove-list-element",
+                  "get-event-information",
+                  "confirmed-cov-notification",
+                  "i-am",
+                  "device-communication-control",
+                  "acknowledge-alarm",
+                  "get-alarm-summary",
+                  "i-have",
+                  "subscribe-cov",
+                  "confirmed-private-transfer",
+                  "vt-close",
+                  "request-key",
+                  "read-property-multiple",
+                  "write-property",
+                  "life-safety-operation",
+                  "read-property",
+                  "atomic-write-file",
+                  "utc-time-synchronization",
+                  "get-enrollment-summary",
+                  "write-property-multiple",
+                  "unconfirmed-cov-notification",
+                  "read-range",
+                  "authenticate"
+                ]
+              },
+              "object_types_supported": {
+                "type": "object",
+                "properties": {
+                  "averaging": {
+                    "type": "boolean"
+                  },
+                  "multi-state-input": {
+                    "type": "boolean"
+                  },
+                  "schedule": {
+                    "type": "boolean"
+                  },
+                  "multi-state-output": {
+                    "type": "boolean"
+                  },
+                  "binary-output": {
+                    "type": "boolean"
+                  },
+                  "analog-value": {
+                    "type": "boolean"
+                  },
+                  "life-safety-point": {
+                    "type": "boolean"
+                  },
+                  "group": {
+                    "type": "boolean"
+                  },
+                  "notification-class": {
+                    "type": "boolean"
+                  },
+                  "analog-input": {
+                    "type": "boolean"
+                  },
+                  "file": {
+                    "type": "boolean"
+                  },
+                  "command": {
+                    "type": "boolean"
+                  },
+                  "life-safety-zone": {
+                    "type": "boolean"
+                  },
+                  "binary-input": {
+                    "type": "boolean"
+                  },
+                  "loop": {
+                    "type": "boolean"
+                  },
+                  "multi-state-value": {
+                    "type": "boolean"
+                  },
+                  "analog-output": {
+                    "type": "boolean"
+                  },
+                  "calendar": {
+                    "type": "boolean"
+                  },
+                  "event-enrollment": {
+                    "type": "boolean"
+                  },
+                  "pulse-converter": {
+                    "type": "boolean"
+                  },
+                  "device": {
+                    "type": "boolean"
+                  },
+                  "trend-log": {
+                    "type": "boolean"
+                  },
+                  "binary-value": {
+                    "type": "boolean"
+                  },
+                  "program": {
+                    "type": "boolean"
+                  },
+                  "accumulator": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "averaging",
+                  "multi-state-input",
+                  "schedule",
+                  "multi-state-output",
+                  "binary-output",
+                  "analog-value",
+                  "life-safety-point",
+                  "group",
+                  "notification-class",
+                  "analog-input",
+                  "file",
+                  "command",
+                  "life-safety-zone",
+                  "binary-input",
+                  "loop",
+                  "multi-state-value",
+                  "analog-output",
+                  "calendar",
+                  "event-enrollment",
+                  "pulse-converter",
+                  "device",
+                  "trend-log",
+                  "binary-value",
+                  "program",
+                  "accumulator"
+                ]
+              }
+            },
+            "required": [
+              "version",
+              "revision",
+              "max_master",
+              "device_id",
+              "max_segments_accepted",
+              "apdu",
+              "services_supported",
+              "object_types_supported"
+            ]
+          },
+          "hardware": {
+            "type": "object",
+            "properties": {
+              "make": {
+                "type": "string",
+                "minLength": 1
+              },
+              "model": {
+                "type": "string",
+                "minLength": 1
+              },
+              "vendor_id": {
+                "type": "number"
+              },
+              "location": {
+                "type": "string",
+                "minLength": 1
+              },
+              "firmware_revision": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "make",
+              "model",
+              "vendor_id",
+              "location",
+              "firmware_revision"
+            ]
+          },
+          "system": {
+            "type": "object",
+            "properties": {
+              "application_software_version": {
+                "type": "string",
+                "minLength": 1
+              },
+              "status": {
+                "type": "string",
+                "minLength": 1
+              },
+              "date": {
+                "type": "string",
+                "minLength": 1
+              },
+              "time": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "application_software_version",
+              "status",
+              "date",
+              "time"
+            ]
+          }
+        },
+        "required": [
+          "object",
+          "protocol",
+          "hardware",
+          "system"
+        ],
+        "title": "Field Controller BACnet Details",
+        "x-examples": {
+          "Example": {
+            "object": {
+              "name": "USSEA-HVAC-BMSNODE02",
+              "description": "AHU-1",
+              "instance": "10200"
+            },
+            "protocol": {
+              "version": 1,
+              "revision": 7,
+              "max_master": 127,
+              "device_id": "10200",
+              "max_segments_accepted": 16,
+              "apdu": {
+                "timeout": 15000,
+                "retries": 1,
+                "segment_timeout": 15000,
+                "max_length": 1476
+              },
+              "services_supported": {
+                "atomic-read-file": true,
+                "confirmed-text-message": true,
+                "unconfirmed-text-message": true,
+                "time-synchronization": true,
+                "confirmed-event-notification": true,
+                "reinitialize-device": true,
+                "who-is": true,
+                "who-has": true,
+                "unconfirmed-event-notification": true,
+                "subscribe-cov-property": false,
+                "vt-data": false,
+                "unconfirmed-private-transfer": false,
+                "create-object": true,
+                "delete-object": true,
+                "read-property-conditional": false,
+                "add-list-element": true,
+                "vt-open": false,
+                "remove-list-element": true,
+                "get-event-information": true,
+                "confirmed-cov-notification": true,
+                "i-am": true,
+                "device-communication-control": true,
+                "acknowledge-alarm": true,
+                "get-alarm-summary": true,
+                "i-have": true,
+                "subscribe-cov": true,
+                "confirmed-private-transfer": true,
+                "vt-close": false,
+                "request-key": false,
+                "read-property-multiple": true,
+                "write-property": true,
+                "life-safety-operation": false,
+                "read-property": true,
+                "atomic-write-file": true,
+                "utc-time-synchronization": false,
+                "get-enrollment-summary": true,
+                "write-property-multiple": true,
+                "unconfirmed-cov-notification": true,
+                "read-range": true,
+                "authenticate": false
+              },
+              "object_types_supported": {
+                "averaging": false,
+                "multi-state-input": false,
+                "schedule": true,
+                "multi-state-output": true,
+                "binary-output": true,
+                "analog-value": true,
+                "life-safety-point": false,
+                "group": false,
+                "notification-class": true,
+                "analog-input": true,
+                "file": true,
+                "command": true,
+                "life-safety-zone": false,
+                "binary-input": true,
+                "loop": false,
+                "multi-state-value": true,
+                "analog-output": true,
+                "calendar": true,
+                "event-enrollment": true,
+                "pulse-converter": false,
+                "device": true,
+                "trend-log": true,
+                "binary-value": true,
+                "program": false,
+                "accumulator": false
+              }
+            },
+            "hardware": {
+              "make": "Siemens Industry Inc., Bldg Tech",
+              "model": "Siemens BACnet Field Panel",
+              "vendor_id": 7,
+              "location": "MAINT SHOP",
+              "firmware_revision": "PXCE V3.4 BACnet 4.3g"
+            },
+            "system": {
+              "application_software_version": "BCE1265_0039",
+              "status": "operational",
+              "date": "2021-01-19",
+              "time": "7:15:41.89"
+            }
+          }
+        }
+      },
+      "Gateway-Listing": {
+        "description": "",
+        "type": "object",
+        "properties": {
+          "count": {
+            "type": "number"
+          },
+          "data": {
+            "type": "array",
+            "uniqueItems": true,
+            "minItems": 1,
+            "items": {
+              "required": [
+                "id",
+                "serial",
+                "tunnel",
+                "tenant",
+                "name",
+                "description",
+                "is_registered"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "serial": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "tunnel": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "tenant": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "name": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "description": {
+                  "type": "string"
+                },
+                "is_registered": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        },
+        "required": [
+          "count",
+          "data"
+        ],
+        "title": "Gateway Listing",
+        "x-examples": {
+          "Example": {
+            "count": 1,
+            "data": [
+              {
+                "id": "87e2c5f6-d961-4464-87c0-ec52863da975",
+                "serial": "b827eb570b5c",
+                "tunnel": "68e20bcceddb",
+                "tenant": "1d1776fe-0437-426c-a796-06e2b5eaccf6",
+                "name": "Test Bench Gateway",
+                "description": "",
+                "is_registered": true
+              }
+            ]
+          }
+        }
       }
     },
     "securitySchemes": {
