@@ -398,13 +398,154 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Field-Controller-Details"
+                },
+                "examples": {
+                  "Response": {
+                    "value": {
+                      "id": "341efcb4-b884-47b5-af5e-aa44ddb6f22a",
+                      "tenant": "1d1776fe-0437-426c-a796-06e2b5eaccf6",
+                      "gateway": "87e2c5f6-d961-4464-87c0-ec52863da975",
+                      "created": 1610379813,
+                      "name": "BMS Node 02",
+                      "description": "AHU-1 Controller",
+                      "location": "Mech Room 126",
+                      "instance_id": 10200,
+                      "site": "c0142a11-62d1-460a-9be5-9e7881ae7b58",
+                      "is_online": true,
+                      "is_ostracized": false,
+                      "bacnet": {
+                        "object": {
+                          "name": "USSEA-HVAC-BMSNODE02",
+                          "description": "AHU-1",
+                          "instance": "10200"
+                        },
+                        "protocol": {
+                          "version": 1,
+                          "revision": 7,
+                          "max_master": 127,
+                          "device_id": "10200",
+                          "max_segments_accepted": 16,
+                          "apdu": {
+                            "timeout": 15000,
+                            "retries": 1,
+                            "segment_timeout": 15000,
+                            "max_length": 1476
+                          },
+                          "services_supported": {
+                            "atomic-read-file": true,
+                            "confirmed-text-message": true,
+                            "unconfirmed-text-message": true,
+                            "time-synchronization": true,
+                            "confirmed-event-notification": true,
+                            "reinitialize-device": true,
+                            "who-is": true,
+                            "who-has": true,
+                            "unconfirmed-event-notification": true,
+                            "subscribe-cov-property": false,
+                            "vt-data": false,
+                            "unconfirmed-private-transfer": false,
+                            "create-object": true,
+                            "delete-object": true,
+                            "read-property-conditional": false,
+                            "add-list-element": true,
+                            "vt-open": false,
+                            "remove-list-element": true,
+                            "get-event-information": true,
+                            "confirmed-cov-notification": true,
+                            "i-am": true,
+                            "device-communication-control": true,
+                            "acknowledge-alarm": true,
+                            "get-alarm-summary": true,
+                            "i-have": true,
+                            "subscribe-cov": true,
+                            "confirmed-private-transfer": true,
+                            "vt-close": false,
+                            "request-key": false,
+                            "read-property-multiple": true,
+                            "write-property": true,
+                            "life-safety-operation": false,
+                            "read-property": true,
+                            "atomic-write-file": true,
+                            "utc-time-synchronization": false,
+                            "get-enrollment-summary": true,
+                            "write-property-multiple": true,
+                            "unconfirmed-cov-notification": true,
+                            "read-range": true,
+                            "authenticate": false
+                          },
+                          "object_types_supported": {
+                            "averaging": false,
+                            "multi-state-input": false,
+                            "schedule": true,
+                            "multi-state-output": true,
+                            "binary-output": true,
+                            "analog-value": true,
+                            "life-safety-point": false,
+                            "group": false,
+                            "notification-class": true,
+                            "analog-input": true,
+                            "file": true,
+                            "command": true,
+                            "life-safety-zone": false,
+                            "binary-input": true,
+                            "loop": false,
+                            "multi-state-value": true,
+                            "analog-output": true,
+                            "calendar": true,
+                            "event-enrollment": true,
+                            "pulse-converter": false,
+                            "device": true,
+                            "trend-log": true,
+                            "binary-value": true,
+                            "program": false,
+                            "accumulator": false
+                          }
+                        },
+                        "hardware": {
+                          "make": "Siemens Industry Inc., Bldg Tech",
+                          "model": "Siemens BACnet Field Panel",
+                          "vendor_id": 7,
+                          "location": "MAINT SHOP",
+                          "firmware_revision": "PXCE V3.4 BACnet 4.3g"
+                        },
+                        "system": {
+                          "application_software_version": "BCE1265_0039",
+                          "status": "operational",
+                          "date": "2021-01-19",
+                          "time": "19:30:50.31"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../models/Error-Response.v1.yaml"
+                },
+                "examples": {
+                  "Controller Not Found": {
+                    "value": {
+                      "error": {
+                        "message": "Controller not found",
+                        "console": "The controller ID 341efcb4-b884-47b5-af5e-aa44ddb6f22b could not be found in the database",
+                        "code": 404
+                      },
+                      "logging_hash": "7da1cc1d783d464ea06c9d71bd221a1b15e729c6"
+                    }
+                  }
                 }
               }
             }
           }
         },
         "operationId": "get-controller",
-        "description": "",
+        "description": "Retrieve field controller details by ID\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`infrastructure:*`,`infrastructure:controller:*`,`infrastructure:controller:read`",
         "tags": [
           "Field Controllers"
         ],
