@@ -958,7 +958,7 @@
           }
         },
         "operationId": "get-user-photo",
-        "description": "Get the specified user's photo in PNG format\n\n**Prerequisites** \n\n_None_\n\n<!--theme: warning-->\n> _**Note** This is a public endpoint and does not require authentication_\n\n**Using this Endpoint in HTML**\n\nThis endpoint can be used as the `src` attribute of an HTML `img` tag.\n```html\n<img src=\"https://api.counterbalance.io/v1/user/{userId}/photo\">\n```",
+        "description": "Get the specified user's photo in PNG format\n\n<!--theme: warning-->\n> _**Heads Up: ** This is a public endpoint and does not require authentication_\n\n**Prerequisites** \n\n_None_\n\n**Using this Endpoint in HTML**\n\nThis endpoint can be used as the `src` attribute of an HTML `img` tag.\n```html\n<img src=\"https://api.counterbalance.io/v1/user/{userId}/photo\">\n```",
         "parameters": []
       },
       "post": {
@@ -1267,7 +1267,7 @@
           }
         },
         "operationId": "get-user-permissions",
-        "description": "Retrieve permissions for a given user\n\n<!-- theme: success -->\n> _**Note:** This endpoint accepts `self` in place of a UUID_\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\nWhen using a UUID:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`user:*`,`user:account:*`,`user:permissions:*`,`user:account:read`,`user:permissions:read`\n\nWhen using self:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`user:*`,`user:self:*`,`user:self:read`",
+        "description": "Retrieve permissions for a given user\n\n<!-- theme: success -->\n> _**Note:** This endpoint accepts `self` in place of a UUID_\n\n_**February 2021: ** Retrieving users via UUID is not yet supported._\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\nWhen using a UUID _(not yet supported)_:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`user:*`,`user:account:*`,`user:permissions:*`,`user:account:read`,`user:permissions:read`\n\nWhen using self:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`user:*`,`user:self:*`,`user:self:read`",
         "security": [
           {
             "Bearer Token": []
@@ -1610,7 +1610,7 @@
           "milestones"
         ],
         "x-examples": {
-          "Seat Example": {
+          "Licensed User Example": {
             "id": "ce48daca-f044-48e6-ad20-0c6e53db12da",
             "license": "seat",
             "flags": {
@@ -1684,7 +1684,7 @@
               }
             }
           },
-          "Record User Example": {
+          "Unlicensed User Example": {
             "id": "73f180ba-caa3-4e49-a68c-f643b5e7bf79",
             "license": "record_user",
             "flags": {
