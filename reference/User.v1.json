@@ -2,8 +2,8 @@
   "openapi": "3.0.0",
   "info": {
     "title": "Users",
-    "version": "1.1.1",
-    "description": "The Users API provides endpoints for user account management, including:\n* Creating and managing user accounts, permission groups, and departments\n* Updating user photos\n* Assigning user roles & permissions\n* Tracking and auditing platform access\n* Allocating and managing user licensing\n* Maintaining personal platform preferences\n\n**User Types**\n\nUser accounts are of one of the following three types depending on the licensing assigned. \n\n* A `seat` is a licensed system administrator account with access to the Counterbalance Console\n* A `user` is a licensed end-user account with access to the Counterbalance Portal\n* A `record_user` is a _\"placeholder\"_ user account for a user that is tracked via Counterbalance but does not hold a license and cannot actively interact with the platform\n\n** Assigning Licensing **\n\nThe user license can be adjusted using the \n\nIf insufficient quota exists for the specified license type, a `403 Forbidden` error will be thrown and the license will not be assigned. ",
+    "version": "1.2",
+    "description": "The Users API provides endpoints for user account management, including:\n* Creating and managing user accounts, permission groups, and departments\n* Updating user photos\n* Assigning user roles & permissions\n* Tracking and auditing platform access\n* Allocating and managing user licensing\n* Maintaining personal platform preferences\n\n## Creating Users\nUser accounts are defined as one of the three types in the table below. Each of these  \n\n### User Types & Licensing\nThese types of users are listed in the table below.\n\n| User Type | Description | Typical Roles | Licensed User |\n| - | - | - | - |\n| `seat` | A licensed system user account with access to the Counterbalance Console | Building Engineer, Property Manager, Facilities Director, Energy Engineer | Yes |\n| `user` | A licensed end-user account with access to the Counterbalance Portal | Building Tenant, Space Occupant | Yes |\n| `record_user` | A _\"placeholder\"_ user account for a user that is tracked via Counterbalance but does not hold a license and cannot actively interact with the platform | *n/a* | No |\n\n## Managing Users\n",
     "termsOfService": "https://www.counterbalance.io/legal/api-terms",
     "contact": {
       "name": "Taylor Vick",
@@ -103,7 +103,7 @@
             "Bearer Token": []
           }
         ],
-        "description": "Retrieve a list of user accounts available to the authenticated user\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`user:*`,`user:account:*`,`user:account:list`\n* Licensed Feature: `user_base`\n\n**Variations**\n\nIf the `status` query paramter is not included with the request, only active user accounts are returned. \n\nQuery paramters are stacked. That is, if you specify a specific site and department, then only users that match BOTH of these parameters will be returned.\n\n**Returned User Scope**\n\nThis is a scoped endpoint and the data returned may not be a complete, conclusive listing of all resources in the tenant account.\n\nUsers with `*` & `user:*` permission scopes will always have access to the complete resource data set in the tenant.",
+        "description": "Retrieve a list of user accounts available to the authenticated user\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`user:*`,`user:account:*`,`user:account:list`\n* Licensed Feature: `user_base`\n\n### Variations\nIf the `status` query paramter is not included with the request, only active user accounts are returned. \n\nQuery paramters are stacked. That is, if you specify a specific site and department, then only users that match BOTH of these parameters will be returned.\n\n### Returned User Scope\nThis is a scoped endpoint and the data returned may not be a complete, conclusive listing of all resources in the tenant account.\n\nUsers with `*` & `user:*` permission scopes will always have access to the complete resource data set in the tenant.",
         "parameters": [
           {
             "schema": {
@@ -246,7 +246,7 @@
             }
           }
         },
-        "description": "Create a new user and optionally assign a license and password\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`user:*`,`user:account:*`,`user:account:create`\n* Licensed Feature: `user_base`\n* If adding a license, adequate quota of the requested type\n\n**Defining the User Type**\n\nThe field `type` may be one of either `record_user` _(non-licensed user)_, `seat` _(licensed system administrator)_, or `user` _(licensed end user)_.\n\nThe `type` field may be omitted and will default to `record_user`\n\n**Setting the User Password**\n\nThe `password` field is required when the user type specified is either `seat` or `user`. In all other cases, it is ignored.",
+        "description": "### Synopsis\nCreate a new user and optionally assign a license and password\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`user:*`,`user:account:*`,`user:account:create`\n* Licensed Feature: `user_base`\n* If adding a license, adequate quota of the requested type\n\n### Defining the User Type\nThe field `type` may be one of either: \n\n* `record_user` _(non-licensed user)_\n* `seat` _(licensed system user)_ \n* `user` _(licensed end user)_\n\nIf type is defined as either `seat` or `user`, the new user will be sent a notification email informing them of their new account. _As of February 2021, there is a pending request to disable this feature via query paramater_\n\nIf the `type` field is omitted, the user will default to `record_user`\n\n### Setting the User Password\nThe `password` field is required when the user type specified is either `seat` or `user`. In all other cases, it is ignored.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -461,9 +461,9 @@
             }
           }
         },
-        "operationId": "get-user-account",
+        "operationId": "get-user-profile",
         "parameters": [],
-        "description": "Retrieve the specified user account\n\n<!-- theme: success -->\n> _**Note:** This endpoint accepts `self` in place of a UUID_\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\nWhen using a UUID:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`user:*`,`user:account:*`,`user:account:read`\n* Licensed Feature: `user_base`\n\nWhen using self:\n* Permissions _(at least one):_ `*`,`user:*`,`user:self:*`,`user:self:read`",
+        "description": "### Synopsis\nRetrieve the specified user account\n\n<!-- theme: success -->\n> _This endpoint accepts `self` in place of a UUID_\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n\n#### When using a UUID:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`user:*`,`user:account:*`,`user:account:read`\n* Licensed Feature: `user_base`\n\n#### When using _self_:\n* Permissions _(at least one):_ `*`,`user:*`,`user:self:*`,`user:self:read`",
         "security": [
           {
             "Bearer Token": []
@@ -472,7 +472,7 @@
       },
       "patch": {
         "summary": "Update User Account",
-        "operationId": "update-user-account",
+        "operationId": "update-user-profile",
         "responses": {
           "200": {
             "description": "OK",
@@ -507,7 +507,7 @@
             }
           }
         },
-        "description": "Update the specified user account\n\n<!-- theme: success -->\n> _**Note:** This endpoint accepts `self` in place of a UUID_\n\nSome body fields are marked as _**required**._ This indicates that if they are included in the body of a request, they cannot be empty strings or null values.\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\nWhen using a UUID:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`user:*`,`user:account:*`,`user:account:update`\n* Licensed Feature: `user_base`\n\nWhen using self:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`user:*`,`user:self:*`,`user:self:update`\n\n",
+        "description": "### Synopsis\nUpdate the specified user account\n\n<!-- theme: success -->\n> _**Note:** This endpoint accepts `self` in place of a UUID_\n\nSome body fields are marked as _**required**._ This indicates that if they are included in the body of a request, they cannot be empty strings or null values.\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n\nWhen using a UUID:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`user:*`,`user:account:*`,`user:account:update`\n* Licensed Feature: `user_base`\n\nWhen using self:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`user:*`,`user:self:*`,`user:self:update`\n\n",
         "requestBody": {
           "content": {
             "application/json": {
@@ -616,7 +616,7 @@
             }
           }
         },
-        "description": "Delete the specified user account\n\n_**October 2020** This endpoint is under active development. Documentation will continue to be updated. _\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`user:*`,`user:account:*`,`user:account:delete`\n* Licensed Feature: `user_base`\n\n",
+        "description": "### Synopsis\nMark the specified user account for deletion\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`user:*`,`user:account:*`,`user:account:delete`\n\n### Account Retention & Restoration\n\nWhen deleted, an account is merely marked for deletion and any associated auth account is blocked. The user can be restored for up to 30 days after it is deleted using the Restore User Account endpoint. \n\n### Permanently Delete a User\n\nTo permanently delete a user account, pass the `permanent` query parameter and set it to true. The account will be immediately and permanently removed from the system and cannot be restored. ",
         "security": [
           {
             "Bearer Token": []
@@ -624,6 +624,16 @@
         ],
         "tags": [
           "User Accounts"
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "boolean"
+            },
+            "in": "query",
+            "name": "permanent",
+            "description": "If true, the user will be permanently deleted and cannot be restored"
+          }
         ]
       }
     },
@@ -787,7 +797,7 @@
             }
           }
         },
-        "description": "Set the license type for the spcified user\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`tenant:*`,`tenant:licensing:*`,`tenant:licensing:assign`\n* Licensed Feature: `user_base`\n* Adequate quota of the requested type\n\n**Setting the License Type**\n\nThe field `type` must be either `record_user` _(non-licensed user)_, `seat` _(licensed system administrator)_, or `user` _(licensed end user)_.\n\n<!-- theme: danger -->\n> _**Danger!** Downgrading a user to the `record_user` license will delete the user's Counterbalance ID account_\n\n**Setting the User Password**\n\nThe `password` field is required when the user type specified is either `seat` or `user`. In all other cases, it is ignored.\n\n**Notifying the User**\n\nComing soon...\n",
+        "description": "### Synopsis\nSet the license type for the spcified user\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`tenant:*`,`tenant:licensing:*`,`tenant:licensing:assign`\n* Licensed Feature: `user_base`\n* Adequate quota of the requested type\n\n### Setting the License Type\nThe field `type` may be one of either: \n\n* `record_user` _(non-licensed user)_\n* `seat` _(licensed system user)_ \n* `user` _(licensed end user)_\n\n<!-- theme: danger -->\n> _**Heads Up** Downgrading a user to the `record_user` license will block the user's CounterbalanceID account_\n\n### Setting the User Password\nThe body field `password` is required when the user type specified is either `seat` or `user`. In all other cases, it is ignored.\n\n### Notifying the User\nComing soon...\n",
         "security": [
           {
             "Bearer Token": []
@@ -890,7 +900,7 @@
           }
         },
         "operationId": "get-user-preferences",
-        "description": "Get the preferences for the currently authenticated user\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`console:view`",
+        "description": "### Synopsis\nGet the preferences for the currently authenticated user\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n\n* Permissions _(at least one):_ `*`,`user:*`,`user:self:*`,`user:self:read`",
         "security": [
           {
             "Bearer Token": []
@@ -899,13 +909,13 @@
       },
       "patch": {
         "summary": "Update User Preferences",
-        "operationId": "patch-v1-user-self-preferences",
+        "operationId": "update-user-preferences",
         "responses": {
           "200": {
             "description": "OK"
           }
         },
-        "description": "Update the preferences for the currently authenticated user\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`console:view`",
+        "description": "### Synopsis\nUpdate the preferences for the currently authenticated user\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`console:view`",
         "security": [
           {
             "Bearer Token": []
@@ -958,7 +968,7 @@
           }
         },
         "operationId": "get-user-photo",
-        "description": "Get the specified user's photo in PNG format\n\n**Prerequisites** \n\n_None_\n\n<!--theme: warning-->\n> _**Note** This is a public endpoint and does not require authentication_\n\n**Using this Endpoint in HTML**\n\nThis endpoint can be used as the `src` attribute of an HTML `img` tag.\n```html\n<img src=\"https://api.counterbalance.io/v1/user/{userId}/photo\">\n```",
+        "description": "### Synopsis\nGet the specified user's photo in PNG format\n\n<!--theme: warning-->\n> _**Heads Up** This is a public endpoint and does not require authentication_\n\n### Prerequisites\n_None_\n\n### Usage Examples\n\nThis endpoint can be used as the `src` attribute of an HTML `img` tag.\n```html\n<img src=\"https://api.counterbalance.io/v1/user/{userId}/photo\">\n```",
         "parameters": []
       },
       "post": {
@@ -1028,14 +1038,215 @@
             }
           }
         },
-        "operationId": "get-v1-user-userId-roles",
-        "description": "Retrieve a list of roles assigned to a user\n\n> This endpoint accepts `self` in place of a UUID",
+        "operationId": "get-user-roles",
+        "description": "### Synopsis\nRetrieve a list of roles assigned to a user\n\n<!-- theme: success -->\n> _This endpoint accepts `self` in place of a UUID_\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n\n#### When using a UUID:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`user:*`,`user:roles:*`,`user:roles:read`\n* Licensed Feature: `user_base`\n\n#### When using _self_:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`user:*`,`user:self:*`,`user:self:read`",
         "security": [
           {
             "Bearer Token": []
           }
         ],
         "parameters": []
+      },
+      "put": {
+        "summary": "Assign User Roles",
+        "operationId": "assign-user-roles",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User-Assigned-Roles"
+                },
+                "examples": {
+                  "Response": {
+                    "value": {
+                      "count": 3,
+                      "data": [
+                        {
+                          "id": "rol_9t7sUEmXhoXG0JIn",
+                          "name": "Automation Technician",
+                          "description": "Permissions suitable for a user in a technical automation service role",
+                          "tags": [
+                            "functional"
+                          ],
+                          "system_only": false
+                        },
+                        {
+                          "id": "rol_BjYA2HwGRnfaFhuV",
+                          "name": "Base Permissions",
+                          "description": "System-assigned role that provides the minimum permissions required to access the console",
+                          "tags": [
+                            "system"
+                          ],
+                          "system_only": true
+                        },
+                        {
+                          "id": "rol_t0duC3p8gZbzhZ5a",
+                          "name": "Energy Manager",
+                          "description": "Permissions suitable for a user in an energy management/environmental responsibility role",
+                          "tags": [
+                            "functional"
+                          ],
+                          "system_only": false
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../models/Error-Response.v1.yaml"
+                },
+                "examples": {
+                  "Invalid Role ID": {
+                    "value": {
+                      "error": {
+                        "message": "Invalid role ID",
+                        "console": "One or more of the role IDs are not assignable to this user",
+                        "code": 400
+                      },
+                      "logging_hash": "..."
+                    }
+                  },
+                  "Invalid License Type": {
+                    "value": {
+                      "error": {
+                        "message": "Invalid license type",
+                        "console": "The user is not assigned a license that allows role assignment",
+                        "code": 400
+                      },
+                      "logging_hash": "..."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "description": "An array of role IDs to add",
+                "items": {}
+              },
+              "examples": {
+                "Example": {
+                  "value": [
+                    "rol_9t7sUEmXhoXG0JIn"
+                  ]
+                }
+              }
+            }
+          },
+          "description": ""
+        },
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "default": "application/json"
+            },
+            "in": "header",
+            "name": "Content-Type"
+          }
+        ],
+        "description": "### Synopsis\nAssign one or more roles to a user\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`user:*`,`user:roles:*`,`user:roles:update`",
+        "tags": [
+          "Roles"
+        ]
+      },
+      "delete": {
+        "summary": "Remove User Roles",
+        "operationId": "remove-user-roles",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User-Assigned-Roles"
+                },
+                "examples": {
+                  "Response": {
+                    "value": {
+                      "count": 3,
+                      "data": [
+                        {
+                          "id": "rol_BjYA2HwGRnfaFhuV",
+                          "name": "Base Permissions",
+                          "description": "System-assigned role that provides the minimum permissions required to access the console",
+                          "tags": [
+                            "system"
+                          ],
+                          "system_only": true
+                        },
+                        {
+                          "id": "rol_t0duC3p8gZbzhZ5a",
+                          "name": "Energy Manager",
+                          "description": "Permissions suitable for a user in an energy management/environmental responsibility role",
+                          "tags": [
+                            "functional"
+                          ],
+                          "system_only": false
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "### Synopsis\nRemove one or more roles from a user\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`user:*`,`user:roles:*`,`user:roles:remove`",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ],
+        "tags": [
+          "Roles"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {}
+              },
+              "examples": {
+                "Example": {
+                  "value": [
+                    "rol_9t7sUEmXhoXG0JIn"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "default": "application/json"
+            },
+            "in": "header",
+            "name": "Content-Type"
+          }
+        ]
       }
     },
     "/v1/user/{userId}/password": {
@@ -1051,8 +1262,8 @@
         }
       ],
       "put": {
-        "summary": "Set User Password",
-        "operationId": "set-user-password",
+        "summary": "Reset User Password",
+        "operationId": "reset-user-password",
         "responses": {
           "204": {
             "description": "No Content",
@@ -1060,6 +1271,50 @@
               "application/json": {
                 "schema": {
                   "type": "null"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../models/Error-Response.v1.yaml"
+                },
+                "examples": {
+                  "No Auth Account": {
+                    "value": {
+                      "error": {
+                        "message": "No authentication account",
+                        "console": "Adele Vance does not have an authentication account",
+                        "code": 400
+                      },
+                      "logging_hash": "..."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../models/Error-Response.v1.yaml"
+                },
+                "examples": {
+                  "User Not Found": {
+                    "value": {
+                      "error": {
+                        "message": "User not found",
+                        "console": "A user with ID ee876c8d-f404-4e13-84b6-ee22ec304322 could not be found in the database",
+                        "code": 404
+                      },
+                      "logging_hash": "..."
+                    }
+                  }
                 }
               }
             }
@@ -1096,133 +1351,9 @@
             }
           }
         },
-        "description": "Reset the password for the specified user\n\n<!-- theme: success -->\n> _**Note:** This endpoint accepts `self` in place of a UUID_\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\nWhen using a UUID:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`user:*`,`user:account:*`,`user:account:update`\n\nWhen using self:\n* Permissions _(at least one):_ `*`,`user:*`,`user:self:*`,`user:self:password`\n\n**Password Strength**\n\nPassword strength is an important consideration when setting passwords for your users. Counterbalance enforces a strong password policy that has the following requirements:\n\n* Must be at least 8-characters in length\n* Lower case (a-z), upper case (A-Z) and numbers (0-9)\n* Special characters (!@#$%^&*)\n* No more than 2 identical characters in a row\n\nNIST recommends a minimum character length of 8, and suggests that length is a better indicator of strength than complexity.\n\n<!-- theme: warning -->\n> _**Note** A password will be rejected if it contains common dictionary phrases or the user's first name, last name, or shortname._\n\n**Password History**\n\nA new password must be different than the user's last 3 passwords. ",
+        "description": "### Synopsis\nReset the password for the specified user\n\n<!-- theme: success -->\n> _This endpoint accepts `self` in place of a UUID_\n\nThe target user will be notified via email that their password has changed. The new password will not be included in the email.\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n\n#### When using a UUID:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`user:*`,`user:account:*`,`user:account:update`\n\n#### When using _self_:\n* Permissions _(at least one):_ `*`,`user:*`,`user:self:*`,`user:self:password`\n\n### Password Strength\nPassword strength is an important consideration when setting passwords for your users. Counterbalance enforces a strong password policy that has the following requirements:\n\n* Must be at least 8-characters in length\n* Lower case (a-z), upper case (A-Z) and numbers (0-9)\n* Special characters (!@#$%^&*)\n* No more than 2 identical characters in a row\n\nNIST recommends a minimum character length of 8, and suggests that length is a better indicator of strength than complexity.\n\n<!-- theme: warning -->\n> ##### ⚠️ Heads Up\n> \n> _A password will be rejected if it contains common dictionary phrases or the user's first name, last name, or shortname._\n\n### Password History\n\nA new password must be different than the user's last 3 passwords. ",
         "tags": [
-          "User Accounts"
-        ]
-      }
-    },
-    "/v1/user/{userId}/roles/{roleId}": {
-      "parameters": [
-        {
-          "schema": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "name": "userId",
-          "in": "path",
-          "required": true,
-          "description": "A valid user account UUID"
-        },
-        {
-          "schema": {
-            "type": "string"
-          },
-          "name": "roleId",
-          "in": "path",
-          "required": true,
-          "description": "A valid role ID"
-        }
-      ],
-      "put": {
-        "summary": "Assign User Roles",
-        "operationId": "put-v1-user-userId-roles",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/User-Assigned-Roles"
-                },
-                "examples": {
-                  "Example": {
-                    "value": {
-                      "roles": [
-                        "rol_ef4g..."
-                      ]
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "roles": {
-                    "type": "array",
-                    "description": "An array of role IDs to add",
-                    "uniqueItems": true,
-                    "minItems": 1,
-                    "maxItems": 10,
-                    "items": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "required": [
-                  "roles"
-                ]
-              },
-              "examples": {
-                "Example": {
-                  "value": {
-                    "roles": [
-                      "rol_ef4g..."
-                    ]
-                  }
-                }
-              }
-            }
-          },
-          "description": ""
-        },
-        "security": [
-          {
-            "Bearer Token": []
-          }
-        ],
-        "parameters": [],
-        "description": "Assign one or more roles to a user",
-        "tags": [
-          "Roles"
-        ]
-      },
-      "delete": {
-        "summary": "Remove User Roles",
-        "operationId": "delete-v1-user-userId-roles",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/User-Assigned-Roles"
-                },
-                "examples": {
-                  "Example": {
-                    "value": {
-                      "roles": []
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "description": "Remove one or more roles from a user",
-        "security": [
-          {
-            "Bearer Token": []
-          }
-        ],
-        "tags": [
-          "Roles"
+          "Security"
         ]
       }
     },
@@ -1256,8 +1387,6 @@
                   "Example": {
                     "value": [
                       "billing:account:view",
-                      "console:view",
-                      "hardware:device:read",
                       "sites:*",
                       "tenant:*",
                       "user:account:*"
@@ -1268,8 +1397,8 @@
             }
           }
         },
-        "operationId": "get-v1-user-userId-permissions",
-        "description": "Retrieve permissions for a given user\n\n> _This endpoint accepts `self` in place of a UUID_",
+        "operationId": "get-user-permissions",
+        "description": "### Synopsis\nRetrieve the permissions associated with the specified user\n\n<!-- theme: success -->\n> _**Note:** This endpoint accepts `self` in place of a UUID_\n\n_**February 2021: ** Retrieving users via UUID is not yet supported._\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n\n#### When using a UUID _(not yet supported)_:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`user:*`,`user:account:*`,`user:permissions:*`,`user:account:read`,`user:permissions:read`\n\n#### When using self:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`user:*`,`user:self:*`,`user:self:read`",
         "security": [
           {
             "Bearer Token": []
@@ -1283,8 +1412,18 @@
         "tags": [
           "Departments"
         ],
-        "responses": {},
-        "operationId": "get-departments"
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "operationId": "get-departments",
+        "description": "<!-- theme: info -->\n> _Coming soon_",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ]
       },
       "post": {
         "summary": "Create New Department",
@@ -1294,9 +1433,14 @@
             "description": "Created"
           }
         },
-        "description": "",
+        "description": "<!-- theme: info -->\n> _Coming soon_",
         "tags": [
           "Departments"
+        ],
+        "security": [
+          {
+            "Bearer Token": []
+          }
         ]
       },
       "parameters": []
@@ -1318,34 +1462,56 @@
         "tags": [
           "Departments"
         ],
-        "responses": {},
-        "operationId": "get-v1-department-departmentId",
-        "description": ""
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "operationId": "get-department",
+        "description": "<!-- theme: info -->\n> _Coming soon_",
+        "parameters": [],
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ]
       },
       "patch": {
         "summary": "Update Department",
         "operationId": "update-department",
+        "tags": [
+          "Departments"
+        ],
+        "description": "<!-- theme: info -->\n> _Coming soon_",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
           }
-        },
-        "tags": [
-          "Departments"
-        ]
+        }
       },
       "delete": {
         "summary": "Delete Department",
         "operationId": "delete-department",
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        },
-        "description": "",
+        "description": "<!-- theme: info -->\n> _Coming soon_",
         "tags": [
           "Departments"
-        ]
+        ],
+        "parameters": [],
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        }
       }
     },
     "/v1/user/group": {
@@ -1354,19 +1520,73 @@
         "tags": [
           "Groups"
         ],
-        "responses": {},
-        "operationId": "get-v1-user-group"
-      },
-      "post": {
-        "summary": "Create User Group",
-        "operationId": "post-v1-user-group",
         "responses": {
           "200": {
             "description": "OK"
           }
         },
+        "operationId": "get-user-group",
+        "description": "<!-- theme: info -->\n> _Coming soon_",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ]
+      },
+      "post": {
+        "summary": "Create User Group",
+        "operationId": "create-user-group",
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        },
         "tags": [
           "Groups"
+        ],
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ],
+        "description": "<!-- theme: info -->\n> _Coming soon_"
+      }
+    },
+    "/v1/user/{userId}/block": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "userId",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "put": {
+        "summary": "Block User Account",
+        "operationId": "block-user",
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "description": "### Synopsis\nBlock the specified user and prevent them from logging in\n\n<!-- theme: info -->\n> _Coming soon_",
+        "tags": [
+          "Security"
+        ]
+      },
+      "delete": {
+        "summary": "Unblock User Account",
+        "operationId": "unblock-user",
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "description": "### Synopsis\nUnblock the specified user account and allow them to login\n\n<!-- theme: info -->\n> _Coming soon_",
+        "tags": [
+          "Security"
         ]
       }
     }
@@ -1612,7 +1832,7 @@
           "milestones"
         ],
         "x-examples": {
-          "Seat Example": {
+          "Licensed User Example": {
             "id": "ce48daca-f044-48e6-ad20-0c6e53db12da",
             "license": "seat",
             "flags": {
@@ -1686,7 +1906,7 @@
               }
             }
           },
-          "Record User Example": {
+          "Unlicensed User Example": {
             "id": "73f180ba-caa3-4e49-a68c-f643b5e7bf79",
             "license": "record_user",
             "flags": {
@@ -1746,7 +1966,7 @@
           }
         },
         "x-tags": [
-          "User Accounts"
+          "Object Models"
         ]
       },
       "User-Preferences": {
@@ -1832,7 +2052,7 @@
           }
         },
         "x-tags": [
-          "User Preferences"
+          "Object Models"
         ]
       },
       "User-Permissions": {
@@ -1853,33 +2073,51 @@
           "type": "string"
         },
         "x-tags": [
-          "Permissions",
           "Object Models"
         ]
       },
       "User-Assigned-Roles": {
-        "title": "User Assigned Roles Object Model",
-        "type": "object",
         "description": "",
+        "type": "object",
         "properties": {
-          "roles": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
+          "count": {
+            "type": "number",
+            "description": "The number of roles assigned"
+          },
+          "data": {
+            "$ref": "#/components/schemas/User-Roles-Item-Details"
           }
         },
+        "required": [
+          "count",
+          "data"
+        ],
+        "title": "User Assigned Roles",
         "x-examples": {
           "Example": {
-            "roles": [
-              "rol_ef4g..."
+            "count": 2,
+            "data": [
+              {
+                "id": "rol_BjYA2HwGRnfaFhuV",
+                "name": "Base Permissions",
+                "description": "System-assigned role that provides the minimum permissions required to access the console",
+                "tags": [
+                  "system"
+                ],
+                "system_only": true
+              },
+              {
+                "id": "rol_t0duC3p8gZbzhZ5a",
+                "name": "Energy Manager",
+                "description": "Permissions suitable for a user in an energy management/environmental responsibility role",
+                "tags": [
+                  "functional"
+                ],
+                "system_only": false
+              }
             ]
           }
-        },
-        "x-tags": [
-          "Roles",
-          "Object Models"
-        ]
+        }
       },
       "User-Roles-Manifest": {
         "title": "User Roles Manifest",
@@ -1902,67 +2140,51 @@
           "roles"
         ]
       },
-      "User-Roles-Manifest-Item": {
-        "title": "User Roles Manifest Item",
+      "User-Roles-Item-Details": {
+        "description": "",
         "type": "object",
         "properties": {
           "id": {
             "type": "string",
-            "description": "The Role ID in Auth0"
+            "minLength": 1
           },
           "name": {
             "type": "string",
-            "description": "The name of the role"
+            "minLength": 1
           },
           "description": {
             "type": "string",
-            "description": "The description of the role"
+            "minLength": 1
           },
-          "enabled": {
-            "type": "boolean",
-            "description": "Indicates if the role is enabled and available for assignment"
-          },
-          "attributes": {
-            "type": "object",
-            "required": [
-              "management_assigned_only",
-              "system_assigned_only",
-              "self_removable",
-              "subscription_required"
-            ],
-            "properties": {
-              "management_assigned_only": {
-                "type": "boolean",
-                "description": "Indicates if the role can only be assigned via the management API. These roles are not displayed in the Console UI and cannot be assigned via the core API"
-              },
-              "system_assigned_only": {
-                "description": "Indicates if the role is assigned by default or by some system action. If this is TRUE, self_removable is generally also TRUE",
-                "type": "boolean"
-              },
-              "self_removable": {
-                "description": "Indicates if the user can remove the role from themselves. If FALSE, the user must have the role removed by another user with the necessary privilege",
-                "type": "boolean"
-              },
-              "subscription_required": {
-                "type": "boolean",
-                "description": "Indicates if a tenant subscription is required to assign this role"
-              }
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
             }
           },
-          "assignment_prerequisite_roles": {
-            "type": "array",
-            "description": "An inclusive list of roles that must be previously assigned to the user before the role can be assigned. ",
-            "items": {}
+          "system_only": {
+            "type": "boolean"
           }
         },
         "required": [
           "id",
           "name",
           "description",
-          "enabled",
-          "attributes",
-          "assignment_prerequisite_roles"
-        ]
+          "tags",
+          "system_only"
+        ],
+        "title": "User Roles Item Details",
+        "x-examples": {
+          "Example": {
+            "id": "rol_BjYA2HwGRnfaFhuV",
+            "name": "Base Permissions",
+            "description": "System-assigned role that provides the minimum permissions required to access the console",
+            "tags": [
+              "system"
+            ],
+            "system_only": true
+          }
+        }
       }
     },
     "securitySchemes": {
@@ -1997,6 +2219,9 @@
     },
     {
       "name": "Groups"
+    },
+    {
+      "name": "Security"
     }
   ]
 }
