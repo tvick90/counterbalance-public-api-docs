@@ -909,7 +909,7 @@
       },
       "patch": {
         "summary": "Update User Preferences",
-        "operationId": "patch-v1-user-self-preferences",
+        "operationId": "update-user-preferences",
         "responses": {
           "200": {
             "description": "OK"
@@ -1061,8 +1061,8 @@
         }
       ],
       "put": {
-        "summary": "Set User Password",
-        "operationId": "set-user-password",
+        "summary": "Reset User Password",
+        "operationId": "reset-user-password",
         "responses": {
           "204": {
             "description": "No Content",
@@ -1070,6 +1070,50 @@
               "application/json": {
                 "schema": {
                   "type": "null"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../models/Error-Response.v1.yaml"
+                },
+                "examples": {
+                  "No Auth Account": {
+                    "value": {
+                      "error": {
+                        "message": "No authentication account",
+                        "console": "Adele Vance does not have an authentication account",
+                        "code": 400
+                      },
+                      "logging_hash": "..."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../models/Error-Response.v1.yaml"
+                },
+                "examples": {
+                  "User Not Found": {
+                    "value": {
+                      "error": {
+                        "message": "User not found",
+                        "console": "A user with ID ee876c8d-f404-4e13-84b6-ee22ec304322 could not be found in the database",
+                        "code": 404
+                      },
+                      "logging_hash": "..."
+                    }
+                  }
                 }
               }
             }
@@ -1106,9 +1150,9 @@
             }
           }
         },
-        "description": "Reset the password for the specified user\n\n<!-- theme: success -->\n> _**Note:** This endpoint accepts `self` in place of a UUID_\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\nWhen using a UUID:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`user:*`,`user:account:*`,`user:account:update`\n\nWhen using self:\n* Permissions _(at least one):_ `*`,`user:*`,`user:self:*`,`user:self:password`\n\n**Password Strength**\n\nPassword strength is an important consideration when setting passwords for your users. Counterbalance enforces a strong password policy that has the following requirements:\n\n* Must be at least 8-characters in length\n* Lower case (a-z), upper case (A-Z) and numbers (0-9)\n* Special characters (!@#$%^&*)\n* No more than 2 identical characters in a row\n\nNIST recommends a minimum character length of 8, and suggests that length is a better indicator of strength than complexity.\n\n<!-- theme: warning -->\n> _**Note** A password will be rejected if it contains common dictionary phrases or the user's first name, last name, or shortname._\n\n**Password History**\n\nA new password must be different than the user's last 3 passwords. ",
+        "description": "Reset the password for the specified user\n\n<!-- theme: success -->\n> _This endpoint accepts `self` in place of a UUID_\n\nThe target user will be notified via email that their password has changed. The new password will not be included in the email.\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\nWhen using a UUID:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`user:*`,`user:account:*`,`user:account:update`\n\nWhen using self:\n* Permissions _(at least one):_ `*`,`user:*`,`user:self:*`,`user:self:password`\n\n**Password Strength**\n\nPassword strength is an important consideration when setting passwords for your users. Counterbalance enforces a strong password policy that has the following requirements:\n\n* Must be at least 8-characters in length\n* Lower case (a-z), upper case (A-Z) and numbers (0-9)\n* Special characters (!@#$%^&*)\n* No more than 2 identical characters in a row\n\nNIST recommends a minimum character length of 8, and suggests that length is a better indicator of strength than complexity.\n\n<!-- theme: warning -->\n> ##### ⚠️ Heads Up\n> \n> _A password will be rejected if it contains common dictionary phrases or the user's first name, last name, or shortname._\n\n**Password History**\n\nA new password must be different than the user's last 3 passwords. ",
         "tags": [
-          "User Accounts"
+          "Security"
         ]
       }
     },
@@ -1277,7 +1321,7 @@
           }
         },
         "operationId": "get-user-permissions",
-        "description": "Retrieve permissions for a given user\n\n<!-- theme: success -->\n> _**Note:** This endpoint accepts `self` in place of a UUID_\n\n_**February 2021: ** Retrieving users via UUID is not yet supported._\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\nWhen using a UUID _(not yet supported)_:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`user:*`,`user:account:*`,`user:permissions:*`,`user:account:read`,`user:permissions:read`\n\nWhen using self:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`user:*`,`user:self:*`,`user:self:read`",
+        "description": "Retrieve the permissions associated with the specified user\n\n<!-- theme: success -->\n> _**Note:** This endpoint accepts `self` in place of a UUID_\n\n_**February 2021: ** Retrieving users via UUID is not yet supported._\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\nWhen using a UUID _(not yet supported)_:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`user:*`,`user:account:*`,`user:permissions:*`,`user:account:read`,`user:permissions:read`\n\nWhen using self:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`user:*`,`user:self:*`,`user:self:read`",
         "security": [
           {
             "Bearer Token": []
@@ -1375,6 +1419,44 @@
         },
         "tags": [
           "Groups"
+        ]
+      }
+    },
+    "/v1/user/{userId}/block": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "userId",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "put": {
+        "summary": "Block User Account",
+        "operationId": "block-user",
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "description": "Block the specified user and prevent them from logging in",
+        "tags": [
+          "Security"
+        ]
+      },
+      "delete": {
+        "summary": "Unblock User Account",
+        "operationId": "unblock-user",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "description": "Unblock the specified user account and allow them to login",
+        "tags": [
+          "Security"
         ]
       }
     }
@@ -2005,6 +2087,9 @@
     },
     {
       "name": "Groups"
+    },
+    {
+      "name": "Security"
     }
   ]
 }
