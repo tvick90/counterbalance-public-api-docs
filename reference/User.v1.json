@@ -3,7 +3,7 @@
   "info": {
     "title": "Users",
     "version": "1.2.2",
-    "description": "The Users API provides endpoints for user account management, including:\n* Creating and managing user accounts, permission groups, and departments\n* Updating user photos\n* Assigning user roles & permissions\n* Tracking and auditing platform access\n* Allocating and managing user licensing\n* Maintaining personal platform preferences\n\n**User Types**\n\nUser accounts are of one of the following three types depending on the licensing assigned. \n\n* A `seat` is a licensed system administrator account with access to the Counterbalance Console\n* A `user` is a licensed end-user account with access to the Counterbalance Portal\n* A `record_user` is a _\"placeholder\"_ user account for a user that is tracked via Counterbalance but does not hold a license and cannot actively interact with the platform\n\n** Assigning Licensing **\n\nThe user license can be adjusted using the \n\nIf insufficient quota exists for the specified license type, a `403 Forbidden` error will be thrown and the license will not be assigned. ",
+    "description": "The Users API provides endpoints for user account management, including:\n* Creating and managing user accounts, permission groups, and departments\n* Updating user photos\n* Assigning user roles & permissions\n* Tracking and auditing platform access\n* Allocating and managing user licensing\n* Maintaining personal platform preferences\n\n### User Types\nUser accounts are of one of the following three types depending on the licensing assigned. \n\n* A `seat` is a licensed system user account with access to the Counterbalance Console\n* A `user` is a licensed end-user account with access to the Counterbalance Portal\n* A `record_user` is a _\"placeholder\"_ user account for a user that is tracked via Counterbalance but does not hold a license and cannot actively interact with the platform\n\n### Assigning Licensing\nThe user license can be adjusted using the \n\nIf insufficient quota exists for the specified license type, a `403 Forbidden` error will be thrown and the license will not be assigned. ",
     "termsOfService": "https://www.counterbalance.io/legal/api-terms",
     "contact": {
       "name": "Taylor Vick",
@@ -103,7 +103,7 @@
             "Bearer Token": []
           }
         ],
-        "description": "Retrieve a list of user accounts available to the authenticated user\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`user:*`,`user:account:*`,`user:account:list`\n* Licensed Feature: `user_base`\n\n**Variations**\n\nIf the `status` query paramter is not included with the request, only active user accounts are returned. \n\nQuery paramters are stacked. That is, if you specify a specific site and department, then only users that match BOTH of these parameters will be returned.\n\n**Returned User Scope**\n\nThis is a scoped endpoint and the data returned may not be a complete, conclusive listing of all resources in the tenant account.\n\nUsers with `*` & `user:*` permission scopes will always have access to the complete resource data set in the tenant.",
+        "description": "Retrieve a list of user accounts available to the authenticated user\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`user:*`,`user:account:*`,`user:account:list`\n* Licensed Feature: `user_base`\n\n### Variations\nIf the `status` query paramter is not included with the request, only active user accounts are returned. \n\nQuery paramters are stacked. That is, if you specify a specific site and department, then only users that match BOTH of these parameters will be returned.\n\n### Returned User Scope\nThis is a scoped endpoint and the data returned may not be a complete, conclusive listing of all resources in the tenant account.\n\nUsers with `*` & `user:*` permission scopes will always have access to the complete resource data set in the tenant.",
         "parameters": [
           {
             "schema": {
@@ -246,7 +246,7 @@
             }
           }
         },
-        "description": "Create a new user and optionally assign a license and password\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`user:*`,`user:account:*`,`user:account:create`\n* Licensed Feature: `user_base`\n* If adding a license, adequate quota of the requested type\n\n**Defining the User Type**\n\nThe field `type` may be one of either: \n\n* `record_user` _(non-licensed user)_\n* `seat` _(licensed system user)_ \n* `user` _(licensed end user)_\n\nIf type is defined as either `seat` or `user`, the new user will be sent a notification email informing them of their new account. _As of February 2021, there is a pending request to disable this feature via query paramater_\n\nIf the `type` field is omitted, the user will default to `record_user`\n\n**Setting the User Password**\n\nThe `password` field is required when the user type specified is either `seat` or `user`. In all other cases, it is ignored.",
+        "description": "### Synopsis\nCreate a new user and optionally assign a license and password\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`user:*`,`user:account:*`,`user:account:create`\n* Licensed Feature: `user_base`\n* If adding a license, adequate quota of the requested type\n\n### Defining the User Type\nThe field `type` may be one of either: \n\n* `record_user` _(non-licensed user)_\n* `seat` _(licensed system user)_ \n* `user` _(licensed end user)_\n\nIf type is defined as either `seat` or `user`, the new user will be sent a notification email informing them of their new account. _As of February 2021, there is a pending request to disable this feature via query paramater_\n\nIf the `type` field is omitted, the user will default to `record_user`\n\n### Setting the User Password\n\nThe `password` field is required when the user type specified is either `seat` or `user`. In all other cases, it is ignored.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -463,7 +463,7 @@
         },
         "operationId": "get-user-profile",
         "parameters": [],
-        "description": "Retrieve the specified user account\n\n<!-- theme: success -->\n> _This endpoint accepts `self` in place of a UUID_\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\nWhen using a UUID:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`user:*`,`user:account:*`,`user:account:read`\n* Licensed Feature: `user_base`\n\nWhen using self:\n* Permissions _(at least one):_ `*`,`user:*`,`user:self:*`,`user:self:read`",
+        "description": "### Synopsis\nRetrieve the specified user account\n\n<!-- theme: success -->\n> _This endpoint accepts `self` in place of a UUID_\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n\n#### When using a UUID:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`user:*`,`user:account:*`,`user:account:read`\n* Licensed Feature: `user_base`\n\n#### When using _self_:\n* Permissions _(at least one):_ `*`,`user:*`,`user:self:*`,`user:self:read`",
         "security": [
           {
             "Bearer Token": []
@@ -507,7 +507,7 @@
             }
           }
         },
-        "description": "Update the specified user account\n\n<!-- theme: success -->\n> _**Note:** This endpoint accepts `self` in place of a UUID_\n\nSome body fields are marked as _**required**._ This indicates that if they are included in the body of a request, they cannot be empty strings or null values.\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\nWhen using a UUID:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`user:*`,`user:account:*`,`user:account:update`\n* Licensed Feature: `user_base`\n\nWhen using self:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`user:*`,`user:self:*`,`user:self:update`\n\n",
+        "description": "### Synopsis\nUpdate the specified user account\n\n<!-- theme: success -->\n> _**Note:** This endpoint accepts `self` in place of a UUID_\n\nSome body fields are marked as _**required**._ This indicates that if they are included in the body of a request, they cannot be empty strings or null values.\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n\nWhen using a UUID:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`user:*`,`user:account:*`,`user:account:update`\n* Licensed Feature: `user_base`\n\nWhen using self:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`user:*`,`user:self:*`,`user:self:update`\n\n",
         "requestBody": {
           "content": {
             "application/json": {
@@ -616,7 +616,7 @@
             }
           }
         },
-        "description": "Mark the specified user account for deletion\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`user:*`,`user:account:*`,`user:account:delete`\n\n**Account Retention & Restoration**\n\nWhen deleted, an account is merely marked for deletion and any associated auth account is blocked. The user can be restored for up to 30 days after it is deleted using the Restore User Account endpoint. \n\n**Permanently Delete a User**\n\nTo permanently delete a user account, pass the `permanent` query parameter and set it to true. The account will be immediately and permanently removed from the system and cannot be restored. ",
+        "description": "### Synopsis\nMark the specified user account for deletion\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`user:*`,`user:account:*`,`user:account:delete`\n\n### Account Retention & Restoration\n\nWhen deleted, an account is merely marked for deletion and any associated auth account is blocked. The user can be restored for up to 30 days after it is deleted using the Restore User Account endpoint. \n\n### Permanently Delete a User\n\nTo permanently delete a user account, pass the `permanent` query parameter and set it to true. The account will be immediately and permanently removed from the system and cannot be restored. ",
         "security": [
           {
             "Bearer Token": []
@@ -797,7 +797,7 @@
             }
           }
         },
-        "description": "Set the license type for the spcified user\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`tenant:*`,`tenant:licensing:*`,`tenant:licensing:assign`\n* Licensed Feature: `user_base`\n* Adequate quota of the requested type\n\n**Setting the License Type**\n\nThe field `type` may be one of either: \n\n* `record_user` _(non-licensed user)_\n* `seat` _(licensed system user)_ \n* `user` _(licensed end user)_\n\n<!-- theme: danger -->\n> _**Heads Up** Downgrading a user to the `record_user` license will block the user's CounterbalanceID account_\n\n**Setting the User Password**\n\nThe `password` field is required when the user type specified is either `seat` or `user`. In all other cases, it is ignored.\n\n**Notifying the User**\n\nComing soon...\n",
+        "description": "### Synopsis\nSet the license type for the spcified user\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`tenant:*`,`tenant:licensing:*`,`tenant:licensing:assign`\n* Licensed Feature: `user_base`\n* Adequate quota of the requested type\n\n### Setting the License Type\nThe field `type` may be one of either: \n\n* `record_user` _(non-licensed user)_\n* `seat` _(licensed system user)_ \n* `user` _(licensed end user)_\n\n<!-- theme: danger -->\n> _**Heads Up** Downgrading a user to the `record_user` license will block the user's CounterbalanceID account_\n\n### Setting the User Password\nThe body field `password` is required when the user type specified is either `seat` or `user`. In all other cases, it is ignored.\n\n### Notifying the User\nComing soon...\n",
         "security": [
           {
             "Bearer Token": []
@@ -900,7 +900,7 @@
           }
         },
         "operationId": "get-user-preferences",
-        "description": "Get the preferences for the currently authenticated user\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`console:view`",
+        "description": "### Synopsis\nGet the preferences for the currently authenticated user\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n\n* Permissions _(at least one):_ `*`,`user:*`,`user:self:*`,`user:self:read`",
         "security": [
           {
             "Bearer Token": []
@@ -915,7 +915,7 @@
             "description": "OK"
           }
         },
-        "description": "Update the preferences for the currently authenticated user\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`console:view`",
+        "description": "### Synopsis\nUpdate the preferences for the currently authenticated user\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`console:view`",
         "security": [
           {
             "Bearer Token": []
@@ -968,7 +968,7 @@
           }
         },
         "operationId": "get-user-photo",
-        "description": "Get the specified user's photo in PNG format\n\n<!--theme: warning-->\n> _**Heads Up: ** This is a public endpoint and does not require authentication_\n\n**Prerequisites** \n\n_None_\n\n**Using this Endpoint in HTML**\n\nThis endpoint can be used as the `src` attribute of an HTML `img` tag.\n```html\n<img src=\"https://api.counterbalance.io/v1/user/{userId}/photo\">\n```",
+        "description": "### Synopsis\nGet the specified user's photo in PNG format\n\n<!--theme: warning-->\n> _**Heads Up** This is a public endpoint and does not require authentication_\n\n### Prerequisites\n_None_\n\n### Usage Examples\n\nThis endpoint can be used as the `src` attribute of an HTML `img` tag.\n```html\n<img src=\"https://api.counterbalance.io/v1/user/{userId}/photo\">\n```",
         "parameters": []
       },
       "post": {
@@ -1039,7 +1039,7 @@
           }
         },
         "operationId": "get-user-roles",
-        "description": "Retrieve a list of roles assigned to a user\n\n<!-- theme: success -->\n> _This endpoint accepts `self` in place of a UUID_\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\nWhen using a UUID:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`user:*`,`user:roles:*`,`user:roles:read`\n* Licensed Feature: `user_base`\n\nWhen using self:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`user:*`,`user:self:*`,`user:self:read`",
+        "description": "### Synopsis\nRetrieve a list of roles assigned to a user\n\n<!-- theme: success -->\n> _This endpoint accepts `self` in place of a UUID_\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n\n#### When using a UUID:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`user:*`,`user:roles:*`,`user:roles:read`\n* Licensed Feature: `user_base`\n\n#### When using _self_:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`user:*`,`user:self:*`,`user:self:read`",
         "security": [
           {
             "Bearer Token": []
@@ -1164,7 +1164,7 @@
             "name": "Content-Type"
           }
         ],
-        "description": "Assign one or more roles to a user\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`user:*`,`user:roles:*`,`user:roles:update`",
+        "description": "### Synopsis\nAssign one or more roles to a user\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`user:*`,`user:roles:*`,`user:roles:update`",
         "tags": [
           "Roles"
         ]
@@ -1211,7 +1211,7 @@
             }
           }
         },
-        "description": "Remove one or more roles from a user\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`user:*`,`user:roles:*`,`user:roles:remove`",
+        "description": "### Synopsis\nRemove one or more roles from a user\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`user:*`,`user:roles:*`,`user:roles:remove`",
         "security": [
           {
             "Bearer Token": []
@@ -1351,7 +1351,7 @@
             }
           }
         },
-        "description": "Reset the password for the specified user\n\n<!-- theme: success -->\n> _This endpoint accepts `self` in place of a UUID_\n\nThe target user will be notified via email that their password has changed. The new password will not be included in the email.\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\nWhen using a UUID:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`user:*`,`user:account:*`,`user:account:update`\n\nWhen using self:\n* Permissions _(at least one):_ `*`,`user:*`,`user:self:*`,`user:self:password`\n\n**Password Strength**\n\nPassword strength is an important consideration when setting passwords for your users. Counterbalance enforces a strong password policy that has the following requirements:\n\n* Must be at least 8-characters in length\n* Lower case (a-z), upper case (A-Z) and numbers (0-9)\n* Special characters (!@#$%^&*)\n* No more than 2 identical characters in a row\n\nNIST recommends a minimum character length of 8, and suggests that length is a better indicator of strength than complexity.\n\n<!-- theme: warning -->\n> ##### ⚠️ Heads Up\n> \n> _A password will be rejected if it contains common dictionary phrases or the user's first name, last name, or shortname._\n\n**Password History**\n\nA new password must be different than the user's last 3 passwords. ",
+        "description": "### Synopsis\nReset the password for the specified user\n\n<!-- theme: success -->\n> _This endpoint accepts `self` in place of a UUID_\n\nThe target user will be notified via email that their password has changed. The new password will not be included in the email.\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n\n#### When using a UUID:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`user:*`,`user:account:*`,`user:account:update`\n\n#### When using _self_:\n* Permissions _(at least one):_ `*`,`user:*`,`user:self:*`,`user:self:password`\n\n### Password Strength\nPassword strength is an important consideration when setting passwords for your users. Counterbalance enforces a strong password policy that has the following requirements:\n\n* Must be at least 8-characters in length\n* Lower case (a-z), upper case (A-Z) and numbers (0-9)\n* Special characters (!@#$%^&*)\n* No more than 2 identical characters in a row\n\nNIST recommends a minimum character length of 8, and suggests that length is a better indicator of strength than complexity.\n\n<!-- theme: warning -->\n> ##### ⚠️ Heads Up\n> \n> _A password will be rejected if it contains common dictionary phrases or the user's first name, last name, or shortname._\n\n### Password History\n\nA new password must be different than the user's last 3 passwords. ",
         "tags": [
           "Security"
         ]
@@ -1398,7 +1398,7 @@
           }
         },
         "operationId": "get-user-permissions",
-        "description": "Retrieve the permissions associated with the specified user\n\n<!-- theme: success -->\n> _**Note:** This endpoint accepts `self` in place of a UUID_\n\n_**February 2021: ** Retrieving users via UUID is not yet supported._\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\nWhen using a UUID _(not yet supported)_:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`user:*`,`user:account:*`,`user:permissions:*`,`user:account:read`,`user:permissions:read`\n\nWhen using self:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`user:*`,`user:self:*`,`user:self:read`",
+        "description": "### Synopsis\nRetrieve the permissions associated with the specified user\n\n<!-- theme: success -->\n> _**Note:** This endpoint accepts `self` in place of a UUID_\n\n_**February 2021: ** Retrieving users via UUID is not yet supported._\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n\n#### When using a UUID _(not yet supported)_:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`user:*`,`user:account:*`,`user:permissions:*`,`user:account:read`,`user:permissions:read`\n\n#### When using self:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`user:*`,`user:self:*`,`user:self:read`",
         "security": [
           {
             "Bearer Token": []
@@ -1412,8 +1412,18 @@
         "tags": [
           "Departments"
         ],
-        "responses": {},
-        "operationId": "get-departments"
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "operationId": "get-departments",
+        "description": "<!-- theme: info -->\n> _Coming soon_",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ]
       },
       "post": {
         "summary": "Create New Department",
@@ -1423,9 +1433,14 @@
             "description": "Created"
           }
         },
-        "description": "",
+        "description": "<!-- theme: info -->\n> _Coming soon_",
         "tags": [
           "Departments"
+        ],
+        "security": [
+          {
+            "Bearer Token": []
+          }
         ]
       },
       "parameters": []
@@ -1447,34 +1462,56 @@
         "tags": [
           "Departments"
         ],
-        "responses": {},
-        "operationId": "get-v1-department-departmentId",
-        "description": ""
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "operationId": "get-department",
+        "description": "<!-- theme: info -->\n> _Coming soon_",
+        "parameters": [],
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ]
       },
       "patch": {
         "summary": "Update Department",
         "operationId": "update-department",
+        "tags": [
+          "Departments"
+        ],
+        "description": "<!-- theme: info -->\n> _Coming soon_",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
           }
-        },
-        "tags": [
-          "Departments"
-        ]
+        }
       },
       "delete": {
         "summary": "Delete Department",
         "operationId": "delete-department",
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        },
-        "description": "",
+        "description": "<!-- theme: info -->\n> _Coming soon_",
         "tags": [
           "Departments"
-        ]
+        ],
+        "parameters": [],
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        }
       }
     },
     "/v1/user/group": {
@@ -1483,20 +1520,36 @@
         "tags": [
           "Groups"
         ],
-        "responses": {},
-        "operationId": "get-v1-user-group"
-      },
-      "post": {
-        "summary": "Create User Group",
-        "operationId": "post-v1-user-group",
         "responses": {
           "200": {
             "description": "OK"
           }
         },
+        "operationId": "get-user-group",
+        "description": "<!-- theme: info -->\n> _Coming soon_",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ]
+      },
+      "post": {
+        "summary": "Create User Group",
+        "operationId": "create-user-group",
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        },
         "tags": [
           "Groups"
-        ]
+        ],
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ],
+        "description": "<!-- theme: info -->\n> _Coming soon_"
       }
     },
     "/v1/user/{userId}/block": {
@@ -1518,7 +1571,7 @@
             "description": "No Content"
           }
         },
-        "description": "Block the specified user and prevent them from logging in",
+        "description": "### Synopsis\nBlock the specified user and prevent them from logging in\n\n<!-- theme: info -->\n> _Coming soon_",
         "tags": [
           "Security"
         ]
@@ -1527,11 +1580,11 @@
         "summary": "Unblock User Account",
         "operationId": "unblock-user",
         "responses": {
-          "200": {
-            "description": "OK"
+          "204": {
+            "description": "No Content"
           }
         },
-        "description": "Unblock the specified user account and allow them to login",
+        "description": "### Synopsis\nUnblock the specified user account and allow them to login\n\n<!-- theme: info -->\n> _Coming soon_",
         "tags": [
           "Security"
         ]
