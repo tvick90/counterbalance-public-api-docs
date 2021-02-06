@@ -616,7 +616,7 @@
             }
           }
         },
-        "description": "Mark the specified user account for deletion\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`user:*`,`user:account:*`,`user:account:delete`\n\n**Account Retention & Restoration**\n\nWhen deleted, an account is merely marked for deletion and any associated auth account is blocked. The user can be restored for up to 30 days after it is permanently deleted using the Restore User Account endpoint. \n\n**Permanently Delete a User**\n\nTo permanently delete a user account, pass the `permanent` query parameter and set it to true. The account will be immediately and permanently removed from the system and cannot be restored. ",
+        "description": "Mark the specified user account for deletion\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`user:*`,`user:account:*`,`user:account:delete`\n\n**Account Retention & Restoration**\n\nWhen deleted, an account is merely marked for deletion and any associated auth account is blocked. The user can be restored for up to 30 days after it is deleted using the Restore User Account endpoint. \n\n**Permanently Delete a User**\n\nTo permanently delete a user account, pass the `permanent` query parameter and set it to true. The account will be immediately and permanently removed from the system and cannot be restored. ",
         "security": [
           {
             "Bearer Token": []
