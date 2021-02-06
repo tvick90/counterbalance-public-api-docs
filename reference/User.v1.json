@@ -2,7 +2,7 @@
   "openapi": "3.0.0",
   "info": {
     "title": "Users",
-    "version": "1.1.1",
+    "version": "1.2.2",
     "description": "The Users API provides endpoints for user account management, including:\n* Creating and managing user accounts, permission groups, and departments\n* Updating user photos\n* Assigning user roles & permissions\n* Tracking and auditing platform access\n* Allocating and managing user licensing\n* Maintaining personal platform preferences\n\n**User Types**\n\nUser accounts are of one of the following three types depending on the licensing assigned. \n\n* A `seat` is a licensed system administrator account with access to the Counterbalance Console\n* A `user` is a licensed end-user account with access to the Counterbalance Portal\n* A `record_user` is a _\"placeholder\"_ user account for a user that is tracked via Counterbalance but does not hold a license and cannot actively interact with the platform\n\n** Assigning Licensing **\n\nThe user license can be adjusted using the \n\nIf insufficient quota exists for the specified license type, a `403 Forbidden` error will be thrown and the license will not be assigned. ",
     "termsOfService": "https://www.counterbalance.io/legal/api-terms",
     "contact": {
