@@ -1256,8 +1256,6 @@
                   "Example": {
                     "value": [
                       "billing:account:view",
-                      "console:view",
-                      "hardware:device:read",
                       "sites:*",
                       "tenant:*",
                       "user:account:*"
@@ -1268,8 +1266,8 @@
             }
           }
         },
-        "operationId": "get-v1-user-userId-permissions",
-        "description": "Retrieve permissions for a given user\n\n> _This endpoint accepts `self` in place of a UUID_",
+        "operationId": "get-user-permissions",
+        "description": "Retrieve permissions for a given user\n\n<!-- theme: success -->\n> _**Note:** This endpoint accepts `self` in place of a UUID_\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\nWhen using a UUID:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`user:*`,`user:account:*`,`user:permissions:*`,`user:account:read`,`user:permissions:read`\n\nWhen using self:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`user:*`,`user:self:*`,`user:self:read`",
         "security": [
           {
             "Bearer Token": []
