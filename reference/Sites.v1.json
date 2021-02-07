@@ -2,8 +2,8 @@
   "openapi": "3.0.0",
   "info": {
     "title": "Sites",
-    "version": "v1.0",
-    "description": "The Sites API provides endpoints for site and building management, including:\n* Creating & managing sites & associated buildings\n* Creating & managing addresses\n* Viewing current and forecasted weather conditions\n* Viewing timezone details for an IANA Timezone ID\n\n**Site Types**\n\nSites are of one of the following two types: \n\n* A `physical`, as the name implies, is a physical location managed by your organization. Physical sites can be assigned an address and, if licensed, may also contain buildings. \n* A `virtual` site is a placeholder that cannot be assigned an address or buildings. Virtual sites are useful for organizing assets in locations that are not managed by your organization, such as a public cloud region.\n\n**Quotas and Licensing**\n\nSite management is a paid feature. Physical sites are subject to quota availability. Virtual sites and buildings are not measured against a pre-defined quota but require a seperate license. These requirments are outlined in the various endpoint docs.\n\nIf insufficient quota or licensing exists for the specified site type, a `403 Forbidden` error will be thrown and the site will not be created. ",
+    "version": "v1.1",
+    "description": "The Sites API provides endpoints for site and building management, including:\n* Creating & managing sites & associated buildings\n* Creating & managing addresses\n* Viewing current and forecasted weather conditions\n* Viewing timezone details for an IANA Timezone ID\n\n## Site Types\nSites are of one of the following two types: \n\n* A `physical`, as the name implies, is a physical location managed by your organization. Physical sites can be assigned an address and, if licensed, may also contain buildings. \n* A `virtual` site is a placeholder that cannot be assigned an address or buildings. Virtual sites are useful for organizing assets in locations that are not managed by your organization, such as a public cloud region.\n\n## Quotas and Licensing\nSite management is a paid feature. Physical sites are subject to quota availability. Virtual sites and buildings are not measured against a pre-defined quota but require a seperate license. These requirments are outlined in the various endpoint docs.\n\nIf insufficient quota or licensing exists for the specified site type, a `403 Forbidden` error will be thrown and the site will not be created. ",
     "termsOfService": "https://www.counterbalance.io/legal/api-terms",
     "contact": {
       "name": "Taylor Vick",
@@ -85,7 +85,7 @@
             "Bearer Token": []
           }
         ],
-        "description": "Retrieve a list of sites available to the authenticated user\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:site:*`,`sites:site:list`\n* Licensed Feature: `sites_base` and/or `sites_virtual`\n\n**Variations**\n\nIf the `type` query paramter is not included with the request, all sites are returned. \n\n**Returned Site Scope**\n\nThis is a scoped endpoint and the data returned may not be a complete, conclusive listing of all resources in the tenant account.\n\nUsers with `*` & `sites:*` permission scopes will always have access to the complete resource data set in the tenant.",
+        "description": "### Synopsis\nRetrieve a list of sites available to the authenticated user\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:site:*`,`sites:site:list`\n* Licensed Feature: `sites_base` and/or `sites_virtual`\n\n### Variations\nA combination of one or more query parameters may be used to vary the returned data according to a particular need. Query parameters are stacked such that using multiple parameters will result in a narrower data set.\n\nFor example, perhaps you organize sites with a pre-defined coding system that includes the state abbreviation in the assigned site codes. You can then return only sites in MN by using a wildcard search with the `code` query param.\n\n<!--\ntitle: \"Site Code Wildcard Search\"\nlineNumbers: false\n-->\n```text\nhttps://api.counterbalance.io/v1/site?code=*MN*\n```\n\nThe listing can also filtered by site type by specifying the `type` parameter and setting it to either `physical` or `virtual`.\n\n<!--\ntitle: \"Physical Sites Only\"\nlineNumbers: false\n-->\n```text\nhttps://api.counterbalance.io/v1/site?type=physical\n```",
         "parameters": [
           {
             "schema": {
@@ -141,7 +141,7 @@
                     "value": {
                       "id": "799ef189-c32b-48b4-9eb8-4787ebe37f2a",
                       "code": "",
-                      "name": "My First Site",
+                      "name": "Seattle Office",
                       "description": "",
                       "type": "physical",
                       "address": null,
@@ -153,7 +153,7 @@
             }
           }
         },
-        "description": "Create a new site\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:site:*`,`sites:site:create`\n* Licensed Feature: \n  - `sites_base` to add physical sites and addresses\n  - `sites_virtual` to add virtual sites\n* Adequate quota of the requested type",
+        "description": "### Synopsis\nCreate a new site\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:site:*`,`sites:site:create`\n* Licensed Feature: \n  - `sites_base` to add physical sites and addresses\n  - `sites_virtual` to add virtual sites\n* Adequate quota of the requested type",
         "security": [
           {
             "Bearer Token": []
@@ -199,7 +199,7 @@
               "examples": {
                 "Example": {
                   "value": {
-                    "name": "My First Site",
+                    "name": "Seattle Office",
                     "type": "physical"
                   }
                 }
@@ -216,6 +216,16 @@
         },
         "tags": [
           "Manage Sites"
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "default": "application/jso"
+            },
+            "in": "header",
+            "name": "Content-Type"
+          }
         ]
       }
     },
@@ -284,8 +294,8 @@
             }
           }
         },
-        "operationId": "get-v1-site-siteId",
-        "description": "Get a site object by ID",
+        "operationId": "get-site",
+        "description": "### Synopsis\nRetrieve the details for the specified site\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:site:*`,`sites:site:read`",
         "security": [
           {
             "Bearer Token": []
@@ -294,7 +304,7 @@
       },
       "patch": {
         "summary": "Update Site",
-        "operationId": "patch-v1-site-siteId",
+        "operationId": "update-site",
         "responses": {
           "200": {
             "description": "OK",
@@ -342,7 +352,7 @@
             }
           }
         },
-        "description": "Update a site by ID\n\nUse the `Update Address` endpoint to update the site's address",
+        "description": "### Synopsis\nUpdate the details for the specified site\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:site:*`,`sites:site:update`\n* Licensed Feature: `sites_base` and/or `sites_virtual`",
         "security": [
           {
             "Bearer Token": []
@@ -388,7 +398,7 @@
       },
       "delete": {
         "summary": "Delete Site",
-        "operationId": "delete-v1-site-siteId",
+        "operationId": "delete-site",
         "responses": {
           "204": {
             "description": "No Content",
@@ -399,9 +409,6 @@
                 }
               }
             }
-          },
-          "404": {
-            "description": "Not Found"
           },
           "409": {
             "description": "Conflict",
@@ -426,7 +433,7 @@
             }
           }
         },
-        "description": "Delete a site by ID",
+        "description": "### Synopsis\nDelete the specified site\n\n<!-- theme: danger -->\n> _**Heads Up** This cannot be undone!_\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:site:*`,`sites:site:delete`\n* Specified site must be void of any associated objects",
         "security": [
           {
             "Bearer Token": []
@@ -492,20 +499,10 @@
                 }
               }
             }
-          },
-          "404": {
-            "description": "Address Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "../models/Error-Response.v1.yaml"
-                }
-              }
-            }
           }
         },
-        "operationId": "get-v1-site-address-addressId",
-        "description": "Get an address by ID",
+        "operationId": "get-address",
+        "description": "### Synopsis\nRetrieve the details for the specified address\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:address:*`,`sites:address:read`",
         "security": [
           {
             "Bearer Token": []
@@ -514,7 +511,7 @@
       },
       "patch": {
         "summary": "Update Address",
-        "operationId": "patch-v1-site-address-addressId",
+        "operationId": "update-address",
         "responses": {
           "200": {
             "description": "OK",
@@ -555,7 +552,7 @@
             }
           }
         },
-        "description": "Update an address by ID",
+        "description": "### Synopsis\nUpdate the details for the specified address\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:address:*`,`sites:address:read`",
         "parameters": [],
         "security": [
           {
@@ -626,7 +623,7 @@
       },
       "delete": {
         "summary": "Delete Address",
-        "operationId": "delete-v1-site-address-addressId",
+        "operationId": "delete-address",
         "responses": {
           "204": {
             "description": "No Content",
@@ -639,7 +636,7 @@
             }
           }
         },
-        "description": "Delete an address by ID",
+        "description": "### Synopsis\nDelete the specified address\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:address:*`,`sites:address:delete`",
         "security": [
           {
             "Bearer Token": []
@@ -789,7 +786,7 @@
             }
           }
         },
-        "description": "Create a new address object and attach it to the specified site or building\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ \n  \n  _When specifying a site ID:_ `*`,`sites:*`,`sites:site:*`,`sites:site:update`\n  \n  _When specifying a building ID:_ `*`,`sites:*`,`sites:building:*`,`sites:building:update`\n\n\n**Address Geocoding**\n\nBy default, new addresses are geocoded to determine their GPS coordinates, timezone, and to fill-in various extended properties such as the locality, country, and ZIP or postcode. \n\nGeocoding is an optional process and can be skipped by setting `geocode` to `false` in the request body. If geocoding is skipped, the following additional body parameters become required: `county`, `country`, `postcode`, `timezone`",
+        "description": "### Synopsis\nCreate a new address object and attach it to the specified site or building\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n* An active tenant account\n* Permissions _(at least one):_ \n  \n  _When specifying a site ID:_ `*`,`sites:*`,`sites:site:*`,`sites:site:update`\n  \n  _When specifying a building ID:_ `*`,`sites:*`,`sites:building:*`,`sites:building:update`\n\n\n### Address Geocoding\nBy default, new addresses are geocoded to determine their GPS coordinates, timezone, and to fill-in various extended properties such as the locality, country, and ZIP or postcode. \n\nGeocoding is an optional process and can be skipped by setting `geocode` to `false` in the request body. If geocoding is skipped, the following additional body parameters become required: `county`, `country`, `postcode`, `timezone`",
         "security": [
           {
             "Bearer Token": []
@@ -1022,7 +1019,7 @@
           }
         },
         "operationId": "list-site-buildings",
-        "description": "Retrieve a list of buildings associated with the specified site\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:building:*`,`sites:building:list`",
+        "description": "### Synopsis\nRetrieve a list of buildings associated with the specified site\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:building:*`,`sites:building:list`",
         "security": [
           {
             "Bearer Token": []
@@ -1745,7 +1742,7 @@
           }
         },
         "operationId": "get-weather-forecast",
-        "description": "Retrieve a detailed daily weather forecast\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:weather:*`,`sites:weather:forecast`\n* Licensed Feature: `weather_forecasts`\n\n**Specifying the Location**\n\nWeather forecasts can be obtained for a specified set of coordinates or by specifying a geocoded address object ID. Either the `coordinates` or `address` query parameters must be passed, but not both.\n\nIf the specified address ID has not been geocoded, an error will be returned.\n\n<!-- theme: warning-->\n> _Parameters `coordinates` and `address` are mutually exclusive. Passing more than one will result in an error_\n\n**Units**\n\nBy default, data is returned in Imperial units. To return data in Metric units, pass the `metric` query parameter and set it to _true_. \n\n**Language**\n\nBy default, data is returned in English. To return data in another language, pass the `langugage` query parameter and set it to a valid IETF language code",
+        "description": "Retrieve a detailed daily weather forecast\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:weather:*`,`sites:weather:forecast`\n* Licensed Feature: `weather_forecasts`\n\n### Specifying the Location\nWeather forecasts can be obtained for a specified set of coordinates or by specifying a geocoded address object ID. Either the `coordinates` or `address` query parameters must be passed, but not both.\n\nIf the specified address ID has not been geocoded, an error will be returned.\n\n<!-- theme: warning-->\n> _Parameters `coordinates` and `address` are mutually exclusive. Passing more than one will result in an error_\n\n### Units\nBy default, data is returned in Imperial units. To return data in Metric units, pass the `metric` query parameter and set it to _true_. \n\n### Language\nBy default, data is returned in English. To return data in another language, pass the `langugage` query parameter and set it to a valid IETF language code",
         "parameters": [
           {
             "schema": {
@@ -2030,7 +2027,7 @@
           }
         },
         "operationId": "get-current-weather-conditions",
-        "description": "Retrieve detailed current weather conditions\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:weather:*`,`sites:weather:currently`\n* Licensed Feature: `weather_conditions`\n\n**Specifying the Location**\n\nWeather conditions can be obtained for a specified set of coordinates or by specifying a geocoded address object ID. Either the `coordinates` or `address` query parameters must be passed, but not both.\n\nIf the specified address ID has not been geocoded, an error will be returned.\n\n<!-- theme: warning-->\n> _Parameters `coordinates` and `address` are mutually exclusive. Passing more than one will result in an error_\n\n**Units**\n\nBy default, data is returned in Imperial units. To return data in Metric units, pass the `metric` query parameter and set it to _true_. \n\n**Language**\n\nBy default, data is returned in English. To return data in another language, pass the `langugage` query parameter and set it to a valid IETF language code",
+        "description": "### Synposis\nRetrieve detailed current weather conditions\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:weather:*`,`sites:weather:currently`\n* Licensed Feature: `weather_conditions`\n\n### Specifying the Location\nWeather conditions can be obtained for a specified set of coordinates or by specifying a geocoded address object ID. Either the `coordinates` or `address` query parameters must be passed, but not both.\n\nIf the specified address ID has not been geocoded, an error will be returned.\n\n<!-- theme: warning-->\n> _Parameters `coordinates` and `address` are mutually exclusive. Passing more than one will result in an error_\n\n### Units\nBy default, data is returned in Imperial units. To return data in Metric units, pass the `metric` query parameter and set it to _true_. \n\n### Language\nBy default, data is returned in English. To return data in another language, pass the `langugage` query parameter and set it to a valid IETF language code",
         "parameters": [
           {
             "schema": {
@@ -2201,7 +2198,7 @@
           }
         },
         "operationId": "get-v1-site-weather-alerts",
-        "description": "Retrieve current sever weather alerts and advisories\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:weather:*`,`sites:weather:alerts`\n* Licensed Feature: `weather_alerts`\n\n**Specifying the Location**\n\nWeather alerts and advisories can be obtained for a specified set of coordinates or by specifying a geocoded address object ID. Either the `coordinates` or `address` query parameters must be passed, but not both.\n\nIf the specified address ID has not been geocoded, an error will be returned.\n\n<!-- theme: warning-->\n> _Parameters `coordinates` and `address` are mutually exclusive. Passing more than one will result in an error_\n\n**Language**\n\nBy default, data is returned in English. To return data in another language, pass the `langugage` query parameter and set it to a valid IETF language code.\n\n<!-- theme: warning-->\n> _The API supports any valid IETF language code but alert data may not be available in the specified language_",
+        "description": "Retrieve current sever weather alerts and advisories\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:weather:*`,`sites:weather:alerts`\n* Licensed Feature: `weather_alerts`\n\n### Specifying the Location\nWeather alerts and advisories can be obtained for a specified set of coordinates or by specifying a geocoded address object ID. Either the `coordinates` or `address` query parameters must be passed, but not both.\n\nIf the specified address ID has not been geocoded, an error will be returned.\n\n<!-- theme: warning-->\n> _Parameters `coordinates` and `address` are mutually exclusive. Passing more than one will result in an error_\n\n### Language\nBy default, data is returned in English. To return data in another language, pass the `langugage` query parameter and set it to a valid IETF language code.\n\n<!-- theme: warning-->\n> _The API supports any valid IETF language code but alert data may not be available in the specified language_",
         "parameters": [
           {
             "schema": {
@@ -2355,7 +2352,7 @@
           }
         },
         "operationId": "get-timezone",
-        "description": "Retrieve timezone details including the current time\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:utilities:*`,`sites:utilities:timezone`\n* Licensed Feature: `sites_base`\n\n**Specifying Coordinates or Address ID**\n\nTimezone details can be obtained for a specified set of coordinates or by specifying a geocoded address object ID. Either the `coordinates` or `address` query parameters must be passed, but not both.\n\nIf the specified address ID has not been geocoded, an error will be returned.\n\n**Specifying am IANA Timezone ID**\n\nTimezone details can be obtained for any Timezone by specifying the IANA timezone ID\n\n<!-- theme: warning-->\n> _Parameters `timezone`, `coordinates` and `address` are mutually exclusive. Passing more than one will result in an error_\n",
+        "description": "### Synopsis\nRetrieve timezone details including the current time\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:utilities:*`,`sites:utilities:timezone`\n* Licensed Feature: `sites_base`\n\n### Specifying Coordinates or Address ID\nTimezone details can be obtained for a specified set of coordinates or by specifying a geocoded address object ID. Either the `coordinates` or `address` query parameters must be passed, but not both.\n\nIf the specified address ID has not been geocoded, an error will be returned.\n\n### Specifying am IANA Timezone ID\nTimezone details can be obtained for any Timezone by specifying the IANA timezone ID\n\n<!-- theme: warning-->\n> _Parameters `timezone`, `coordinates` and `address` are mutually exclusive. Passing more than one will result in an error_\n",
         "parameters": [
           {
             "schema": {
