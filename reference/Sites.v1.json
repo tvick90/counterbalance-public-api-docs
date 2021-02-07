@@ -85,7 +85,7 @@
             "Bearer Token": []
           }
         ],
-        "description": "Retrieve a list of sites available to the authenticated user\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:site:*`,`sites:site:list`\n* Licensed Feature: `sites_base` and/or `sites_virtual`\n\n**Variations**\n\nIf the `type` query paramter is not included with the request, all sites are returned. \n\n**Returned Site Scope**\n\nThis is a scoped endpoint and the data returned may not be a complete, conclusive listing of all resources in the tenant account.\n\nUsers with `*` & `sites:*` permission scopes will always have access to the complete resource data set in the tenant.",
+        "description": "### Synopsis\nRetrieve a list of sites available to the authenticated user\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:site:*`,`sites:site:list`\n* Licensed Feature: `sites_base` and/or `sites_virtual`\n\n### Variations\nA combination of one or more query parameters may be used to vary the returned data according to a particular need. Query parameters are stacked such that using multiple parameters will result in a narrower data set.\n\nFor example, perhaps you organize sites with a pre-defined coding system that includes the state abbreviation in the assigned site codes. You can then return only sites in MN by using a wildcard search with the `code` query param.\n\n<!--\ntitle: \"Site Code Wildcard Search\"\nlineNumbers: false\n-->\n```text\nhttps://api.counterbalance.io/v1/site?code=*MN*\n```\n\nThe listing can also filtered by site type by specifying the `type` parameter and setting it to either `physical` or `virtual`.\n\n<!--\ntitle: \"Physical Sites Only\"\nlineNumbers: false\n-->\n```text\nhttps://api.counterbalance.io/v1/site?type=physical\n```",
         "parameters": [
           {
             "schema": {
@@ -141,7 +141,7 @@
                     "value": {
                       "id": "799ef189-c32b-48b4-9eb8-4787ebe37f2a",
                       "code": "",
-                      "name": "My First Site",
+                      "name": "Seattle Office",
                       "description": "",
                       "type": "physical",
                       "address": null,
@@ -153,7 +153,7 @@
             }
           }
         },
-        "description": "Create a new site\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:site:*`,`sites:site:create`\n* Licensed Feature: \n  - `sites_base` to add physical sites and addresses\n  - `sites_virtual` to add virtual sites\n* Adequate quota of the requested type",
+        "description": "### Synopsis\nCreate a new site\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:site:*`,`sites:site:create`\n* Licensed Feature: \n  - `sites_base` to add physical sites and addresses\n  - `sites_virtual` to add virtual sites\n* Adequate quota of the requested type",
         "security": [
           {
             "Bearer Token": []
@@ -199,7 +199,7 @@
               "examples": {
                 "Example": {
                   "value": {
-                    "name": "My First Site",
+                    "name": "Seattle Office",
                     "type": "physical"
                   }
                 }
@@ -216,6 +216,16 @@
         },
         "tags": [
           "Manage Sites"
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "default": "application/jso"
+            },
+            "in": "header",
+            "name": "Content-Type"
+          }
         ]
       }
     },
