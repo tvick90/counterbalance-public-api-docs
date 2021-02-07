@@ -294,8 +294,8 @@
             }
           }
         },
-        "operationId": "get-v1-site-siteId",
-        "description": "Get a site object by ID",
+        "operationId": "get-site",
+        "description": "### Synopsis\nRetrieve the details for the specified site\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:site:*`,`sites:site:read`",
         "security": [
           {
             "Bearer Token": []
@@ -304,7 +304,7 @@
       },
       "patch": {
         "summary": "Update Site",
-        "operationId": "patch-v1-site-siteId",
+        "operationId": "update-site",
         "responses": {
           "200": {
             "description": "OK",
@@ -352,7 +352,7 @@
             }
           }
         },
-        "description": "Update a site by ID\n\nUse the `Update Address` endpoint to update the site's address",
+        "description": "### Synopsis\nUpdate the details for the specified site\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:site:*`,`sites:site:update`\n* Licensed Feature: `sites_base` and/or `sites_virtual`",
         "security": [
           {
             "Bearer Token": []
@@ -398,7 +398,7 @@
       },
       "delete": {
         "summary": "Delete Site",
-        "operationId": "delete-v1-site-siteId",
+        "operationId": "delete-site",
         "responses": {
           "204": {
             "description": "No Content",
@@ -409,9 +409,6 @@
                 }
               }
             }
-          },
-          "404": {
-            "description": "Not Found"
           },
           "409": {
             "description": "Conflict",
@@ -436,7 +433,7 @@
             }
           }
         },
-        "description": "Delete a site by ID",
+        "description": "### Synopsis\nDelete the specified site\n\n<!-- theme: danger -->\n> _**Heads Up** This cannot be undone!_\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:site:*`,`sites:site:delete`\n* Specified site must be void of any associated objects",
         "security": [
           {
             "Bearer Token": []
@@ -502,20 +499,10 @@
                 }
               }
             }
-          },
-          "404": {
-            "description": "Address Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "../models/Error-Response.v1.yaml"
-                }
-              }
-            }
           }
         },
-        "operationId": "get-v1-site-address-addressId",
-        "description": "Get an address by ID",
+        "operationId": "get-address",
+        "description": "### Synopsis\nRetrieve the details for the specified address\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:address:*`,`sites:address:read`",
         "security": [
           {
             "Bearer Token": []
@@ -524,7 +511,7 @@
       },
       "patch": {
         "summary": "Update Address",
-        "operationId": "patch-v1-site-address-addressId",
+        "operationId": "update-address",
         "responses": {
           "200": {
             "description": "OK",
@@ -565,7 +552,7 @@
             }
           }
         },
-        "description": "Update an address by ID",
+        "description": "### Synopsis\nUpdate the details for the specified address\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:address:*`,`sites:address:read`",
         "parameters": [],
         "security": [
           {
@@ -636,7 +623,7 @@
       },
       "delete": {
         "summary": "Delete Address",
-        "operationId": "delete-v1-site-address-addressId",
+        "operationId": "delete-address",
         "responses": {
           "204": {
             "description": "No Content",
@@ -649,7 +636,7 @@
             }
           }
         },
-        "description": "Delete an address by ID",
+        "description": "### Synopsis\nDelete the specified address\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:address:*`,`sites:address:delete`",
         "security": [
           {
             "Bearer Token": []
