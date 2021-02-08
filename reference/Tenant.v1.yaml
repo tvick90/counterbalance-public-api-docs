@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
   title: Tenant Management
-  version: '1.0'
+  version: 1.1.6
   description: Endpoints for creating and managing Counterbalance tenant accounts
   termsOfService: 'https://www.counterbalance.io/legal/api-terms'
   contact:
@@ -83,8 +83,14 @@ paths:
                       accepted_subscription_terms:
                         status: false
                         timestamp: 0
-      operationId: get-v1-tenant
-      description: Retrieve the tenant account for the authenticated user
+      operationId: get-tenant
+      description: |-
+        ### Synopsis
+        Retrieve the tenant account details for the authenticated user
+
+        ### Prerequisites
+        The following prerequisites are required for this endpoint:
+        * Permissions _(at least one):_ `*`,`tenant:*`,`tenant:account:*`,`tenant:account:read`
       security:
         - Bearer Token: []
     post:
@@ -105,10 +111,16 @@ paths:
                   value:
                     success_message: The new tenant account was created! Email confirmation required.
       description: |-
-        Create a new tenant account
+        ### Synopsis
+        Create a new tenant account (aka, account signup)
 
-        <!-- theme: warning -->
-        > _**Note** Once an account is created, it must be confirmed before it can be used_
+        ### Prerequisites
+        _None_
+
+        ### Creating a New Account
+        The terms of service must be accepted before the account can be created. The `accept_terms` body field must be set to `true` in order for the request to be completed successfully.
+
+        Once an account is successfully completed, a six-digit confirmation code is emailed to the new user. The new account must be confirmed with the Confirm Tenant Account endpoint before it can be used.
       requestBody:
         content:
           application/json:
@@ -141,15 +153,22 @@ paths:
                 value:
                   given_name: Taylor
                   family_name: Vick
-                  email: hello@counterbalanceio
+                  email: hello@counterbalance.io
                   password: Se@ttle1!
                   company_name: Counterbalance Software
                   accept_terms: true
       tags:
         - Tenant Account
+      parameters:
+        - schema:
+            type: string
+            default: application/json
+          in: header
+          name: Content-Type
+          required: true
     patch:
       summary: Update Tenant Account
-      operationId: patch-v1-tenant
+      operationId: update-tenant
       responses:
         '200':
           description: OK
@@ -217,7 +236,14 @@ paths:
                       accepted_subscription_terms:
                         status: false
                         timestamp: 0
-      description: Update the tenant account of the authenticated user
+      description: |-
+        ### Synopsis
+        Update the tenant account details for the authenticated user
+
+        ### Prerequisites
+        The following prerequisites are required for this endpoint:
+        * An active tenant account
+        * Permissions _(at least one):_ `*`,`tenant:*`,`tenant:account:*`,`tenant:account:update`
       security:
         - Bearer Token: []
       requestBody:
@@ -242,13 +268,26 @@ paths:
         description: ''
       tags:
         - Tenant Account
+      parameters:
+        - schema:
+            type: string
+            default: application/json
+          in: header
+          name: Content-Type
     delete:
       summary: Delete Tenant Account
-      operationId: delete-v1-tenant
+      operationId: delete-tenant
       responses:
         '200':
           description: OK
-      description: Delete the tenant account of the authenticated user
+      description: |-
+        ### Synopsis
+        Delete the tenant account of the authenticated user
+
+        ### Prerequisites
+        The following prerequisites are required for this endpoint:
+        * An active tenant account
+        * Permissions _(at least one):_ `*`,`tenant:*`,`tenant:account:*`,`tenant:account:delete`
       tags:
         - Tenant Account
   /v1/tenant/quota:
@@ -256,8 +295,200 @@ paths:
       summary: Get Tenant Quota Summary
       tags:
         - Tenant Quota
-      responses: {}
-      operationId: get-v1-tenant-quota
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tenant-Quota-Summary'
+              examples:
+                Response:
+                  value:
+                    usage:
+                      record_user: 11
+                      seat: 3
+                      user: 3
+                      site: 7
+                      building: 0
+                      gateway: 0
+                      controller: 0
+                      point: 0
+                      equipment: 0
+                      meter: 0
+                    tenant:
+                      id: 75a14450-2aa9-4785-a7dd-add5655953a4
+                      subscription_sku: plan_GvzqNsab8C5SG8
+                      billing_id: cus_GfeG3goOpZMblf
+                    quotas:
+                      building:
+                        usage: 0
+                        quota:
+                          included: 2
+                          purchased: 0
+                          total: 2
+                        remaining: 2
+                        status:
+                          can_add_more: true
+                          is_exceeded: false
+                          is_met: false
+                      controller:
+                        usage: 0
+                        quota:
+                          included: 5
+                          purchased: 0
+                          total: 5
+                        remaining: 5
+                        status:
+                          can_add_more: true
+                          is_exceeded: false
+                          is_met: false
+                      equipment:
+                        usage: 0
+                        quota:
+                          included: 10
+                          purchased: 0
+                          total: 10
+                        remaining: 10
+                        status:
+                          can_add_more: true
+                          is_exceeded: false
+                          is_met: false
+                      gateway:
+                        usage: 0
+                        quota: null
+                        remaining: null
+                        status:
+                          can_add_more: true
+                          is_exceeded: false
+                      meter:
+                        usage: 0
+                        quota:
+                          included: 5
+                          purchased: 0
+                          total: 5
+                        remaining: 5
+                        status:
+                          can_add_more: true
+                          is_exceeded: false
+                          is_met: false
+                      point:
+                        usage: 0
+                        quota:
+                          included: 100
+                          purchased: 0
+                          total: 100
+                        remaining: 100
+                        status:
+                          can_add_more: true
+                          is_exceeded: false
+                          is_met: false
+                      seat:
+                        usage: 3
+                        quota:
+                          included: 2
+                          purchased: 3
+                          total: 5
+                        remaining: 2
+                        status:
+                          can_add_more: true
+                          is_exceeded: false
+                          is_met: false
+                      site:
+                        usage: 7
+                        quota:
+                          included: 1
+                          purchased: 6
+                          total: 7
+                        remaining: 0
+                        status:
+                          can_add_more: false
+                          is_exceeded: false
+                          is_met: true
+                      user:
+                        usage: 3
+                        quota:
+                          included: 0
+                          purchased: 0
+                          total: 0
+                        remaining: 0
+                        status:
+                          can_add_more: false
+                          is_exceeded: true
+                          is_met: true
+                      record_user:
+                        usage: 11
+                        quota: null
+                        remaining: null
+                        status:
+                          can_add_more: true
+                          is_exceeded: false
+                    subscription:
+                      base:
+                        id: plan_GvzqNsab8C5SG8
+                        name: Essentials
+                        tier: 1
+                        enabled: true
+                        billing_frequency: month
+                        seat_price: 27
+                        included_quotas:
+                          building: 2
+                          controller: 5
+                          equipment: 10
+                          gateway: null
+                          meter: 5
+                          point: 100
+                          seat: 2
+                          site: 1
+                          user: 0
+                          record_user: null
+                        included_features:
+                          - commander
+                          - dynamic_plotter
+                          - favorites
+                          - sites_base
+                          - sites_equipment
+                          - user_management
+                          - weather_alerts
+                          - weather_conditions
+                      purchased_items:
+                        - id: si_IGWLaFhj6bhyLx
+                          product: prod_HZ4TOtIlNA9QCE
+                          plan: price_1GzwKcJ5K0z3IHPXutddmh3D
+                          quantity: 6
+                        - id: si_IGWajoRwdI0Q47
+                          product: prod_HZJ7uDhRzsf6lo
+                          plan: price_1H0AVBJ5K0z3IHPXTV47pZ3C
+                          quantity: 1
+                        - id: si_IGWjOMxXGL0678
+                          product: prod_GZIOOnp2EtrDOE
+                          plan: plan_GvzqNsab8C5SG8
+                          quantity: 5
+                    features:
+                      - commander
+                      - dynamic_plotter
+                      - favorites
+                      - sites_base
+                      - sites_equipment
+                      - user_management
+                      - weather_alerts
+                      - weather_conditions
+                      - sites_base
+                      - sites_base
+                      - sites_forecasts
+                      - sites_weather
+                      - sites_weather_alerts
+      operationId: get-tenant-quota
+      description: |-
+        ### Synopsis
+        Retrieve a summary of metered tenant objects and their usage
+
+        ### Prerequisites
+        The following prerequisites are required for this endpoint:
+        * An active tenant account
+        * Permissions _(at least one):_ `*`,`tenant:*`,`tenant:quota:*`,`tenant:quota:read`
+      security:
+        - Bearer Token: []
   /v1/tenant/confirm:
     post:
       summary: Confirm Tenant Account
@@ -277,7 +508,13 @@ paths:
                   value:
                     success_message: Tenant account has been successfully confirmed!
       description: |-
+        ### Synopsis
         Confirm a newly-created tenant account
+
+        ### Prerequisites
+        The following prerequisites are required for this endpoint:
+        * The tenant account confirmation code _(emailed to the new user)_
+        * Permissions _(at least one):_ `*`,`tenant:*`,`tenant:account:*`,`tenant:account:update`
 
         > _**Note** A confirm operation can only be completed by the user who created the tenant acccount_
       security:
@@ -622,8 +859,41 @@ components:
     Tenant-Quota-Summary:
       description: ''
       type: object
-      title: Tenant Quota Summary
       properties:
+        usage:
+          type: object
+          required:
+            - record_user
+            - seat
+            - user
+            - site
+            - building
+            - gateway
+            - controller
+            - point
+            - equipment
+            - meter
+          properties:
+            record_user:
+              type: number
+            seat:
+              type: number
+            user:
+              type: number
+            site:
+              type: number
+            building:
+              type: number
+            gateway:
+              type: number
+            controller:
+              type: number
+            point:
+              type: number
+            equipment:
+              type: number
+            meter:
+              type: number
         tenant:
           type: object
           required:
@@ -635,247 +905,45 @@ components:
               type: string
               minLength: 1
             subscription_sku:
-              type:
-                - string
-                - 'null'
+              type: string
               minLength: 1
             billing_id:
-              type:
-                - string
-                - 'null'
+              type: string
               minLength: 1
         quotas:
           type: object
           required:
+            - building
+            - controller
+            - equipment
+            - gateway
+            - meter
+            - point
             - seat
+            - site
             - user
             - record_user
-            - department
-            - site
-            - domain
-            - managed_device
           properties:
+            building:
+              $ref: '#/components/schemas/Tenant-Quota-Item-Summary'
+            controller:
+              $ref: '#/components/schemas/Tenant-Quota-Item-Summary'
+            equipment:
+              $ref: '#/components/schemas/Tenant-Quota-Item-Summary'
+            gateway:
+              $ref: '#/components/schemas/Tenant-Quota-Item-Summary'
+            meter:
+              $ref: '#/components/schemas/Tenant-Quota-Item-Summary'
+            point:
+              $ref: '#/components/schemas/Tenant-Quota-Item-Summary'
             seat:
-              type: object
-              required:
-                - usage
-                - quota
-                - remaining
-                - status
-              properties:
-                usage:
-                  type: number
-                quota:
-                  type:
-                    - object
-                    - 'null'
-                  properties:
-                    included:
-                      type: number
-                    purchased:
-                      type: number
-                    total:
-                      type: number
-                remaining:
-                  type: number
-                status:
-                  type: object
-                  required:
-                    - can_add_more
-                    - is_exceeded
-                  properties:
-                    can_add_more:
-                      type: boolean
-                    is_exceeded:
-                      type: boolean
-            user:
-              type: object
-              required:
-                - usage
-                - quota
-                - remaining
-                - status
-              properties:
-                usage:
-                  type: number
-                quota:
-                  type:
-                    - object
-                    - 'null'
-                  required:
-                    - included
-                    - purchased
-                    - total
-                  properties:
-                    included:
-                      type: number
-                    purchased:
-                      type: number
-                    total:
-                      type: number
-                remaining:
-                  type: number
-                status:
-                  type: object
-                  required:
-                    - can_add_more
-                    - is_exceeded
-                  properties:
-                    can_add_more:
-                      type: boolean
-                    is_exceeded:
-                      type: boolean
-            record_user:
-              type: object
-              required:
-                - usage
-                - status
-              properties:
-                usage:
-                  type: number
-                quota: {}
-                remaining: {}
-                status:
-                  type: object
-                  required:
-                    - can_add_more
-                    - is_exceeded
-                  properties:
-                    can_add_more:
-                      type: boolean
-                    is_exceeded:
-                      type: boolean
-            department:
-              type: object
-              required:
-                - usage
-                - quota
-                - remaining
-                - status
-              properties:
-                usage:
-                  type: number
-                quota:
-                  type:
-                    - object
-                    - 'null'
-                  required:
-                    - included
-                    - purchased
-                    - total
-                  properties:
-                    included:
-                      type: number
-                    purchased:
-                      type: number
-                    total:
-                      type: number
-                remaining:
-                  type: number
-                status:
-                  type: object
-                  required:
-                    - can_add_more
-                    - is_exceeded
-                  properties:
-                    can_add_more:
-                      type: boolean
-                    is_exceeded:
-                      type: boolean
+              $ref: '#/components/schemas/Tenant-Quota-Item-Summary'
             site:
-              type: object
-              required:
-                - usage
-                - quota
-                - remaining
-                - status
-              properties:
-                usage:
-                  type: number
-                quota:
-                  type:
-                    - object
-                    - 'null'
-                  required:
-                    - included
-                    - purchased
-                    - total
-                  properties:
-                    included:
-                      type: number
-                    purchased:
-                      type: number
-                    total:
-                      type: number
-                remaining:
-                  type: number
-                status:
-                  type: object
-                  required:
-                    - can_add_more
-                    - is_exceeded
-                  properties:
-                    can_add_more:
-                      type: boolean
-                    is_exceeded:
-                      type: boolean
-            domain:
-              type: object
-              required:
-                - usage
-                - status
-              properties:
-                usage:
-                  type: number
-                quota: {}
-                remaining: {}
-                status:
-                  type: object
-                  required:
-                    - can_add_more
-                    - is_exceeded
-                  properties:
-                    can_add_more:
-                      type: boolean
-                    is_exceeded:
-                      type: boolean
-            managed_device:
-              type: object
-              required:
-                - usage
-                - quota
-                - remaining
-                - status
-              properties:
-                usage:
-                  type: number
-                quota:
-                  type:
-                    - object
-                    - 'null'
-                  required:
-                    - included
-                    - purchased
-                    - total
-                  properties:
-                    included:
-                      type: number
-                    purchased:
-                      type: number
-                    total:
-                      type: number
-                remaining:
-                  type: number
-                status:
-                  type: object
-                  required:
-                    - can_add_more
-                    - is_exceeded
-                  properties:
-                    can_add_more:
-                      type: boolean
-                    is_exceeded:
-                      type: boolean
+              $ref: '#/components/schemas/Tenant-Quota-Item-Summary'
+            user:
+              $ref: '#/components/schemas/Tenant-Quota-Item-Summary'
+            record_user:
+              $ref: '#/components/schemas/Tenant-Quota-Item-Summary'
         subscription:
           type: object
           required:
@@ -912,30 +980,33 @@ components:
                 included_quotas:
                   type: object
                   required:
-                    - seat
-                    - user
-                    - department
-                    - site
                     - building
-                    - managed_device
-                    - device_templates
+                    - controller
+                    - equipment
+                    - meter
+                    - point
+                    - seat
+                    - site
+                    - user
                   properties:
+                    building:
+                      type: number
+                    controller:
+                      type: number
+                    equipment:
+                      type: number
+                    gateway: {}
+                    meter:
+                      type: number
+                    point:
+                      type: number
                     seat:
+                      type: number
+                    site:
                       type: number
                     user:
                       type: number
                     record_user: {}
-                    department:
-                      type: number
-                    domain: {}
-                    site:
-                      type: number
-                    building:
-                      type: number
-                    managed_device:
-                      type: number
-                    device_templates:
-                      type: number
                 included_features:
                   type: array
                   items:
@@ -968,10 +1039,12 @@ components:
           items:
             type: object
       required:
+        - usage
         - tenant
         - quotas
         - subscription
         - features
+      title: Tenant Quota Summary
     Tenant-Preferences:
       description: ''
       type: object
@@ -1015,6 +1088,51 @@ components:
       title: Tenant Deletion PIN Request Body
       x-tags:
         - Tenant Operations
+    Tenant-Quota-Item-Summary:
+      description: ''
+      type: object
+      title: Quota Item Summary
+      properties:
+        usage:
+          type: number
+          description: The number of objects of this type
+        quota:
+          type: object
+          required:
+            - included
+            - purchased
+            - total
+          properties:
+            included:
+              type: number
+              description: The quantity of of this object included in the subscription plan
+            purchased:
+              type: number
+              description: The quantity of this object that has been purchased in addition to the base quantity
+            total:
+              type: number
+              description: The total quantity of this object permitted in the tenant account
+        remaining:
+          type: number
+          description: A simple formlula of `total` - `usage`
+        status:
+          type: object
+          required:
+            - can_add_more
+            - is_exceeded
+            - is_met
+          properties:
+            can_add_more:
+              type: boolean
+            is_exceeded:
+              type: boolean
+            is_met:
+              type: boolean
+      required:
+        - usage
+        - quota
+        - remaining
+        - status
   securitySchemes:
     Bearer Token:
       type: http
