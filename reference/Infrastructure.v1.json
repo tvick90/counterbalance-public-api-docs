@@ -148,7 +148,7 @@
         "tags": [
           "Gateways"
         ],
-        "description": "I need to finish this"
+        "description": "I need to finish this and then I added this"
       }
     },
     "/v1/infrastructure/gateway/{gatewayId}/devices": {
