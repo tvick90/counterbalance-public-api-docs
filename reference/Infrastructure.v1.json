@@ -2,7 +2,7 @@
   "openapi": "3.0.0",
   "info": {
     "title": "Infrastructure",
-    "version": "1.0",
+    "version": "1.1.0",
     "description": "The Infrastructure API provides endpoints for gateway and field controller management, including:\n* Registering & managing site gateways\n* Creating & managing DDC field controllers\n\n**Managing Site Gateways**\n\nA site gateway is a physical device placed on the BAS network and provides the connection to the Counterbalance cloud. A site gateway must first be purchased and registered with a tenant account before it will be accessible in the console and this process is outlined in the Register Gateway endpoint.\n\n**Quotas and Licensing**\n\nSite management is a paid feature. Physical sites are subject to quota availability. Virtual sites and buildings are not measured against a pre-defined quota but require a seperate license. These requirments are outlined in the various endpoint docs.\n\nIf insufficient quota or licensing exists for the specified site type, a `403 Forbidden` error will be thrown and the site will not be created. "
   },
   "servers": [
