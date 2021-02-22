@@ -62,7 +62,12 @@
         "summary": "Get Data Point Details",
         "tags": [],
         "responses": {},
-        "operationId": "get-v1-telemetry-datapoint-datapointId"
+        "operationId": "get-v1-telemetry-datapoint-datapointId",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/collectorID"
+          }
+        ]
       },
       "delete": {
         "summary": "Delete Data Point",
@@ -73,10 +78,108 @@
           }
         }
       }
+    },
+    "/v1/collector": {
+      "get": {
+        "summary": "Retrieve Collector Details",
+        "tags": [
+          "Collectors"
+        ],
+        "responses": {},
+        "operationId": "get-v1-collector"
+      },
+      "post": {
+        "summary": "Create Collector",
+        "operationId": "post-v1-collector",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "description": "Create a new Collector for a data point",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "Content-Type",
+            "description": "application/json",
+            "required": true
+          }
+        ]
+      }
+    },
+    "/v1/collector/{collectorId}/sample": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "collectorId",
+          "in": "path",
+          "required": true,
+          "description": "A valid collector UUID"
+        }
+      ],
+      "get": {
+        "summary": "Retrieve Collector Trend Samples",
+        "tags": [],
+        "responses": {},
+        "operationId": "get-v1-collector-collectorId-samples",
+        "description": "Retrieve data samples for the specified collector. ",
+        "parameters": [
+          {
+            "schema": {
+              "type": "number"
+            },
+            "in": "query",
+            "name": "start",
+            "description": "Timestamp for the upper end of the sample response"
+          },
+          {
+            "schema": {
+              "type": "number"
+            },
+            "in": "query",
+            "name": "end",
+            "description": "Timestamp for the lower end of the sample response"
+          },
+          {
+            "schema": {
+              "type": "integer"
+            },
+            "in": "query",
+            "name": "duration",
+            "description": "The length of the sample (in seconds)"
+          }
+        ]
+      }
     }
   },
   "components": {
-    "schemas": {}
+    "schemas": {},
+    "parameters": {
+      "collectorID": {
+        "name": "collectorID",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "string"
+        }
+      }
+    },
+    "securitySchemes": {
+      "Bearer Token": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
   },
   "tags": [
     {
@@ -84,6 +187,9 @@
     },
     {
       "name": "Data Points"
+    },
+    {
+      "name": "Collectors"
     }
   ]
 }
