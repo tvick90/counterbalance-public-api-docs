@@ -1883,7 +1883,7 @@
     },
     "responses": {
       "200-Gateway-Updated": {
-        "description": "Gateway Updated Successfully",
+        "description": "Ok",
         "content": {
           "application/json": {
             "schema": {
@@ -1906,7 +1906,7 @@
         }
       },
       "200-Get-Gateway": {
-        "description": "Gateway Details Retrieved Successfully",
+        "description": "Ok",
         "content": {
           "application/json": {
             "schema": {
@@ -1929,14 +1929,14 @@
         }
       },
       "404-Gateway-Not-Found": {
-        "description": "Gateway Not Found",
+        "description": "Not Found",
         "content": {
           "application/json": {
             "schema": {
               "$ref": "../models/Error-Response.v1.yaml"
             },
             "examples": {
-              "Gateway Not Found": {
+              "Response": {
                 "value": {
                   "error": {
                     "message": "Gateway not found",
@@ -1956,7 +1956,7 @@
         }
       },
       "201-Gateway-Created": {
-        "description": "Gateway Created Successfully",
+        "description": "Created",
         "content": {
           "application/json": {
             "schema": {
@@ -1976,7 +1976,7 @@
         }
       },
       "200-Get-Gateway-Listing": {
-        "description": "Gateway Listing Retrieved Successfully",
+        "description": "Ok",
         "content": {
           "application/json": {
             "schema": {
