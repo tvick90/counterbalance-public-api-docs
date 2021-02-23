@@ -20,10 +20,7 @@
         ],
         "responses": {
           "200": {
-            "$ref": "#/components/responses/Get-Gateway"
-          },
-          "404": {
-            "$ref": "#/components/responses/404-Gateway-Not-Found"
+            "$ref": "#/components/responses/200-Get-Gateway-Listing"
           }
         },
         "operationId": "get-gateway",
@@ -81,7 +78,14 @@
       ],
       "get": {
         "summary": "Get Gateway",
-        "responses": {},
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/200-Get-Gateway"
+          },
+          "404": {
+            "$ref": "#/components/responses/404-Gateway-Not-Found"
+          }
+        },
         "operationId": "get-gateway",
         "tags": [
           "Gateways"
@@ -199,33 +203,16 @@
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "properties": {
-                  "name": {
-                    "type": "string",
-                    "description": "A name for the gateway"
-                  },
-                  "description": {
-                    "type": "string",
-                    "description": "A brief description of the gateway"
-                  },
-                  "location": {
-                    "type": "string",
-                    "description": "The installed location of the device"
-                  }
-                }
+                "$ref": "#/components/schemas/Update-Gateway-Request-Body"
               },
               "examples": {
                 "Example": {
-                  "value": {
-                    "name": "Primary Gateway",
-                    "description": "The primary gateway we use",
-                    "location": "BAS Panel for RTU-1"
-                  }
+                  "$ref": "#/components/examples/Update-Gateway-Body"
                 }
               }
             }
-          }
+          },
+          "description": ""
         },
         "parameters": [
           {
@@ -1673,22 +1660,10 @@
           "data"
         ],
         "title": "Gateway Listing",
-        "x-examples": {
-          "Example": {
-            "count": 1,
-            "data": [
-              {
-                "id": "87e2c5f6-d961-4464-87c0-ec52863da975",
-                "serial": "b827eb570b5c",
-                "tunnel": "68e20bcceddb",
-                "tenant": "1d1776fe-0437-426c-a796-06e2b5eaccf6",
-                "name": "Test Bench Gateway",
-                "description": "",
-                "is_registered": true
-              }
-            ]
-          }
-        }
+        "x-examples": {},
+        "x-tags": [
+          "Object Models"
+        ]
       },
       "Field-Controller-Listing": {
         "description": "",
@@ -1939,6 +1914,28 @@
           "serial",
           "name"
         ]
+      },
+      "Update-Gateway-Request-Body": {
+        "title": "Update Gateway Request Body",
+        "type": "object",
+        "x-tags": [
+          "Object Models"
+        ],
+        "description": "",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "A name for the gateway"
+          },
+          "description": {
+            "type": "string",
+            "description": "A brief description of the gateway"
+          },
+          "location": {
+            "type": "string",
+            "description": "The installed location of the device"
+          }
+        }
       }
     },
     "securitySchemes": {
@@ -1948,15 +1945,16 @@
       }
     },
     "responses": {
-      "Update-Gateway": {
-        "description": "Example response",
+      "200-Gateway-Updated": {
+        "description": "Gateway Updated Successfully",
         "content": {
           "application/json": {
             "schema": {
-              "properties": {
-                "id": {
-                  "type": "string"
-                }
+              "$ref": "#/components/schemas/Gateway-Details"
+            },
+            "examples": {
+              "Response": {
+                "$ref": "#/components/examples/Get-Gateway"
               }
             }
           }
@@ -1970,7 +1968,7 @@
           }
         }
       },
-      "Get-Gateway": {
+      "200-Get-Gateway": {
         "description": "Example responses",
         "content": {
           "application/json": {
@@ -1979,10 +1977,10 @@
             },
             "examples": {
               "Response": {
-                "$ref": "#/components/examples/Gateway-Example"
+                "$ref": "#/components/examples/Get-Gateway"
               },
               "Response w/ Vitals": {
-                "$ref": "#/components/examples/Gateway-Example-Online"
+                "$ref": "#/components/examples/Get-Gateway-Online"
               }
             }
           }
@@ -2039,6 +2037,26 @@
             "$ref": "#/components/parameters/Content-Type"
           }
         }
+      },
+      "200-Get-Gateway-Listing": {
+        "description": "Example response",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Gateway-Listing"
+            },
+            "examples": {
+              "Response": {
+                "$ref": "#/components/examples/Get-Gateway-List"
+              }
+            }
+          }
+        },
+        "headers": {
+          "Content-Type": {
+            "$ref": "#/components/parameters/Content-Type"
+          }
+        }
       }
     },
     "parameters": {
@@ -2060,7 +2078,6 @@
         "schema": {
           "type": "string",
           "format": "date",
-          "example": "application/json",
           "default": "application/json"
         },
         "description": "application/json"
@@ -2116,6 +2133,27 @@
         "value": {
           "serial": "b821eb530b5e",
           "name": "Primary Gateway"
+        }
+      },
+      "Get-Gateway-List": {
+        "value": {
+          "count": 1,
+          "data": [
+            {
+              "id": "539fea81-d151-46e1-b1f6-36e3864ebeff",
+              "serial": "dca6327364b3",
+              "name": "Primary Gateway",
+              "description": "The primary gateway we use",
+              "is_registered": true
+            }
+          ]
+        }
+      },
+      "Update-Gateway-Body": {
+        "value": {
+          "name": "Primary Gateway",
+          "description": "The primary gateway we use",
+          "location": "BAS Panel for RTU-1"
         }
       }
     }
