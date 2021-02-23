@@ -39,15 +39,7 @@
         "operationId": "create-gateway",
         "responses": {
           "201": {
-            "description": "Created",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
+            "$ref": "#/components/responses/201-Gateway-Created"
           }
         },
         "description": "### Synopsis\nActivate a new gateway device and register it with a tenant account\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`infrastructure:*`,`infrastructure:gateway:*`,`infrastructure:gateway:register`\n* Adequate gateway quota\n* A physical gateway device serial number\n\n### Gateway Serial Number\nA valid gateway serial number is required in order to activate a new gateway. The serial number is found on the bottom of the device or by loading the web GUI of the gateway.\n\n### Registration Process\nThe registration of a gateway is a two-step process. First, the gateway device must be created and assigned a tenant account using this endpoint. \n\nA successful creation will generate a unique gateway UUID and a registration PIN. These values will be emailed to the authenticated user and will be needed to link the device.\n\nSecond, the Register Gateway Device endpoint is used from the device to link it with the tenant account using the newly registered UUID and registration secret.",
@@ -76,12 +68,7 @@
         },
         "parameters": [
           {
-            "schema": {
-              "type": "string"
-            },
-            "in": "header",
-            "name": "Content-Type",
-            "description": "application/json"
+            "$ref": "#/components/parameters/Content-Type"
           }
         ]
       }
@@ -2023,6 +2010,26 @@
                   },
                   "logging_hash": "..."
                 }
+              }
+            }
+          }
+        },
+        "headers": {
+          "Content-Type": {
+            "$ref": "#/components/parameters/Content-Type"
+          }
+        }
+      },
+      "201-Gateway-Created": {
+        "description": "Gateway created",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Gateway-Details"
+            },
+            "examples": {
+              "Response": {
+                "$ref": "#/components/examples/Get-Gateway"
               }
             }
           }
