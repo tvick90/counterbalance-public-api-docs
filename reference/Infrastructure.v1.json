@@ -1922,11 +1922,7 @@
             }
           }
         },
-        "headers": {
-          "Content-Type": {
-            "$ref": "#/components/parameters/Content-Type"
-          }
-        }
+        "headers": {}
       },
       "404-Gateway-Not-Found": {
         "description": "Not Found",
@@ -2014,7 +2010,6 @@
         "required": true,
         "schema": {
           "type": "string",
-          "format": "date",
           "default": "application/json"
         },
         "description": "application/json"
