@@ -2,7 +2,7 @@
   "openapi": "3.0.0",
   "info": {
     "title": "Infrastructure",
-    "version": "1.1.0",
+    "version": "1.2.1",
     "description": "The Infrastructure API provides endpoints for gateway and field controller management, including:\n* Registering & managing site gateways\n* Creating & managing DDC field controllers\n\n**Managing Site Gateways**\n\nA site gateway is a physical device placed on the BAS network and provides the connection to the Counterbalance cloud. A site gateway must first be purchased and registered with a tenant account before it will be accessible in the console and this process is outlined in the Register Gateway endpoint.\n\n**Quotas and Licensing**\n\nSite management is a paid feature. Physical sites are subject to quota availability. Virtual sites and buildings are not measured against a pre-defined quota but require a seperate license. These requirments are outlined in the various endpoint docs.\n\nIf insufficient quota or licensing exists for the specified site type, a `403 Forbidden` error will be thrown and the site will not be created. "
   },
   "servers": [
@@ -31,7 +31,7 @@
           }
         },
         "operationId": "get-gateway",
-        "description": "Get a list of available gateway devices\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`infrastructure:*`,`infrastructure:gateway:*`,`infrastructure:gateway:list`",
+        "description": "### Synopsis\nGet a list of available gateway devices\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`infrastructure:*`,`infrastructure:gateway:*`,`infrastructure:gateway:list`",
         "security": [
           {
             "Bearer Token": []
@@ -39,7 +39,7 @@
         ]
       },
       "post": {
-        "summary": "Create Gateway",
+        "summary": "Activate Gateway",
         "operationId": "create-gateway",
         "responses": {
           "201": {
@@ -54,7 +54,7 @@
             }
           }
         },
-        "description": "Register a new gateway device with a tenant account\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`infrastructure:*`,`infrastructure:gateway:*`,`infrastructure:gateway:register`\n* Adequate gateway quota\n* A physical gateway device serial number\n\n**Gateway Serial Number**\n\nA valid gateway serial number is required in order to register a new gateway. The serial number is found on the bottom of the device or by loading the web GUI of the gateway.\n\n**Registration Process**\n\nThe registration of a gateway is a two-step process. First, the gateway device must be created and assigned a tenant account using this endpoint. \n\nA successful creation will generate a unique gateway UUID and a registration PIN. These values will be emailed to the authenticated user and will be needed to link the device.\n\nSecond, the Register Gateway Device endpoint is used from the device to link it with the tenant account using the newly registered UUID and registration secret.",
+        "description": "### Synopsis\nActivate a new gateway device and register it with a tenant account\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`infrastructure:*`,`infrastructure:gateway:*`,`infrastructure:gateway:register`\n* Adequate gateway quota\n* A physical gateway device serial number\n\n### Gateway Serial Number\nA valid gateway serial number is required in order to activate a new gateway. The serial number is found on the bottom of the device or by loading the web GUI of the gateway.\n\n### Registration Process\nThe registration of a gateway is a two-step process. First, the gateway device must be created and assigned a tenant account using this endpoint. \n\nA successful creation will generate a unique gateway UUID and a registration PIN. These values will be emailed to the authenticated user and will be needed to link the device.\n\nSecond, the Register Gateway Device endpoint is used from the device to link it with the tenant account using the newly registered UUID and registration secret.",
         "tags": [
           "Gateways"
         ],
@@ -102,7 +102,17 @@
               }
             }
           }
-        }
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "Content-Type",
+            "description": "application/json"
+          }
+        ]
       }
     },
     "/v1/infrastructure/gateway/{gatewayId}": {
@@ -113,42 +123,187 @@
           },
           "name": "gatewayId",
           "in": "path",
-          "required": true
+          "required": true,
+          "description": "A valid gateway UUID"
         }
       ],
       "get": {
         "summary": "Get Gateway",
         "responses": {},
-        "operationId": "get-v1-infrastructure-gateway-gatewayId",
+        "operationId": "get-gateway",
         "tags": [
           "Gateways"
+        ],
+        "description": "### Synopsis\nRetrieve a gateway device\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`infrastructure:*`,`infrastructure:gateway:*`,`infrastructure:gateway:read`\n\n### Checking Gateway Vitals\n",
+        "parameters": [
+          {
+            "schema": {
+              "type": "boolean"
+            },
+            "in": "query",
+            "name": "online",
+            "description": "Query the gateway for vitals and configuration details"
+          },
+          {
+            "schema": {
+              "type": "boolean"
+            },
+            "in": "query",
+            "name": "check_vitals",
+            "description": "Deprecated. Same as `online`",
+            "deprecated": true
+          }
+        ],
+        "security": [
+          {
+            "Bearer Token": []
+          }
         ]
       },
       "patch": {
         "summary": "Update Gateway",
-        "operationId": "patch-v1-infrastructure-gateway-gatewayId",
+        "operationId": "update-gateway",
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "serial": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "tunnel": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "tenant": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "name": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "description": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "is_registered": {
+                      "type": "boolean"
+                    },
+                    "vitals": {
+                      "type": [
+                        "object",
+                        "null"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "serial",
+                    "tunnel",
+                    "tenant",
+                    "name",
+                    "description",
+                    "is_registered"
+                  ]
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "id": "539fea81-d151-46e1-b1f6-36e3864ebeff",
+                      "serial": "dca6327364b3",
+                      "tunnel": "cbgw-dca6327364b3-api",
+                      "tenant": "7d5a9e81-0902-4137-b71e-40ea913b5bfa",
+                      "name": "Primary Gateway",
+                      "description": "The primary gateway we use",
+                      "is_registered": true,
+                      "vitals": null
+                    }
+                  }
+                }
+              }
+            }
           }
         },
-        "description": "",
+        "description": "### Synopsis\nUpdate a gateway device\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`infrastructure:*`,`infrastructure:gateway:*`,`infrastructure:gateway:update`",
         "tags": [
           "Gateways"
+        ],
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "A name for the gateway"
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "A brief description of the gateway"
+                  },
+                  "location": {
+                    "type": "string",
+                    "description": "The installed location of the device"
+                  }
+                }
+              },
+              "examples": {
+                "Example": {
+                  "value": {
+                    "name": "Primary Gateway",
+                    "description": "The primary gateway we use",
+                    "location": "BAS Panel for RTU-1"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "Content-Type",
+            "description": "application/json",
+            "required": true
+          }
         ]
       },
       "delete": {
         "summary": "Delete Gateway",
-        "operationId": "delete-v1-infrastructure-gateway-gatewayId",
+        "operationId": "delete-gateway",
         "responses": {
-          "200": {
-            "description": "OK"
+          "204": {
+            "description": "No Content"
           }
         },
         "tags": [
           "Gateways"
         ],
-        "description": "I need to finish this and then I added this"
+        "description": "### Synopsis\nDelete a gateway device\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`infrastructure:*`,`infrastructure:gateway:*`,`infrastructure:gateway:delete`",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ]
       }
     },
     "/v1/infrastructure/gateway/{gatewayId}/devices": {
