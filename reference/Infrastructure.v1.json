@@ -118,13 +118,7 @@
     "/v1/infrastructure/gateway/{gatewayId}": {
       "parameters": [
         {
-          "schema": {
-            "type": "string"
-          },
-          "name": "gatewayId",
-          "in": "path",
-          "required": true,
-          "description": "A valid gateway UUID"
+          "$ref": "#/components/parameters/gatewayId"
         }
       ],
       "get": {
@@ -217,7 +211,7 @@
                   ]
                 },
                 "examples": {
-                  "example-1": {
+                  "Response": {
                     "value": {
                       "id": "539fea81-d151-46e1-b1f6-36e3864ebeff",
                       "serial": "dca6327364b3",
@@ -309,13 +303,7 @@
     "/v1/infrastructure/gateway/{gatewayId}/devices": {
       "parameters": [
         {
-          "schema": {
-            "type": "string"
-          },
-          "name": "gatewayId",
-          "in": "path",
-          "required": true,
-          "description": "A valid gateway ID"
+          "$ref": "#/components/parameters/gatewayId"
         }
       ],
       "get": {
@@ -367,7 +355,7 @@
             }
           }
         },
-        "operationId": "get-v1-infrastructure-gateway-gatewayId-devices",
+        "operationId": "get-gateway-devices",
         "description": "List the available field controllers on the specified gateway\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* A configured site gateway with Internet access\n* Permissions _(at least one):_ `*`,`infrastructure:*`,`infrastructure:gateway:*`,`infrastructure:gateway:query`",
         "tags": [
           "Gateways"
@@ -846,20 +834,28 @@
       "Gateway-Details-Condensed": {
         "description": "",
         "type": "object",
+        "title": "Gateway Details - Condensed",
+        "x-examples": {
+          "Example": {
+            "id": "53193642-1964-4306-8134-3bdd59d551e5",
+            "serial": "b821eb530b5e",
+            "tunnel": "68e20bcceddb",
+            "tenant": "d6797ebf-5b00-4a59-b3e5-19711b4c55bb",
+            "name": "Primary Gateway",
+            "description": "",
+            "is_registered": false,
+            "vitals": null
+          }
+        },
+        "x-tags": [
+          "Object Models"
+        ],
         "properties": {
           "id": {
             "type": "string",
             "minLength": 1
           },
           "serial": {
-            "type": "string",
-            "minLength": 1
-          },
-          "tunnel": {
-            "type": "string",
-            "minLength": 1
-          },
-          "tenant": {
             "type": "string",
             "minLength": 1
           },
@@ -880,27 +876,9 @@
         "required": [
           "id",
           "serial",
-          "tunnel",
-          "tenant",
           "name",
           "description",
           "is_registered"
-        ],
-        "title": "Gateway Details - Condensed",
-        "x-examples": {
-          "Example": {
-            "id": "53193642-1964-4306-8134-3bdd59d551e5",
-            "serial": "b821eb530b5e",
-            "tunnel": "68e20bcceddb",
-            "tenant": "d6797ebf-5b00-4a59-b3e5-19711b4c55bb",
-            "name": "Primary Gateway",
-            "description": "",
-            "is_registered": false,
-            "vitals": null
-          }
-        },
-        "x-tags": [
-          "Object Models"
         ]
       },
       "Gateway-Devices": {
@@ -1956,6 +1934,35 @@
       "Bearer Token": {
         "type": "http",
         "scheme": "bearer"
+      }
+    },
+    "responses": {
+      "Update-Gateway": {
+        "description": "Example response",
+        "content": {
+          "application/json": {
+            "schema": {
+              "properties": {
+                "id": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "parameters": {
+      "gatewayId": {
+        "name": "gatewayId",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "format": "uuid",
+          "example": "539fea81-d151-46e1-b1f6-36e3864ebeff"
+        },
+        "description": "A valid gateway UUID"
       }
     }
   },
