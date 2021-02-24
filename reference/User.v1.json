@@ -2193,7 +2193,8 @@
         "scheme": "bearer",
         "description": ""
       }
-    }
+    },
+    "examples": {}
   },
   "tags": [
     {
