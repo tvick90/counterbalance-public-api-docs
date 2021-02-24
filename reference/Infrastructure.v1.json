@@ -308,7 +308,7 @@
         }
       ],
       "get": {
-        "summary": "Get Field Controller Details",
+        "summary": "Get Field Controller",
         "responses": {
           "200": {
             "$ref": "#/components/responses/200-Get-Controller"
@@ -344,10 +344,50 @@
         "operationId": "update-controller",
         "responses": {
           "200": {
-            "description": "OK"
+            "$ref": "#/components/responses/200-Controller-Updated"
+          },
+          "404": {
+            "$ref": "#/components/responses/404-Controller-Not-Found"
           }
         },
-        "description": "",
+        "description": "### Synopsis\nUpdate a field controller\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`infrastructure:*`,`infrastructure:controller:*`,`infrastructure:controller:update`",
+        "tags": [
+          "Field Controllers"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Update-Field-Controller-Request-Body"
+              },
+              "examples": {
+                "Example": {
+                  "$ref": "#/components/examples/Update-Controller-Body"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete Field Controller",
+        "operationId": "delete-controller",
+        "responses": {
+          "204": {
+            "description": "No Content",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "null"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/404-Controller-Not-Found"
+          }
+        },
+        "description": "### Synopsis\nDelete a field controller\n\n<!-- theme: danger -->\n\n> ##### Heads Up!\n> _Deleting a field controller will also remove its associated telemetry (points, schedules, etc) and all associated meters and collectors._\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`infrastructure:*`,`infrastructure:controller:*`,`infrastructure:controller:delete`",
         "tags": [
           "Field Controllers"
         ]
@@ -388,9 +428,6 @@
         "title": "Gateway Details",
         "type": "object",
         "description": "The data returned for a specified gateway UUID",
-        "x-tags": [
-          "Object Models"
-        ],
         "x-examples": {},
         "properties": {
           "id": {
@@ -418,6 +455,9 @@
           "id",
           "serial",
           "vitals"
+        ],
+        "x-tags": [
+          "Schemas"
         ]
       },
       "Gateway-Devices": {
@@ -544,7 +584,10 @@
           "data"
         ],
         "title": "Gateway Device Listing",
-        "x-examples": {}
+        "x-examples": {},
+        "x-tags": [
+          "Schemas"
+        ]
       },
       "Field-Controller-Details": {
         "description": "",
@@ -726,6 +769,9 @@
           "instance_id",
           "site",
           "is_ostracized"
+        ],
+        "x-tags": [
+          "Schemas"
         ]
       },
       "Field-Controller-BACnet-Details": {
@@ -1251,7 +1297,11 @@
               "time": "7:15:41.89"
             }
           }
-        }
+        },
+        "x-tags": [
+          "Object Models",
+          "Schemas"
+        ]
       },
       "Gateway-Listing": {
         "description": "",
@@ -1312,7 +1362,7 @@
         "title": "Gateway Listing",
         "x-examples": {},
         "x-tags": [
-          "Object Models"
+          "Schemas"
         ]
       },
       "Field-Controller-Listing": {
@@ -1422,6 +1472,9 @@
         "required": [
           "count",
           "data"
+        ],
+        "x-tags": [
+          "Schemas"
         ]
       },
       "Gateway-Vitals": {
@@ -1528,14 +1581,14 @@
           "network"
         ],
         "x-examples": {},
-        "title": "Gateway Vitals"
+        "title": "Gateway Vitals",
+        "x-tags": [
+          "Schemas"
+        ]
       },
       "New-Gateway-Request-Body": {
         "title": "Activate Gateway Request Body",
         "type": "object",
-        "x-tags": [
-          "Object Models"
-        ],
         "description": "Description",
         "properties": {
           "serial": {
@@ -1563,14 +1616,14 @@
         "required": [
           "serial",
           "name"
+        ],
+        "x-tags": [
+          "Schemas"
         ]
       },
       "Update-Gateway-Request-Body": {
         "title": "Update Gateway Request Body",
         "type": "object",
-        "x-tags": [
-          "Object Models"
-        ],
         "description": "",
         "properties": {
           "name": {
@@ -1585,7 +1638,10 @@
             "type": "string",
             "description": "The installed location of the device"
           }
-        }
+        },
+        "x-tags": [
+          "Schemas"
+        ]
       },
       "Gateway-Whois": {
         "description": "",
@@ -1636,7 +1692,10 @@
           "count",
           "data"
         ],
-        "title": "Gateway Whois Response"
+        "title": "Gateway Whois Response",
+        "x-tags": [
+          "Schemas"
+        ]
       },
       "New-Field-Controller-Request-Body": {
         "title": "New Field Controller Request Body",
@@ -1676,6 +1735,37 @@
           "name",
           "gateway",
           "instance"
+        ],
+        "x-tags": [
+          "Schemas"
+        ]
+      },
+      "Update-Field-Controller-Request-Body": {
+        "title": "Update Field Controller Request Body",
+        "type": "object",
+        "description": "",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "gateway": {
+            "type": "string"
+          },
+          "site": {
+            "type": "string"
+          },
+          "location": {
+            "type": "string"
+          },
+          "ostracized": {
+            "type": "string"
+          }
+        },
+        "x-tags": [
+          "Schemas"
         ]
       }
     },
@@ -1869,6 +1959,21 @@
         }
       },
       "201-Controller-Created": {
+        "description": "Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Field-Controller-Details"
+            },
+            "examples": {
+              "Response": {
+                "$ref": "#/components/examples/Get-Controller-Details"
+              }
+            }
+          }
+        }
+      },
+      "200-Controller-Updated": {
         "description": "Ok",
         "content": {
           "application/json": {
@@ -2211,7 +2316,7 @@
       "New-Field-Controller-Body": {
         "value": {
           "name": "USSEA-HVAC-BMSNODE01",
-          "gateway": "87e2c5f6-d961-4464-87c0-ec52863da975",
+          "gateway": "539fea81-d151-46e1-b1f6-36e3864ebeff",
           "instance": "10100"
         }
       },
@@ -2330,6 +2435,11 @@
               "time": "20:58:26.18"
             }
           }
+        }
+      },
+      "Update-Controller-Body": {
+        "value": {
+          "name": "New Name"
         }
       }
     }
