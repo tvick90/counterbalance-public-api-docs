@@ -2020,11 +2020,7 @@
             }
           }
         },
-        "headers": {
-          "Content-Type": {
-            "$ref": "#/components/parameters/Content-Type"
-          }
-        }
+        "headers": {}
       },
       "200-Get-Gateway-Listing": {
         "description": "Ok",
@@ -2040,11 +2036,7 @@
             }
           }
         },
-        "headers": {
-          "Content-Type": {
-            "$ref": "#/components/parameters/Content-Type"
-          }
-        }
+        "headers": {}
       },
       "200-Gateway-Whois": {
         "description": "Ok",
