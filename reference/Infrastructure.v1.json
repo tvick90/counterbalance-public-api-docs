@@ -625,7 +625,7 @@
         "tags": [
           "Gateways"
         ],
-        "description": "### Synopsis\nSend a BACnet Who-Is to the network and review responsive field controllers\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* n activated site gateway with Internet access\n* Permissions _(at least one):_ `*`,`infrastructure:*`,`infrastructure:gateway:*`,`infrastructure:gateway:query`\n",
+        "description": "### Synopsis\nSend a BACnet Who-Is to the network and review responsive field controllers\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* An activated site gateway with Internet access\n* Permissions _(at least one):_ `*`,`infrastructure:*`,`infrastructure:gateway:*`,`infrastructure:gateway:query`\n",
         "security": [
           {
             "Bearer Token": []
