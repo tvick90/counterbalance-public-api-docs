@@ -98,7 +98,7 @@
             },
             "in": "query",
             "name": "online",
-            "description": "Query the gateway for vitals and configuration details"
+            "description": "Query the gateway for vitals and statistics"
           },
           {
             "schema": {
@@ -106,7 +106,7 @@
             },
             "in": "query",
             "name": "check_vitals",
-            "description": "Deprecated. Same as `online`",
+            "description": "Same as `online`",
             "deprecated": true
           }
         ],
@@ -608,13 +608,7 @@
     "/v1/infrastructure/gateway/{gatewayId}/whois": {
       "parameters": [
         {
-          "schema": {
-            "type": "string"
-          },
-          "name": "gatewayId",
-          "in": "path",
-          "required": true,
-          "description": "A valid gateway ID"
+          "$ref": "#/components/parameters/gatewayId"
         }
       ],
       "post": {
@@ -622,13 +616,16 @@
         "operationId": "send-whois",
         "responses": {
           "200": {
-            "description": "OK"
+            "$ref": "#/components/responses/200-Gateway-Whois"
+          },
+          "404": {
+            "$ref": "#/components/responses/404-Gateway-Not-Found"
           }
         },
         "tags": [
           "Gateways"
         ],
-        "description": "Send a BACnet Who-Is to the network and review responsive field controllers\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* A configured site gateway with Internet access\n* Permissions _(at least one):_ `*`,`infrastructure:*`,`infrastructure:gateway:*`,`infrastructure:gateway:query`\n",
+        "description": "### Synopsis\nSend a BACnet Who-Is to the network and review responsive field controllers\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* n activated site gateway with Internet access\n* Permissions _(at least one):_ `*`,`infrastructure:*`,`infrastructure:gateway:*`,`infrastructure:gateway:query`\n",
         "security": [
           {
             "Bearer Token": []
@@ -1873,6 +1870,57 @@
             "description": "The installed location of the device"
           }
         }
+      },
+      "Gateway-Whois": {
+        "description": "",
+        "type": "object",
+        "properties": {
+          "count": {
+            "type": "number"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "responses": {
+                "type": "array",
+                "uniqueItems": true,
+                "minItems": 1,
+                "items": {
+                  "required": [
+                    "device_id",
+                    "device_name"
+                  ],
+                  "properties": {
+                    "device_id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "device_name": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  }
+                }
+              },
+              "online_devices": {
+                "type": "array",
+                "items": {
+                  "required": [],
+                  "properties": {}
+                }
+              }
+            },
+            "required": [
+              "responses",
+              "online_devices"
+            ]
+          }
+        },
+        "required": [
+          "count",
+          "data"
+        ],
+        "title": "Gateway Whois Response"
       }
     },
     "securitySchemes": {
@@ -1945,11 +1993,7 @@
             }
           }
         },
-        "headers": {
-          "Content-Type": {
-            "$ref": "#/components/parameters/Content-Type"
-          }
-        }
+        "headers": {}
       },
       "201-Gateway-Created": {
         "description": "Created",
@@ -1988,6 +2032,21 @@
         "headers": {
           "Content-Type": {
             "$ref": "#/components/parameters/Content-Type"
+          }
+        }
+      },
+      "200-Gateway-Whois": {
+        "description": "Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Gateway-Whois"
+            },
+            "examples": {
+              "Response": {
+                "$ref": "#/components/examples/Gateway-Whois"
+              }
+            }
           }
         }
       }
@@ -2086,6 +2145,27 @@
           "name": "Primary Gateway",
           "description": "The primary gateway we use",
           "location": "BAS Panel for RTU-1"
+        }
+      },
+      "Gateway-Whois": {
+        "value": {
+          "count": 2,
+          "data": {
+            "responses": [
+              {
+                "device_id": "10100",
+                "device_name": "USSEA-HVAC-BMSNODE01"
+              },
+              {
+                "device_id": "10200",
+                "device_name": "USSEA-HVAC-BMSNODE02"
+              }
+            ],
+            "online_devices": [
+              "10100",
+              "10200"
+            ]
+          }
         }
       }
     }
