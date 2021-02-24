@@ -23,7 +23,7 @@
             "$ref": "#/components/responses/200-Get-Gateway-Listing"
           }
         },
-        "operationId": "get-gateway",
+        "operationId": "get-gateway-list",
         "description": "### Synopsis\nGet a list of available gateway devices\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`infrastructure:*`,`infrastructure:gateway:*`,`infrastructure:gateway:list`",
         "security": [
           {
@@ -203,53 +203,14 @@
         "summary": "List Available Field Controllers",
         "responses": {
           "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Gateway-Devices"
-                },
-                "examples": {
-                  "Response": {
-                    "value": {
-                      "count": 2,
-                      "data": {
-                        "managed_devices": [
-                          {
-                            "id": "341efcb4-b884-47b5-af5e-aa44ddb6f22a",
-                            "name": "US SEA Node 02",
-                            "description": "AHU-1 Controller",
-                            "location": "AHU-1 Controller",
-                            "site": "c0142a11-62d1-460a-9be5-9e7881ae7b58",
-                            "online": true,
-                            "bacnet": {
-                              "id": 10200,
-                              "name": "USSEA-HVAC-BMSNODE02"
-                            }
-                          }
-                        ],
-                        "unmanaged_devices": [
-                          {
-                            "device_id": "10100",
-                            "device_name": "USSEA-HVAC-BMSNODE01"
-                          }
-                        ],
-                        "online_devices": [
-                          "10100",
-                          "10200"
-                        ],
-                        "offline_devices": [],
-                        "new_devices_available": true
-                      }
-                    }
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/200-Get-Gateway-Devices"
+          },
+          "404": {
+            "$ref": "#/components/responses/404-Gateway-Not-Found"
           }
         },
         "operationId": "get-gateway-devices",
-        "description": "List the available field controllers on the specified gateway\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* A configured site gateway with Internet access\n* Permissions _(at least one):_ `*`,`infrastructure:*`,`infrastructure:gateway:*`,`infrastructure:gateway:query`",
+        "description": "### Synopsis\nList the available field controllers on the specified gateway\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* An activated site gateway with Internet access\n* Permissions _(at least one):_ `*`,`infrastructure:*`,`infrastructure:gateway:*`,`infrastructure:gateway:query`",
         "tags": [
           "Gateways"
         ],
@@ -265,54 +226,14 @@
         "summary": "List Registered Field Controllers",
         "responses": {
           "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Field-Controller-Listing"
-                },
-                "examples": {
-                  "Response": {
-                    "value": {
-                      "count": 2,
-                      "data": [
-                        {
-                          "id": "341efcb4-b884-47b5-af5e-aa44ddb6f22a",
-                          "tenant": "1d1776fe-0437-426c-a796-06e2b5eaccf6",
-                          "gateway": "87e2c5f6-d961-4464-87c0-ec52863da975",
-                          "created": 1610379813,
-                          "name": "BMS Node 02",
-                          "description": "AHU-1 Controller",
-                          "location": "Mechanical Room 126",
-                          "instance_id": 10200,
-                          "is_ostracized": false,
-                          "site": "c0142a11-62d1-460a-9be5-9e7881ae7b58"
-                        },
-                        {
-                          "id": "6953222d-3705-4da3-06e8-ee66ab41a700",
-                          "tenant": "1d1776fe-0437-426c-a796-06e2b5eaccf6",
-                          "gateway": "87e2c5f6-d961-4464-87c0-ec52863da975",
-                          "created": 1610992645,
-                          "name": "BMS Node 01",
-                          "description": "Central Plant Controller",
-                          "location": "Chiller Room",
-                          "instance_id": 10100,
-                          "is_ostracized": false,
-                          "site": null
-                        }
-                      ]
-                    }
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/200-Get-Controller-Listing"
           }
         },
-        "operationId": "get-v1-infrastructure-controller",
+        "operationId": "get-controller-list",
         "tags": [
           "Field Controllers"
         ],
-        "description": "List available field controllers in a tenant account\n\n**Prerequisites** \n\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`infrastructure:*`,`infrastructure:controller:*`,`infrastructure:controller:list`",
+        "description": "### Synopsis\nList available field controllers in a tenant account\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`infrastructure:*`,`infrastructure:controller:*`,`infrastructure:controller:list`",
         "security": [
           {
             "Bearer Token": []
@@ -322,7 +243,8 @@
           {
             "schema": {
               "type": "string",
-              "format": "uuid"
+              "format": "uuid",
+              "example": "539fea81-d151-46e1-b1f6-36e3864ebeff"
             },
             "in": "query",
             "name": "gateway",
@@ -331,7 +253,8 @@
           {
             "schema": {
               "type": "string",
-              "format": "uuid"
+              "format": "uuid",
+              "example": "82478e3a-a212-41bf-9e2b-7522a1504a6b"
             },
             "in": "query",
             "name": "site",
@@ -341,7 +264,7 @@
       },
       "post": {
         "summary": "Register Field Controller",
-        "operationId": "create-ddc-controller",
+        "operationId": "create-controller",
         "responses": {
           "201": {
             "description": "Created",
@@ -418,12 +341,7 @@
     "/v1/infrastructure/controller/{controllerId}": {
       "parameters": [
         {
-          "schema": {
-            "type": "string"
-          },
-          "name": "controllerId",
-          "in": "path",
-          "required": true
+          "$ref": "#/components/parameters/controllerId"
         }
       ],
       "get": {
@@ -594,7 +512,8 @@
         "parameters": [
           {
             "schema": {
-              "type": "boolean"
+              "type": "boolean",
+              "default": "false"
             },
             "in": "query",
             "name": "bacnet",
@@ -807,39 +726,7 @@
           "data"
         ],
         "title": "Gateway Device Listing",
-        "x-examples": {
-          "Example": {
-            "count": 2,
-            "data": {
-              "managed_devices": [
-                {
-                  "id": "341efcb4-b884-47b5-af5e-aa44ddb6f22a",
-                  "name": "US SEA Node 02",
-                  "description": "AHU-1 Controller",
-                  "location": "AHU-1 Controller",
-                  "site": "c0142a11-62d1-460a-9be5-9e7881ae7b58",
-                  "online": true,
-                  "bacnet": {
-                    "id": 10200,
-                    "name": "USSEA-HVAC-BMSNODE02"
-                  }
-                }
-              ],
-              "unmanaged_devices": [
-                {
-                  "device_id": "10100",
-                  "device_name": "USSEA-HVAC-BMSNODE01"
-                }
-              ],
-              "online_devices": [
-                "10100",
-                "10200"
-              ],
-              "offline_devices": [],
-              "new_devices_available": true
-            }
-          }
-        }
+        "x-examples": {}
       },
       "Field-Controller-Details": {
         "description": "",
@@ -2052,6 +1939,36 @@
             }
           }
         }
+      },
+      "200-Get-Gateway-Devices": {
+        "description": "Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Gateway-Devices"
+            },
+            "examples": {
+              "Response": {
+                "$ref": "#/components/examples/Get-Gateway-Devices"
+              }
+            }
+          }
+        }
+      },
+      "200-Get-Controller-Listing": {
+        "description": "Example response",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Field-Controller-Listing"
+            },
+            "examples": {
+              "Response": {
+                "$ref": "#/components/examples/Get-Controller-Listing"
+              }
+            }
+          }
+        }
       }
     },
     "parameters": {
@@ -2075,6 +1992,16 @@
           "default": "application/json"
         },
         "description": "application/json"
+      },
+      "controllerId": {
+        "name": "controllerId",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "description": "A valid controller UUID"
       }
     },
     "examples": {
@@ -2169,6 +2096,70 @@
               "10200"
             ]
           }
+        }
+      },
+      "Get-Gateway-Devices": {
+        "value": {
+          "count": 2,
+          "data": {
+            "managed_devices": [
+              {
+                "id": "4f668b28-c30d-4fc1-b751-7cc30dcc4964",
+                "name": "USSEA-HVAC-BMSNODE01",
+                "description": "",
+                "location": "",
+                "site": "82478e3a-a212-41bf-9e2b-7522a1504a6b",
+                "online": true,
+                "bacnet": {
+                  "id": 10100,
+                  "name": "USSEA-HVAC-BMSNODE01"
+                }
+              }
+            ],
+            "unmanaged_devices": [
+              {
+                "device_id": "10200",
+                "device_name": "USSEA-HVAC-BMSNODE02"
+              }
+            ],
+            "online_devices": [
+              "10100",
+              "10200"
+            ],
+            "offline_devices": [],
+            "new_devices_available": true
+          }
+        }
+      },
+      "Get-Controller-Listing": {
+        "value": {
+          "count": 2,
+          "data": [
+            {
+              "id": "48f6bef2-1d57-4333-b9af-be687876e997",
+              "tenant": "7d5a9e81-0902-4137-b71e-40ea913b5bfa",
+              "gateway": "539fea81-d151-46e1-b1f6-36e3864ebeff",
+              "created": 1614139068,
+              "name": "USSEA-HVAC-BMSNODE02",
+              "description": "",
+              "location": "",
+              "instance_id": 10200,
+              "is_ostracized": false,
+              "site": "82478e3a-a212-41bf-9e2b-7522a1504a6b"
+            },
+            {
+              "id": "4f668b28-c30d-4fc1-b751-7cc30dcc4964",
+              "tenant": "7d5a9e81-0902-4137-b71e-40ea913b5bfa",
+              "gateway": "539fea81-d151-46e1-b1f6-36e3864ebeff",
+              "created": 1613717286,
+              "name": "USSEA-HVAC-BMSNODE01",
+              "description": "",
+              "location": "",
+              "instance_id": 10100,
+              "is_ostracized": false,
+              "site": "82478e3a-a212-41bf-9e2b-7522a1504a6b"
+            }
+          ]
         }
       }
     }
