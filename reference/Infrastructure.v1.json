@@ -168,13 +168,24 @@
         "operationId": "delete-gateway",
         "responses": {
           "204": {
-            "description": "No Content"
+            "description": "No Content",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "null"
+                },
+                "examples": {}
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/404-Gateway-Not-Found"
           }
         },
         "tags": [
           "Gateways"
         ],
-        "description": "### Synopsis\nDelete a gateway device\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`infrastructure:*`,`infrastructure:gateway:*`,`infrastructure:gateway:delete`",
+        "description": "### Synopsis\nDelete a gateway device\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`infrastructure:*`,`infrastructure:gateway:*`,`infrastructure:gateway:delete`\n\n### Connected Controllers\nWhen a gateway is deleted, the connected controllers are retained but all data collection activities will stop, building intelligence rules will be unavailable, and any associated meters will be in fault. \n\nA controller can be re-associated with an active gateway via the [Update Controller](/docs/core-api/reference/Infrastructure.v1.json/paths/~1v1~1infrastructure~1gateway~1%7BgatewayId%7D/patch) endpoint.",
         "security": [
           {
             "Bearer Token": []
