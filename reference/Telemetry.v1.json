@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "title": "Telemetry & Logging",
+    "title": "Telemetry",
     "version": "1.0",
     "description": "Telemetry and logging allows the collection of data from gateways and on-site systems"
   },
@@ -14,53 +14,45 @@
   "paths": {
     "/v1/telemetry/point": {
       "get": {
-        "summary": "List Data Points",
-        "tags": [
-          "Data Points"
-        ],
+        "summary": "List Points",
         "responses": {},
-        "operationId": "get-v1-telemetry-point",
-        "description": ""
+        "operationId": "get-point-list",
+        "description": "",
+        "tags": [
+          "Points"
+        ]
       },
       "post": {
         "summary": "Create Data Point",
-        "operationId": "create-telemetry-point",
+        "operationId": "create-data-point",
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "400": {
+            "$ref": "#/components/responses/400-Invalid-Scope"
+          },
+          "404": {
+            "$ref": "#/components/responses/404-Controller-Not-Found"
           }
         },
         "description": "Create a new telemetry point definition",
         "tags": [
-          "Data Points"
+          "Points"
         ]
-      }
-    },
-    "/v1/telemetry/logger": {
-      "get": {
-        "summary": "Get Logger Listing",
-        "tags": [
-          "Loggers"
-        ],
-        "responses": {},
-        "operationId": "get-loggers",
-        "description": "Retrieve a list of loggers"
       }
     },
     "/v1/telemetry/datapoint/{datapointId}": {
       "parameters": [
         {
-          "schema": {
-            "type": "string"
-          },
-          "name": "datapointId",
-          "in": "path",
-          "required": true
+          "$ref": "#/components/parameters/pointId"
         }
       ],
       "get": {
         "summary": "Get Data Point Details",
-        "tags": [],
+        "tags": [
+          "Points"
+        ],
         "responses": {},
         "operationId": "get-v1-telemetry-datapoint-datapointId",
         "parameters": [
@@ -76,7 +68,10 @@
           "200": {
             "description": "OK"
           }
-        }
+        },
+        "tags": [
+          "Points"
+        ]
       }
     },
     "/v1/collector": {
@@ -112,6 +107,9 @@
             "description": "application/json",
             "required": true
           }
+        ],
+        "tags": [
+          "Collectors"
         ]
       }
     },
@@ -129,7 +127,9 @@
       ],
       "get": {
         "summary": "Retrieve Collector Trend Samples",
-        "tags": [],
+        "tags": [
+          "Collectors"
+        ],
         "responses": {},
         "operationId": "get-v1-collector-collectorId-samples",
         "description": "Retrieve data samples for the specified collector. ",
@@ -172,12 +172,69 @@
         "schema": {
           "type": "string"
         }
+      },
+      "pointId": {
+        "name": "pointId",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "format": "uuid",
+          "example": "168a3e32-996f-410a-a06c-c4cdc10fa362"
+        },
+        "description": "A valid point UUID"
       }
     },
     "securitySchemes": {
       "Bearer Token": {
         "type": "http",
         "scheme": "bearer"
+      }
+    },
+    "responses": {
+      "400-Invalid-Scope": {
+        "description": "Bad Request",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../models/Error-Response.v1.yaml"
+            },
+            "examples": {
+              "Response": {
+                "value": {
+                  "error": {
+                    "message": "Invalid object type",
+                    "console": "The object type specified is invalid",
+                    "code": 400
+                  },
+                  "logging_hash": "..."
+                }
+              }
+            }
+          }
+        }
+      },
+      "404-Controller-Not-Found": {
+        "description": "Not Found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../models/Error-Response.v1.yaml"
+            },
+            "examples": {
+              "Response": {
+                "value": {
+                  "error": {
+                    "message": "Controller not found",
+                    "console": "The controller ID ... could not be found in the database",
+                    "code": 404
+                  },
+                  "logging_hash": "..."
+                }
+              }
+            }
+          }
+        }
       }
     }
   },
@@ -186,10 +243,10 @@
       "name": "Loggers"
     },
     {
-      "name": "Data Points"
+      "name": "Collectors"
     },
     {
-      "name": "Collectors"
+      "name": "Points"
     }
   ]
 }
