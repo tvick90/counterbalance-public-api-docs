@@ -172,7 +172,7 @@
         }
       ],
       "get": {
-        "summary": "Get Collector Trend Samples",
+        "summary": "Sample Collector Data",
         "tags": [
           "Collectors"
         ],
@@ -185,7 +185,7 @@
           }
         },
         "operationId": "get-collector-samples",
-        "description": "### Synopsis\nRetrieve data samples for the specified collector. \n\n### Prerequsites\n\n## ",
+        "description": "## Synopsis\nRetrieve data samples for the specified collector. \n\n## Prerequsites\n\n## Adjusting the Sample Window\nBy default, samples for the last 12 hours are returned. This sample window can be adjusted using query parameters as outlined below.\n\n### I have a fixed date range\nThis is how you do it\n\n### I want to sample a relative range",
         "parameters": [
           {
             "schema": {
