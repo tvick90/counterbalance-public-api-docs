@@ -1391,7 +1391,7 @@
     },
     "/v1/site/weather/forecast": {
       "get": {
-        "summary": "Get Weather Forecast",
+        "summary": "Get Forecast",
         "tags": [
           "Weather"
         ],
@@ -2197,7 +2197,7 @@
             }
           }
         },
-        "operationId": "get-v1-site-weather-alerts",
+        "operationId": "get-weather-alerts",
         "description": "Retrieve current sever weather alerts and advisories\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:weather:*`,`sites:weather:alerts`\n* Licensed Feature: `weather_alerts`\n\n### Specifying the Location\nWeather alerts and advisories can be obtained for a specified set of coordinates or by specifying a geocoded address object ID. Either the `coordinates` or `address` query parameters must be passed, but not both.\n\nIf the specified address ID has not been geocoded, an error will be returned.\n\n<!-- theme: warning-->\n> _Parameters `coordinates` and `address` are mutually exclusive. Passing more than one will result in an error_\n\n### Language\nBy default, data is returned in English. To return data in another language, pass the `langugage` query parameter and set it to a valid IETF language code.\n\n<!-- theme: warning-->\n> _The API supports any valid IETF language code but alert data may not be available in the specified language_",
         "parameters": [
           {
