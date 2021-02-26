@@ -157,6 +157,45 @@
       },
       "parameters": []
     },
+    "/v1/telemetry/collector/{collectorId}": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/collectorId"
+        }
+      ],
+      "get": {
+        "summary": "Get Collector",
+        "tags": [
+          "Collectors"
+        ],
+        "responses": {},
+        "operationId": "get-collector",
+        "description": "",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ]
+      },
+      "patch": {
+        "summary": "Update Collector",
+        "operationId": "update-collector",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "description": "",
+        "tags": [
+          "Collectors"
+        ],
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ]
+      }
+    },
     "/v1/telemetry/collector/{collectorId}/sample": {
       "parameters": [
         {
@@ -203,45 +242,6 @@
             "name": "duration",
             "description": "The length of the sample (in seconds)"
           }
-        ],
-        "security": [
-          {
-            "Bearer Token": []
-          }
-        ]
-      }
-    },
-    "/v1/telemetry/collector/{collectorId}": {
-      "parameters": [
-        {
-          "$ref": "#/components/parameters/collectorId"
-        }
-      ],
-      "get": {
-        "summary": "Get Collector",
-        "tags": [
-          "Collectors"
-        ],
-        "responses": {},
-        "operationId": "get-collector",
-        "description": "",
-        "security": [
-          {
-            "Bearer Token": []
-          }
-        ]
-      },
-      "patch": {
-        "summary": "Update Collector",
-        "operationId": "update-collector",
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        },
-        "description": "",
-        "tags": [
-          "Collectors"
         ],
         "security": [
           {
@@ -532,10 +532,10 @@
       "name": "Loggers"
     },
     {
-      "name": "Collectors"
+      "name": "Points"
     },
     {
-      "name": "Points"
+      "name": "Collectors"
     }
   ]
 }
