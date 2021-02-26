@@ -111,7 +111,7 @@
         ]
       }
     },
-    "/v1/collector": {
+    "/v1/telemetry/collector": {
       "get": {
         "summary": "List Collectors",
         "tags": [
@@ -154,7 +154,8 @@
         "tags": [
           "Collectors"
         ]
-      }
+      },
+      "parameters": []
     },
     "/v1/collector/{collectorId}/sample": {
       "parameters": [
