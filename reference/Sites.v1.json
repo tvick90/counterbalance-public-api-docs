@@ -19,7 +19,7 @@
   "paths": {
     "/v1/site": {
       "get": {
-        "summary": "Get Site Listing",
+        "summary": "List Sites",
         "tags": [
           "Manage Sites"
         ],
@@ -126,7 +126,7 @@
         ]
       },
       "post": {
-        "summary": "Create New Site",
+        "summary": "Create Site",
         "operationId": "create-site",
         "responses": {
           "201": {
@@ -1027,7 +1027,7 @@
         ]
       },
       "post": {
-        "summary": "Create New Building",
+        "summary": "Create Building",
         "operationId": "create-building",
         "responses": {
           "201": {
@@ -1804,7 +1804,7 @@
     },
     "/v1/site/weather/current-conditions": {
       "get": {
-        "summary": "Get Current Weather Conditions",
+        "summary": "Get Current Conditions",
         "tags": [
           "Weather"
         ],
@@ -2074,7 +2074,7 @@
     },
     "/v1/site/weather/alerts": {
       "get": {
-        "summary": "Get Weather Alerts",
+        "summary": "Get Alerts",
         "tags": [
           "Weather"
         ],
