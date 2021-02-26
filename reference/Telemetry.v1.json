@@ -157,8 +157,16 @@
       },
       "parameters": []
     },
-    "/v1/collector/{collectorId}/sample": {
+    "/v1/telemetry/collector/{collectorId}/sample": {
       "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "collectorId",
+          "in": "path",
+          "required": true
+        },
         {
           "$ref": "./Infrastructure.v1.json#/components/parameters/controllerId"
         }
@@ -211,8 +219,16 @@
         ]
       }
     },
-    "/v1/collector/{collectorId}": {
+    "/v1/telemetry/collector/{collectorId}": {
       "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "collectorId",
+          "in": "path",
+          "required": true
+        },
         {
           "$ref": "#/components/parameters/collectorId"
         }
