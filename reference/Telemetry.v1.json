@@ -119,7 +119,7 @@
         ],
         "responses": {},
         "operationId": "list-collectors",
-        "description": "## Synopsis\nList ",
+        "description": "### Synopsis\nList ",
         "security": [
           {
             "Bearer Token": []
@@ -134,7 +134,7 @@
             "description": "OK"
           }
         },
-        "description": "## Synopsis\nCreate a new Collector for a data point\n\n## Prerequisites",
+        "description": "### Synopsis\nCreate a new Collector for a data point\n\n### Prerequisites",
         "security": [
           {
             "Bearer Token": []
@@ -177,7 +177,7 @@
           }
         },
         "operationId": "get-collector-samples",
-        "description": "## Synopsis\nRetrieve data samples for the specified collector. \n\n## Prerequsites\n\n## ",
+        "description": "### Synopsis\nRetrieve data samples for the specified collector. \n\n### Prerequsites\n\n## ",
         "parameters": [
           {
             "schema": {
