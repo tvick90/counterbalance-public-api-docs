@@ -216,7 +216,7 @@
           }
         },
         "operationId": "get-collector-samples",
-        "description": "### Synopsis\nRetrieve data samples for the specified collector. \n\n### Prerequsites\n\n### Adjusting the Sample Window\nBy default, samples for the last 12 hours are returned. This sample window can be adjusted using query parameters as outlined below.\n\n#### Sample a Fixed Date Range\nThis is how you do it\n\n#### Sample a Relative Date Range\nThis is how you do it",
+        "description": "### Synopsis\nRetrieve data samples for the specified collector. \n\n### Prerequsites\n\n### Adjusting the Sample Window\nBy default, with no query parameters specified, sample data for the last 12 hours is returned. \n\nThis sample window can be adjusted using query parameters in two ways.\n\n#### Sample a Fixed Date Range\nThis is how you do it\n\n#### Sample a Relative Date Range\nA relative range can be sampled using a `start` date and a `duration` in seconds. ",
         "parameters": [
           {
             "schema": {
