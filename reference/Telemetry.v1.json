@@ -20,6 +20,11 @@
         "description": "",
         "tags": [
           "Points"
+        ],
+        "security": [
+          {
+            "Bearer Token": []
+          }
         ]
       },
       "post": {
@@ -39,6 +44,11 @@
         "description": "Create a new telemetry point definition",
         "tags": [
           "Points"
+        ],
+        "security": [
+          {
+            "Bearer Token": []
+          }
         ]
       },
       "parameters": []
@@ -55,16 +65,18 @@
           "Points"
         ],
         "responses": {},
-        "operationId": "get-v1-telemetry-datapoint-datapointId",
-        "parameters": [
+        "operationId": "get-point",
+        "parameters": [],
+        "security": [
           {
-            "$ref": "#/components/parameters/collectorID"
+            "Bearer Token": []
           }
-        ]
+        ],
+        "description": ""
       },
       "delete": {
         "summary": "Delete Point",
-        "operationId": "delete-v1-telemetry-datapoint-datapointId",
+        "operationId": "delete-point",
         "responses": {
           "200": {
             "description": "OK"
@@ -72,6 +84,12 @@
         },
         "tags": [
           "Points"
+        ],
+        "description": "",
+        "security": [
+          {
+            "Bearer Token": []
+          }
         ]
       },
       "patch": {
@@ -101,7 +119,12 @@
         ],
         "responses": {},
         "operationId": "list-collectors",
-        "description": "## Synopsis\nList "
+        "description": "## Synopsis\nList ",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ]
       },
       "post": {
         "summary": "Create Collector",
@@ -179,6 +202,11 @@
             "name": "duration",
             "description": "The length of the sample (in seconds)"
           }
+        ],
+        "security": [
+          {
+            "Bearer Token": []
+          }
         ]
       }
     },
@@ -194,8 +222,13 @@
           "Collectors"
         ],
         "responses": {},
-        "operationId": "get-v1-collector-collectorId",
-        "description": ""
+        "operationId": "get-collector",
+        "description": "",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ]
       },
       "patch": {
         "summary": "Update Collector",
@@ -208,6 +241,11 @@
         "description": "",
         "tags": [
           "Collectors"
+        ],
+        "security": [
+          {
+            "Bearer Token": []
+          }
         ]
       }
     }
