@@ -27,8 +27,8 @@
     },
     {
       "type": "item",
-      "title": "Infrastructure",
-      "uri": "reference/Infrastructure.v1.json"
+      "title": "Account Management",
+      "uri": "reference/Tenant.v1.yaml"
     },
     {
       "type": "item",
@@ -37,13 +37,18 @@
     },
     {
       "type": "item",
-      "title": "Telemetry & Data Logging",
-      "uri": "reference/Telemetry.v1.json"
+      "title": "Equipment",
+      "uri": "reference/Equipment.v1.json"
     },
     {
       "type": "item",
-      "title": "Equipment",
-      "uri": "reference/Equipment.v1.json"
+      "title": "Infrastructure",
+      "uri": "reference/Infrastructure.v1.json"
+    },
+    {
+      "type": "item",
+      "title": "Telemetry & Data Logging",
+      "uri": "reference/Telemetry.v1.json"
     },
     {
       "type": "item",
@@ -54,11 +59,6 @@
       "type": "item",
       "title": "Subscription & Billing",
       "uri": "reference/Billing.v1.yaml"
-    },
-    {
-      "type": "item",
-      "title": "Account Management",
-      "uri": "reference/Tenant.v1.yaml"
     }
   ]
 }

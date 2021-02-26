@@ -76,16 +76,17 @@
     },
     "/v1/collector": {
       "get": {
-        "summary": "Retrieve Collector Details",
+        "summary": "List Collectors",
         "tags": [
           "Collectors"
         ],
         "responses": {},
-        "operationId": "get-v1-collector"
+        "operationId": "list-collectors",
+        "description": "## Synopsis\nList "
       },
       "post": {
         "summary": "Create Collector",
-        "operationId": "post-v1-collector",
+        "operationId": "create-collector",
         "responses": {
           "200": {
             "description": "OK"
@@ -116,23 +117,24 @@
     "/v1/collector/{collectorId}/sample": {
       "parameters": [
         {
-          "schema": {
-            "type": "string"
-          },
-          "name": "collectorId",
-          "in": "path",
-          "required": true,
-          "description": "A valid collector UUID"
+          "$ref": "./Infrastructure.v1.json#/components/parameters/controllerId"
         }
       ],
       "get": {
-        "summary": "Retrieve Collector Trend Samples",
+        "summary": "Get Collector Trend Samples",
         "tags": [
           "Collectors"
         ],
-        "responses": {},
-        "operationId": "get-v1-collector-collectorId-samples",
-        "description": "Retrieve data samples for the specified collector. ",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/200-Get-Collector-Samples"
+          },
+          "404": {
+            "$ref": "#/components/responses/404-Collector-Not-Found"
+          }
+        },
+        "operationId": "get-collector-samples",
+        "description": "## Synopsis\nRetrieve data samples for the specified collector. \n\n## Prerequsites\n\n## ",
         "parameters": [
           {
             "schema": {
@@ -160,19 +162,146 @@
           }
         ]
       }
+    },
+    "/v1/collector/{collectorId}": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/collectorId"
+        }
+      ],
+      "get": {
+        "summary": "Get Collector",
+        "tags": [],
+        "responses": {},
+        "operationId": "get-v1-collector-collectorId",
+        "description": ""
+      },
+      "patch": {
+        "summary": "Update Collector",
+        "operationId": "update-collector",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "description": ""
+      }
     }
   },
   "components": {
-    "schemas": {},
+    "schemas": {
+      "Get-Collector-Samples-Response-Body": {
+        "description": "",
+        "type": "object",
+        "properties": {
+          "count": {
+            "type": "number"
+          },
+          "range": {
+            "type": "object",
+            "properties": {
+              "start": {
+                "type": "number"
+              },
+              "end": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "start",
+              "end"
+            ]
+          },
+          "integrity": {
+            "type": "object",
+            "properties": {
+              "sample_duration": {
+                "type": "number"
+              },
+              "expected_samples": {
+                "type": "number"
+              },
+              "missing_samples": {
+                "type": "number"
+              },
+              "quality": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "sample_duration",
+              "expected_samples",
+              "missing_samples",
+              "quality"
+            ]
+          },
+          "data": {
+            "type": "array",
+            "uniqueItems": true,
+            "minItems": 1,
+            "items": {
+              "required": [
+                "id",
+                "timestamp",
+                "value",
+                "event_state"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "timestamp": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "value": {
+                  "type": "number"
+                },
+                "feedback_value": {},
+                "state_text": {},
+                "event_state": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "priority_array": {},
+                "status_flags": {
+                  "type": "object",
+                  "properties": {
+                    "fault": {
+                      "type": "boolean"
+                    },
+                    "in_alarm": {
+                      "type": "boolean"
+                    },
+                    "overridden": {
+                      "type": "boolean"
+                    },
+                    "out_of_service": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "fault",
+                    "in_alarm",
+                    "overridden",
+                    "out_of_service"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "required": [
+          "count",
+          "range",
+          "integrity",
+          "data"
+        ],
+        "title": "Get Collector Samples"
+      }
+    },
     "parameters": {
-      "collectorID": {
-        "name": "collectorID",
-        "in": "query",
-        "required": false,
-        "schema": {
-          "type": "string"
-        }
-      },
       "pointId": {
         "name": "pointId",
         "in": "path",
@@ -183,6 +312,16 @@
           "example": "168a3e32-996f-410a-a06c-c4cdc10fa362"
         },
         "description": "A valid point UUID"
+      },
+      "collectorId": {
+        "name": "collectorId",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "description": "A valid collector UUID"
       }
     },
     "securitySchemes": {
@@ -234,6 +373,92 @@
               }
             }
           }
+        }
+      },
+      "200-Get-Collector-Samples": {
+        "description": "Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Get-Collector-Samples-Response-Body"
+            },
+            "examples": {
+              "Response": {
+                "$ref": "#/components/examples/Get-Collector-Samples"
+              }
+            }
+          }
+        }
+      },
+      "404-Collector-Not-Found": {
+        "description": "Not Found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../models/Error-Response.v1.yaml"
+            },
+            "examples": {
+              "Response": {
+                "value": {
+                  "error": {
+                    "message": "Collector not found",
+                    "console": "The collector ID ... could not be found in the database",
+                    "code": 404
+                  },
+                  "logging_hash": "..."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "examples": {
+      "Get-Collector-Samples": {
+        "value": {
+          "count": 335,
+          "range": {
+            "start": 1614163800,
+            "end": 1614264720
+          },
+          "integrity": {
+            "sample_duration": 100920,
+            "expected_samples": 336,
+            "missing_samples": 1,
+            "quality": 99
+          },
+          "data": [
+            {
+              "id": "6fc988a0f34126693318d2df9247f8cc",
+              "timestamp": "1614264600",
+              "value": 62.6,
+              "feedback_value": null,
+              "state_text": null,
+              "event_state": "normal",
+              "priority_array": null,
+              "status_flags": {
+                "fault": false,
+                "in_alarm": false,
+                "overridden": false,
+                "out_of_service": false
+              }
+            },
+            {
+              "id": "bbd4e6fb74ad710553100aace78636ce",
+              "timestamp": "1614264300",
+              "value": 62.6,
+              "feedback_value": null,
+              "state_text": null,
+              "event_state": "normal",
+              "priority_array": null,
+              "status_flags": {
+                "fault": false,
+                "in_alarm": false,
+                "overridden": false,
+                "out_of_service": false
+              }
+            }
+          ]
         }
       }
     }
