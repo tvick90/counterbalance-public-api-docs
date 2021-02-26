@@ -2,7 +2,7 @@
   "openapi": "3.0.0",
   "info": {
     "title": "Telemetry",
-    "version": "1.0",
+    "version": "1.1.0",
     "description": "Telemetry and logging allows the collection of data from gateways and on-site systems"
   },
   "servers": [
@@ -12,7 +12,7 @@
     }
   ],
   "paths": {
-    "/v1/telemetry/point": {
+    "/v1/telemetry/datapoint": {
       "get": {
         "summary": "List Points",
         "responses": {},
@@ -23,7 +23,7 @@
         ]
       },
       "post": {
-        "summary": "Create Data Point",
+        "summary": "Create Point",
         "operationId": "create-data-point",
         "responses": {
           "200": {
@@ -40,16 +40,17 @@
         "tags": [
           "Points"
         ]
-      }
+      },
+      "parameters": []
     },
-    "/v1/telemetry/datapoint/{datapointId}": {
+    "/v1/telemetry/datapoint/{pointId}": {
       "parameters": [
         {
           "$ref": "#/components/parameters/pointId"
         }
       ],
       "get": {
-        "summary": "Get Data Point Details",
+        "summary": "Get Point",
         "tags": [
           "Points"
         ],
@@ -62,13 +63,31 @@
         ]
       },
       "delete": {
-        "summary": "Delete Data Point",
+        "summary": "Delete Point",
         "operationId": "delete-v1-telemetry-datapoint-datapointId",
         "responses": {
           "200": {
             "description": "OK"
           }
         },
+        "tags": [
+          "Points"
+        ]
+      },
+      "patch": {
+        "summary": "Update Point",
+        "operationId": "update-point",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "description": "",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ],
         "tags": [
           "Points"
         ]
@@ -92,7 +111,7 @@
             "description": "OK"
           }
         },
-        "description": "Create a new Collector for a data point",
+        "description": "## Synopsis\nCreate a new Collector for a data point\n\n## Prerequisites",
         "security": [
           {
             "Bearer Token": []
@@ -171,7 +190,9 @@
       ],
       "get": {
         "summary": "Get Collector",
-        "tags": [],
+        "tags": [
+          "Collectors"
+        ],
         "responses": {},
         "operationId": "get-v1-collector-collectorId",
         "description": ""
@@ -184,7 +205,10 @@
             "description": "OK"
           }
         },
-        "description": ""
+        "description": "",
+        "tags": [
+          "Collectors"
+        ]
       }
     }
   },
@@ -327,7 +351,8 @@
     "securitySchemes": {
       "Bearer Token": {
         "type": "http",
-        "scheme": "bearer"
+        "scheme": "bearer",
+        "description": ""
       }
     },
     "responses": {
