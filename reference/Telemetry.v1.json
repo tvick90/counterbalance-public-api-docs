@@ -41,7 +41,7 @@
             "$ref": "#/components/responses/404-Controller-Not-Found"
           }
         },
-        "description": "Create a new telemetry point definition",
+        "description": "### Synopsis\nCreate a new point definition\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`telemetry:*`,`telemetry:datapoint:*`,`telemetry:datapoint:create`\n* Adequate gateway quota",
         "tags": [
           "Points"
         ],
