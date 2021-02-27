@@ -17,16 +17,6 @@
     },
     {
       "type": "item",
-      "title": "Caching",
-      "uri": "docs/Caching.md"
-    },
-    {
-      "type": "item",
-      "title": "Help & Support",
-      "uri": "docs/Help-and-Support.md"
-    },
-    {
-      "type": "item",
       "title": "Account Management",
       "uri": "reference/Tenant.v1.yaml"
     },
