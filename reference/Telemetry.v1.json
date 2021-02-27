@@ -68,7 +68,19 @@
         "operationId": "create-data-point",
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Point-Details"
+                },
+                "examples": {
+                  "Response": {
+                    "$ref": "#/components/examples/Get-Analog-Input-Point"
+                  }
+                }
+              }
+            }
           },
           "400": {
             "$ref": "#/components/responses/400-Invalid-Scope"
