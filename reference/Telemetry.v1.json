@@ -249,6 +249,131 @@
           }
         ]
       }
+    },
+    "/v1/telemetry/datapoint/{pointId}/command": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/pointId"
+        }
+      ],
+      "put": {
+        "summary": "Command Point",
+        "operationId": "command-point",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "boolean",
+                      "description": "Indicates the status of the request, produced by the gateway"
+                    }
+                  },
+                  "required": [
+                    "status"
+                  ]
+                },
+                "examples": {
+                  "Response Success": {
+                    "value": {
+                      "status": true
+                    }
+                  },
+                  "Response Fail": {
+                    "value": {
+                      "status": false
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../models/Error-Response.v1.yaml"
+                },
+                "examples": {
+                  "Invalid Parameters": {
+                    "value": {
+                      "error": {
+                        "message": "One or more required parameters are missing",
+                        "console": "Check the request body and try again",
+                        "code": 400
+                      },
+                      "logging_hash": "..."
+                    }
+                  },
+                  "Invalid Operation": {
+                    "value": {
+                      "error": {
+                        "message": "Invalid operation requested",
+                        "console": "Only command and relinquish are supported",
+                        "code": 400
+                      },
+                      "logging_hash": "..."
+                    }
+                  },
+                  "Point Not Commandable": {
+                    "value": {
+                      "error": {
+                        "message": "Datapoint not commandable",
+                        "console": "This datapoint is not commandable",
+                        "code": 400
+                      },
+                      "logging_hash": "..."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/404-Point-Not-Found"
+          }
+        },
+        "tags": [
+          "Points"
+        ],
+        "description": "### Synopsis\nCommand or releasea point\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`telemetry:*`,`telemetry:datapoint:*`,`telemetry:datapoint:command`\n* A registered gateway connected to the Internet\n* A connected BACnet field controller\n* One or more commandable BACnet data points\n\n### Commandable Points\nThe table below defines the BACnet object types compatible with this endpoint. Support for enumerated values is planned for a future release.\n\n| Object Type | Description |\n|-----|---------------|\n| `1` | Analog Output |\n| `2` | Analog Value |\n| `4` | Binary Output |\n| `5` | Binary Value |\n\n### Supported Command Priorities\nAll BACnet sixteen command priorities are supported. \n\n### Command vs Relinquish\nThe `operation` body parameter accepts two values: `command` or `relinquish`\n\n#### Command a New Value\nTo command a data point to a new value, set `operation` to `command` in the request body and include the desired priority and new value. The new value will be added to the command priority array at the requested priority and any previous value at the same priority is overwritten. \n\n#### Relinqush a Set Value\nTo relinquish a command priority, set `operation` to `relinquish` in the request body and include the desired priority. The requested priority will be set to _null_ in the command priority array.",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "Content-Type",
+            "description": "application/json"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Command-Point-Request-Body"
+              },
+              "examples": {
+                "Command Point Example": {
+                  "$ref": "#/components/examples/Put-Command-Point"
+                },
+                "Relinquish Point Example": {
+                  "$ref": "#/components/examples/Put-Relinquish-Point"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -362,6 +487,45 @@
           "data"
         ],
         "title": "Get Collector Samples"
+      },
+      "Command-Point-Request-Body": {
+        "description": "",
+        "type": "object",
+        "properties": {
+          "operation": {
+            "type": "string",
+            "minLength": 1
+          },
+          "value": {
+            "type": "number"
+          },
+          "priority": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "operation",
+          "priority"
+        ],
+        "title": "Command Point Request Body"
+      },
+      "Relinquish-Point-Request-Body": {
+        "description": "",
+        "type": "object",
+        "properties": {
+          "operation": {
+            "type": "string",
+            "minLength": 1
+          },
+          "priority": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "operation",
+          "priority"
+        ],
+        "title": "Relinquish Point Request Body"
       }
     },
     "parameters": {
@@ -475,6 +639,50 @@
             }
           }
         }
+      },
+      "400-Non-Commandable-Point": {
+        "description": "Bad Request",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../models/Error-Response.v1.yaml"
+            },
+            "examples": {
+              "Response": {
+                "value": {
+                  "error": {
+                    "message": "Datapoint not commandable",
+                    "console": "string",
+                    "code": 0
+                  },
+                  "logging_hash": null
+                }
+              }
+            }
+          }
+        }
+      },
+      "404-Point-Not-Found": {
+        "description": "Not Found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../models/Error-Response.v1.yaml"
+            },
+            "examples": {
+              "Response": {
+                "value": {
+                  "error": {
+                    "message": "Datapoint not found",
+                    "console": "The datapoint ID ... could not be found in the database",
+                    "code": 404
+                  },
+                  "logging_hash": "..."
+                }
+              }
+            }
+          }
+        }
       }
     },
     "examples": {
@@ -523,6 +731,19 @@
               }
             }
           ]
+        }
+      },
+      "Put-Relinquish-Point": {
+        "value": {
+          "operation": "relinquish",
+          "priority": 8
+        }
+      },
+      "Put-Command-Point": {
+        "value": {
+          "operation": "command",
+          "value": 1,
+          "priority": 8
         }
       }
     }
