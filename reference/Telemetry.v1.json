@@ -340,7 +340,7 @@
         "tags": [
           "Points"
         ],
-        "description": "### Synopsis\nCommand or releasea point\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`telemetry:*`,`telemetry:datapoint:*`,`telemetry:datapoint:command`\n* A registered gateway connected to the Internet\n* A connected BACnet field controller\n* One or more commandable BACnet data points\n\n### Commandable Points\nThe table below defines the BACnet object types compatible with this endpoint. Support for enumerated values is planned for a future release.\n\n| Object Type | Description |\n|-----|---------------|\n| `1` | Analog Output |\n| `2` | Analog Value |\n| `4` | Binary Output |\n| `5` | Binary Value |\n\n### Supported Command Priorities\nAll sixteen BACnet command priorities are supported. \n\n### Command vs Relinquish\nThe `operation` body parameter accepts two values: `command` or `relinquish`\n\n#### Command a New Value\nTo command a data point to a new value, set `operation` to `command` in the request body and include the desired priority and new value. The new value will be added to the command priority array at the requested priority and any previous value at the same priority is overwritten. \n\n#### Relinqush a Set Value\nTo relinquish a command priority, set `operation` to `relinquish` in the request body and include the desired priority. The requested priority will be set to _null_ in the command priority array.",
+        "description": "### Synopsis\nCommand or release a point\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`telemetry:*`,`telemetry:datapoint:*`,`telemetry:datapoint:command`\n* A registered gateway connected to the Internet\n* A connected BACnet field controller\n* One or more commandable BACnet data points\n\n### Commandable Points\nThe table below defines the BACnet object types compatible with this endpoint. Support for enumerated values is planned for a future release.\n\n| Object Type | Description |\n|-----|---------------|\n| `1` | Analog Output |\n| `2` | Analog Value |\n| `4` | Binary Output |\n| `5` | Binary Value |\n\n### Supported Command Priorities\nAll sixteen BACnet command priorities are supported. \n\n### Command vs Relinquish\nThe `operation` body parameter accepts two values: `command` or `relinquish`\n\n#### Command a New Value\nTo command a data point to a new value, set `operation` to `command` in the request body and include the desired priority and new value. The new value will be added to the command priority array at the requested priority and any previous value at the same priority is overwritten. \n\n#### Relinqush a Set Value\nTo relinquish a command priority, set `operation` to `relinquish` in the request body and include the desired priority. The requested priority will be set to _null_ in the command priority array.",
         "security": [
           {
             "Bearer Token": []
@@ -491,41 +491,33 @@
       "Command-Point-Request-Body": {
         "description": "",
         "type": "object",
+        "title": "Command Point Request Body",
         "properties": {
           "operation": {
             "type": "string",
-            "minLength": 1
+            "minLength": 1,
+            "description": "The desired operation, either command or relinquish",
+            "enum": [
+              "command",
+              "relinquish"
+            ]
           },
           "value": {
             "type": "number"
           },
           "priority": {
-            "type": "number"
+            "type": "number",
+            "description": "The target command priority",
+            "format": "double",
+            "example": 8,
+            "minimum": 1,
+            "maximum": 16
           }
         },
         "required": [
           "operation",
           "priority"
-        ],
-        "title": "Command Point Request Body"
-      },
-      "Relinquish-Point-Request-Body": {
-        "description": "",
-        "type": "object",
-        "properties": {
-          "operation": {
-            "type": "string",
-            "minLength": 1
-          },
-          "priority": {
-            "type": "number"
-          }
-        },
-        "required": [
-          "operation",
-          "priority"
-        ],
-        "title": "Relinquish Point Request Body"
+        ]
       }
     },
     "parameters": {
