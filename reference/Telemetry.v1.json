@@ -64,15 +64,50 @@
         "tags": [
           "Points"
         ],
-        "responses": {},
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Point-Details"
+                },
+                "examples": {
+                  "Analog Input": {
+                    "$ref": "#/components/examples/Get-Analog-Input-Point"
+                  },
+                  "Analog Input Online": {
+                    "$ref": "#/components/examples/Get-Analog-Input-Point-Online"
+                  },
+                  "Binary Output Online": {
+                    "$ref": "#/components/examples/Get-Binary-Output-Point-Online"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/404-Point-Not-Found"
+          }
+        },
         "operationId": "get-point",
-        "parameters": [],
+        "parameters": [
+          {
+            "schema": {
+              "type": "boolean",
+              "default": "false"
+            },
+            "in": "query",
+            "name": "online",
+            "description": "Fetch the latest BACnet data for the point"
+          }
+        ],
         "security": [
           {
             "Bearer Token": []
           }
         ],
-        "description": ""
+        "description": "### Synopsis\nRetrieve a point\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`telemetry:*`,`telemetry:datapoint:*`,`telemetry:datapoint:read`\n* A registered gateway connected to the Internet\n* A connected BACnet field controller (if `online` is true)\n* One or more commandable BACnet data points\n\n### Online BACnet Data\nEach BACnet object type will return a variable BACnet response body depending on the parameters present and supported by the target field controller. \n\nSeveral response examples are provided to illustrate the variety of paremeters available."
       },
       "delete": {
         "summary": "Delete Point",
@@ -97,10 +132,25 @@
         "operationId": "update-point",
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Point-Details"
+                },
+                "examples": {
+                  "Response": {
+                    "$ref": "#/components/examples/Get-Analog-Input-Point"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/404-Point-Not-Found"
           }
         },
-        "description": "",
+        "description": "### Synopsis\nUpdate a point\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`telemetry:*`,`telemetry:datapoint:*`,`telemetry:datapoint:update`\n* One or more BACnet data points\n\n<!-- theme: warning -->\n\n> _This endpoint will only update the Counterbalance definition of a defined point. This will not update the BACnet definition on the device. Future endpoints are planned to permit online BACnet updates._",
         "security": [
           {
             "Bearer Token": []
@@ -108,6 +158,58 @@
         ],
         "tags": [
           "Points"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "The name of the point"
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "A brief description of the point"
+                  },
+                  "resolution": {
+                    "type": "string",
+                    "description": "The display and collection resolution for analog points (decimal places)"
+                  },
+                  "site": {
+                    "type": "string",
+                    "format": "uuid",
+                    "description": "A valid site UUID to assign the point to"
+                  },
+                  "instance_id": {
+                    "type": "number",
+                    "description": "The BACnet object instance ID"
+                  }
+                }
+              },
+              "examples": {
+                "Example": {
+                  "value": {
+                    "name": "SEA.RMT",
+                    "description": "ROOM TEMP",
+                    "site": "82478e3a-a212-41bf-9e2b-7522a1504a6b"
+                  }
+                }
+              }
+            }
+          },
+          "description": ""
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "Content-Type",
+            "description": "application/json"
+          }
         ]
       }
     },
@@ -518,6 +620,247 @@
           "operation",
           "priority"
         ]
+      },
+      "Point-Details": {
+        "description": "",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "controller": {
+            "type": "string",
+            "minLength": 1
+          },
+          "created": {
+            "type": "number"
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "description": {
+            "type": "string",
+            "minLength": 1
+          },
+          "instance_id": {
+            "type": "number"
+          },
+          "object_type": {
+            "type": "number"
+          },
+          "site": {
+            "type": "string",
+            "minLength": 1
+          },
+          "is_online": {
+            "type": "boolean"
+          },
+          "bacnet": {
+            "type": "object",
+            "properties": {
+              "object": {
+                "type": "object",
+                "properties": {
+                  "instance": {
+                    "type": "number"
+                  },
+                  "type": {
+                    "type": "number"
+                  },
+                  "name": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "description": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "instance",
+                  "type",
+                  "name",
+                  "description"
+                ]
+              },
+              "telemetry": {
+                "type": "object",
+                "properties": {
+                  "present_value": {
+                    "type": "number"
+                  },
+                  "reliability": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "device_type": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "event_state": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "state_text": {
+                    "type": "array",
+                    "items": {
+                      "required": [],
+                      "properties": {}
+                    }
+                  },
+                  "polarity": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "feedback_value": {
+                    "type": "number"
+                  },
+                  "relinquish_default": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "present_value",
+                  "reliability",
+                  "device_type",
+                  "event_state",
+                  "state_text",
+                  "polarity",
+                  "feedback_value",
+                  "relinquish_default"
+                ]
+              },
+              "status": {
+                "type": "object",
+                "properties": {
+                  "in_alarm": {
+                    "type": "boolean"
+                  },
+                  "fault": {
+                    "type": "boolean"
+                  },
+                  "out_of_service": {
+                    "type": "boolean"
+                  },
+                  "overridden": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "in_alarm",
+                  "fault",
+                  "out_of_service",
+                  "overridden"
+                ]
+              },
+              "priority_array": {
+                "type": "array",
+                "items": {
+                  "required": [],
+                  "properties": {}
+                }
+              },
+              "alarming": {
+                "type": "object",
+                "properties": {
+                  "enabled": {
+                    "type": "boolean"
+                  },
+                  "acked_transitions": {
+                    "type": "object",
+                    "properties": {
+                      "to_normal": {
+                        "type": "boolean"
+                      },
+                      "to_offnormal": {
+                        "type": "boolean"
+                      },
+                      "to_fault": {
+                        "type": "boolean"
+                      }
+                    },
+                    "required": [
+                      "to_normal",
+                      "to_offnormal",
+                      "to_fault"
+                    ]
+                  },
+                  "notify": {
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "notification_class": {
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "type",
+                      "notification_class"
+                    ]
+                  },
+                  "time_delay": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "enabled",
+                  "acked_transitions",
+                  "notify",
+                  "time_delay"
+                ]
+              },
+              "totalization": {
+                "type": "object",
+                "properties": {
+                  "enabled": {
+                    "type": "boolean"
+                  },
+                  "elapsed_active_time": {
+                    "type": "number"
+                  },
+                  "last_reset": {
+                    "type": "number"
+                  },
+                  "ealpsed_inactive_time": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "enabled",
+                  "elapsed_active_time",
+                  "last_reset",
+                  "ealpsed_inactive_time"
+                ]
+              }
+            },
+            "required": [
+              "object",
+              "telemetry",
+              "status",
+              "priority_array",
+              "alarming",
+              "totalization"
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "controller",
+          "created",
+          "name",
+          "description",
+          "instance_id",
+          "object_type",
+          "site",
+          "is_online",
+          "bacnet"
+        ],
+        "title": "Point Details"
       }
     },
     "parameters": {
@@ -736,6 +1079,163 @@
           "operation": "command",
           "value": 1,
           "priority": 8
+        }
+      },
+      "Get-Analog-Input-Point-Online": {
+        "value": {
+          "id": "168a3e32-996f-410a-a06c-c4cdc10fa362",
+          "controller": "4f668b28-c30d-4fc1-b751-7cc30dcc4964",
+          "created": 1613745301,
+          "name": "SEA.HWS.T",
+          "description": "HW SUPPLY TEMP",
+          "instance_id": 5,
+          "object_type": 0,
+          "site": "82478e3a-a212-41bf-9e2b-7522a1504a6b",
+          "is_online": true,
+          "bacnet": {
+            "object": {
+              "instance": 5,
+              "type": 0,
+              "name": "SEA.HWS.T",
+              "description": "HW SUPPLY TEMP"
+            },
+            "telemetry": {
+              "present_value": 109.2,
+              "reliability": "no fault detected",
+              "device_type": "10k Thermister",
+              "event_state": "normal",
+              "units": {
+                "raw": "degrees fahrenheit",
+                "formatted": "DEG F"
+              }
+            },
+            "status": {
+              "in_alarm": false,
+              "fault": false,
+              "out_of_service": false,
+              "overridden": false
+            },
+            "alarming": {
+              "enabled": true,
+              "acked_transitions": {
+                "to_normal": true,
+                "to_offnormal": true,
+                "to_fault": true
+              },
+              "notify": {
+                "type": "alarm",
+                "notification_class": 0
+              },
+              "time_delay": 30,
+              "limits": {
+                "high": 160,
+                "low": 45
+              },
+              "deadband": 1,
+              "event_timestamps": {
+                "to_off_normal": 5838048000,
+                "to_normal": 5838048000,
+                "to_fault": 5838048000
+              }
+            },
+            "totalization": {
+              "enabled": true,
+              "elapsed_active_time": 0,
+              "last_reset": 0,
+              "ealpsed_inactive_time": 0
+            }
+          }
+        }
+      },
+      "Get-Binary-Output-Point-Online": {
+        "value": {
+          "id": "f0b51e0d-1b3d-464e-9e6d-fef693f412b7",
+          "controller": "4f668b28-c30d-4fc1-b751-7cc30dcc4964",
+          "created": 1614441878,
+          "name": "SEA.SRV.ALARM",
+          "description": "SRV ALARM LIGHT",
+          "instance_id": 5,
+          "object_type": 4,
+          "site": "82478e3a-a212-41bf-9e2b-7522a1504a6b",
+          "is_online": true,
+          "bacnet": {
+            "object": {
+              "instance": 5,
+              "type": 4,
+              "name": "SEA.SRV.ALARM",
+              "description": "SRV ALARM LIGHT"
+            },
+            "telemetry": {
+              "present_value": 0,
+              "reliability": "no fault detected",
+              "device_type": "LDO",
+              "event_state": "normal",
+              "state_text": [
+                "NORMAL",
+                "ALARM"
+              ],
+              "polarity": "normal",
+              "feedback_value": 0,
+              "relinquish_default": 0
+            },
+            "status": {
+              "in_alarm": false,
+              "fault": false,
+              "out_of_service": false,
+              "overridden": false
+            },
+            "priority_array": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "alarming": {
+              "enabled": true,
+              "acked_transitions": {
+                "to_normal": true,
+                "to_offnormal": true,
+                "to_fault": true
+              },
+              "notify": {
+                "type": "alarm",
+                "notification_class": 0
+              },
+              "time_delay": 0
+            },
+            "totalization": {
+              "enabled": true,
+              "elapsed_active_time": 0,
+              "last_reset": 0,
+              "ealpsed_inactive_time": 0
+            }
+          }
+        }
+      },
+      "Get-Analog-Input-Point": {
+        "value": {
+          "id": "2044bcaf-4c60-4901-8f8c-350f17172263",
+          "controller": "4f668b28-c30d-4fc1-b751-7cc30dcc4964",
+          "created": 1613745308,
+          "name": "SEA.RMT",
+          "description": "ROOM TEMP",
+          "instance_id": 0,
+          "object_type": 0,
+          "site": "82478e3a-a212-41bf-9e2b-7522a1504a6b",
+          "is_online": true,
+          "bacnet": null
         }
       }
     }
