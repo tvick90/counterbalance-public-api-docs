@@ -1,7 +1,12 @@
 {
+  "x-stoplight": {
+    "docs": {
+      "showModels": false
+    }
+  },
   "openapi": "3.0.0",
   "info": {
-    "title": "Telemetry",
+    "title": "Telemetry & Data Collection",
     "version": "1.1.0",
     "description": "Telemetry and logging allows the collection of data from gateways and on-site systems"
   },
@@ -33,7 +38,7 @@
           }
         },
         "operationId": "get-point-list",
-        "description": "### Synopsis\nList points\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`telemetry:*`,`telemetry:datapoint:*`,`telemetry:datapoint:list`\n* One or more BACnet data points",
+        "description": "### Synopsis\nRetrieve a list of points. Optionally filter the list by controller and/or site.\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`telemetry:*`,`telemetry:datapoint:*`,`telemetry:datapoint:list`\n* One or more BACnet data points",
         "tags": [
           "Points"
         ],
@@ -147,7 +152,17 @@
               }
             }
           }
-        }
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "Content-Type",
+            "description": "application/json"
+          }
+        ]
       },
       "parameters": []
     },
