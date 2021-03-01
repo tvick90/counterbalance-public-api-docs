@@ -1070,6 +1070,14 @@
           "format": "uuid"
         },
         "description": "A valid collector UUID"
+      },
+      "authorization": {
+        "name": "authorization",
+        "in": "header",
+        "required": false,
+        "schema": {
+          "type": "string"
+        }
       }
     },
     "securitySchemes": {
@@ -1460,13 +1468,10 @@
   },
   "tags": [
     {
-      "name": "Loggers"
+      "name": "Collectors"
     },
     {
       "name": "Points"
-    },
-    {
-      "name": "Collectors"
     }
   ]
 }
