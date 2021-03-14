@@ -415,7 +415,7 @@
           }
         },
         "operationId": "get-collector-samples",
-        "description": "### Synopsis\nRetrieve data samples for the specified collector. \n\n### Prerequsites\n\n### Adjusting the Sample Window\nBy default, with no query parameters specified, sample data for the last 12 hours is returned. \n\nThis sample window can be adjusted using query parameters in two ways.\n\n#### Sample a Fixed Date Range\nThis is how you do it\n\n#### Sample a Relative Date Range\nA relative range can be sampled using a `start` date and a `duration` in seconds. ",
+        "description": "### Synopsis\nRetrieve data samples for the specified collector \n\n### Prerequsites\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`telemetry:*`,`telemetry:collector:*`,`telemetry:collector:`\n* One or more BACnet data points\n\n### Adjusting the Sample Window\nBy default, if no query parameters are specified, the last 12 hours of sample data is returned. \n\nThe starting point and ending point of the sample window can be adjust with query parameters in two ways. \n\n#### Using a Fixed Date Range\nTo retrieve sample data for a fixed period of time between two dates, pass both the `start` and `end` parameters as the unix timestamps for the desired dates.\n\nFor example, for sample data between 8AM on March 1st, 2021 to 8PM on March 5th, 2021, convert these dates and times to their corresponding UNIX timestamps and pass them in the corresponding parameter.\n\n```\nHTTP/1.1 https://api.counterbalance.io/.../sample?start=1614700800&end=1615005120\n```\n\n#### Using a Relative Date Range\nTo retrieve sample data for a relative period of time _(last 7 days, last 2 hours, etc)_, the `duration` parameter is used to dynamically set a window start or end point.\n\nWhen `duration` is passed, the `start` and `end` parameters become mutually exclusive. The relative range can only be set by specifying one or the other (or neither).\n\nThe `end` paramater is optional. The current date and time will be used if no end is explicitly set.\n\nFor example, for sample data for the 24 hours ending at 8AM on March 1st, 2021, convert the end date and time to a UNIX timestamp and specify the desired duration.\n\n```\nHTTP/1.1 https://api.counterbalance.io/.../sample?start=1614700800\n```\n\n#### Using Start Only\nTo retrieve sample data for a relative period of time _(last 7 days, last 2 hours, etc)_, the `duration` parameter is used to dynamically set a window start or end point.\n\nWhen `duration` is passwed, the `start` and `end` parameters become mutually exclusive and the relative range can only be set by specifying one or the other (or neither).\n\nThe `end` paramater is optional. The current date and time will be used if no end is explicitly set.\n\nFor example, for sample data for the 24 hours ending at 8AM on March 1st, 2021, convert the end date and time to a UNIX timestamp and specify the desired duration.\n\n```\nHTTP/1.1 https://api.counterbalance.io/.../sample?start=1614700800\n```\n<!-- type: tab-end -->\n\n#### Sample a Fixed Date Range\nTo retrieve sample data for a fixed period of time, specify both the `start` and `end` parameters to the unix timestamps for the desired dates.\n\nFor example, for sample data between 8AM on March 1st, 2021 to 8PM on March 5th, 2021, convert these dates and times to their corresponding UNIX timestamps and pass them in the appropriate parameter.\n\n\n\n#### Sample a Relative Date Range\nA relative range can be sampled using a `start` date and a `duration` in seconds. ",
         "parameters": [
           {
             "schema": {
@@ -423,15 +423,16 @@
             },
             "in": "query",
             "name": "start",
-            "description": "Timestamp for the upper end of the sample response"
+            "description": "Specify the timestamp for the historic point in time where a sample window begins (left side of the X-axis)"
           },
           {
             "schema": {
-              "type": "number"
+              "type": "number",
+              "default": "now"
             },
             "in": "query",
             "name": "end",
-            "description": "Timestamp for the lower end of the sample response"
+            "description": "Specify the timestamp where a sample window ends (right side of the X-axis)"
           },
           {
             "schema": {
@@ -439,7 +440,7 @@
             },
             "in": "query",
             "name": "duration",
-            "description": "The length of the sample (in seconds)"
+            "description": "The length of a relative sample window in seconds"
           }
         ],
         "security": [
