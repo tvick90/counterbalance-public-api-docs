@@ -41,7 +41,7 @@
                       "uniqueItems": true,
                       "description": "An array of site objects",
                       "items": {
-                        "$ref": "#/components/schemas/Site-Object-Generic"
+                        "$ref": "#/components/schemas/Site-Object"
                       }
                     }
                   },
@@ -52,27 +52,7 @@
                 },
                 "examples": {
                   "Response": {
-                    "value": {
-                      "count": 2,
-                      "data": [
-                        {
-                          "id": "799ef189-c32b-48b4-9eb8-4787ebe37f2a",
-                          "type": "physical",
-                          "code": "USSEA",
-                          "name": "Seattle, WA HQ",
-                          "description": "Seattle, WA Headquarters",
-                          "address": "f88879fa-eb4e-4ac2-9dad-d3650919fdef"
-                        },
-                        {
-                          "id": "f11a1a42-75ba-4cab-a053-4fab48933a4f",
-                          "type": "physical",
-                          "code": "USMSP",
-                          "name": "Minneapolis, MN",
-                          "description": "Minneapolis, MN Regional Office",
-                          "address": "8ac7d5dc-803d-40ac-bc37-16c0dbffe5d8"
-                        }
-                      ]
-                    }
+                    "$ref": "#/components/examples/Get-Site-List-Response"
                   }
                 }
               }
@@ -85,20 +65,8 @@
             "Bearer Token": []
           }
         ],
-        "description": "### Synopsis\nRetrieve a list of sites available to the authenticated user\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:site:*`,`sites:site:list`\n* Licensed Feature: `sites_base`\n\n### Variations\nA combination of one or more query parameters may be used to vary the returned data according to a particular need. Query parameters are stacked such that using multiple parameters will result in a narrower data set.\n\nFor example, perhaps you organize sites with a pre-defined coding system that includes the state abbreviation in the assigned site codes. You can then return only sites in MN by using a wildcard search with the `code` query param.\n\n<!--\ntitle: \"Site Code Wildcard Search\"\nlineNumbers: false\n-->\n```text\nhttps://api.counterbalance.io/v1/site?code=*MN*\n```\n\nThe listing can also filtered by site type by specifying the `type` parameter and setting it to either `physical` or `virtual`.\n\n<!--\ntitle: \"Physical Sites Only\"\nlineNumbers: false\n-->\n```text\nhttps://api.counterbalance.io/v1/site?type=physical\n```",
+        "description": "### Synopsis\nRetrieve a list of sites available to the authenticated user\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:site:*`,`sites:site:list`\n* Licensed Feature: `sites_base`\n\n### Filtering Results\nA combination of one or more query parameters may be used to filter returned data. Query parameters are stacked such that using multiple parameters will result in a narrower data set.\n\nWildcard searches are permitted on all query parameters. Wildcard searches are case insensitive and all data is forced to lowercase for matching purposes. See usage examples below.\n\n<!--\ntitle: \"Site Code Wildcard Search\"\nlineNumbers: false\n-->\n```text\nhttps://api.counterbalance.io/v1/site?code=*MN*\n```\n<!--\ntitle: \"Site Name Wildcard Search\"\nlineNumbers: false\n-->\n```text\nhttps://api.counterbalance.io/v1/site?name=*elementary*\n```",
         "parameters": [
-          {
-            "schema": {
-              "type": "string",
-              "enum": [
-                "physical",
-                "virtual"
-              ]
-            },
-            "in": "query",
-            "name": "type",
-            "description": "Return only sites of the specified type"
-          },
           {
             "schema": {
               "type": "string"
@@ -134,19 +102,11 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Site-Object-Complete"
+                  "$ref": "#/components/schemas/Site-Object"
                 },
                 "examples": {
                   "Response": {
-                    "value": {
-                      "id": "799ef189-c32b-48b4-9eb8-4787ebe37f2a",
-                      "code": "",
-                      "name": "Seattle Office",
-                      "description": "",
-                      "type": "physical",
-                      "address": null,
-                      "contacts": null
-                    }
+                    "$ref": "#/components/examples/Get-Site-Object-Response"
                   }
                 }
               }
@@ -170,15 +130,6 @@
                     "maxLength": 120,
                     "description": "The name of the new site"
                   },
-                  "type": {
-                    "type": "string",
-                    "enum": [
-                      "campus",
-                      "building"
-                    ],
-                    "default": "physical",
-                    "description": "The type of site to create"
-                  },
                   "code": {
                     "type": "string",
                     "maxLength": 32,
@@ -188,19 +139,18 @@
                     "type": "string",
                     "maxLength": 300,
                     "description": "A description of the site"
+                  },
+                  "year_built": {
+                    "type": "string"
                   }
                 },
                 "required": [
-                  "name",
-                  "type"
+                  "name"
                 ]
               },
               "examples": {
                 "Example": {
-                  "value": {
-                    "name": "Seattle Office",
-                    "type": "building"
-                  }
+                  "$ref": "#/components/examples/Post-Create-Site-Body"
                 }
               }
             },
@@ -231,14 +181,7 @@
     "/v1/site/{siteId}": {
       "parameters": [
         {
-          "schema": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "name": "siteId",
-          "in": "path",
-          "required": true,
-          "description": "A valid site UUID"
+          "$ref": "#/components/parameters/siteId"
         }
       ],
       "get": {
@@ -252,41 +195,11 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Site-Object-Complete"
+                  "$ref": "#/components/schemas/Site-Object"
                 },
                 "examples": {
                   "Response": {
-                    "value": {
-                      "id": "799ef189-c32b-48b4-9eb8-4787ebe37f2a",
-                      "code": "USSEA",
-                      "name": "Seattle, WA HQ",
-                      "description": "Seattle, WA Headquarters",
-                      "type": "physical",
-                      "address": {
-                        "id": "f88879fa-eb4e-4ac2-9dad-d3650919fdef",
-                        "lines": [
-                          "400 Broad Street"
-                        ],
-                        "locality": "",
-                        "city": "Seattle",
-                        "county": "King",
-                        "state": "WA",
-                        "postcode": 98109,
-                        "country": "",
-                        "formatted": "400 Broad Street, Seattle, WA 98119",
-                        "geolocation": {
-                          "latitude": 47.6205,
-                          "longitude": -122.34927
-                        },
-                        "timezone": "America/Los_Angeles",
-                        "offset": -8,
-                        "designations": {
-                          "primary_mailing": false,
-                          "primary_billing": false
-                        }
-                      },
-                      "contacts": null
-                    }
+                    "$ref": "#/components/examples/Get-Site-Object-Response"
                   }
                 }
               }
@@ -377,6 +290,9 @@
                     "type": "string",
                     "description": "The description of the site",
                     "maxLength": 300
+                  },
+                  "year_built": {
+                    "type": "string"
                   }
                 }
               },
@@ -432,7 +348,7 @@
             }
           }
         },
-        "description": "### Synopsis\nDelete the specified site\n\n<!-- theme: danger -->\n> _**Heads Up** This cannot be undone!_\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:site:*`,`sites:site:delete`\n* Specified site must be void of any associated objects",
+        "description": "### Synopsis\nDelete the specified site\n\n<!-- theme: danger -->\n> _**Heads Up** This cannot be undone!_\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:site:*`,`sites:site:delete`\n* Specified site must be void of any associated objects (floors, rooms, equipment, etc)",
         "security": [
           {
             "Bearer Token": []
@@ -2380,49 +2296,141 @@
           }
         ]
       }
+    },
+    "/v1/floor": {
+      "get": {
+        "summary": "List Floors",
+        "tags": [
+          "Floors"
+        ],
+        "responses": {},
+        "operationId": "list-floors",
+        "description": "### Synopsis\nRetrieve a list of sites available to the authenticated user\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:site:*`,`sites:site:list`\n* Licensed Feature: `sites_base`"
+      },
+      "post": {
+        "summary": "Create Floor",
+        "operationId": "post-v1-floor",
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        },
+        "description": "",
+        "tags": [
+          "Floors"
+        ]
+      }
+    },
+    "/v1/floor/{floorId}": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/floorId"
+        }
+      ],
+      "get": {
+        "summary": "Get Floor",
+        "tags": [
+          "Floors"
+        ],
+        "responses": {},
+        "operationId": "get-v1-floor-floorId",
+        "description": ""
+      },
+      "patch": {
+        "summary": "Update Floor",
+        "operationId": "update-floor",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "description": "",
+        "tags": [
+          "Floors"
+        ]
+      },
+      "delete": {
+        "summary": "Delete Floor",
+        "operationId": "delete-floor",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "description": "",
+        "tags": [
+          "Floors"
+        ]
+      }
     }
   },
   "components": {
     "schemas": {
-      "Site-Object-Complete": {
+      "Site-Object": {
         "description": "",
         "type": "object",
-        "title": "Typical Site Object",
-        "x-tags": [
-          "Object Models"
-        ],
         "properties": {
           "id": {
-            "type": "string"
+            "type": "string",
+            "minLength": 1
+          },
+          "created": {
+            "type": "string",
+            "minLength": 1
           },
           "code": {
-            "type": "string"
+            "type": "string",
+            "minLength": 1
           },
           "name": {
             "type": "string",
-            "minLength": 1,
-            "maxLength": 96
+            "minLength": 1
           },
           "description": {
-            "type": "string",
-            "maxLength": 120
-          },
-          "type": {
             "type": "string",
             "minLength": 1
           },
           "address": {
-            "$ref": "#/components/schemas/Address-Object"
+            "type": "string",
+            "minLength": 1
           },
-          "contacts": {}
+          "attributes": {
+            "type": "object",
+            "properties": {
+              "year_built": {
+                "type": "string",
+                "minLength": 1
+              },
+              "floor_count": {
+                "type": "number"
+              },
+              "room_count": {
+                "type": "number"
+              },
+              "gross_floor_area": {
+                "type": "number"
+              },
+              "net_room_area": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "year_built",
+              "floor_count",
+              "room_count",
+              "gross_floor_area",
+              "net_room_area"
+            ]
+          }
         },
         "required": [
           "id",
+          "created",
           "code",
           "name",
           "description",
-          "type",
-          "address"
+          "address",
+          "attributes"
         ]
       },
       "Site-Object-Generic": {
@@ -4004,6 +4012,142 @@
         "type": "http",
         "scheme": "bearer",
         "description": ""
+      }
+    },
+    "parameters": {
+      "siteId": {
+        "name": "siteId",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "description": "A valid site UUID"
+      },
+      "addressId": {
+        "name": "addressId",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "description": "A valid address UUID"
+      },
+      "floorId": {
+        "name": "floorId",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "description": "A valid floor UUID"
+      },
+      "roomId": {
+        "name": "roomId",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "description": "A valid room UUID"
+      }
+    },
+    "examples": {
+      "Get-Site-List-Response": {
+        "value": {
+          "count": 4,
+          "data": [
+            {
+              "id": "0fa60c71-a611-418a-93a0-0bdf2dfa5ac3",
+              "created": "2021-02-05T03:13:05+0000",
+              "code": "MSP",
+              "name": "Minneapolis Office",
+              "description": "",
+              "address": "1fb555c1-c683-4254-820b-f6e7a7add74c",
+              "attributes": {
+                "year_built": "1927",
+                "floor_count": 1,
+                "room_count": 8,
+                "gross_floor_area": 18000,
+                "net_room_area": 17850
+              }
+            },
+            {
+              "id": "723a9c16-1790-4386-b17b-54bc9ed6d901",
+              "created": "2021-02-05T15:11:48+0000",
+              "code": "SFO",
+              "name": "San Francisco Office",
+              "description": "",
+              "address": "6517a08a-ab53-4c23-b4c1-d685d8e25a1c",
+              "attributes": {
+                "year_built": "2005",
+                "floor_count": 0,
+                "room_count": 0,
+                "gross_floor_area": 0,
+                "net_room_area": 0
+              }
+            },
+            {
+              "id": "82478e3a-a212-41bf-9e2b-7522a1504a6b",
+              "created": "2021-02-05T03:00:27+0000",
+              "code": "SEA",
+              "name": "Seattle Office",
+              "description": "",
+              "address": "032183ea-087d-43a6-94e8-5688ef909771",
+              "attributes": {
+                "year_built": "1945",
+                "floor_count": 27,
+                "room_count": 241,
+                "gross_floor_area": 570000,
+                "net_room_area": 570000
+              }
+            },
+            {
+              "id": "c1b5593a-6f59-46fa-ae38-15e4c4262ffa",
+              "created": "2021-02-06T05:51:29+0000",
+              "code": "AUS",
+              "name": "Austin Office",
+              "description": "",
+              "address": "8aac0478-7b6f-448f-952b-dd710a94ee7a",
+              "attributes": {
+                "year_built": "1997",
+                "floor_count": 2,
+                "room_count": 36,
+                "gross_floor_area": 18560,
+                "net_room_area": 18000
+              }
+            }
+          ]
+        }
+      },
+      "Post-Create-Site-Body": {
+        "value": {
+          "name": "Minneapolis Office",
+          "year_built": "1927",
+          "description": "Minneapolis branch office"
+        }
+      },
+      "Get-Site-Object-Response": {
+        "value": {
+          "id": "0fa60c71-a611-418a-93a0-0bdf2dfa5ac3",
+          "created": "2021-02-05T03:13:05+0000",
+          "code": "MSP",
+          "name": "Minneapolis Office",
+          "description": "",
+          "address": "1fb555c1-c683-4254-820b-f6e7a7add74c",
+          "contacts": null,
+          "attributes": {
+            "year_built": "",
+            "floor_count": 0,
+            "room_count": 0,
+            "gross_floor_area": 0,
+            "net_room_area": 0
+          }
+        }
       }
     }
   },
