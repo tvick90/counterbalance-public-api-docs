@@ -1990,7 +1990,12 @@
           }
         },
         "operationId": "list-rooms",
-        "description": ""
+        "description": "",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ]
       },
       "post": {
         "summary": "Create Room",
@@ -2003,6 +2008,12 @@
         "description": "",
         "tags": [
           "Rooms"
+        ],
+        "parameters": [],
+        "security": [
+          {
+            "Bearer Token": []
+          }
         ]
       }
     },
@@ -2051,13 +2062,18 @@
         "summary": "Delete Room",
         "operationId": "delete-room",
         "responses": {
-          "200": {
-            "description": "OK"
+          "204": {
+            "description": "No Content"
           }
         },
         "description": "",
         "tags": [
           "Rooms"
+        ],
+        "security": [
+          {
+            "Bearer Token": []
+          }
         ]
       }
     }
