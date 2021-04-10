@@ -204,6 +204,9 @@
                 }
               }
             }
+          },
+          "404": {
+            "$ref": "#/components/responses/404-Site-Not-Found"
           }
         },
         "operationId": "get-site",
@@ -262,6 +265,9 @@
                 }
               }
             }
+          },
+          "404": {
+            "$ref": "#/components/responses/404-Site-Not-Found"
           }
         },
         "description": "### Synopsis\nUpdate the details for the specified site\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:site:*`,`sites:site:update`\n* Licensed Feature: `sites_base` and/or `sites_virtual`",
@@ -325,27 +331,8 @@
               }
             }
           },
-          "409": {
-            "description": "Conflict",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "../models/Error-Response.v1.yaml"
-                },
-                "examples": {
-                  "Site Not Empty": {
-                    "value": {
-                      "error": {
-                        "message": "Site is not empty",
-                        "console": "Remove 2 building(s) before deleting this site",
-                        "code": 409
-                      },
-                      "logging_hash": null
-                    }
-                  }
-                }
-              }
-            }
+          "400": {
+            "$ref": "#/components/responses/400-Site-Not-Empty"
           }
         },
         "description": "### Synopsis\nDelete the specified site\n\n<!-- theme: danger -->\n> _**Heads Up** This cannot be undone!_\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:site:*`,`sites:site:delete`\n* Specified site must be void of any associated objects (floors, rooms, equipment, etc)",
@@ -1937,7 +1924,14 @@
         "tags": [
           "Floors"
         ],
-        "responses": {},
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "$ref": "#/components/responses/404-Floor-Not-Found"
+          }
+        },
         "operationId": "get-floor",
         "description": "",
         "security": [
@@ -1952,6 +1946,9 @@
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "404": {
+            "$ref": "#/components/responses/404-Floor-Not-Found"
           }
         },
         "description": "",
@@ -1970,6 +1967,12 @@
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "400": {
+            "$ref": "#/components/responses/400-Floor-Not-Empty"
+          },
+          "404": {
+            "$ref": "#/components/responses/404-Floor-Not-Found"
           }
         },
         "description": "",
@@ -2000,11 +2003,6 @@
       "post": {
         "summary": "Create Room",
         "operationId": "create-room",
-        "responses": {
-          "201": {
-            "description": "Created"
-          }
-        },
         "description": "",
         "tags": [
           "Rooms"
@@ -2031,6 +2029,9 @@
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "404": {
+            "$ref": "#/components/responses/404-Room-Not-Found"
           }
         },
         "operationId": "get-room",
@@ -2047,6 +2048,9 @@
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "404": {
+            "$ref": "#/components/responses/404-Room-Not-Found"
           }
         },
         "security": [
@@ -2064,6 +2068,9 @@
         "responses": {
           "204": {
             "description": "No Content"
+          },
+          "404": {
+            "$ref": "#/components/responses/404-Room-Not-Found"
           }
         },
         "description": "",
@@ -3929,6 +3936,118 @@
           "required": [
             "id"
           ]
+        }
+      }
+    },
+    "responses": {
+      "404-Site-Not-Found": {
+        "description": "Not Found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../models/Error-Response.v1.yaml"
+            },
+            "examples": {
+              "Response": {
+                "value": {
+                  "error": {
+                    "message": "Site not found",
+                    "console": "The site ID ... could not be found in the database",
+                    "code": 404
+                  },
+                  "logging_hash": "..."
+                }
+              }
+            }
+          }
+        }
+      },
+      "404-Floor-Not-Found": {
+        "description": "Not Found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../models/Error-Response.v1.yaml"
+            },
+            "examples": {
+              "Response": {
+                "value": {
+                  "error": {
+                    "message": "Floornot found",
+                    "console": "The floor ID ... could not be found in the database",
+                    "code": 404
+                  },
+                  "logging_hash": "..."
+                }
+              }
+            }
+          }
+        }
+      },
+      "404-Room-Not-Found": {
+        "description": "Not Found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../models/Error-Response.v1.yaml"
+            },
+            "examples": {
+              "Response": {
+                "value": {
+                  "error": {
+                    "message": "Room not found",
+                    "console": "The room ID ... could not be found in the database",
+                    "code": 404
+                  },
+                  "logging_hash": "..."
+                }
+              }
+            }
+          }
+        }
+      },
+      "400-Site-Not-Empty": {
+        "description": "Bad Request",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../models/Error-Response.v1.yaml"
+            },
+            "examples": {
+              "Response": {
+                "value": {
+                  "error": {
+                    "message": "Site is not empty",
+                    "console": "The site ID ... cannot be deleted while it contains floors. Delete the associated floorsand try again.",
+                    "code": 400
+                  },
+                  "logging_hash": "..."
+                }
+              }
+            }
+          }
+        }
+      },
+      "400-Floor-Not-Empty": {
+        "description": "Bad Request",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../models/Error-Response.v1.yaml"
+            },
+            "examples": {
+              "Response": {
+                "value": {
+                  "error": {
+                    "message": "Floor not empty",
+                    "console": "The floor ID ... cannot be deleted while it contains rooms. Delete the associated rooms and try again.",
+                    "code": 400
+                  },
+                  "logging_hash": "..."
+                }
+              }
+            }
+          }
         }
       }
     }
