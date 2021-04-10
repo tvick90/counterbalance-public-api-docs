@@ -1873,10 +1873,22 @@
         "operationId": "create-floor",
         "responses": {
           "201": {
-            "description": "Created"
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Floor-Object"
+                },
+                "examples": {
+                  "Response": {
+                    "$ref": "#/components/examples/Room-Object"
+                  }
+                }
+              }
+            }
           }
         },
-        "description": "### Synopsis\nCreate a new floor\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:floor:*`,`sites:floor:create`\n* Licensed Feature: `sites_base`",
+        "description": "### Synopsis\nCreate a new floor and assign it to a site\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:floor:*`,`sites:floor:create`\n* Licensed Feature: `sites_base`",
         "tags": [
           "Floors"
         ],
@@ -1884,7 +1896,51 @@
           {
             "Bearer Token": []
           }
-        ]
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "description": "",
+                "type": "object",
+                "properties": {
+                  "code": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "A unique code for the floor",
+                    "example": "Floor 1, Main Floor, Basement"
+                  },
+                  "description": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "gross_floor_area": {
+                    "type": "number"
+                  },
+                  "site": {
+                    "type": "string",
+                    "minLength": 1,
+                    "format": "uuid",
+                    "description": "Specify a valid site UUID that will contain this floor"
+                  },
+                  "below_grade": {
+                    "type": "boolean",
+                    "description": "Indicate if the floor is below grade. Default is `false`"
+                  }
+                },
+                "required": [
+                  "code",
+                  "site"
+                ]
+              },
+              "examples": {
+                "Example": {
+                  "$ref": "#/components/examples/Create-Floor-Body"
+                }
+              }
+            }
+          }
+        }
       },
       "parameters": []
     },
@@ -1916,7 +1972,7 @@
           }
         },
         "operationId": "get-floor",
-        "description": "",
+        "description": "### Synopsis\nRetrieve the details for the specified floor\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:floor:*`,`sites:floor:read`",
         "security": [
           {
             "Bearer Token": []
