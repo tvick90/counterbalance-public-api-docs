@@ -1977,6 +1977,89 @@
           "Floors"
         ]
       }
+    },
+    "/v1/site/room": {
+      "get": {
+        "summary": "List Rooms",
+        "tags": [
+          "Rooms"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "operationId": "list-rooms",
+        "description": ""
+      },
+      "post": {
+        "summary": "Create Room",
+        "operationId": "create-room",
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        },
+        "description": "",
+        "tags": [
+          "Rooms"
+        ]
+      }
+    },
+    "/v1/site/room/{roomId}": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/roomId"
+        }
+      ],
+      "get": {
+        "summary": "Get Room",
+        "tags": [
+          "Rooms"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "operationId": "get-room",
+        "description": "",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ]
+      },
+      "patch": {
+        "summary": "Update Room",
+        "operationId": "update-room",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ],
+        "tags": [
+          "Rooms"
+        ]
+      },
+      "delete": {
+        "summary": "Delete Room",
+        "operationId": "delete-room",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "description": "",
+        "tags": [
+          "Rooms"
+        ]
+      }
     }
   },
   "components": {
