@@ -1841,25 +1841,8 @@
                   }
                 },
                 "examples": {
-                  "example-1": {
-                    "value": {
-                      "count": 0,
-                      "data": [
-                        {
-                          "id": "string",
-                          "created": "string",
-                          "site": "string",
-                          "code": "string",
-                          "description": "string",
-                          "attributes": {
-                            "below_grade": true,
-                            "gross_floor_area": 0,
-                            "room_count": 0,
-                            "net_room_area": 0
-                          }
-                        }
-                      ]
-                    }
+                  "Response": {
+                    "$ref": "#/components/examples/Floor-Object-List"
                   }
                 }
               }
@@ -1867,7 +1850,7 @@
           }
         },
         "operationId": "list-floors",
-        "description": "### Synopsis\nRetrieve a list of sites available to the authenticated user\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:site:*`,`sites:site:list`\n* Licensed Feature: `sites_base`",
+        "description": "### Synopsis\nRetrieve a list of floors available to the authenticated user\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:floor:*`,`sites:floor:list`",
         "security": [
           {
             "Bearer Token": []
@@ -1881,7 +1864,7 @@
             },
             "in": "query",
             "name": "siteId",
-            "description": "A valid site UUID"
+            "description": "Filter floors by their assigned site UUID"
           }
         ]
       },
@@ -1893,7 +1876,7 @@
             "description": "Created"
           }
         },
-        "description": "",
+        "description": "### Synopsis\nCreate a new floor\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:floor:*`,`sites:floor:create`\n* Licensed Feature: `sites_base`",
         "tags": [
           "Floors"
         ],
