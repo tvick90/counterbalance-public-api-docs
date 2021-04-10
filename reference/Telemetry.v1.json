@@ -1,8 +1,13 @@
 {
+  "x-stoplight": {
+    "docs": {
+      "showModels": false
+    }
+  },
   "openapi": "3.0.0",
   "info": {
-    "title": "Telemetry",
-    "version": "1.1.1",
+    "title": "Telemetry & Data Collection",
+    "version": "1.1.0",
     "description": "Telemetry and logging allows the collection of data from gateways and on-site systems"
   },
   "servers": [
@@ -33,7 +38,7 @@
           }
         },
         "operationId": "get-point-list",
-        "description": "### Synopsis\nList points\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`telemetry:*`,`telemetry:datapoint:*`,`telemetry:datapoint:list`\n* One or more BACnet data points",
+        "description": "### Synopsis\nRetrieve a list of points. Optionally filter the list by controller and/or site.\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`telemetry:*`,`telemetry:datapoint:*`,`telemetry:datapoint:list`\n* One or more BACnet data points",
         "tags": [
           "Points"
         ],
@@ -68,7 +73,19 @@
         "operationId": "create-data-point",
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Point-Details"
+                },
+                "examples": {
+                  "Response": {
+                    "$ref": "#/components/examples/Get-Analog-Input-Point"
+                  }
+                }
+              }
+            }
           },
           "400": {
             "$ref": "#/components/responses/400-Invalid-Scope"
@@ -135,7 +152,17 @@
               }
             }
           }
-        }
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "Content-Type",
+            "description": "application/json"
+          }
+        ]
       },
       "parameters": []
     },
@@ -1044,6 +1071,14 @@
           "format": "uuid"
         },
         "description": "A valid collector UUID"
+      },
+      "authorization": {
+        "name": "authorization",
+        "in": "header",
+        "required": false,
+        "schema": {
+          "type": "string"
+        }
       }
     },
     "securitySchemes": {
@@ -1434,13 +1469,10 @@
   },
   "tags": [
     {
-      "name": "Loggers"
+      "name": "Collectors"
     },
     {
       "name": "Points"
-    },
-    {
-      "name": "Collectors"
     }
   ]
 }
