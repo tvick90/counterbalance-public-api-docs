@@ -3973,7 +3973,7 @@
               "Response": {
                 "value": {
                   "error": {
-                    "message": "Floornot found",
+                    "message": "Floor not found",
                     "console": "The floor ID ... could not be found in the database",
                     "code": 404
                   },
