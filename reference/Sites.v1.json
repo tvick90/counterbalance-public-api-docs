@@ -2213,7 +2213,7 @@
           }
         },
         "operationId": "get-room",
-        "description": "",
+        "description": "### Synopsis\nRetrieve the details for the specified room\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:room:*`,`sites:room:read`",
         "security": [
           {
             "Bearer Token": []
@@ -2539,7 +2539,7 @@
           "Object Models"
         ]
       },
-      "Forecast-Day-Details": {
+      "Daily-Forecast-Object": {
         "description": "",
         "type": "object",
         "properties": {
@@ -2998,7 +2998,7 @@
           "day",
           "night"
         ],
-        "title": "Forecast Day Details",
+        "title": "Daily Forecast",
         "x-examples": {
           "Example": {
             "date": 1606136400,
@@ -3119,50 +3119,6 @@
       "Weather-Forecast": {
         "description": "",
         "type": "object",
-        "properties": {
-          "effective_coordinates": {
-            "type": "object",
-            "required": [
-              "latitude",
-              "longitude"
-            ],
-            "properties": {
-              "latitude": {
-                "type": "string",
-                "minLength": 1
-              },
-              "longitude": {
-                "type": "string",
-                "minLength": 1
-              }
-            }
-          },
-          "units": {
-            "type": "string",
-            "minLength": 1
-          },
-          "summary": {
-            "type": "string",
-            "minLength": 1
-          },
-          "forecasts": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "": {
-                  "$ref": "#/components/schemas/Forecast-Day-Details"
-                }
-              }
-            }
-          }
-        },
-        "required": [
-          "effective_coordinates",
-          "units",
-          "summary",
-          "forecasts"
-        ],
         "x-examples": {
           "Example": {
             "effective_coordinates": {
@@ -3289,6 +3245,50 @@
         "title": "Weather Forecast",
         "x-tags": [
           "Object Models"
+        ],
+        "properties": {
+          "effective_coordinates": {
+            "type": "object",
+            "required": [
+              "latitude",
+              "longitude"
+            ],
+            "properties": {
+              "latitude": {
+                "type": "string",
+                "minLength": 1
+              },
+              "longitude": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "units": {
+            "type": "string",
+            "minLength": 1
+          },
+          "summary": {
+            "type": "string",
+            "minLength": 1
+          },
+          "forecasts": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "": {
+                  "$ref": "#/components/schemas/Daily-Forecast-Object"
+                }
+              }
+            }
+          }
+        },
+        "required": [
+          "effective_coordinates",
+          "units",
+          "summary",
+          "forecasts"
         ]
       },
       "Weather-Current-Conditions": {
