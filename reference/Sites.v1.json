@@ -2238,7 +2238,8 @@
         ],
         "tags": [
           "Rooms"
-        ]
+        ],
+        "description": "### Synopsis\nUpdate the details for the specified room\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:room:*`,`sites:room:update`"
       },
       "delete": {
         "summary": "Delete Room",
