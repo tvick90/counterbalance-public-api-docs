@@ -3999,6 +3999,7 @@
         "value": {
           "id": "0fa60c71-a611-418a-93a0-0bdf2dfa5ac3",
           "created": "2021-02-05T03:13:05+0000",
+          "last_modified": null,
           "code": "MSP",
           "name": "Minneapolis Office",
           "description": "",
@@ -4015,16 +4016,15 @@
       },
       "Floor-Object": {
         "value": {
-          "id": "d2fa3901-8649-46dc-bbfb-4864007895da",
-          "created": "2021-04-10T18:58:46+0000",
-          "site": "0fa60c71-a611-418a-93a0-0bdf2dfa5ac3",
-          "code": "Floor 1",
-          "description": "",
+          "id": "3540c510-24c8-43e6-b0fb-17f1447cdff9",
+          "created": "2021-04-10T19:19:46+0000",
+          "last_modified": null,
+          "number": "100",
+          "name": "Open Office",
+          "description": "Open office & collaboration area",
           "attributes": {
-            "below_grade": false,
-            "gross_floor_area": 18000,
-            "room_count": 0,
-            "net_room_area": 0
+            "occupancy": "B",
+            "area": 8900
           }
         }
       },
@@ -4071,6 +4071,7 @@
         "value": {
           "id": "3540c510-24c8-43e6-b0fb-17f1447cdff9",
           "created": "2021-04-10T19:19:46+0000",
+          "last_modified": null,
           "number": "100",
           "name": "Open Office",
           "description": "Open office & collaboration area",
