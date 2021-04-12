@@ -514,6 +514,9 @@
               }
             }
           },
+          "400": {
+            "$ref": "#/components/responses/400-Address-Already-Exists"
+          },
           "404": {
             "$ref": "#/components/responses/404-Site-Not-Found"
           }
@@ -4263,6 +4266,28 @@
                     "message": "Address not found",
                     "console": "The address ID ... could not be found in the database",
                     "code": 404
+                  },
+                  "logging_hash": "..."
+                }
+              }
+            }
+          }
+        }
+      },
+      "400-Address-Already-Exists": {
+        "description": "Bad Request",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../models/Error-Response.v1.yaml"
+            },
+            "examples": {
+              "Response": {
+                "value": {
+                  "error": {
+                    "message": "Site already has an address",
+                    "console": "Update or delete the existing address",
+                    "code": 400
                   },
                   "logging_hash": "..."
                 }
