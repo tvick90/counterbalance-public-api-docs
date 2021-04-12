@@ -1,3 +1,0 @@
-# Quotas & Resource Authorization
-
-The beginning of an awesome article...

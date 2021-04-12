@@ -1,10 +1,15 @@
 # Responses & Errors
 
-The API returns data in a variety of formats depending on the endpoint used. When exchanging non-binary data, the API accepts and returns JSON. The returned content will always be identified with a `Content-Type` header.
+The API returns data in a variety of formats depending on the endpoint used. When exchanging non-binary data, the API accepts and returns JSON. 
+
+The returned content will always be identified with a `Content-Type` header.
+
+## Common Object Properties
+Coming soon
 
 ## Status Codes
 
-All possible status codes are outlined below.
+The API returns standard HTTP status codes. All status codes used are outlined below.
 
 ### Success Responses
 

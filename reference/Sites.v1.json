@@ -298,13 +298,7 @@
     "/v1/site/address/{addressId}": {
       "parameters": [
         {
-          "schema": {
-            "type": "string"
-          },
-          "name": "addressId",
-          "in": "path",
-          "required": true,
-          "description": "A valid address UUID"
+          "$ref": "#/components/parameters/addressId"
         }
       ],
       "get": {
@@ -314,42 +308,10 @@
         ],
         "responses": {
           "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Address-Object"
-                },
-                "examples": {
-                  "Response": {
-                    "value": {
-                      "id": "f3643601-d122-47c5-893c-1f108c07d840",
-                      "lines": [
-                        "80 80th Street S",
-                        "Suite 650"
-                      ],
-                      "locality": "Loring Park",
-                      "city": "Minneapolis",
-                      "county": "Hennepin",
-                      "state": "MN",
-                      "postcode": 55403,
-                      "country": "USA",
-                      "formatted": "80 80th Street S, Suite 650, Minneapolis, MN 55403",
-                      "geolocation": {
-                        "latitude": 44.97191,
-                        "longitude": -93.28492
-                      },
-                      "timezone": "America/Chicago",
-                      "offset": -21600,
-                      "designations": {
-                        "primary_mailing": true,
-                        "primary_billing": false
-                      }
-                    }
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/200-Address-Object"
+          },
+          "404": {
+            "$ref": "#/components/responses/404-Address-Not-Found"
           }
         },
         "operationId": "get-address",
@@ -365,45 +327,13 @@
         "operationId": "update-address",
         "responses": {
           "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Address-Object"
-                },
-                "examples": {
-                  "Response": {
-                    "value": {
-                      "id": "f3643601-d122-47c5-893c-1f108c07d840",
-                      "lines": [
-                        "80 80th Street S",
-                        "Suite 800"
-                      ],
-                      "locality": "Loring Park",
-                      "city": "Minneapolis",
-                      "county": "Hennepin",
-                      "state": "MN",
-                      "postcode": 55403,
-                      "country": "USA",
-                      "formatted": "80 80th Street S, Suite 650, Minneapolis, MN 55403",
-                      "geolocation": {
-                        "latitude": 44.97191,
-                        "longitude": -93.28492
-                      },
-                      "timezone": "America/Chicago",
-                      "offset": -21600,
-                      "designations": {
-                        "primary_mailing": true,
-                        "primary_billing": false
-                      }
-                    }
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/200-Address-Object"
+          },
+          "404": {
+            "$ref": "#/components/responses/404-Address-Not-Found"
           }
         },
-        "description": "### Synopsis\nUpdate the details for the specified address\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:address:*`,`sites:address:read`",
+        "description": "### Synopsis\nUpdate the details for the specified address\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:address:*`,`sites:address:update`",
         "parameters": [],
         "security": [
           {
@@ -485,6 +415,9 @@
                 }
               }
             }
+          },
+          "404": {
+            "$ref": "#/components/responses/404-Address-Not-Found"
           }
         },
         "description": "### Synopsis\nDelete the specified address\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:address:*`,`sites:address:delete`",
@@ -515,45 +448,13 @@
         "operationId": "address-operations",
         "responses": {
           "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Address-Object"
-                },
-                "examples": {
-                  "Response": {
-                    "value": {
-                      "id": "f3643601-d122-47c5-893c-1f108c07d840",
-                      "lines": [
-                        "80 8th Street S",
-                        "Suite 650"
-                      ],
-                      "locality": "Loring Park",
-                      "city": "Minneapolis",
-                      "county": "Hennepin",
-                      "state": "MN",
-                      "postcode": 55403,
-                      "country": "USA",
-                      "formatted": "80 8th Street S, Suite 650, Minneapolis, MN 55403",
-                      "geolocation": {
-                        "latitude": 44.97191,
-                        "longitude": -93.28492
-                      },
-                      "timezone": "America/Chicago",
-                      "offset": -21600,
-                      "designations": {
-                        "primary_mailing": true,
-                        "primary_billing": false
-                      }
-                    }
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/200-Address-Object"
+          },
+          "404": {
+            "$ref": "#/components/responses/404-Address-Not-Found"
           }
         },
-        "description": "Carry out various operations on an address object",
+        "description": "### Synopsis\nPerform operations on the specified address\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:site:*`,`sites:address:*`,`sites:address:update`\n\n### Supported Operations\nThe following operations are currently supported:\n\n#### Address Normalization\nAn existing address object can be normalized or re-normalized by specifying the operation as `normalize`. The address' existing lines, city, and state values are used to generate a normalization query and updates are performed based on these values. If normalization data is incorrect, try adjusting these parameters and re-normalizing. \n\nWhen an address is normalized, the following properties are looked up and overridden: `city`,`state`,`latitude`,`longitude`,`postcode`,`locality`,`county`,`country`,`timezone`\n",
         "security": [
           {
             "Bearer Token": []
@@ -607,37 +508,17 @@
                 },
                 "examples": {
                   "Response": {
-                    "value": {
-                      "id": "06283d43-1da3-42c7-ae96-8b304cb4cbb9",
-                      "lines": [
-                        "140 4th Ave N",
-                        "Suite 210"
-                      ],
-                      "locality": "South Lake Union",
-                      "city": "Seattle",
-                      "county": "King",
-                      "state": "WA",
-                      "postcode": 98109,
-                      "country": "USA",
-                      "formatted": "140 4th Ave N, Suite 210, Seattle, WA 98109",
-                      "geolocation": {
-                        "latitude": 47.61916,
-                        "longitude": -122.34801
-                      },
-                      "timezone": "America/Los_Angeles",
-                      "offset": -28800,
-                      "designations": {
-                        "primary_mailing": false,
-                        "primary_billing": false
-                      }
-                    }
+                    "$ref": "#/components/examples/Address-Object"
                   }
                 }
               }
             }
+          },
+          "404": {
+            "$ref": "#/components/responses/404-Site-Not-Found"
           }
         },
-        "description": "### Synopsis\nCreate a new address object and attach it to the specified site or building\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n* An active tenant account\n* Permissions _(at least one):_ \n  \n  _When specifying a site ID:_ `*`,`sites:*`,`sites:site:*`,`sites:site:update`\n  \n  _When specifying a building ID:_ `*`,`sites:*`,`sites:building:*`,`sites:building:update`\n\n\n### Address Geocoding\nBy default, new addresses are geocoded to determine their GPS coordinates, timezone, and to fill-in various extended properties such as the locality, country, and ZIP or postcode. \n\nGeocoding is an optional process and can be skipped by setting `geocode` to `false` in the request body. If geocoding is skipped, the following additional body parameters become required: `county`, `country`, `postcode`, `timezone`",
+        "description": "### Synopsis\nCreate a new address object and attach it to the specified site\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n* An active tenant account\n* Permissions _(at least one):_ \n  \n  _When specifying a site ID:_ `*`,`sites:*`,`sites:site:*`,`sites:site:update`\n\n\n### Address Geocoding\nBy default, new addresses are geocoded to determine their GPS coordinates, timezone, and to fill-in various extended properties such as the locality, country, and ZIP or postcode. \n\nGeocoding is an optional process and can be skipped by setting `geocode` to `false` in the request body. If geocoding is skipped, the following additional body parameters become required: `county`, `country`, `postcode`, `timezone`",
         "security": [
           {
             "Bearer Token": []
@@ -756,17 +637,8 @@
               "format": "uuid"
             },
             "in": "query",
-            "name": "site",
-            "description": "A valid site UUID"
-          },
-          {
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            },
-            "in": "query",
-            "name": "building",
-            "description": "A valid building UUID"
+            "name": "@site",
+            "description": "A valid site UUID for which to assign this address"
           }
         ]
       }
@@ -1807,13 +1679,7 @@
         ],
         "parameters": [
           {
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            },
-            "in": "query",
-            "name": "siteId",
-            "description": "Filter floors by their assigned site UUID"
+            "$ref": "#/components/parameters/@siteId"
           }
         ]
       },
@@ -1835,6 +1701,9 @@
                 }
               }
             }
+          },
+          "404": {
+            "$ref": "#/components/responses/404-Site-Not-Found"
           }
         },
         "description": "### Synopsis\nCreate a new floor and assign it to a site\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:floor:*`,`sites:floor:create`\n* Licensed Feature: `sites_base`",
@@ -1870,7 +1739,7 @@
                     "type": "boolean",
                     "description": "Indicate if the floor is below grade. Default is `false`"
                   },
-                  "site": {
+                  "@site": {
                     "type": "string",
                     "format": "uuid",
                     "description": "A valid site UUID that will contain this floor"
@@ -1878,7 +1747,7 @@
                 },
                 "required": [
                   "code",
-                  "site"
+                  "@site"
                 ]
               },
               "examples": {
@@ -1982,22 +1851,10 @@
         ],
         "parameters": [
           {
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            },
-            "in": "query",
-            "name": "siteId",
-            "description": "Filter rooms by their associated site UUID"
+            "$ref": "#/components/parameters/@siteId"
           },
           {
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            },
-            "in": "query",
-            "name": "floorId",
-            "description": "Filter rooms by their assigned floor UUID"
+            "$ref": "#/components/parameters/@floorId"
           }
         ],
         "responses": {
@@ -2066,7 +1923,7 @@
                     "description": "The net area of the room in localized units (integers only)",
                     "format": "double"
                   },
-                  "floor": {
+                  "@floor": {
                     "type": "string",
                     "minLength": 1,
                     "format": "uuid",
@@ -2111,7 +1968,7 @@
                   "name",
                   "number",
                   "area",
-                  "floor",
+                  "@floor",
                   "occupancy"
                 ]
               },
@@ -2138,6 +1995,9 @@
                 }
               }
             }
+          },
+          "404": {
+            "$ref": "#/components/responses/404-Floor-Not-Found"
           }
         }
       }
@@ -2188,7 +2048,54 @@
         "tags": [
           "Rooms"
         ],
-        "description": "### Synopsis\nUpdate the details for the specified room\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:room:*`,`sites:room:update`"
+        "description": "### Synopsis\nUpdate the details for the specified room\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:room:*`,`sites:room:update`",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "The name of the room"
+                  },
+                  "number": {
+                    "type": "string",
+                    "description": "The room number"
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "The room description"
+                  },
+                  "occupancy": {
+                    "type": "string",
+                    "description": "The room occupancy classification"
+                  },
+                  "area": {
+                    "type": "number",
+                    "description": "The net area of the room"
+                  },
+                  "@floor": {
+                    "type": "string",
+                    "format": "uuid",
+                    "description": "The floor the room belongs to"
+                  }
+                }
+              },
+              "examples": {
+                "Example": {
+                  "value": {
+                    "name": "Circulation",
+                    "occupancy": "B",
+                    "area": 250,
+                    "floor": "f1acf44a-62d2-42f3-8dad-b917de85d75c"
+                  }
+                }
+              }
+            }
+          },
+          "description": ""
+        }
       },
       "delete": {
         "summary": "Delete Room",
@@ -2208,7 +2115,7 @@
             "$ref": "#/components/responses/404-Room-Not-Found"
           }
         },
-        "description": "### Synopsis\nDelete the specified room\n\n<!-- theme: danger -->\n> _**Heads Up** This cannot be undone!_\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:room:*`,`sites:room:delete`\n* Specified floor must be void of any associated rooms",
+        "description": "### Synopsis\nDelete the specified room\n\n<!-- theme: danger -->\n> _**Heads Up** This cannot be undone!_\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:room:*`,`sites:room:delete`\n* Specified room must be void of any associated equipment",
         "tags": [
           "Rooms"
         ],
@@ -2225,6 +2132,7 @@
       "Site-Object": {
         "description": "",
         "type": "object",
+        "title": "Site Object",
         "properties": {
           "id": {
             "type": "string",
@@ -2253,12 +2161,19 @@
             "type": "string",
             "minLength": 1
           },
-          "address": {
+          "@address": {
             "type": "string",
             "minLength": 1
           },
           "attributes": {
             "type": "object",
+            "required": [
+              "year_built",
+              "floor_count",
+              "room_count",
+              "gross_floor_area",
+              "net_room_area"
+            ],
             "properties": {
               "year_built": {
                 "type": "string",
@@ -2276,14 +2191,7 @@
               "net_room_area": {
                 "type": "number"
               }
-            },
-            "required": [
-              "year_built",
-              "floor_count",
-              "room_count",
-              "gross_floor_area",
-              "net_room_area"
-            ]
+            }
           }
         },
         "required": [
@@ -2292,10 +2200,9 @@
           "code",
           "name",
           "description",
-          "address",
+          "@address",
           "attributes"
-        ],
-        "title": "Site Object"
+        ]
       },
       "Address-Object": {
         "description": "",
@@ -2303,20 +2210,37 @@
         "properties": {
           "id": {
             "type": "string",
+            "minLength": 1,
             "format": "uuid",
-            "description": "The address object UUID"
+            "readOnly": true
+          },
+          "created": {
+            "type": "string",
+            "minLength": 1,
+            "readOnly": true
+          },
+          "last_modified": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "format": "date-time",
+            "readOnly": true
+          },
+          "@site": {
+            "type": "string",
+            "minLength": 1,
+            "format": "uuid"
           },
           "lines": {
             "type": "array",
-            "minItems": 1,
-            "maxItems": 2,
-            "description": "An array of address lines",
             "items": {
-              "type": "string"
+              "type": "object"
             }
           },
           "locality": {
-            "type": "string"
+            "type": "string",
+            "minLength": 1
           },
           "city": {
             "type": "string",
@@ -2334,7 +2258,8 @@
             "type": "number"
           },
           "country": {
-            "type": "string"
+            "type": "string",
+            "minLength": 1
           },
           "formatted": {
             "type": "string",
@@ -2359,9 +2284,6 @@
             "type": "string",
             "minLength": 1
           },
-          "offset": {
-            "type": "number"
-          },
           "designations": {
             "type": "object",
             "required": [
@@ -2380,6 +2302,8 @@
         },
         "required": [
           "id",
+          "created",
+          "@site",
           "lines",
           "locality",
           "city",
@@ -2390,13 +2314,9 @@
           "formatted",
           "geolocation",
           "timezone",
-          "offset",
           "designations"
         ],
-        "title": "Address Object",
-        "x-tags": [
-          "Schemas"
-        ]
+        "title": "Address Object"
       },
       "Timezone-Details": {
         "description": "",
@@ -3751,6 +3671,7 @@
       "Floor-Object": {
         "description": "",
         "type": "object",
+        "title": "Floor Object",
         "properties": {
           "id": {
             "type": "string",
@@ -3767,7 +3688,7 @@
             ],
             "minLength": 1
           },
-          "site": {
+          "@site": {
             "type": "string",
             "minLength": 1
           },
@@ -3780,6 +3701,12 @@
           },
           "attributes": {
             "type": "object",
+            "required": [
+              "below_grade",
+              "gross_floor_area",
+              "room_count",
+              "net_room_area"
+            ],
             "properties": {
               "below_grade": {
                 "type": "boolean"
@@ -3793,24 +3720,17 @@
               "net_room_area": {
                 "type": "number"
               }
-            },
-            "required": [
-              "below_grade",
-              "gross_floor_area",
-              "room_count",
-              "net_room_area"
-            ]
+            }
           }
         },
         "required": [
           "id",
           "created",
-          "site",
+          "@site",
           "code",
           "description",
           "attributes"
-        ],
-        "title": "Floor Object"
+        ]
       },
       "Room-Object": {
         "description": "",
@@ -3830,6 +3750,14 @@
               "string",
               "null"
             ],
+            "minLength": 1
+          },
+          "@site": {
+            "type": "string",
+            "minLength": 1
+          },
+          "@floor": {
+            "type": "string",
             "minLength": 1
           },
           "number": {
@@ -3864,6 +3792,9 @@
         "required": [
           "id",
           "created",
+          "last_modified",
+          "@site",
+          "@floor",
           "number",
           "name",
           "description",
@@ -3918,6 +3849,26 @@
           "format": "uuid"
         },
         "description": "A valid room UUID"
+      },
+      "@siteId": {
+        "name": "@site",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "description": "Filter results by their associated site UUID"
+      },
+      "@floorId": {
+        "name": "@floor",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "description": "Filter results by their associated floor UUID"
       }
     },
     "examples": {
@@ -4003,7 +3954,7 @@
           "code": "MSP",
           "name": "Minneapolis Office",
           "description": "",
-          "address": "1fb555c1-c683-4254-820b-f6e7a7add74c",
+          "@address": "1fb555c1-c683-4254-820b-f6e7a7add74c",
           "contacts": null,
           "attributes": {
             "year_built": "",
@@ -4016,15 +3967,17 @@
       },
       "Floor-Object": {
         "value": {
-          "id": "3540c510-24c8-43e6-b0fb-17f1447cdff9",
-          "created": "2021-04-10T19:19:46+0000",
-          "last_modified": null,
-          "number": "100",
-          "name": "Open Office",
-          "description": "Open office & collaboration area",
+          "id": "38082b4a-6e6c-46ac-ba44-9de02d3323c0",
+          "created": "2021-04-12T17:08:59+0000",
+          "last_modified": "2021-04-12T17:11:23+0000",
+          "@site": "0fa60c71-a611-418a-93a0-0bdf2dfa5ac3",
+          "code": "Basement",
+          "description": "Mechanical, building storage",
           "attributes": {
-            "occupancy": "B",
-            "area": 8900
+            "below_grade": true,
+            "gross_floor_area": 16000,
+            "room_count": 5,
+            "net_room_area": 5480
           }
         }
       },
@@ -4033,7 +3986,7 @@
           "code": "Floor 1",
           "description": "First floor",
           "gross_floor_area": 18000,
-          "site": "0fa60c71-a611-418a-93a0-0bdf2dfa5ac3",
+          "@site": "0fa60c71-a611-418a-93a0-0bdf2dfa5ac3",
           "below_grade": false
         }
       },
@@ -4063,21 +4016,23 @@
           "number": "100",
           "description": "Open office & collaboration area",
           "area": 8900,
-          "floor": "d2fa3901-8649-46dc-bbfb-4864007895da",
+          "@floor": "d2fa3901-8649-46dc-bbfb-4864007895da",
           "occupancy": "B"
         }
       },
       "Room-Object": {
         "value": {
-          "id": "3540c510-24c8-43e6-b0fb-17f1447cdff9",
-          "created": "2021-04-10T19:19:46+0000",
-          "last_modified": null,
-          "number": "100",
-          "name": "Open Office",
-          "description": "Open office & collaboration area",
+          "id": "61747b47-9828-4294-8602-8ef445e17240",
+          "created": "2021-04-12T18:22:40+0000",
+          "last_modified": "2021-04-12T18:54:18+0000",
+          "@site": "0fa60c71-a611-418a-93a0-0bdf2dfa5ac3",
+          "@floor": "38082b4a-6e6c-46ac-ba44-9de02d3323c0",
+          "number": "1",
+          "name": "Circulation",
+          "description": "Hall area",
           "attributes": {
             "occupancy": "B",
-            "area": 8900
+            "area": 150
           }
         }
       },
@@ -4097,26 +4052,27 @@
       },
       "Address-Object": {
         "value": {
-          "id": "f3643601-d122-47c5-893c-1f108c07d840",
+          "id": "6517a08a-ab53-4c23-b4c1-d685d8e25a1c",
+          "created": "2021-02-05T16:10:54+0000",
+          "last_modified": null,
+          "@site": "723a9c16-1790-4386-b17b-54bc9ed6d901",
           "lines": [
-            "80 80th Street S",
-            "Suite 650"
+            "600 Montgomery"
           ],
-          "locality": "Loring Park",
-          "city": "Minneapolis",
-          "county": "Hennepin",
-          "state": "MN",
-          "postcode": 55403,
+          "locality": "Downtown San Francisco",
+          "city": "San Francisco",
+          "county": "San Francisco",
+          "state": "CA",
+          "postcode": 94111,
           "country": "USA",
-          "formatted": "80 80th Street S, Suite 650, Minneapolis, MN 55403",
+          "formatted": "600 Montgomery, San Francisco, CA 94111",
           "geolocation": {
-            "latitude": 44.97191,
-            "longitude": -93.28492
+            "latitude": 37.79513,
+            "longitude": -122.40299
           },
-          "timezone": "America/Chicago",
-          "offset": -21600,
+          "timezone": "America/Los_Angeles",
           "designations": {
-            "primary_mailing": true,
+            "primary_mailing": false,
             "primary_billing": false
           }
         }
@@ -4279,7 +4235,7 @@
         }
       },
       "200-Address-Object": {
-        "description": "Example response",
+        "description": "Ok",
         "content": {
           "application/json": {
             "schema": {
@@ -4288,6 +4244,28 @@
             "examples": {
               "Response": {
                 "$ref": "#/components/examples/Address-Object"
+              }
+            }
+          }
+        }
+      },
+      "404-Address-Not-Found": {
+        "description": "Not Found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../models/Error-Response.v1.yaml"
+            },
+            "examples": {
+              "Response": {
+                "value": {
+                  "error": {
+                    "message": "Address not found",
+                    "console": "The address ID ... could not be found in the database",
+                    "code": 404
+                  },
+                  "logging_hash": "..."
+                }
               }
             }
           }
