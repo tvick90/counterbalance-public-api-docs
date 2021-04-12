@@ -2234,6 +2234,13 @@
             "type": "string",
             "minLength": 1
           },
+          "last_modified": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "minLength": 1
+          },
           "code": {
             "type": "string",
             "minLength": 1
@@ -3753,6 +3760,13 @@
             "type": "string",
             "minLength": 1
           },
+          "last_modified": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "minLength": 1
+          },
           "site": {
             "type": "string",
             "minLength": 1
@@ -3801,6 +3815,7 @@
       "Room-Object": {
         "description": "",
         "type": "object",
+        "title": "Room Object",
         "properties": {
           "id": {
             "type": "string",
@@ -3808,6 +3823,13 @@
           },
           "created": {
             "type": "string",
+            "minLength": 1
+          },
+          "last_modified": {
+            "type": [
+              "string",
+              "null"
+            ],
             "minLength": 1
           },
           "number": {
@@ -3824,6 +3846,10 @@
           },
           "attributes": {
             "type": "object",
+            "required": [
+              "occupancy",
+              "area"
+            ],
             "properties": {
               "occupancy": {
                 "type": "string",
@@ -3832,11 +3858,7 @@
               "area": {
                 "type": "number"
               }
-            },
-            "required": [
-              "occupancy",
-              "area"
-            ]
+            }
           }
         },
         "required": [
@@ -3846,8 +3868,7 @@
           "name",
           "description",
           "attributes"
-        ],
-        "title": "Room Object"
+        ]
       }
     },
     "securitySchemes": {
