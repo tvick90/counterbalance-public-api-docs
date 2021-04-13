@@ -664,121 +664,121 @@
                   "Response (Imperial Units)": {
                     "value": {
                       "effective_coordinates": {
-                        "latitude": "44.98588",
-                        "longitude": "-93.28069"
+                        "latitude": "37.79513",
+                        "longitude": "-122.40299"
                       },
                       "units": "imperial",
-                      "summary": "Snow between late tonight and tomorrow morning will accumulate 1-2 inches before changing to rain",
+                      "summary": "Pleasant Sunday",
                       "forecasts": [
                         {
-                          "date": 1606136400,
+                          "date": "2021-04-13T14:00:00+0000",
                           "sources": [
                             "AccuWeather"
                           ],
                           "air_quality": {
                             "airquality": {
-                              "value": 75,
+                              "value": 53,
                               "rating": "Moderate",
                               "rating_value": 2
                             },
                             "grass": {
-                              "value": 0,
-                              "rating": "Low",
-                              "rating_value": 1
+                              "value": 110,
+                              "rating": "High",
+                              "rating_value": 3
                             },
                             "mold": {
-                              "value": 0,
+                              "value": 3250,
                               "rating": "Low",
                               "rating_value": 1
                             },
                             "ragweed": {
-                              "value": 0,
-                              "rating": "Low",
-                              "rating_value": 1
+                              "value": 30,
+                              "rating": "Moderate",
+                              "rating_value": 2
                             },
                             "tree": {
-                              "value": 0,
-                              "rating": "Low",
-                              "rating_value": 1
+                              "value": 50,
+                              "rating": "Moderate",
+                              "rating_value": 2
                             },
                             "uvindex": {
-                              "value": 2,
-                              "rating": "Low",
-                              "rating_value": 1
+                              "value": 7,
+                              "rating": "High",
+                              "rating_value": 3
                             }
                           },
                           "hours_of_sun": 7,
                           "temperature": {
                             "minimum": {
-                              "value": 30,
+                              "value": 50,
                               "unit": "F"
                             },
                             "maximum": {
-                              "value": 38,
+                              "value": 61,
                               "unit": "F"
                             }
                           },
                           "day": {
-                            "icon": 3,
+                            "icon": 4,
                             "phrases": {
-                              "long": "Times of clouds and sun",
-                              "short": "Times of clouds and sun"
+                              "long": "Areas of low clouds, then some sun",
+                              "short": "Partly sunny"
                             },
                             "is_raining": false,
                             "probabilities": {
-                              "precipitation": 4,
+                              "precipitation": 1,
                               "thunderstorm": 0,
-                              "rain": 3,
+                              "rain": 0,
                               "snow": 1,
                               "ice": 0
                             },
                             "wind": {
                               "direction": {
-                                "degrees": 122,
-                                "localized": "ESE"
+                                "degrees": 256,
+                                "localized": "WSW"
                               },
                               "speed": {
-                                "value": 4,
+                                "value": 11,
                                 "unit": "mi/h"
                               },
                               "gust": {
-                                "value": 10,
+                                "value": 18,
                                 "unit": "mi/h",
-                                "direction": "SE"
+                                "direction": "WSW"
                               }
                             },
-                            "cloud_cover": 29
+                            "cloud_cover": 51
                           },
                           "night": {
-                            "icon": 22,
+                            "icon": 33,
                             "phrases": {
-                              "long": "Plenty of clouds with a coating to an inch of snow late",
-                              "short": "Overcast with snow late"
+                              "long": "Clear",
+                              "short": "Clear"
                             },
-                            "is_raining": true,
+                            "is_raining": false,
                             "probabilities": {
-                              "precipitation": 75,
+                              "precipitation": 1,
                               "thunderstorm": 0,
-                              "rain": 10,
-                              "snow": 75,
-                              "ice": 3
+                              "rain": 0,
+                              "snow": 1,
+                              "ice": 0
                             },
                             "wind": {
                               "direction": {
-                                "degrees": 139,
-                                "localized": "SE"
+                                "degrees": 192,
+                                "localized": "SSW"
                               },
                               "speed": {
-                                "value": 9,
+                                "value": 8,
                                 "unit": "mi/h"
                               },
                               "gust": {
-                                "value": 13,
+                                "value": 16,
                                 "unit": "mi/h",
-                                "direction": "SE"
+                                "direction": "WSW"
                               }
                             },
-                            "cloud_cover": 97
+                            "cloud_cover": 9
                           }
                         }
                       ]
@@ -787,121 +787,121 @@
                   "Response (Metric Units)": {
                     "value": {
                       "effective_coordinates": {
-                        "latitude": "44.98588",
-                        "longitude": "-93.28069"
+                        "latitude": "37.79513",
+                        "longitude": "-122.40299"
                       },
                       "units": "metric",
-                      "summary": "Snow between late tonight and tomorrow morning will accumulate 3-6 cm before changing to rain",
+                      "summary": "Pleasant Sunday",
                       "forecasts": [
                         {
-                          "date": 1606136400,
+                          "date": "2021-04-13T14:00:00+0000",
                           "sources": [
                             "AccuWeather"
                           ],
                           "air_quality": {
                             "airquality": {
-                              "value": 75,
+                              "value": 53,
                               "rating": "Moderate",
                               "rating_value": 2
                             },
                             "grass": {
-                              "value": 0,
-                              "rating": "Low",
-                              "rating_value": 1
+                              "value": 110,
+                              "rating": "High",
+                              "rating_value": 3
                             },
                             "mold": {
-                              "value": 0,
+                              "value": 3250,
                               "rating": "Low",
                               "rating_value": 1
                             },
                             "ragweed": {
-                              "value": 0,
-                              "rating": "Low",
-                              "rating_value": 1
+                              "value": 30,
+                              "rating": "Moderate",
+                              "rating_value": 2
                             },
                             "tree": {
-                              "value": 0,
-                              "rating": "Low",
-                              "rating_value": 1
+                              "value": 50,
+                              "rating": "Moderate",
+                              "rating_value": 2
                             },
                             "uvindex": {
-                              "value": 2,
-                              "rating": "Low",
-                              "rating_value": 1
+                              "value": 7,
+                              "rating": "High",
+                              "rating_value": 3
                             }
                           },
                           "hours_of_sun": 7,
                           "temperature": {
                             "minimum": {
-                              "value": -1,
+                              "value": 9,
                               "unit": "C"
                             },
                             "maximum": {
-                              "value": 3,
+                              "value": 16,
                               "unit": "C"
                             }
                           },
                           "day": {
-                            "icon": 3,
+                            "icon": 4,
                             "phrases": {
-                              "long": "Times of clouds and sun",
-                              "short": "Times of clouds and sun"
+                              "long": "Areas of low clouds, then some sun",
+                              "short": "Partly sunny"
                             },
                             "is_raining": false,
                             "probabilities": {
-                              "precipitation": 4,
+                              "precipitation": 1,
                               "thunderstorm": 0,
-                              "rain": 3,
+                              "rain": 0,
                               "snow": 1,
                               "ice": 0
                             },
                             "wind": {
                               "direction": {
-                                "degrees": 122,
-                                "localized": "ESE"
+                                "degrees": 256,
+                                "localized": "WSW"
                               },
                               "speed": {
-                                "value": 7,
+                                "value": 18,
                                 "unit": "km/h"
                               },
                               "gust": {
-                                "value": 16,
+                                "value": 29,
                                 "unit": "km/h",
-                                "direction": "SE"
+                                "direction": "WSW"
                               }
                             },
-                            "cloud_cover": 29
+                            "cloud_cover": 51
                           },
                           "night": {
-                            "icon": 22,
+                            "icon": 33,
                             "phrases": {
-                              "long": "Plenty of clouds with 1-3 cm of snow late",
-                              "short": "Overcast, late snow, 1-3 cm"
+                              "long": "Clear",
+                              "short": "Clear"
                             },
-                            "is_raining": true,
+                            "is_raining": false,
                             "probabilities": {
-                              "precipitation": 75,
+                              "precipitation": 1,
                               "thunderstorm": 0,
-                              "rain": 10,
-                              "snow": 75,
-                              "ice": 3
+                              "rain": 0,
+                              "snow": 1,
+                              "ice": 0
                             },
                             "wind": {
                               "direction": {
-                                "degrees": 139,
-                                "localized": "SE"
+                                "degrees": 192,
+                                "localized": "SSW"
                               },
                               "speed": {
-                                "value": 14,
+                                "value": 13,
                                 "unit": "km/h"
                               },
                               "gust": {
-                                "value": 22,
+                                "value": 25,
                                 "unit": "km/h",
-                                "direction": "SE"
+                                "direction": "WSW"
                               }
                             },
-                            "cloud_cover": 97
+                            "cloud_cover": 9
                           }
                         }
                       ]
@@ -954,26 +954,7 @@
             }
           },
           "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "../models/Error-Response.v1.yaml"
-                },
-                "examples": {
-                  "Address Not Found": {
-                    "value": {
-                      "error": {
-                        "message": "Address not found",
-                        "console": "The address ID 8ac7d5dc-803d-40ac-bc37-16c0dbffe5d8 could not be found in the database",
-                        "code": 404
-                      },
-                      "logging_hash": null
-                    }
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/404-Address-Not-Found"
           },
           "409": {
             "description": "Conflict",
@@ -999,7 +980,7 @@
           }
         },
         "operationId": "get-weather-forecast",
-        "description": "Retrieve a detailed daily weather forecast\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:weather:*`,`sites:weather:forecast`\n* Licensed Feature: `weather_forecasts`\n\n### Specifying the Location\nWeather forecasts can be obtained for a specified set of coordinates or by specifying a geocoded address object ID. Either the `coordinates` or `address` query parameters must be passed, but not both.\n\nIf the specified address ID has not been geocoded, an error will be returned.\n\n<!-- theme: warning-->\n> _Parameters `coordinates` and `address` are mutually exclusive. Passing more than one will result in an error_\n\n### Units\nBy default, data is returned in Imperial units. To return data in Metric units, pass the `metric` query parameter and set it to _true_. \n\n### Language\nBy default, data is returned in English. To return data in another language, pass the `langugage` query parameter and set it to a valid IETF language code",
+        "description": "Retrieve a detailed daily weather forecast\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:weather:*`,`sites:weather:forecast`\n* Licensed Feature: `weather_forecasts`\n\n### Specifying the Location\nWeather forecasts can be obtained for a specified set of coordinates or by specifying a geocoded address object ID. Either the `coordinates` or `@address` query parameters must be passed, but not both.\n\nIf the specified address ID has not been geocoded, an error will be returned.\n\n<!-- theme: warning-->\n> _Parameters `coordinates` and `@address` are mutually exclusive. Passing more than one will result in an error_\n\n### Units\nBy default, data is returned in Imperial units. To return data in Metric units, pass the `metric` query parameter and set it to _true_. \n\n### Language\nBy default, data is returned in English. To return data in another language, pass the `langugage` query parameter and set it to a valid IETF language code",
         "parameters": [
           {
             "schema": {
@@ -1016,7 +997,7 @@
               "format": "uuid"
             },
             "in": "query",
-            "name": "address",
+            "name": "@address",
             "description": "Get the weather forecast for the specified address ID"
           },
           {
@@ -1077,128 +1058,128 @@
                   "Response (Imperial Units)": {
                     "value": {
                       "effective_coordinates": {
-                        "latitude": "44.98588",
-                        "longitude": "-93.28069"
+                        "latitude": "37.79513",
+                        "longitude": "-122.40299"
                       },
                       "units": "imperial",
-                      "timestamp": 1606150620,
-                      "phrase": "Mostly sunny",
-                      "icon": 2,
+                      "timestamp": "2021-04-13T14:15:00+0000",
+                      "phrase": "Mostly cloudy",
+                      "icon": 6,
                       "is_raining": false,
                       "is_daytime": true,
                       "temperature": {
-                        "value": 30,
+                        "value": 49,
                         "unit": "F"
                       },
                       "apparent_temperature": {
-                        "value": 30,
+                        "value": 52,
                         "unit": "F"
                       },
                       "wetbulb_temperature": {
-                        "value": 28,
+                        "value": 48,
                         "unit": "F"
                       },
                       "windchill_temperature": {
-                        "value": 27,
+                        "value": 46,
                         "unit": "F"
                       },
-                      "relative_humidity": 71,
+                      "relative_humidity": 90,
                       "dewpoint": {
-                        "value": 22,
+                        "value": 46,
                         "unit": "F"
                       },
                       "wind": {
                         "direction": {
-                          "degrees": 113,
-                          "localized": "ESE"
+                          "degrees": 248,
+                          "localized": "WSW"
                         },
                         "speed": {
-                          "value": 3,
+                          "value": 6,
                           "unit": "mi/h"
                         },
                         "gust": {
-                          "value": 6,
+                          "value": 15,
                           "unit": "mi/h"
                         }
                       },
                       "visibility": {
-                        "value": 10,
+                        "value": 5,
                         "unit": "mi",
                         "obstructions": ""
                       },
-                      "cloud_cover": 14,
+                      "cloud_cover": 78,
                       "ceiling": {
-                        "value": 40000,
+                        "value": 5100,
                         "unit": "ft"
                       },
                       "pressure": {
-                        "value": 30.37,
+                        "value": 29.87,
                         "unit": "inHg",
-                        "direction": "Steady"
+                        "direction": "Rising"
                       }
                     }
                   },
                   "Response (Metric Units)": {
                     "value": {
                       "effective_coordinates": {
-                        "latitude": "44.98588",
-                        "longitude": "-93.28069"
+                        "latitude": "37.79513",
+                        "longitude": "-122.40299"
                       },
                       "units": "metric",
-                      "timestamp": 1606155600,
-                      "phrase": "Mostly sunny",
-                      "icon": 2,
+                      "timestamp": "2021-04-13T14:15:00+0000",
+                      "phrase": "Mostly cloudy",
+                      "icon": 6,
                       "is_raining": false,
                       "is_daytime": true,
                       "temperature": {
-                        "value": 0,
+                        "value": 9,
                         "unit": "C"
                       },
                       "apparent_temperature": {
-                        "value": 0,
+                        "value": 11,
                         "unit": "C"
                       },
                       "wetbulb_temperature": {
-                        "value": -1,
+                        "value": 8,
                         "unit": "C"
                       },
                       "windchill_temperature": {
-                        "value": -1,
+                        "value": 7,
                         "unit": "C"
                       },
-                      "relative_humidity": 65,
+                      "relative_humidity": 90,
                       "dewpoint": {
-                        "value": -4,
+                        "value": 8,
                         "unit": "C"
                       },
                       "wind": {
                         "direction": {
-                          "degrees": 135,
-                          "localized": "SE"
+                          "degrees": 248,
+                          "localized": "WSW"
                         },
                         "speed": {
-                          "value": 5,
+                          "value": 10,
                           "unit": "km/h"
                         },
                         "gust": {
-                          "value": 10,
+                          "value": 24,
                           "unit": "km/h"
                         }
                       },
                       "visibility": {
-                        "value": 17,
+                        "value": 8,
                         "unit": "km",
                         "obstructions": ""
                       },
-                      "cloud_cover": 12,
+                      "cloud_cover": 78,
                       "ceiling": {
-                        "value": 12192,
+                        "value": 1554,
                         "unit": "m"
                       },
                       "pressure": {
-                        "value": 1027.1,
+                        "value": 1011.5,
                         "unit": "mb",
-                        "direction": "Falling"
+                        "direction": "Rising"
                       }
                     }
                   }
@@ -1284,7 +1265,7 @@
           }
         },
         "operationId": "get-current-weather-conditions",
-        "description": "### Synposis\nRetrieve detailed current weather conditions\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:weather:*`,`sites:weather:currently`\n* Licensed Feature: `weather_conditions`\n\n### Specifying the Location\nWeather conditions can be obtained for a specified set of coordinates or by specifying a geocoded address object ID. Either the `coordinates` or `address` query parameters must be passed, but not both.\n\nIf the specified address ID has not been geocoded, an error will be returned.\n\n<!-- theme: warning-->\n> _Parameters `coordinates` and `address` are mutually exclusive. Passing more than one will result in an error_\n\n### Units\nBy default, data is returned in Imperial units. To return data in Metric units, pass the `metric` query parameter and set it to _true_. \n\n### Language\nBy default, data is returned in English. To return data in another language, pass the `langugage` query parameter and set it to a valid IETF language code",
+        "description": "### Synposis\nRetrieve detailed current weather conditions\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:weather:*`,`sites:weather:currently`\n* Licensed Feature: `weather_conditions`\n\n### Specifying the Location\nWeather conditions can be obtained for a specified set of coordinates or by specifying a geocoded address object ID. Either the `coordinates` or `@address` query parameters must be passed, but not both.\n\nIf the specified address ID has not been geocoded, an error will be returned.\n\n<!-- theme: warning-->\n> _Parameters `coordinates` and `@address` are mutually exclusive. Passing more than one will resultin an error_\n\n### Units\nBy default, data is returned in Imperial units. To return data in Metric units, pass the `metric` query parameter and set it to _true_. \n\n### Language\nBy default, data is returned in English. To return data in another language, pass the `langugage` query parameter and set it to a valid IETF language code",
         "parameters": [
           {
             "schema": {
@@ -1301,7 +1282,7 @@
               "format": "uuid"
             },
             "in": "query",
-            "name": "address",
+            "name": "@address",
             "description": "Get the current conditions for the specified address ID"
           },
           {
@@ -1363,8 +1344,8 @@
                               "summary": "High Surf Advisory in effect from 10:00 PM PST until Wednesday, 10:00 PM PST.  Source: U.S. National Weather Service",
                               "status": "New",
                               "span": {
-                                "start": 1606284000,
-                                "end": 1606370400
+                                "start": "2021-04-13T14:00:00+0000",
+                                "end": "2021-04-13T14:00:00+0000"
                               },
                               "details": "...HIGH SURF ADVISORY IN EFFECT FROM 10 PM THIS EVENING TO 10 PM\nPST WEDNESDAY...\n\n* WHAT...Large breaking waves of 18 to 21 feet expected in the\n  surf zone.\n\n* WHERE...North Coast and Central Coast.\n\n* WHEN...From 10 PM this evening to 10 PM PST Wednesday.\n\n* IMPACTS...Dangerous conditions along the coast and in the surf\n  zone. Localized beach erosion may also occur due to large waves.\n\nPRECAUTIONARY/PREPAREDNESS ACTIONS...\n\nLarge waves may break and run up beaches farther than usual. Keep\nyour distance from the coastline and never turn your back on the\nocean.\n\nInexperienced swimmers should remain out of the water due to\ndangerous surf conditions.\n\n&&"
                             }
@@ -1472,7 +1453,7 @@
               "format": "uuid"
             },
             "in": "query",
-            "name": "address",
+            "name": "@address",
             "description": "Get weather alerts for the specified address ID"
           },
           {
@@ -1499,37 +1480,7 @@
         ],
         "responses": {
           "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Timezone-Details"
-                },
-                "examples": {
-                  "Response": {
-                    "value": {
-                      "id": "America/Los_Angeles",
-                      "effective_coordinates": [
-                        "47.49316",
-                        "-122.29394"
-                      ],
-                      "current": {
-                        "wall_time": 1606186725,
-                        "utc_offset": -28800,
-                        "is_dst": false,
-                        "tag": "PST"
-                      },
-                      "names": {
-                        "ISO6391_language_code": "en",
-                        "generic": "Pacific Time",
-                        "standard": "Pacific Standard Time",
-                        "daylight": "Pacific Daylight Time"
-                      }
-                    }
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/200-Get-Timezone-Object"
           },
           "400": {
             "description": "Bad Request",
@@ -1554,26 +1505,7 @@
             }
           },
           "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "../models/Error-Response.v1.yaml"
-                },
-                "examples": {
-                  "Adress Not Found": {
-                    "value": {
-                      "error": {
-                        "message": "Address not found",
-                        "console": "The address ID 8ac7d5dc-803d-40ac-bc57-16c0dbffe5d8 could not be found in the database",
-                        "code": 404
-                      },
-                      "logging_hash": null
-                    }
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/404-Address-Not-Found"
           },
           "409": {
             "description": "Conflict",
@@ -1597,7 +1529,7 @@
                     "value": {
                       "error": {
                         "message": "Invalid address geocoding",
-                        "console": "The address ID 8ac7d5dc-803d-40ac-bc37-16c0dbffe5d8 is not geocoded and we have no coordinates to check",
+                        "console": "The address ID ... is not geocoded and we have no coordinates to check",
                         "code": 409
                       },
                       "logging_hash": null
@@ -1609,7 +1541,7 @@
           }
         },
         "operationId": "get-timezone",
-        "description": "### Synopsis\nRetrieve timezone details including the current time\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:utilities:*`,`sites:utilities:timezone`\n* Licensed Feature: `sites_base`\n\n### Specifying Coordinates or Address ID\nTimezone details can be obtained for a specified set of coordinates or by specifying a geocoded address object ID. Either the `coordinates` or `address` query parameters must be passed, but not both.\n\nIf the specified address ID has not been geocoded, an error will be returned.\n\n### Specifying am IANA Timezone ID\nTimezone details can be obtained for any Timezone by specifying the IANA timezone ID\n\n<!-- theme: warning-->\n> _Parameters `timezone`, `coordinates` and `address` are mutually exclusive. Passing more than one will result in an error_\n",
+        "description": "### Synopsis\nRetrieve timezone details including the current time\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:utilities:*`,`sites:utilities:timezone`\n* Licensed Feature: `sites_base`\n\n### Specifying Coordinates or Address ID\nTimezone details can be obtained for a specified set of coordinates or by specifying a geocoded address object ID. Either the `coordinates` or `@address` query parameters must be passed, but not both.\n\nIf the specified address ID has not been geocoded, an error will be returned.\n\n### Specifying am IANA Timezone ID\nTimezone details can be obtained for any Timezone by specifying the IANA timezone ID\n\n<!-- theme: warning-->\n> _Parameters `timezone`, `coordinates` and `@address` are mutually exclusive. Passing more than one will result in an error_\n",
         "parameters": [
           {
             "schema": {
@@ -1633,8 +1565,13 @@
               "format": "uuid"
             },
             "in": "query",
-            "name": "address",
+            "name": "@address",
             "description": "Get the timezone for the specified address ID"
+          }
+        ],
+        "security": [
+          {
+            "Bearer Token": []
           }
         ]
       }
@@ -2321,7 +2258,7 @@
         ],
         "title": "Address Object"
       },
-      "Timezone-Details": {
+      "Timezone-Object": {
         "description": "",
         "type": "object",
         "properties": {
@@ -2332,20 +2269,16 @@
           "effective_coordinates": {
             "type": "array",
             "items": {
-              "type": "string"
+              "required": [],
+              "properties": {}
             }
           },
           "current": {
             "type": "object",
-            "required": [
-              "wall_time",
-              "utc_offset",
-              "is_dst",
-              "tag"
-            ],
             "properties": {
               "wall_time": {
-                "type": "number"
+                "type": "string",
+                "minLength": 1
               },
               "utc_offset": {
                 "type": "number"
@@ -2357,16 +2290,16 @@
                 "type": "string",
                 "minLength": 1
               }
-            }
+            },
+            "required": [
+              "wall_time",
+              "utc_offset",
+              "is_dst",
+              "tag"
+            ]
           },
           "names": {
             "type": "object",
-            "required": [
-              "ISO6391_language_code",
-              "generic",
-              "standard",
-              "daylight"
-            ],
             "properties": {
               "ISO6391_language_code": {
                 "type": "string",
@@ -2384,7 +2317,13 @@
                 "type": "string",
                 "minLength": 1
               }
-            }
+            },
+            "required": [
+              "ISO6391_language_code",
+              "generic",
+              "standard",
+              "daylight"
+            ]
           }
         },
         "required": [
@@ -2393,31 +2332,7 @@
           "current",
           "names"
         ],
-        "title": "Timezone Details",
-        "x-examples": {
-          "Example": {
-            "id": "Europe/Berlin",
-            "effective_coordinates": [
-              "52.5535101",
-              "13.2911232"
-            ],
-            "current": {
-              "wall_time": 1606190613,
-              "utc_offset": 3600,
-              "is_dst": false,
-              "tag": "CET"
-            },
-            "names": {
-              "ISO6391_language_code": "en",
-              "generic": "Central European Time",
-              "standard": "Central European Standard Time",
-              "daylight": "Central European Summer Time"
-            }
-          }
-        },
-        "x-tags": [
-          "Object Models"
-        ]
+        "title": "Timezone Object"
       },
       "Daily-Forecast-Object": {
         "description": "",
@@ -4079,6 +3994,27 @@
             "primary_billing": false
           }
         }
+      },
+      "Timezone-Object": {
+        "value": {
+          "id": "America/Los_Angeles",
+          "effective_coordinates": [
+            "37.79513",
+            "-122.40299"
+          ],
+          "current": {
+            "wall_time": "2021-04-13T06:59:36+0000",
+            "utc_offset": -25200,
+            "is_dst": false,
+            "tag": "PDT"
+          },
+          "names": {
+            "ISO6391_language_code": "en",
+            "generic": "Pacific Time",
+            "standard": "Pacific Standard Time",
+            "daylight": "Pacific Daylight Time"
+          }
+        }
       }
     },
     "responses": {
@@ -4288,6 +4224,65 @@
                     "message": "Site already has an address",
                     "console": "Update or delete the existing address",
                     "code": 400
+                  },
+                  "logging_hash": "..."
+                }
+              }
+            }
+          }
+        }
+      },
+      "409-No-Address-Geocoding": {
+        "description": "Conflict",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../models/Error-Response.v1.yaml"
+            },
+            "examples": {
+              "Invalid Geocoding": {
+                "value": {
+                  "error": {
+                    "message": "Invalid address geocoding",
+                    "console": "The address ID ... is not geocoded and we have no coordinates to check",
+                    "code": 409
+                  },
+                  "logging_hash": "..."
+                }
+              }
+            }
+          }
+        }
+      },
+      "200-Get-Timezone-Object": {
+        "description": "Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Timezone-Object"
+            },
+            "examples": {
+              "Response": {
+                "$ref": "#/components/examples/Timezone-Object"
+              }
+            }
+          }
+        }
+      },
+      "409-Invalid-Weather-Parameters": {
+        "description": "Conflict",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../models/Error-Response.v1.yaml"
+            },
+            "examples": {
+              "Response": {
+                "value": {
+                  "error": {
+                    "message": "Invalid parameter combination",
+                    "console": "Parameters coordinates and address are mutually exclusive. Specify only one.",
+                    "code": 409
                   },
                   "logging_hash": "..."
                 }
