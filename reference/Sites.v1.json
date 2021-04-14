@@ -191,19 +191,7 @@
         ],
         "responses": {
           "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Site-Object"
-                },
-                "examples": {
-                  "Response": {
-                    "$ref": "#/components/examples/Get-Site-Object-Response"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/200-Site-Object"
           },
           "404": {
             "$ref": "#/components/responses/404-Site-Not-Found"
@@ -222,49 +210,7 @@
         "operationId": "update-site",
         "responses": {
           "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Site-Object-Complete"
-                },
-                "examples": {
-                  "Response": {
-                    "value": {
-                      "id": "799ef189-c32b-48b4-9eb8-4787ebe37f2a",
-                      "code": "SEA",
-                      "name": "Seattle HQ",
-                      "description": "Seattle, WA Headquarters",
-                      "type": "physical",
-                      "address": {
-                        "id": "f88879fa-eb4e-4ac2-9dad-d3650919fdef",
-                        "lines": [
-                          "400 Broad Street"
-                        ],
-                        "locality": "",
-                        "city": "Seattle",
-                        "county": "King",
-                        "state": "WA",
-                        "postcode": 98109,
-                        "country": "",
-                        "formatted": "400 Broad Street, Seattle, WA 98119",
-                        "geolocation": {
-                          "latitude": 47.6205,
-                          "longitude": -122.34927
-                        },
-                        "timezone": "America/Los_Angeles",
-                        "offset": -8,
-                        "designations": {
-                          "primary_mailing": false,
-                          "primary_billing": false
-                        }
-                      },
-                      "contacts": null
-                    }
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/200-Site-Object"
           },
           "404": {
             "$ref": "#/components/responses/404-Site-Not-Found"
@@ -333,6 +279,9 @@
           },
           "400": {
             "$ref": "#/components/responses/400-Site-Not-Empty"
+          },
+          "404": {
+            "$ref": "#/components/responses/404-Site-Not-Found"
           }
         },
         "description": "### Synopsis\nDelete the specified site\n\n<!-- theme: danger -->\n> _**Heads Up** This cannot be undone!_\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:site:*`,`sites:site:delete`\n* Specified site must be void of any associated objects (floors, rooms, equipment, etc)",
@@ -349,13 +298,7 @@
     "/v1/site/address/{addressId}": {
       "parameters": [
         {
-          "schema": {
-            "type": "string"
-          },
-          "name": "addressId",
-          "in": "path",
-          "required": true,
-          "description": "A valid address UUID"
+          "$ref": "#/components/parameters/addressId"
         }
       ],
       "get": {
@@ -365,42 +308,10 @@
         ],
         "responses": {
           "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Address-Object"
-                },
-                "examples": {
-                  "Response": {
-                    "value": {
-                      "id": "f3643601-d122-47c5-893c-1f108c07d840",
-                      "lines": [
-                        "80 80th Street S",
-                        "Suite 650"
-                      ],
-                      "locality": "Loring Park",
-                      "city": "Minneapolis",
-                      "county": "Hennepin",
-                      "state": "MN",
-                      "postcode": 55403,
-                      "country": "USA",
-                      "formatted": "80 80th Street S, Suite 650, Minneapolis, MN 55403",
-                      "geolocation": {
-                        "latitude": 44.97191,
-                        "longitude": -93.28492
-                      },
-                      "timezone": "America/Chicago",
-                      "offset": -21600,
-                      "designations": {
-                        "primary_mailing": true,
-                        "primary_billing": false
-                      }
-                    }
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/200-Address-Object"
+          },
+          "404": {
+            "$ref": "#/components/responses/404-Address-Not-Found"
           }
         },
         "operationId": "get-address",
@@ -416,45 +327,13 @@
         "operationId": "update-address",
         "responses": {
           "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Address-Object"
-                },
-                "examples": {
-                  "Response": {
-                    "value": {
-                      "id": "f3643601-d122-47c5-893c-1f108c07d840",
-                      "lines": [
-                        "80 80th Street S",
-                        "Suite 800"
-                      ],
-                      "locality": "Loring Park",
-                      "city": "Minneapolis",
-                      "county": "Hennepin",
-                      "state": "MN",
-                      "postcode": 55403,
-                      "country": "USA",
-                      "formatted": "80 80th Street S, Suite 650, Minneapolis, MN 55403",
-                      "geolocation": {
-                        "latitude": 44.97191,
-                        "longitude": -93.28492
-                      },
-                      "timezone": "America/Chicago",
-                      "offset": -21600,
-                      "designations": {
-                        "primary_mailing": true,
-                        "primary_billing": false
-                      }
-                    }
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/200-Address-Object"
+          },
+          "404": {
+            "$ref": "#/components/responses/404-Address-Not-Found"
           }
         },
-        "description": "### Synopsis\nUpdate the details for the specified address\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:address:*`,`sites:address:read`",
+        "description": "### Synopsis\nUpdate the details for the specified address\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:address:*`,`sites:address:update`",
         "parameters": [],
         "security": [
           {
@@ -536,6 +415,9 @@
                 }
               }
             }
+          },
+          "404": {
+            "$ref": "#/components/responses/404-Address-Not-Found"
           }
         },
         "description": "### Synopsis\nDelete the specified address\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:address:*`,`sites:address:delete`",
@@ -566,45 +448,13 @@
         "operationId": "address-operations",
         "responses": {
           "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Address-Object"
-                },
-                "examples": {
-                  "Response": {
-                    "value": {
-                      "id": "f3643601-d122-47c5-893c-1f108c07d840",
-                      "lines": [
-                        "80 8th Street S",
-                        "Suite 650"
-                      ],
-                      "locality": "Loring Park",
-                      "city": "Minneapolis",
-                      "county": "Hennepin",
-                      "state": "MN",
-                      "postcode": 55403,
-                      "country": "USA",
-                      "formatted": "80 8th Street S, Suite 650, Minneapolis, MN 55403",
-                      "geolocation": {
-                        "latitude": 44.97191,
-                        "longitude": -93.28492
-                      },
-                      "timezone": "America/Chicago",
-                      "offset": -21600,
-                      "designations": {
-                        "primary_mailing": true,
-                        "primary_billing": false
-                      }
-                    }
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/200-Address-Object"
+          },
+          "404": {
+            "$ref": "#/components/responses/404-Address-Not-Found"
           }
         },
-        "description": "Carry out various operations on an address object",
+        "description": "### Synopsis\nPerform operations on the specified address\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:site:*`,`sites:address:*`,`sites:address:update`\n\n### Supported Operations\nThe following operations are currently supported:\n\n#### Address Normalization\nAn existing address object can be normalized or re-normalized by specifying the operation as `normalize`. The address' existing lines, city, and state values are used to generate a normalization query and updates are performed based on these values. If normalization data is incorrect, try adjusting these parameters and re-normalizing. \n\nWhen an address is normalized, the following properties are looked up and overridden: `city`,`state`,`latitude`,`longitude`,`postcode`,`locality`,`county`,`country`,`timezone`\n",
         "security": [
           {
             "Bearer Token": []
@@ -658,37 +508,20 @@
                 },
                 "examples": {
                   "Response": {
-                    "value": {
-                      "id": "06283d43-1da3-42c7-ae96-8b304cb4cbb9",
-                      "lines": [
-                        "140 4th Ave N",
-                        "Suite 210"
-                      ],
-                      "locality": "South Lake Union",
-                      "city": "Seattle",
-                      "county": "King",
-                      "state": "WA",
-                      "postcode": 98109,
-                      "country": "USA",
-                      "formatted": "140 4th Ave N, Suite 210, Seattle, WA 98109",
-                      "geolocation": {
-                        "latitude": 47.61916,
-                        "longitude": -122.34801
-                      },
-                      "timezone": "America/Los_Angeles",
-                      "offset": -28800,
-                      "designations": {
-                        "primary_mailing": false,
-                        "primary_billing": false
-                      }
-                    }
+                    "$ref": "#/components/examples/Address-Object"
                   }
                 }
               }
             }
+          },
+          "400": {
+            "$ref": "#/components/responses/400-Address-Already-Exists"
+          },
+          "404": {
+            "$ref": "#/components/responses/404-Site-Not-Found"
           }
         },
-        "description": "### Synopsis\nCreate a new address object and attach it to the specified site or building\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n* An active tenant account\n* Permissions _(at least one):_ \n  \n  _When specifying a site ID:_ `*`,`sites:*`,`sites:site:*`,`sites:site:update`\n  \n  _When specifying a building ID:_ `*`,`sites:*`,`sites:building:*`,`sites:building:update`\n\n\n### Address Geocoding\nBy default, new addresses are geocoded to determine their GPS coordinates, timezone, and to fill-in various extended properties such as the locality, country, and ZIP or postcode. \n\nGeocoding is an optional process and can be skipped by setting `geocode` to `false` in the request body. If geocoding is skipped, the following additional body parameters become required: `county`, `country`, `postcode`, `timezone`",
+        "description": "### Synopsis\nCreate a new address object and attach it to the specified site\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n* An active tenant account\n* Permissions _(at least one):_ \n  \n  _When specifying a site ID:_ `*`,`sites:*`,`sites:site:*`,`sites:site:update`\n\n\n### Address Geocoding\nBy default, new addresses are geocoded to determine their GPS coordinates, timezone, and to fill-in various extended properties such as the locality, country, and ZIP or postcode. \n\nGeocoding is an optional process and can be skipped by setting `geocode` to `false` in the request body. If geocoding is skipped, the following additional body parameters become required: `county`, `country`, `postcode`, `timezone`",
         "security": [
           {
             "Bearer Token": []
@@ -807,17 +640,8 @@
               "format": "uuid"
             },
             "in": "query",
-            "name": "site",
-            "description": "A valid site UUID"
-          },
-          {
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            },
-            "in": "query",
-            "name": "building",
-            "description": "A valid building UUID"
+            "name": "@site",
+            "description": "A valid site UUID for which to assign this address"
           }
         ]
       }
@@ -840,121 +664,121 @@
                   "Response (Imperial Units)": {
                     "value": {
                       "effective_coordinates": {
-                        "latitude": "44.98588",
-                        "longitude": "-93.28069"
+                        "latitude": "37.79513",
+                        "longitude": "-122.40299"
                       },
                       "units": "imperial",
-                      "summary": "Snow between late tonight and tomorrow morning will accumulate 1-2 inches before changing to rain",
+                      "summary": "Pleasant Sunday",
                       "forecasts": [
                         {
-                          "date": 1606136400,
+                          "date": "2021-04-13T14:00:00+0000",
                           "sources": [
                             "AccuWeather"
                           ],
                           "air_quality": {
                             "airquality": {
-                              "value": 75,
+                              "value": 53,
                               "rating": "Moderate",
                               "rating_value": 2
                             },
                             "grass": {
-                              "value": 0,
-                              "rating": "Low",
-                              "rating_value": 1
+                              "value": 110,
+                              "rating": "High",
+                              "rating_value": 3
                             },
                             "mold": {
-                              "value": 0,
+                              "value": 3250,
                               "rating": "Low",
                               "rating_value": 1
                             },
                             "ragweed": {
-                              "value": 0,
-                              "rating": "Low",
-                              "rating_value": 1
+                              "value": 30,
+                              "rating": "Moderate",
+                              "rating_value": 2
                             },
                             "tree": {
-                              "value": 0,
-                              "rating": "Low",
-                              "rating_value": 1
+                              "value": 50,
+                              "rating": "Moderate",
+                              "rating_value": 2
                             },
                             "uvindex": {
-                              "value": 2,
-                              "rating": "Low",
-                              "rating_value": 1
+                              "value": 7,
+                              "rating": "High",
+                              "rating_value": 3
                             }
                           },
                           "hours_of_sun": 7,
                           "temperature": {
                             "minimum": {
-                              "value": 30,
+                              "value": 50,
                               "unit": "F"
                             },
                             "maximum": {
-                              "value": 38,
+                              "value": 61,
                               "unit": "F"
                             }
                           },
                           "day": {
-                            "icon": 3,
+                            "icon": 4,
                             "phrases": {
-                              "long": "Times of clouds and sun",
-                              "short": "Times of clouds and sun"
+                              "long": "Areas of low clouds, then some sun",
+                              "short": "Partly sunny"
                             },
                             "is_raining": false,
                             "probabilities": {
-                              "precipitation": 4,
+                              "precipitation": 1,
                               "thunderstorm": 0,
-                              "rain": 3,
+                              "rain": 0,
                               "snow": 1,
                               "ice": 0
                             },
                             "wind": {
                               "direction": {
-                                "degrees": 122,
-                                "localized": "ESE"
+                                "degrees": 256,
+                                "localized": "WSW"
                               },
                               "speed": {
-                                "value": 4,
+                                "value": 11,
                                 "unit": "mi/h"
                               },
                               "gust": {
-                                "value": 10,
+                                "value": 18,
                                 "unit": "mi/h",
-                                "direction": "SE"
+                                "direction": "WSW"
                               }
                             },
-                            "cloud_cover": 29
+                            "cloud_cover": 51
                           },
                           "night": {
-                            "icon": 22,
+                            "icon": 33,
                             "phrases": {
-                              "long": "Plenty of clouds with a coating to an inch of snow late",
-                              "short": "Overcast with snow late"
+                              "long": "Clear",
+                              "short": "Clear"
                             },
-                            "is_raining": true,
+                            "is_raining": false,
                             "probabilities": {
-                              "precipitation": 75,
+                              "precipitation": 1,
                               "thunderstorm": 0,
-                              "rain": 10,
-                              "snow": 75,
-                              "ice": 3
+                              "rain": 0,
+                              "snow": 1,
+                              "ice": 0
                             },
                             "wind": {
                               "direction": {
-                                "degrees": 139,
-                                "localized": "SE"
+                                "degrees": 192,
+                                "localized": "SSW"
                               },
                               "speed": {
-                                "value": 9,
+                                "value": 8,
                                 "unit": "mi/h"
                               },
                               "gust": {
-                                "value": 13,
+                                "value": 16,
                                 "unit": "mi/h",
-                                "direction": "SE"
+                                "direction": "WSW"
                               }
                             },
-                            "cloud_cover": 97
+                            "cloud_cover": 9
                           }
                         }
                       ]
@@ -963,121 +787,121 @@
                   "Response (Metric Units)": {
                     "value": {
                       "effective_coordinates": {
-                        "latitude": "44.98588",
-                        "longitude": "-93.28069"
+                        "latitude": "37.79513",
+                        "longitude": "-122.40299"
                       },
                       "units": "metric",
-                      "summary": "Snow between late tonight and tomorrow morning will accumulate 3-6 cm before changing to rain",
+                      "summary": "Pleasant Sunday",
                       "forecasts": [
                         {
-                          "date": 1606136400,
+                          "date": "2021-04-13T14:00:00+0000",
                           "sources": [
                             "AccuWeather"
                           ],
                           "air_quality": {
                             "airquality": {
-                              "value": 75,
+                              "value": 53,
                               "rating": "Moderate",
                               "rating_value": 2
                             },
                             "grass": {
-                              "value": 0,
-                              "rating": "Low",
-                              "rating_value": 1
+                              "value": 110,
+                              "rating": "High",
+                              "rating_value": 3
                             },
                             "mold": {
-                              "value": 0,
+                              "value": 3250,
                               "rating": "Low",
                               "rating_value": 1
                             },
                             "ragweed": {
-                              "value": 0,
-                              "rating": "Low",
-                              "rating_value": 1
+                              "value": 30,
+                              "rating": "Moderate",
+                              "rating_value": 2
                             },
                             "tree": {
-                              "value": 0,
-                              "rating": "Low",
-                              "rating_value": 1
+                              "value": 50,
+                              "rating": "Moderate",
+                              "rating_value": 2
                             },
                             "uvindex": {
-                              "value": 2,
-                              "rating": "Low",
-                              "rating_value": 1
+                              "value": 7,
+                              "rating": "High",
+                              "rating_value": 3
                             }
                           },
                           "hours_of_sun": 7,
                           "temperature": {
                             "minimum": {
-                              "value": -1,
+                              "value": 9,
                               "unit": "C"
                             },
                             "maximum": {
-                              "value": 3,
+                              "value": 16,
                               "unit": "C"
                             }
                           },
                           "day": {
-                            "icon": 3,
+                            "icon": 4,
                             "phrases": {
-                              "long": "Times of clouds and sun",
-                              "short": "Times of clouds and sun"
+                              "long": "Areas of low clouds, then some sun",
+                              "short": "Partly sunny"
                             },
                             "is_raining": false,
                             "probabilities": {
-                              "precipitation": 4,
+                              "precipitation": 1,
                               "thunderstorm": 0,
-                              "rain": 3,
+                              "rain": 0,
                               "snow": 1,
                               "ice": 0
                             },
                             "wind": {
                               "direction": {
-                                "degrees": 122,
-                                "localized": "ESE"
+                                "degrees": 256,
+                                "localized": "WSW"
                               },
                               "speed": {
-                                "value": 7,
+                                "value": 18,
                                 "unit": "km/h"
                               },
                               "gust": {
-                                "value": 16,
+                                "value": 29,
                                 "unit": "km/h",
-                                "direction": "SE"
+                                "direction": "WSW"
                               }
                             },
-                            "cloud_cover": 29
+                            "cloud_cover": 51
                           },
                           "night": {
-                            "icon": 22,
+                            "icon": 33,
                             "phrases": {
-                              "long": "Plenty of clouds with 1-3 cm of snow late",
-                              "short": "Overcast, late snow, 1-3 cm"
+                              "long": "Clear",
+                              "short": "Clear"
                             },
-                            "is_raining": true,
+                            "is_raining": false,
                             "probabilities": {
-                              "precipitation": 75,
+                              "precipitation": 1,
                               "thunderstorm": 0,
-                              "rain": 10,
-                              "snow": 75,
-                              "ice": 3
+                              "rain": 0,
+                              "snow": 1,
+                              "ice": 0
                             },
                             "wind": {
                               "direction": {
-                                "degrees": 139,
-                                "localized": "SE"
+                                "degrees": 192,
+                                "localized": "SSW"
                               },
                               "speed": {
-                                "value": 14,
+                                "value": 13,
                                 "unit": "km/h"
                               },
                               "gust": {
-                                "value": 22,
+                                "value": 25,
                                 "unit": "km/h",
-                                "direction": "SE"
+                                "direction": "WSW"
                               }
                             },
-                            "cloud_cover": 97
+                            "cloud_cover": 9
                           }
                         }
                       ]
@@ -1130,26 +954,7 @@
             }
           },
           "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "../models/Error-Response.v1.yaml"
-                },
-                "examples": {
-                  "Address Not Found": {
-                    "value": {
-                      "error": {
-                        "message": "Address not found",
-                        "console": "The address ID 8ac7d5dc-803d-40ac-bc37-16c0dbffe5d8 could not be found in the database",
-                        "code": 404
-                      },
-                      "logging_hash": null
-                    }
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/404-Address-Not-Found"
           },
           "409": {
             "description": "Conflict",
@@ -1175,7 +980,7 @@
           }
         },
         "operationId": "get-weather-forecast",
-        "description": "Retrieve a detailed daily weather forecast\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:weather:*`,`sites:weather:forecast`\n* Licensed Feature: `weather_forecasts`\n\n### Specifying the Location\nWeather forecasts can be obtained for a specified set of coordinates or by specifying a geocoded address object ID. Either the `coordinates` or `address` query parameters must be passed, but not both.\n\nIf the specified address ID has not been geocoded, an error will be returned.\n\n<!-- theme: warning-->\n> _Parameters `coordinates` and `address` are mutually exclusive. Passing more than one will result in an error_\n\n### Units\nBy default, data is returned in Imperial units. To return data in Metric units, pass the `metric` query parameter and set it to _true_. \n\n### Language\nBy default, data is returned in English. To return data in another language, pass the `langugage` query parameter and set it to a valid IETF language code",
+        "description": "Retrieve a detailed daily weather forecast\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:weather:*`,`sites:weather:forecast`\n* Licensed Feature: `weather_forecasts`\n\n### Specifying the Location\nWeather forecasts can be obtained for a specified set of coordinates or by specifying a geocoded address object ID. Either the `coordinates` or `@address` query parameters must be passed, but not both.\n\nIf the specified address ID has not been geocoded, an error will be returned.\n\n<!-- theme: warning-->\n> _Parameters `coordinates` and `@address` are mutually exclusive. Passing more than one will result in an error_\n\n### Units\nBy default, data is returned in Imperial units. To return data in Metric units, pass the `metric` query parameter and set it to _true_. \n\n### Language\nBy default, data is returned in English. To return data in another language, pass the `langugage` query parameter and set it to a valid IETF language code",
         "parameters": [
           {
             "schema": {
@@ -1192,7 +997,7 @@
               "format": "uuid"
             },
             "in": "query",
-            "name": "address",
+            "name": "@address",
             "description": "Get the weather forecast for the specified address ID"
           },
           {
@@ -1253,128 +1058,128 @@
                   "Response (Imperial Units)": {
                     "value": {
                       "effective_coordinates": {
-                        "latitude": "44.98588",
-                        "longitude": "-93.28069"
+                        "latitude": "37.79513",
+                        "longitude": "-122.40299"
                       },
                       "units": "imperial",
-                      "timestamp": 1606150620,
-                      "phrase": "Mostly sunny",
-                      "icon": 2,
+                      "timestamp": "2021-04-13T14:15:00+0000",
+                      "phrase": "Mostly cloudy",
+                      "icon": 6,
                       "is_raining": false,
                       "is_daytime": true,
                       "temperature": {
-                        "value": 30,
+                        "value": 49,
                         "unit": "F"
                       },
                       "apparent_temperature": {
-                        "value": 30,
+                        "value": 52,
                         "unit": "F"
                       },
                       "wetbulb_temperature": {
-                        "value": 28,
+                        "value": 48,
                         "unit": "F"
                       },
                       "windchill_temperature": {
-                        "value": 27,
+                        "value": 46,
                         "unit": "F"
                       },
-                      "relative_humidity": 71,
+                      "relative_humidity": 90,
                       "dewpoint": {
-                        "value": 22,
+                        "value": 46,
                         "unit": "F"
                       },
                       "wind": {
                         "direction": {
-                          "degrees": 113,
-                          "localized": "ESE"
+                          "degrees": 248,
+                          "localized": "WSW"
                         },
                         "speed": {
-                          "value": 3,
+                          "value": 6,
                           "unit": "mi/h"
                         },
                         "gust": {
-                          "value": 6,
+                          "value": 15,
                           "unit": "mi/h"
                         }
                       },
                       "visibility": {
-                        "value": 10,
+                        "value": 5,
                         "unit": "mi",
                         "obstructions": ""
                       },
-                      "cloud_cover": 14,
+                      "cloud_cover": 78,
                       "ceiling": {
-                        "value": 40000,
+                        "value": 5100,
                         "unit": "ft"
                       },
                       "pressure": {
-                        "value": 30.37,
+                        "value": 29.87,
                         "unit": "inHg",
-                        "direction": "Steady"
+                        "direction": "Rising"
                       }
                     }
                   },
                   "Response (Metric Units)": {
                     "value": {
                       "effective_coordinates": {
-                        "latitude": "44.98588",
-                        "longitude": "-93.28069"
+                        "latitude": "37.79513",
+                        "longitude": "-122.40299"
                       },
                       "units": "metric",
-                      "timestamp": 1606155600,
-                      "phrase": "Mostly sunny",
-                      "icon": 2,
+                      "timestamp": "2021-04-13T14:15:00+0000",
+                      "phrase": "Mostly cloudy",
+                      "icon": 6,
                       "is_raining": false,
                       "is_daytime": true,
                       "temperature": {
-                        "value": 0,
+                        "value": 9,
                         "unit": "C"
                       },
                       "apparent_temperature": {
-                        "value": 0,
+                        "value": 11,
                         "unit": "C"
                       },
                       "wetbulb_temperature": {
-                        "value": -1,
+                        "value": 8,
                         "unit": "C"
                       },
                       "windchill_temperature": {
-                        "value": -1,
+                        "value": 7,
                         "unit": "C"
                       },
-                      "relative_humidity": 65,
+                      "relative_humidity": 90,
                       "dewpoint": {
-                        "value": -4,
+                        "value": 8,
                         "unit": "C"
                       },
                       "wind": {
                         "direction": {
-                          "degrees": 135,
-                          "localized": "SE"
+                          "degrees": 248,
+                          "localized": "WSW"
                         },
                         "speed": {
-                          "value": 5,
+                          "value": 10,
                           "unit": "km/h"
                         },
                         "gust": {
-                          "value": 10,
+                          "value": 24,
                           "unit": "km/h"
                         }
                       },
                       "visibility": {
-                        "value": 17,
+                        "value": 8,
                         "unit": "km",
                         "obstructions": ""
                       },
-                      "cloud_cover": 12,
+                      "cloud_cover": 78,
                       "ceiling": {
-                        "value": 12192,
+                        "value": 1554,
                         "unit": "m"
                       },
                       "pressure": {
-                        "value": 1027.1,
+                        "value": 1011.5,
                         "unit": "mb",
-                        "direction": "Falling"
+                        "direction": "Rising"
                       }
                     }
                   }
@@ -1460,7 +1265,7 @@
           }
         },
         "operationId": "get-current-weather-conditions",
-        "description": "### Synposis\nRetrieve detailed current weather conditions\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:weather:*`,`sites:weather:currently`\n* Licensed Feature: `weather_conditions`\n\n### Specifying the Location\nWeather conditions can be obtained for a specified set of coordinates or by specifying a geocoded address object ID. Either the `coordinates` or `address` query parameters must be passed, but not both.\n\nIf the specified address ID has not been geocoded, an error will be returned.\n\n<!-- theme: warning-->\n> _Parameters `coordinates` and `address` are mutually exclusive. Passing more than one will result in an error_\n\n### Units\nBy default, data is returned in Imperial units. To return data in Metric units, pass the `metric` query parameter and set it to _true_. \n\n### Language\nBy default, data is returned in English. To return data in another language, pass the `langugage` query parameter and set it to a valid IETF language code",
+        "description": "### Synposis\nRetrieve detailed current weather conditions\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:weather:*`,`sites:weather:currently`\n* Licensed Feature: `weather_conditions`\n\n### Specifying the Location\nWeather conditions can be obtained for a specified set of coordinates or by specifying a geocoded address object ID. Either the `coordinates` or `@address` query parameters must be passed, but not both.\n\nIf the specified address ID has not been geocoded, an error will be returned.\n\n<!-- theme: warning-->\n> _Parameters `coordinates` and `@address` are mutually exclusive. Passing more than one will resultin an error_\n\n### Units\nBy default, data is returned in Imperial units. To return data in Metric units, pass the `metric` query parameter and set it to _true_. \n\n### Language\nBy default, data is returned in English. To return data in another language, pass the `langugage` query parameter and set it to a valid IETF language code",
         "parameters": [
           {
             "schema": {
@@ -1477,7 +1282,7 @@
               "format": "uuid"
             },
             "in": "query",
-            "name": "address",
+            "name": "@address",
             "description": "Get the current conditions for the specified address ID"
           },
           {
@@ -1539,8 +1344,8 @@
                               "summary": "High Surf Advisory in effect from 10:00 PM PST until Wednesday, 10:00 PM PST.  Source: U.S. National Weather Service",
                               "status": "New",
                               "span": {
-                                "start": 1606284000,
-                                "end": 1606370400
+                                "start": "2021-04-13T14:00:00+0000",
+                                "end": "2021-04-13T14:00:00+0000"
                               },
                               "details": "...HIGH SURF ADVISORY IN EFFECT FROM 10 PM THIS EVENING TO 10 PM\nPST WEDNESDAY...\n\n* WHAT...Large breaking waves of 18 to 21 feet expected in the\n  surf zone.\n\n* WHERE...North Coast and Central Coast.\n\n* WHEN...From 10 PM this evening to 10 PM PST Wednesday.\n\n* IMPACTS...Dangerous conditions along the coast and in the surf\n  zone. Localized beach erosion may also occur due to large waves.\n\nPRECAUTIONARY/PREPAREDNESS ACTIONS...\n\nLarge waves may break and run up beaches farther than usual. Keep\nyour distance from the coastline and never turn your back on the\nocean.\n\nInexperienced swimmers should remain out of the water due to\ndangerous surf conditions.\n\n&&"
                             }
@@ -1648,7 +1453,7 @@
               "format": "uuid"
             },
             "in": "query",
-            "name": "address",
+            "name": "@address",
             "description": "Get weather alerts for the specified address ID"
           },
           {
@@ -1675,37 +1480,7 @@
         ],
         "responses": {
           "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Timezone-Details"
-                },
-                "examples": {
-                  "Response": {
-                    "value": {
-                      "id": "America/Los_Angeles",
-                      "effective_coordinates": [
-                        "47.49316",
-                        "-122.29394"
-                      ],
-                      "current": {
-                        "wall_time": 1606186725,
-                        "utc_offset": -28800,
-                        "is_dst": false,
-                        "tag": "PST"
-                      },
-                      "names": {
-                        "ISO6391_language_code": "en",
-                        "generic": "Pacific Time",
-                        "standard": "Pacific Standard Time",
-                        "daylight": "Pacific Daylight Time"
-                      }
-                    }
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/200-Get-Timezone-Object"
           },
           "400": {
             "description": "Bad Request",
@@ -1730,26 +1505,7 @@
             }
           },
           "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "../models/Error-Response.v1.yaml"
-                },
-                "examples": {
-                  "Adress Not Found": {
-                    "value": {
-                      "error": {
-                        "message": "Address not found",
-                        "console": "The address ID 8ac7d5dc-803d-40ac-bc57-16c0dbffe5d8 could not be found in the database",
-                        "code": 404
-                      },
-                      "logging_hash": null
-                    }
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/404-Address-Not-Found"
           },
           "409": {
             "description": "Conflict",
@@ -1773,7 +1529,7 @@
                     "value": {
                       "error": {
                         "message": "Invalid address geocoding",
-                        "console": "The address ID 8ac7d5dc-803d-40ac-bc37-16c0dbffe5d8 is not geocoded and we have no coordinates to check",
+                        "console": "The address ID ... is not geocoded and we have no coordinates to check",
                         "code": 409
                       },
                       "logging_hash": null
@@ -1785,7 +1541,7 @@
           }
         },
         "operationId": "get-timezone",
-        "description": "### Synopsis\nRetrieve timezone details including the current time\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:utilities:*`,`sites:utilities:timezone`\n* Licensed Feature: `sites_base`\n\n### Specifying Coordinates or Address ID\nTimezone details can be obtained for a specified set of coordinates or by specifying a geocoded address object ID. Either the `coordinates` or `address` query parameters must be passed, but not both.\n\nIf the specified address ID has not been geocoded, an error will be returned.\n\n### Specifying am IANA Timezone ID\nTimezone details can be obtained for any Timezone by specifying the IANA timezone ID\n\n<!-- theme: warning-->\n> _Parameters `timezone`, `coordinates` and `address` are mutually exclusive. Passing more than one will result in an error_\n",
+        "description": "### Synopsis\nRetrieve timezone details including the current time\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:utilities:*`,`sites:utilities:timezone`\n* Licensed Feature: `sites_base`\n\n### Specifying Coordinates or Address ID\nTimezone details can be obtained for a specified set of coordinates or by specifying a geocoded address object ID. Either the `coordinates` or `@address` query parameters must be passed, but not both.\n\nIf the specified address ID has not been geocoded, an error will be returned.\n\n### Specifying am IANA Timezone ID\nTimezone details can be obtained for any Timezone by specifying the IANA timezone ID\n\n<!-- theme: warning-->\n> _Parameters `timezone`, `coordinates` and `@address` are mutually exclusive. Passing more than one will result in an error_\n",
         "parameters": [
           {
             "schema": {
@@ -1809,8 +1565,13 @@
               "format": "uuid"
             },
             "in": "query",
-            "name": "address",
+            "name": "@address",
             "description": "Get the timezone for the specified address ID"
+          }
+        ],
+        "security": [
+          {
+            "Bearer Token": []
           }
         ]
       }
@@ -1841,25 +1602,8 @@
                   }
                 },
                 "examples": {
-                  "example-1": {
-                    "value": {
-                      "count": 0,
-                      "data": [
-                        {
-                          "id": "string",
-                          "created": "string",
-                          "site": "string",
-                          "code": "string",
-                          "description": "string",
-                          "attributes": {
-                            "below_grade": true,
-                            "gross_floor_area": 0,
-                            "room_count": 0,
-                            "net_room_area": 0
-                          }
-                        }
-                      ]
-                    }
+                  "Response": {
+                    "$ref": "#/components/examples/Floor-Object-List"
                   }
                 }
               }
@@ -1867,7 +1611,7 @@
           }
         },
         "operationId": "list-floors",
-        "description": "### Synopsis\nRetrieve a list of sites available to the authenticated user\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:site:*`,`sites:site:list`\n* Licensed Feature: `sites_base`",
+        "description": "### Synopsis\nRetrieve a list of floors available to the authenticated user\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:floor:*`,`sites:floor:list`",
         "security": [
           {
             "Bearer Token": []
@@ -1875,13 +1619,7 @@
         ],
         "parameters": [
           {
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            },
-            "in": "query",
-            "name": "siteId",
-            "description": "A valid site UUID"
+            "$ref": "#/components/parameters/@siteId"
           }
         ]
       },
@@ -1890,10 +1628,25 @@
         "operationId": "create-floor",
         "responses": {
           "201": {
-            "description": "Created"
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Floor-Object"
+                },
+                "examples": {
+                  "Response": {
+                    "$ref": "#/components/examples/Room-Object"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/404-Site-Not-Found"
           }
         },
-        "description": "",
+        "description": "### Synopsis\nCreate a new floor and assign it to a site\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:floor:*`,`sites:floor:create`\n* Licensed Feature: `sites_base`",
         "tags": [
           "Floors"
         ],
@@ -1901,20 +1654,55 @@
           {
             "Bearer Token": []
           }
-        ]
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "description": "",
+                "type": "object",
+                "properties": {
+                  "code": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "A unique code for the floor",
+                    "example": "Floor 1, Main Floor, Basement"
+                  },
+                  "description": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "gross_floor_area": {
+                    "type": "number"
+                  },
+                  "below_grade": {
+                    "type": "boolean",
+                    "description": "Indicate if the floor is below grade. Default is `false`"
+                  },
+                  "@site": {
+                    "type": "string",
+                    "format": "uuid",
+                    "description": "A valid site UUID that will contain this floor"
+                  }
+                },
+                "required": [
+                  "code",
+                  "@site"
+                ]
+              },
+              "examples": {
+                "Example": {
+                  "$ref": "#/components/examples/Create-Floor-Body"
+                }
+              }
+            }
+          }
+        }
       },
       "parameters": []
     },
     "/v1/site/floor/{floorId}": {
       "parameters": [
-        {
-          "schema": {
-            "type": "string"
-          },
-          "name": "floorId",
-          "in": "path",
-          "required": true
-        },
         {
           "$ref": "#/components/parameters/floorId"
         }
@@ -1926,14 +1714,14 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "$ref": "#/components/responses/200-Floor-Object"
           },
           "404": {
             "$ref": "#/components/responses/404-Floor-Not-Found"
           }
         },
         "operationId": "get-floor",
-        "description": "",
+        "description": "### Synopsis\nRetrieve the details for the specified floor\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:floor:*`,`sites:floor:read`",
         "security": [
           {
             "Bearer Token": []
@@ -1945,13 +1733,13 @@
         "operationId": "update-floor",
         "responses": {
           "200": {
-            "description": "OK"
+            "$ref": "#/components/responses/200-Floor-Object"
           },
           "404": {
             "$ref": "#/components/responses/404-Floor-Not-Found"
           }
         },
-        "description": "",
+        "description": "### Synopsis\nUpdate the details for the specified floor\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:floor:*`,`sites:floor:update`\n* Licensed Feature: `sites_base`",
         "tags": [
           "Floors"
         ],
@@ -1965,8 +1753,15 @@
         "summary": "Delete Floor",
         "operationId": "delete-floor",
         "responses": {
-          "200": {
-            "description": "OK"
+          "204": {
+            "description": "No Content",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "null"
+                }
+              }
+            }
           },
           "400": {
             "$ref": "#/components/responses/400-Floor-Not-Empty"
@@ -1975,7 +1770,7 @@
             "$ref": "#/components/responses/404-Floor-Not-Found"
           }
         },
-        "description": "",
+        "description": "### Synopsis\nDelete the specified floor\n\n<!-- theme: danger -->\n> _**Heads Up** This cannot be undone!_\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:floor:*`,`sites:floor:delete`\n* Specified floor must be void of any associated rooms",
         "tags": [
           "Floors"
         ]
@@ -1987,23 +1782,54 @@
         "tags": [
           "Rooms"
         ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        },
         "operationId": "list-rooms",
-        "description": "",
+        "description": "### Synopsis\nRetrieve a list of rooms available to the authenticated user\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:room:*`,`sites:room:list`",
         "security": [
           {
             "Bearer Token": []
           }
-        ]
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/@siteId"
+          },
+          {
+            "$ref": "#/components/parameters/@floorId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "count": {
+                      "type": "number"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Room-Object"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "Response": {
+                    "$ref": "#/components/examples/Room-Object"
+                  }
+                }
+              }
+            }
+          }
+        }
       },
       "post": {
         "summary": "Create Room",
         "operationId": "create-room",
-        "description": "",
+        "description": "### Synopsis\nCreate a new room and assign it to a floor\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:room:*`,`sites:room:create`\n* Licensed Feature: `sites_base`\n\n### Defining Room Occupancy\nThe room occupancy classification must be specifid in the `occupancy` body parameter. One of the [International Building Code (IBC)](https://buildingcodetrainer.com/building-occupancy-classification-occupancy-types-explained/) occupancy codes is required and all occupancies are considered valid values.\n\n### Defining Room Area\nThe `area` body parameter is required and should contain the net area of the room in localized units (square meters or square feet). Only integer values are permitted.",
         "tags": [
           "Rooms"
         ],
@@ -2012,7 +1838,108 @@
           {
             "Bearer Token": []
           }
-        ]
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "description": "",
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "number": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "description": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "area": {
+                    "type": "number",
+                    "description": "The net area of the room in localized units (integers only)",
+                    "format": "double"
+                  },
+                  "@floor": {
+                    "type": "string",
+                    "minLength": 1,
+                    "format": "uuid",
+                    "description": "A valid floor UUID that will contain this room"
+                  },
+                  "occupancy": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "The IBC occupancy classification of this room",
+                    "enum": [
+                      "A-1",
+                      "A-2",
+                      "A-3",
+                      "A-4",
+                      "A-5",
+                      "B",
+                      "E",
+                      "F-1",
+                      "F-2",
+                      "H-1",
+                      "H-2",
+                      "H-3",
+                      "H-4",
+                      "H-5",
+                      "I-1",
+                      "I-2",
+                      "I-3",
+                      "I-4",
+                      "M",
+                      "R-1",
+                      "R-2",
+                      "R-3",
+                      "R-3.1",
+                      "R-4",
+                      "S-1",
+                      "S-2",
+                      "U"
+                    ]
+                  }
+                },
+                "required": [
+                  "name",
+                  "number",
+                  "area",
+                  "@floor",
+                  "occupancy"
+                ]
+              },
+              "examples": {
+                "Response": {
+                  "$ref": "#/components/examples/Create-Room-Body"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Room-Object"
+                },
+                "examples": {
+                  "Response": {
+                    "$ref": "#/components/examples/Room-Object"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/404-Floor-Not-Found"
+          }
+        }
       }
     },
     "/v1/site/room/{roomId}": {
@@ -2028,14 +1955,14 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "$ref": "#/components/responses/200-Room-Object"
           },
           "404": {
             "$ref": "#/components/responses/404-Room-Not-Found"
           }
         },
         "operationId": "get-room",
-        "description": "",
+        "description": "### Synopsis\nRetrieve the details for the specified room\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:room:*`,`sites:room:read`",
         "security": [
           {
             "Bearer Token": []
@@ -2047,7 +1974,7 @@
         "operationId": "update-room",
         "responses": {
           "200": {
-            "description": "OK"
+            "$ref": "#/components/responses/200-Room-Object"
           },
           "404": {
             "$ref": "#/components/responses/404-Room-Not-Found"
@@ -2060,20 +1987,75 @@
         ],
         "tags": [
           "Rooms"
-        ]
+        ],
+        "description": "### Synopsis\nUpdate the details for the specified room\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:room:*`,`sites:room:update`",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "The name of the room"
+                  },
+                  "number": {
+                    "type": "string",
+                    "description": "The room number"
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "The room description"
+                  },
+                  "occupancy": {
+                    "type": "string",
+                    "description": "The room occupancy classification"
+                  },
+                  "area": {
+                    "type": "number",
+                    "description": "The net area of the room"
+                  },
+                  "@floor": {
+                    "type": "string",
+                    "format": "uuid",
+                    "description": "The floor the room belongs to"
+                  }
+                }
+              },
+              "examples": {
+                "Example": {
+                  "value": {
+                    "name": "Circulation",
+                    "occupancy": "B",
+                    "area": 250,
+                    "floor": "f1acf44a-62d2-42f3-8dad-b917de85d75c"
+                  }
+                }
+              }
+            }
+          },
+          "description": ""
+        }
       },
       "delete": {
         "summary": "Delete Room",
         "operationId": "delete-room",
         "responses": {
           "204": {
-            "description": "No Content"
+            "description": "No Content",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "null"
+                }
+              }
+            }
           },
           "404": {
             "$ref": "#/components/responses/404-Room-Not-Found"
           }
         },
-        "description": "",
+        "description": "### Synopsis\nDelete the specified room\n\n<!-- theme: danger -->\n> _**Heads Up** This cannot be undone!_\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:room:*`,`sites:room:delete`\n* Specified room must be void of any associated equipment",
         "tags": [
           "Rooms"
         ],
@@ -2090,6 +2072,7 @@
       "Site-Object": {
         "description": "",
         "type": "object",
+        "title": "Site Object",
         "properties": {
           "id": {
             "type": "string",
@@ -2097,6 +2080,13 @@
           },
           "created": {
             "type": "string",
+            "minLength": 1
+          },
+          "last_modified": {
+            "type": [
+              "string",
+              "null"
+            ],
             "minLength": 1
           },
           "code": {
@@ -2111,12 +2101,19 @@
             "type": "string",
             "minLength": 1
           },
-          "address": {
+          "@address": {
             "type": "string",
             "minLength": 1
           },
           "attributes": {
             "type": "object",
+            "required": [
+              "year_built",
+              "floor_count",
+              "room_count",
+              "gross_floor_area",
+              "net_room_area"
+            ],
             "properties": {
               "year_built": {
                 "type": "string",
@@ -2134,14 +2131,7 @@
               "net_room_area": {
                 "type": "number"
               }
-            },
-            "required": [
-              "year_built",
-              "floor_count",
-              "room_count",
-              "gross_floor_area",
-              "net_room_area"
-            ]
+            }
           }
         },
         "required": [
@@ -2150,10 +2140,9 @@
           "code",
           "name",
           "description",
-          "address",
+          "@address",
           "attributes"
-        ],
-        "title": "Site Object"
+        ]
       },
       "Address-Object": {
         "description": "",
@@ -2161,20 +2150,37 @@
         "properties": {
           "id": {
             "type": "string",
+            "minLength": 1,
             "format": "uuid",
-            "description": "The address object UUID"
+            "readOnly": true
+          },
+          "created": {
+            "type": "string",
+            "minLength": 1,
+            "readOnly": true
+          },
+          "last_modified": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "format": "date-time",
+            "readOnly": true
+          },
+          "@site": {
+            "type": "string",
+            "minLength": 1,
+            "format": "uuid"
           },
           "lines": {
             "type": "array",
-            "minItems": 1,
-            "maxItems": 2,
-            "description": "An array of address lines",
             "items": {
-              "type": "string"
+              "type": "object"
             }
           },
           "locality": {
-            "type": "string"
+            "type": "string",
+            "minLength": 1
           },
           "city": {
             "type": "string",
@@ -2192,7 +2198,8 @@
             "type": "number"
           },
           "country": {
-            "type": "string"
+            "type": "string",
+            "minLength": 1
           },
           "formatted": {
             "type": "string",
@@ -2217,9 +2224,6 @@
             "type": "string",
             "minLength": 1
           },
-          "offset": {
-            "type": "number"
-          },
           "designations": {
             "type": "object",
             "required": [
@@ -2238,6 +2242,8 @@
         },
         "required": [
           "id",
+          "created",
+          "@site",
           "lines",
           "locality",
           "city",
@@ -2248,15 +2254,11 @@
           "formatted",
           "geolocation",
           "timezone",
-          "offset",
           "designations"
         ],
-        "title": "Address Object",
-        "x-tags": [
-          "Schemas"
-        ]
+        "title": "Address Object"
       },
-      "Timezone-Details": {
+      "Timezone-Object": {
         "description": "",
         "type": "object",
         "properties": {
@@ -2267,20 +2269,16 @@
           "effective_coordinates": {
             "type": "array",
             "items": {
-              "type": "string"
+              "required": [],
+              "properties": {}
             }
           },
           "current": {
             "type": "object",
-            "required": [
-              "wall_time",
-              "utc_offset",
-              "is_dst",
-              "tag"
-            ],
             "properties": {
               "wall_time": {
-                "type": "number"
+                "type": "string",
+                "minLength": 1
               },
               "utc_offset": {
                 "type": "number"
@@ -2292,16 +2290,16 @@
                 "type": "string",
                 "minLength": 1
               }
-            }
+            },
+            "required": [
+              "wall_time",
+              "utc_offset",
+              "is_dst",
+              "tag"
+            ]
           },
           "names": {
             "type": "object",
-            "required": [
-              "ISO6391_language_code",
-              "generic",
-              "standard",
-              "daylight"
-            ],
             "properties": {
               "ISO6391_language_code": {
                 "type": "string",
@@ -2319,7 +2317,13 @@
                 "type": "string",
                 "minLength": 1
               }
-            }
+            },
+            "required": [
+              "ISO6391_language_code",
+              "generic",
+              "standard",
+              "daylight"
+            ]
           }
         },
         "required": [
@@ -2328,33 +2332,9 @@
           "current",
           "names"
         ],
-        "title": "Timezone Details",
-        "x-examples": {
-          "Example": {
-            "id": "Europe/Berlin",
-            "effective_coordinates": [
-              "52.5535101",
-              "13.2911232"
-            ],
-            "current": {
-              "wall_time": 1606190613,
-              "utc_offset": 3600,
-              "is_dst": false,
-              "tag": "CET"
-            },
-            "names": {
-              "ISO6391_language_code": "en",
-              "generic": "Central European Time",
-              "standard": "Central European Standard Time",
-              "daylight": "Central European Summer Time"
-            }
-          }
-        },
-        "x-tags": [
-          "Object Models"
-        ]
+        "title": "Timezone Object"
       },
-      "Forecast-Day-Details": {
+      "Daily-Forecast-Object": {
         "description": "",
         "type": "object",
         "properties": {
@@ -2813,7 +2793,7 @@
           "day",
           "night"
         ],
-        "title": "Forecast Day Details",
+        "title": "Daily Forecast",
         "x-examples": {
           "Example": {
             "date": 1606136400,
@@ -2934,50 +2914,6 @@
       "Weather-Forecast": {
         "description": "",
         "type": "object",
-        "properties": {
-          "effective_coordinates": {
-            "type": "object",
-            "required": [
-              "latitude",
-              "longitude"
-            ],
-            "properties": {
-              "latitude": {
-                "type": "string",
-                "minLength": 1
-              },
-              "longitude": {
-                "type": "string",
-                "minLength": 1
-              }
-            }
-          },
-          "units": {
-            "type": "string",
-            "minLength": 1
-          },
-          "summary": {
-            "type": "string",
-            "minLength": 1
-          },
-          "forecasts": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "": {
-                  "$ref": "#/components/schemas/Forecast-Day-Details"
-                }
-              }
-            }
-          }
-        },
-        "required": [
-          "effective_coordinates",
-          "units",
-          "summary",
-          "forecasts"
-        ],
         "x-examples": {
           "Example": {
             "effective_coordinates": {
@@ -3104,6 +3040,50 @@
         "title": "Weather Forecast",
         "x-tags": [
           "Object Models"
+        ],
+        "properties": {
+          "effective_coordinates": {
+            "type": "object",
+            "required": [
+              "latitude",
+              "longitude"
+            ],
+            "properties": {
+              "latitude": {
+                "type": "string",
+                "minLength": 1
+              },
+              "longitude": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "units": {
+            "type": "string",
+            "minLength": 1
+          },
+          "summary": {
+            "type": "string",
+            "minLength": 1
+          },
+          "forecasts": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "": {
+                  "$ref": "#/components/schemas/Daily-Forecast-Object"
+                }
+              }
+            }
+          }
+        },
+        "required": [
+          "effective_coordinates",
+          "units",
+          "summary",
+          "forecasts"
         ]
       },
       "Weather-Current-Conditions": {
@@ -3609,6 +3589,7 @@
       "Floor-Object": {
         "description": "",
         "type": "object",
+        "title": "Floor Object",
         "properties": {
           "id": {
             "type": "string",
@@ -3618,7 +3599,14 @@
             "type": "string",
             "minLength": 1
           },
-          "site": {
+          "last_modified": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "minLength": 1
+          },
+          "@site": {
             "type": "string",
             "minLength": 1
           },
@@ -3631,6 +3619,12 @@
           },
           "attributes": {
             "type": "object",
+            "required": [
+              "below_grade",
+              "gross_floor_area",
+              "room_count",
+              "net_room_area"
+            ],
             "properties": {
               "below_grade": {
                 "type": "boolean"
@@ -3644,34 +3638,43 @@
               "net_room_area": {
                 "type": "number"
               }
-            },
-            "required": [
-              "below_grade",
-              "gross_floor_area",
-              "room_count",
-              "net_room_area"
-            ]
+            }
           }
         },
         "required": [
           "id",
           "created",
-          "site",
+          "@site",
           "code",
           "description",
           "attributes"
-        ],
-        "title": "Floor Object"
+        ]
       },
       "Room-Object": {
         "description": "",
         "type": "object",
+        "title": "Room Object",
         "properties": {
           "id": {
             "type": "string",
             "minLength": 1
           },
           "created": {
+            "type": "string",
+            "minLength": 1
+          },
+          "last_modified": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "minLength": 1
+          },
+          "@site": {
+            "type": "string",
+            "minLength": 1
+          },
+          "@floor": {
             "type": "string",
             "minLength": 1
           },
@@ -3689,6 +3692,10 @@
           },
           "attributes": {
             "type": "object",
+            "required": [
+              "occupancy",
+              "area"
+            ],
             "properties": {
               "occupancy": {
                 "type": "string",
@@ -3697,22 +3704,20 @@
               "area": {
                 "type": "number"
               }
-            },
-            "required": [
-              "occupancy",
-              "area"
-            ]
+            }
           }
         },
         "required": [
           "id",
           "created",
+          "last_modified",
+          "@site",
+          "@floor",
           "number",
           "name",
           "description",
           "attributes"
-        ],
-        "title": "Room Object"
+        ]
       }
     },
     "securitySchemes": {
@@ -3762,6 +3767,26 @@
           "format": "uuid"
         },
         "description": "A valid room UUID"
+      },
+      "@siteId": {
+        "name": "@site",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "description": "Filter results by their associated site UUID"
+      },
+      "@floorId": {
+        "name": "@floor",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "description": "Filter results by their associated floor UUID"
       }
     },
     "examples": {
@@ -3843,10 +3868,11 @@
         "value": {
           "id": "0fa60c71-a611-418a-93a0-0bdf2dfa5ac3",
           "created": "2021-02-05T03:13:05+0000",
+          "last_modified": null,
           "code": "MSP",
           "name": "Minneapolis Office",
           "description": "",
-          "address": "1fb555c1-c683-4254-820b-f6e7a7add74c",
+          "@address": "1fb555c1-c683-4254-820b-f6e7a7add74c",
           "contacts": null,
           "attributes": {
             "year_built": "",
@@ -3859,16 +3885,17 @@
       },
       "Floor-Object": {
         "value": {
-          "id": "d2fa3901-8649-46dc-bbfb-4864007895da",
-          "created": "2021-04-10T18:58:46+0000",
-          "site": "0fa60c71-a611-418a-93a0-0bdf2dfa5ac3",
-          "code": "Floor 1",
-          "description": "",
+          "id": "38082b4a-6e6c-46ac-ba44-9de02d3323c0",
+          "created": "2021-04-12T17:08:59+0000",
+          "last_modified": "2021-04-12T17:11:23+0000",
+          "@site": "0fa60c71-a611-418a-93a0-0bdf2dfa5ac3",
+          "code": "Basement",
+          "description": "Mechanical, building storage",
           "attributes": {
-            "below_grade": false,
-            "gross_floor_area": 18000,
-            "room_count": 0,
-            "net_room_area": 0
+            "below_grade": true,
+            "gross_floor_area": 16000,
+            "room_count": 5,
+            "net_room_area": 5480
           }
         }
       },
@@ -3877,7 +3904,7 @@
           "code": "Floor 1",
           "description": "First floor",
           "gross_floor_area": 18000,
-          "site": "0fa60c71-a611-418a-93a0-0bdf2dfa5ac3",
+          "@site": "0fa60c71-a611-418a-93a0-0bdf2dfa5ac3",
           "below_grade": false
         }
       },
@@ -3907,20 +3934,23 @@
           "number": "100",
           "description": "Open office & collaboration area",
           "area": 8900,
-          "floor": "d2fa3901-8649-46dc-bbfb-4864007895da",
+          "@floor": "d2fa3901-8649-46dc-bbfb-4864007895da",
           "occupancy": "B"
         }
       },
       "Room-Object": {
         "value": {
-          "id": "3540c510-24c8-43e6-b0fb-17f1447cdff9",
-          "created": "2021-04-10T19:19:46+0000",
-          "number": "100",
-          "name": "Open Office",
-          "description": "Open office & collaboration area",
+          "id": "61747b47-9828-4294-8602-8ef445e17240",
+          "created": "2021-04-12T18:22:40+0000",
+          "last_modified": "2021-04-12T18:54:18+0000",
+          "@site": "0fa60c71-a611-418a-93a0-0bdf2dfa5ac3",
+          "@floor": "38082b4a-6e6c-46ac-ba44-9de02d3323c0",
+          "number": "1",
+          "name": "Circulation",
+          "description": "Hall area",
           "attributes": {
             "occupancy": "B",
-            "area": 8900
+            "area": 150
           }
         }
       },
@@ -3936,6 +3966,54 @@
           "required": [
             "id"
           ]
+        }
+      },
+      "Address-Object": {
+        "value": {
+          "id": "6517a08a-ab53-4c23-b4c1-d685d8e25a1c",
+          "created": "2021-02-05T16:10:54+0000",
+          "last_modified": null,
+          "@site": "723a9c16-1790-4386-b17b-54bc9ed6d901",
+          "lines": [
+            "600 Montgomery"
+          ],
+          "locality": "Downtown San Francisco",
+          "city": "San Francisco",
+          "county": "San Francisco",
+          "state": "CA",
+          "postcode": 94111,
+          "country": "USA",
+          "formatted": "600 Montgomery, San Francisco, CA 94111",
+          "geolocation": {
+            "latitude": 37.79513,
+            "longitude": -122.40299
+          },
+          "timezone": "America/Los_Angeles",
+          "designations": {
+            "primary_mailing": false,
+            "primary_billing": false
+          }
+        }
+      },
+      "Timezone-Object": {
+        "value": {
+          "id": "America/Los_Angeles",
+          "effective_coordinates": [
+            "37.79513",
+            "-122.40299"
+          ],
+          "current": {
+            "wall_time": "2021-04-13T06:59:36+0000",
+            "utc_offset": -25200,
+            "is_dst": false,
+            "tag": "PDT"
+          },
+          "names": {
+            "ISO6391_language_code": "en",
+            "generic": "Pacific Time",
+            "standard": "Pacific Standard Time",
+            "daylight": "Pacific Daylight Time"
+          }
         }
       }
     },
@@ -3973,7 +4051,7 @@
               "Response": {
                 "value": {
                   "error": {
-                    "message": "Floornot found",
+                    "message": "Floor not found",
                     "console": "The floor ID ... could not be found in the database",
                     "code": 404
                   },
@@ -4042,6 +4120,169 @@
                     "message": "Floor not empty",
                     "console": "The floor ID ... cannot be deleted while it contains rooms. Delete the associated rooms and try again.",
                     "code": 400
+                  },
+                  "logging_hash": "..."
+                }
+              }
+            }
+          }
+        }
+      },
+      "200-Floor-Object": {
+        "description": "Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Floor-Object"
+            },
+            "examples": {
+              "Response": {
+                "$ref": "#/components/examples/Floor-Object"
+              }
+            }
+          }
+        }
+      },
+      "200-Room-Object": {
+        "description": "Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Room-Object"
+            },
+            "examples": {
+              "Response": {
+                "$ref": "#/components/examples/Room-Object"
+              }
+            }
+          }
+        }
+      },
+      "200-Site-Object": {
+        "description": "Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Site-Object"
+            },
+            "examples": {
+              "Response": {
+                "$ref": "#/components/examples/Site-Object"
+              }
+            }
+          }
+        }
+      },
+      "200-Address-Object": {
+        "description": "Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Address-Object"
+            },
+            "examples": {
+              "Response": {
+                "$ref": "#/components/examples/Address-Object"
+              }
+            }
+          }
+        }
+      },
+      "404-Address-Not-Found": {
+        "description": "Not Found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../models/Error-Response.v1.yaml"
+            },
+            "examples": {
+              "Response": {
+                "value": {
+                  "error": {
+                    "message": "Address not found",
+                    "console": "The address ID ... could not be found in the database",
+                    "code": 404
+                  },
+                  "logging_hash": "..."
+                }
+              }
+            }
+          }
+        }
+      },
+      "400-Address-Already-Exists": {
+        "description": "Bad Request",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../models/Error-Response.v1.yaml"
+            },
+            "examples": {
+              "Response": {
+                "value": {
+                  "error": {
+                    "message": "Site already has an address",
+                    "console": "Update or delete the existing address",
+                    "code": 400
+                  },
+                  "logging_hash": "..."
+                }
+              }
+            }
+          }
+        }
+      },
+      "409-No-Address-Geocoding": {
+        "description": "Conflict",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../models/Error-Response.v1.yaml"
+            },
+            "examples": {
+              "Invalid Geocoding": {
+                "value": {
+                  "error": {
+                    "message": "Invalid address geocoding",
+                    "console": "The address ID ... is not geocoded and we have no coordinates to check",
+                    "code": 409
+                  },
+                  "logging_hash": "..."
+                }
+              }
+            }
+          }
+        }
+      },
+      "200-Get-Timezone-Object": {
+        "description": "Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Timezone-Object"
+            },
+            "examples": {
+              "Response": {
+                "$ref": "#/components/examples/Timezone-Object"
+              }
+            }
+          }
+        }
+      },
+      "409-Invalid-Weather-Parameters": {
+        "description": "Conflict",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../models/Error-Response.v1.yaml"
+            },
+            "examples": {
+              "Response": {
+                "value": {
+                  "error": {
+                    "message": "Invalid parameter combination",
+                    "console": "Parameters coordinates and address are mutually exclusive. Specify only one.",
+                    "code": 409
                   },
                   "logging_hash": "..."
                 }
