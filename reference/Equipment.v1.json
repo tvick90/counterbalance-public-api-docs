@@ -12,7 +12,7 @@
   "paths": {
     "/v1/equipment": {
       "get": {
-        "summary": "List Equipment",
+        "summary": "List Equipment Nodes",
         "tags": [
           "Equipment"
         ],
@@ -21,8 +21,8 @@
         "description": ""
       },
       "post": {
-        "summary": "Create Equipment",
-        "operationId": "post-v1-equipment",
+        "summary": "Create Equipment Node",
+        "operationId": "create-equipment",
         "responses": {
           "200": {
             "description": "OK"
@@ -31,28 +31,103 @@
         "description": "",
         "tags": [
           "Equipment"
-        ]
+        ],
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "A name for the new node"
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "A brief description of the equipment"
+                  },
+                  "tag": {
+                    "type": "string",
+                    "description": "A top-level Haystack equipment tag"
+                  },
+                  "markers": {
+                    "type": "string",
+                    "description": "A space-seperated list of marker tags"
+                  },
+                  "@parent": {
+                    "type": "string",
+                    "description": "The parent equipment node of this node",
+                    "format": "uuid"
+                  },
+                  "@site": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "metadata": {
+                    "type": "string"
+                  },
+                  "notes": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "name",
+                  "tag"
+                ]
+              }
+            }
+          },
+          "description": ""
+        }
       }
     },
     "/v1/equipment/{equipmentId}": {
       "parameters": [
         {
-          "schema": {
-            "type": "string"
-          },
-          "name": "equipmentId",
-          "in": "path",
-          "required": true
+          "$ref": "#/components/parameters/equipmentId"
         }
       ],
       "get": {
-        "summary": "Get Equipment Details",
+        "summary": "Get Equipment Node",
         "tags": [
           "Equipment"
         ],
         "responses": {},
-        "operationId": "get-equipment-details",
+        "operationId": "get-equipment",
         "description": "Retrieve equipment details"
+      },
+      "patch": {
+        "summary": "Update Equipment Node",
+        "operationId": "update-equipment",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "Equipment Nodes"
+        ],
+        "description": ""
+      },
+      "delete": {
+        "summary": "Delete Equipment Node",
+        "operationId": "delete-equipment",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "description": "",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ]
       }
     },
     "/v1/equipment/classifications": {
@@ -115,7 +190,25 @@
     }
   },
   "components": {
-    "schemas": {}
+    "schemas": {},
+    "securitySchemes": {
+      "Bearer Token": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    },
+    "parameters": {
+      "equipmentId": {
+        "name": "equipmentId",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "description": "A valid equipment node UUID"
+      }
+    }
   },
   "tags": [
     {
