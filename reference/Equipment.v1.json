@@ -24,8 +24,8 @@
         "summary": "Create Equipment Node",
         "operationId": "create-equipment",
         "responses": {
-          "200": {
-            "description": "OK"
+          "201": {
+            "description": "Created"
           }
         },
         "description": "",
@@ -69,7 +69,7 @@
                     "format": "uuid"
                   },
                   "metadata": {
-                    "type": "string"
+                    "type": "object"
                   },
                   "notes": {
                     "type": "string"
@@ -79,6 +79,20 @@
                   "name",
                   "tag"
                 ]
+              },
+              "examples": {
+                "Example": {
+                  "value": {
+                    "name": "string",
+                    "description": "string",
+                    "tag": "string",
+                    "markers": "string",
+                    "@parent": "fedbb5a3-e076-44dc-92b5-6f9f6cec4ddc",
+                    "@site": "451f769d-1122-4c11-a645-7d2ed505aa0b",
+                    "metadata": {},
+                    "notes": "string"
+                  }
+                }
               }
             }
           },
