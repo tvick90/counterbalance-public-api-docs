@@ -2,7 +2,8 @@
   "openapi": "3.0.0",
   "info": {
     "title": "Equipment",
-    "version": "1.0"
+    "version": "1.0",
+    "description": "## Defining Equipment Nodes\nEquipment nodes are the Counterbalance representation of the physical pieces of equipment on a site. \n\n### Parent/Child Relationships\nEquipment nodes can be defined to create a parent/child relationship that follows-that of the actual equipment onsite. Exaamples include an air handler that serves multiple VAV boxes or zones or chilled water plant and its associated refrigeration equipment, pumps, etc.\n\n#### Permitted Relationships\nThe permitted parent/child components for each type of equipment are listed below.\n\n| Parent Tag | Permitted Children Tags |\n|---|---|\n| `ahu` | `vav`, `zone` |"
   },
   "servers": [
     {
