@@ -196,6 +196,16 @@
           {
             "Bearer Token": []
           }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "boolean"
+            },
+            "in": "query",
+            "name": "force",
+            "description": "Force the delete of a gateway that is offline"
+          }
         ]
       }
     },
@@ -1829,7 +1839,7 @@
                 "value": {
                   "error": {
                     "message": "Gateway not found",
-                    "console": "The gateway ID ... could not be found in the database",
+                    "console": "Please check the gateway ID and try your request again",
                     "code": 404
                   },
                   "logging_hash": "..."
