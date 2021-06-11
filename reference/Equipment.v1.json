@@ -2,7 +2,8 @@
   "openapi": "3.0.0",
   "info": {
     "title": "Equipment",
-    "version": "1.0"
+    "version": "1.0",
+    "description": "## Defining Equipment Nodes\nEquipment nodes are the Counterbalance representation of the physical pieces of equipment on a site. \n\n### Parent/Child Relationships\nEquipment nodes can be defined to create a parent/child relationship that follows-that of the actual equipment onsite. Exaamples include an air handler that serves multiple VAV boxes or zones or chilled water plant and its associated refrigeration equipment, pumps, etc.\n\n#### Permitted Relationships\nThe permitted parent/child components for each type of equipment are listed below.\n\n| Parent Tag | Permitted Children Tags |\n|---|---|\n| `ahu` | `vav`, `zone` |"
   },
   "servers": [
     {
@@ -12,7 +13,7 @@
   "paths": {
     "/v1/equipment": {
       "get": {
-        "summary": "List Equipment",
+        "summary": "List Equipment Nodes",
         "tags": [
           "Equipment"
         ],
@@ -21,38 +22,127 @@
         "description": ""
       },
       "post": {
-        "summary": "Create Equipment",
-        "operationId": "post-v1-equipment",
+        "summary": "Create Equipment Node",
+        "operationId": "create-equipment",
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        },
+        "description": "",
+        "tags": [
+          "Equipment"
+        ],
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "A name for the new node"
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "A brief description of the equipment"
+                  },
+                  "tag": {
+                    "type": "string",
+                    "description": "A top-level Haystack equipment tag"
+                  },
+                  "markers": {
+                    "type": "string",
+                    "description": "A space-seperated list of marker tags"
+                  },
+                  "@parent": {
+                    "type": "string",
+                    "description": "The parent equipment node of this node",
+                    "format": "uuid"
+                  },
+                  "@site": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "metadata": {
+                    "type": "object"
+                  },
+                  "notes": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "name",
+                  "tag"
+                ]
+              },
+              "examples": {
+                "Example": {
+                  "value": {
+                    "name": "string",
+                    "description": "string",
+                    "tag": "string",
+                    "markers": "string",
+                    "@parent": "fedbb5a3-e076-44dc-92b5-6f9f6cec4ddc",
+                    "@site": "451f769d-1122-4c11-a645-7d2ed505aa0b",
+                    "metadata": {},
+                    "notes": "string"
+                  }
+                }
+              }
+            }
+          },
+          "description": ""
+        }
+      }
+    },
+    "/v1/equipment/{equipmentId}": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/equipmentId"
+        }
+      ],
+      "get": {
+        "summary": "Get Equipment Node",
+        "tags": [
+          "Equipment"
+        ],
+        "responses": {},
+        "operationId": "get-equipment",
+        "description": "Retrieve equipment details"
+      },
+      "patch": {
+        "summary": "Update Equipment Node",
+        "operationId": "update-equipment",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "Equipment Nodes"
+        ],
+        "description": ""
+      },
+      "delete": {
+        "summary": "Delete Equipment Node",
+        "operationId": "delete-equipment",
         "responses": {
           "200": {
             "description": "OK"
           }
         },
         "description": "",
-        "tags": [
-          "Equipment"
+        "security": [
+          {
+            "Bearer Token": []
+          }
         ]
-      }
-    },
-    "/v1/equipment/{equipmentId}": {
-      "parameters": [
-        {
-          "schema": {
-            "type": "string"
-          },
-          "name": "equipmentId",
-          "in": "path",
-          "required": true
-        }
-      ],
-      "get": {
-        "summary": "Get Equipment Details",
-        "tags": [
-          "Equipment"
-        ],
-        "responses": {},
-        "operationId": "get-equipment-details",
-        "description": "Retrieve equipment details"
       }
     },
     "/v1/equipment/classifications": {
@@ -115,7 +205,25 @@
     }
   },
   "components": {
-    "schemas": {}
+    "schemas": {},
+    "securitySchemes": {
+      "Bearer Token": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    },
+    "parameters": {
+      "equipmentId": {
+        "name": "equipmentId",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "description": "A valid equipment node UUID"
+      }
+    }
   },
   "tags": [
     {
