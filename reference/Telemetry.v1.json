@@ -49,22 +49,10 @@
         ],
         "parameters": [
           {
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            },
-            "in": "query",
-            "name": "controller",
-            "description": "Return points connected to the specified controller ID"
+            "$ref": "#/components/parameters/@siteId"
           },
           {
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            },
-            "in": "query",
-            "name": "site",
-            "description": "Return points associated with the specified site ID"
+            "$ref": "#/components/parameters/@controllerId"
           }
         ]
       },
@@ -73,19 +61,7 @@
         "operationId": "create-data-point",
         "responses": {
           "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Point-Details"
-                },
-                "examples": {
-                  "Response": {
-                    "$ref": "#/components/examples/Get-Analog-Input-Point"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/200-Point-Object"
           },
           "400": {
             "$ref": "#/components/responses/400-Invalid-Scope"
