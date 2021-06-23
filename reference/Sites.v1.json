@@ -2,7 +2,7 @@
   "openapi": "3.0.0",
   "info": {
     "title": "Sites",
-    "version": "v1.2.0",
+    "version": "v1.2.2",
     "description": "The Sites API provides endpoints for site and building management, including:\n* Creating & managing sites & associated buildings\n* Creating & managing addresses\n* Viewing current and forecasted weather conditions\n* Viewing timezone details for an IANA Timezone ID\n\n## Site Types\nSites are of one of two types: \n\n* A `building` is a site composed of a single building and can be assigned an address and contacts.\n\n* A `campus` is a high-level collection of buildings. A campus cannot be assigned an addressis or contacts.\n\n## Quotas and Licensing\nSite management is a paid feature. Physical sites are subject to quota availability. Virtual sites and buildings are not measured against a pre-defined quota but require a seperate license. These requirments are outlined in the various endpoint docs.\n\nIf insufficient quota or licensing exists for the specified site type, a `403 Forbidden` error will be thrown and the site will not be created. ",
     "termsOfService": "https://www.counterbalance.io/legal/api-terms",
     "contact": {
