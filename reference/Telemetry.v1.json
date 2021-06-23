@@ -17,7 +17,7 @@
     }
   ],
   "paths": {
-    "/v1/telemetry/datapoint": {
+    "/v1/telemetry/point": {
       "get": {
         "summary": "List Points",
         "responses": {
@@ -166,10 +166,18 @@
       },
       "parameters": []
     },
-    "/v1/telemetry/datapoint/{pointId}": {
+    "/v1/telemetry/point/{pointId}": {
       "parameters": [
         {
-          "$ref": "#/components/parameters/pointId"
+          "name": "pointId",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid",
+            "example": "168a3e32-996f-410a-a06c-c4cdc10fa362"
+          },
+          "description": "A valid point UUID"
         }
       ],
       "get": {
@@ -179,25 +187,7 @@
         ],
         "responses": {
           "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Point-Details"
-                },
-                "examples": {
-                  "Analog Input": {
-                    "$ref": "#/components/examples/Get-Analog-Input-Point"
-                  },
-                  "Analog Input Online": {
-                    "$ref": "#/components/examples/Get-Analog-Input-Point-Online"
-                  },
-                  "Binary Output Online": {
-                    "$ref": "#/components/examples/Get-Binary-Output-Point-Online"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/200-Point-Object-Extended"
           },
           "404": {
             "$ref": "#/components/responses/404-Point-Not-Found"
@@ -256,19 +246,7 @@
         "operationId": "update-point",
         "responses": {
           "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Point-Details"
-                },
-                "examples": {
-                  "Response": {
-                    "$ref": "#/components/examples/Get-Analog-Input-Point"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/200-Point-Object"
           },
           "404": {
             "$ref": "#/components/responses/404-Point-Not-Found"
@@ -749,17 +727,20 @@
       "Point-Details": {
         "description": "",
         "type": "object",
+        "title": "Point Object",
         "properties": {
           "id": {
             "type": "string",
             "minLength": 1
           },
-          "controller": {
+          "@controller": {
             "type": "string",
-            "minLength": 1
+            "minLength": 1,
+            "format": "uuid"
           },
           "created": {
-            "type": "number"
+            "type": "string",
+            "format": "date-time"
           },
           "name": {
             "type": "string",
@@ -775,18 +756,38 @@
           "object_type": {
             "type": "number"
           },
-          "site": {
+          "collector_count": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 16
+          },
+          "@site": {
             "type": "string",
-            "minLength": 1
+            "minLength": 1,
+            "format": "uuid"
           },
           "is_online": {
             "type": "boolean"
           },
           "bacnet": {
             "type": "object",
+            "required": [
+              "object",
+              "telemetry",
+              "status",
+              "priority_array",
+              "alarming",
+              "totalization"
+            ],
             "properties": {
               "object": {
                 "type": "object",
+                "required": [
+                  "instance",
+                  "type",
+                  "name",
+                  "description"
+                ],
                 "properties": {
                   "instance": {
                     "type": "number"
@@ -802,16 +803,20 @@
                     "type": "string",
                     "minLength": 1
                   }
-                },
-                "required": [
-                  "instance",
-                  "type",
-                  "name",
-                  "description"
-                ]
+                }
               },
               "telemetry": {
                 "type": "object",
+                "required": [
+                  "present_value",
+                  "reliability",
+                  "device_type",
+                  "event_state",
+                  "state_text",
+                  "polarity",
+                  "feedback_value",
+                  "relinquish_default"
+                ],
                 "properties": {
                   "present_value": {
                     "type": "number"
@@ -831,8 +836,7 @@
                   "state_text": {
                     "type": "array",
                     "items": {
-                      "required": [],
-                      "properties": {}
+                      "type": "object"
                     }
                   },
                   "polarity": {
@@ -845,20 +849,16 @@
                   "relinquish_default": {
                     "type": "number"
                   }
-                },
-                "required": [
-                  "present_value",
-                  "reliability",
-                  "device_type",
-                  "event_state",
-                  "state_text",
-                  "polarity",
-                  "feedback_value",
-                  "relinquish_default"
-                ]
+                }
               },
               "status": {
                 "type": "object",
+                "required": [
+                  "in_alarm",
+                  "fault",
+                  "out_of_service",
+                  "overridden"
+                ],
                 "properties": {
                   "in_alarm": {
                     "type": "boolean"
@@ -872,29 +872,33 @@
                   "overridden": {
                     "type": "boolean"
                   }
-                },
-                "required": [
-                  "in_alarm",
-                  "fault",
-                  "out_of_service",
-                  "overridden"
-                ]
+                }
               },
               "priority_array": {
                 "type": "array",
                 "items": {
-                  "required": [],
-                  "properties": {}
+                  "type": "object"
                 }
               },
               "alarming": {
                 "type": "object",
+                "required": [
+                  "enabled",
+                  "acked_transitions",
+                  "notify",
+                  "time_delay"
+                ],
                 "properties": {
                   "enabled": {
                     "type": "boolean"
                   },
                   "acked_transitions": {
                     "type": "object",
+                    "required": [
+                      "to_normal",
+                      "to_offnormal",
+                      "to_fault"
+                    ],
                     "properties": {
                       "to_normal": {
                         "type": "boolean"
@@ -905,15 +909,14 @@
                       "to_fault": {
                         "type": "boolean"
                       }
-                    },
-                    "required": [
-                      "to_normal",
-                      "to_offnormal",
-                      "to_fault"
-                    ]
+                    }
                   },
                   "notify": {
                     "type": "object",
+                    "required": [
+                      "type",
+                      "notification_class"
+                    ],
                     "properties": {
                       "type": {
                         "type": "string",
@@ -922,25 +925,21 @@
                       "notification_class": {
                         "type": "number"
                       }
-                    },
-                    "required": [
-                      "type",
-                      "notification_class"
-                    ]
+                    }
                   },
                   "time_delay": {
                     "type": "number"
                   }
-                },
-                "required": [
-                  "enabled",
-                  "acked_transitions",
-                  "notify",
-                  "time_delay"
-                ]
+                }
               },
               "totalization": {
                 "type": "object",
+                "required": [
+                  "enabled",
+                  "elapsed_active_time",
+                  "last_reset",
+                  "ealpsed_inactive_time"
+                ],
                 "properties": {
                   "enabled": {
                     "type": "boolean"
@@ -954,38 +953,23 @@
                   "ealpsed_inactive_time": {
                     "type": "number"
                   }
-                },
-                "required": [
-                  "enabled",
-                  "elapsed_active_time",
-                  "last_reset",
-                  "ealpsed_inactive_time"
-                ]
+                }
               }
-            },
-            "required": [
-              "object",
-              "telemetry",
-              "status",
-              "priority_array",
-              "alarming",
-              "totalization"
-            ]
+            }
           }
         },
         "required": [
           "id",
-          "controller",
+          "@controller",
           "created",
           "name",
           "description",
           "instance_id",
           "object_type",
-          "site",
+          "@site",
           "is_online",
           "bacnet"
-        ],
-        "title": "Point Details"
+        ]
       },
       "Point-Listing": {
         "description": "",
@@ -1079,6 +1063,45 @@
         "schema": {
           "type": "string"
         }
+      },
+      "@controllerId": {
+        "name": "@controller",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "description": "Filter results by their associated controller UUID"
+      },
+      "@siteId": {
+        "name": "@site",
+        "in": "query",
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "description": "Filter results by their associated site UUID"
+      },
+      "@gatewayId": {
+        "name": "@gateway",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "description": "Filter results by their associated gateway UUID"
+      },
+      "@pointId": {
+        "name": "@point",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "description": "Filter results by their associated point UUID"
       }
     },
     "securitySchemes": {
@@ -1123,7 +1146,7 @@
                 "value": {
                   "error": {
                     "message": "Controller not found",
-                    "console": "The controller ID ... could not be found in the database",
+                    "console": "Please check the controller ID and try your request again",
                     "code": 404
                   },
                   "logging_hash": "..."
@@ -1160,7 +1183,7 @@
                 "value": {
                   "error": {
                     "message": "Collector not found",
-                    "console": "The collector ID ... could not be found in the database",
+                    "console": "Please check the collector ID and try your request again",
                     "code": 404
                   },
                   "logging_hash": "..."
@@ -1203,12 +1226,48 @@
               "Response": {
                 "value": {
                   "error": {
-                    "message": "Datapoint not found",
-                    "console": "The datapoint ID ... could not be found in the database",
+                    "message": "Point not found",
+                    "console": "Please check the point ID and try your request again",
                     "code": 404
                   },
                   "logging_hash": "..."
                 }
+              }
+            }
+          }
+        }
+      },
+      "200-Point-Object": {
+        "description": "Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Point-Details"
+            },
+            "examples": {
+              "Response": {
+                "$ref": "#/components/examples/Get-Analog-Input-Point"
+              }
+            }
+          }
+        }
+      },
+      "200-Point-Object-Extended": {
+        "description": "Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Point-Details"
+            },
+            "examples": {
+              "Analog Input": {
+                "$ref": "#/components/examples/Get-Analog-Input-Point"
+              },
+              "Analog Input Online": {
+                "$ref": "#/components/examples/Get-Analog-Input-Point-Online"
+              },
+              "Binary Output Online": {
+                "$ref": "#/components/examples/Get-Binary-Output-Point-Online"
               }
             }
           }
@@ -1278,21 +1337,22 @@
       },
       "Get-Analog-Input-Point-Online": {
         "value": {
-          "id": "168a3e32-996f-410a-a06c-c4cdc10fa362",
-          "controller": "4f668b28-c30d-4fc1-b751-7cc30dcc4964",
-          "created": 1613745301,
-          "name": "SEA.HWS.T",
-          "description": "HW SUPPLY TEMP",
+          "id": "139e612c-83fa-4cc9-8634-834395899346",
+          "@controller": "d1ae9060-b89c-48e8-abae-0f78d8f6af9d",
+          "created": "2021-06-22T01:36:30+0000",
+          "name": "SEA.AH1.SAT",
+          "description": "AH-1 SUPPLY TEMPERATURE",
           "instance_id": 5,
           "object_type": 0,
-          "site": "82478e3a-a212-41bf-9e2b-7522a1504a6b",
+          "collector_count": 0,
+          "@site": "82478e3a-a212-41bf-9e2b-7522a1504a6b",
           "is_online": true,
           "bacnet": {
             "object": {
               "instance": 5,
               "type": 0,
-              "name": "SEA.HWS.T",
-              "description": "HW SUPPLY TEMP"
+              "name": "SEA.AH1.SAT",
+              "description": "AH-1 SUPPLY TEMPERATURE"
             },
             "telemetry": {
               "present_value": 109.2,
@@ -1344,14 +1404,15 @@
       },
       "Get-Binary-Output-Point-Online": {
         "value": {
-          "id": "f0b51e0d-1b3d-464e-9e6d-fef693f412b7",
-          "controller": "4f668b28-c30d-4fc1-b751-7cc30dcc4964",
-          "created": 1614441878,
-          "name": "SEA.SRV.ALARM",
-          "description": "SRV ALARM LIGHT",
-          "instance_id": 5,
-          "object_type": 4,
-          "site": "82478e3a-a212-41bf-9e2b-7522a1504a6b",
+          "id": "139e612c-83fa-4cc9-8634-834395899346",
+          "@controller": "d1ae9060-b89c-48e8-abae-0f78d8f6af9d",
+          "created": "2021-06-22T01:36:30+0000",
+          "name": "SEA.AH1.ENA",
+          "description": "AH-1 ENABLE",
+          "instance_id": 0,
+          "object_type": 5,
+          "collector_count": 0,
+          "@site": "82478e3a-a212-41bf-9e2b-7522a1504a6b",
           "is_online": true,
           "bacnet": {
             "object": {
@@ -1421,15 +1482,16 @@
       },
       "Get-Analog-Input-Point": {
         "value": {
-          "id": "2044bcaf-4c60-4901-8f8c-350f17172263",
-          "controller": "4f668b28-c30d-4fc1-b751-7cc30dcc4964",
-          "created": 1613745308,
-          "name": "SEA.RMT",
-          "description": "ROOM TEMP",
+          "id": "139e612c-83fa-4cc9-8634-834395899346",
+          "@controller": "d1ae9060-b89c-48e8-abae-0f78d8f6af9d",
+          "created": "2021-06-22T01:36:30+0000",
+          "name": "SEA.AH1.ENA",
+          "description": "AH-1 ENABLE",
           "instance_id": 0,
-          "object_type": 0,
-          "site": "82478e3a-a212-41bf-9e2b-7522a1504a6b",
-          "is_online": true,
+          "object_type": 5,
+          "collector_count": 0,
+          "@site": "82478e3a-a212-41bf-9e2b-7522a1504a6b",
+          "is_online": null,
           "bacnet": null
         }
       },
