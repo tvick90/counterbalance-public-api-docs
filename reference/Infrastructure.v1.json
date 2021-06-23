@@ -191,10 +191,20 @@
         "tags": [
           "Gateways"
         ],
-        "description": "### Synopsis\nDelete a gateway device\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`infrastructure:*`,`infrastructure:gateway:*`,`infrastructure:gateway:delete`\n\n### Connected Controllers\nWhen a gateway is deleted, the connected controllers are retained but all data collection activities will stop, building intelligence rules will be unavailable, and any associated meters will be in fault. \n\nA controller can be re-associated with an active gateway via the [Update Controller](/reference/Infrastructure.v1.json/paths/~1v1~1infrastructure~1gateway~1%7BgatewayId%7D/patch) endpoint.",
+        "description": "### Synopsis\nDelete a gateway device\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`infrastructure:*`,`infrastructure:gateway:*`,`infrastructure:gateway:delete`\n\n### Connected Controllers\nWhen a gateway is deleted, the connected controllers are retained but all data collection activities will stop, building intelligence rules will be unavailable, and any associated meters will be in fault. \n\nA controller can be re-associated with an active gateway via the [Update Controller](/reference/Infrastructure.v1.json/paths/~1v1~1infrastructure~1gateway~1%7BgatewayId%7D/patch) endpoint.\n\n### Deleting an Offline Gateway\nBy default, when a gateway is deleted, the system will attempt to contact and initialize it. If the gateway cannot be contacted, the delete operation will fail. \n\nTo override this default action, set the `force` query parameter to `true`.",
         "security": [
           {
             "Bearer Token": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "boolean"
+            },
+            "in": "query",
+            "name": "force",
+            "description": "Force the delete of a gateway that is offline"
           }
         ]
       }
@@ -1829,7 +1839,7 @@
                 "value": {
                   "error": {
                     "message": "Gateway not found",
-                    "console": "The gateway ID ... could not be found in the database",
+                    "console": "Please check the gateway ID and try your request again",
                     "code": 404
                   },
                   "logging_hash": "..."
