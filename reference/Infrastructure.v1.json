@@ -1996,6 +1996,48 @@
             }
           }
         }
+      },
+      "200-Get-Network": {
+        "description": "Example response",
+        "content": {
+          "application/json": {
+            "schema": {
+              "properties": {
+                "id": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "201-Network-Created": {
+        "description": "Example response",
+        "content": {
+          "application/json": {
+            "schema": {
+              "properties": {
+                "id": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "200-Get-Network-Listing": {
+        "description": "Example response",
+        "content": {
+          "application/json": {
+            "schema": {
+              "properties": {
+                "id": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
       }
     },
     "parameters": {
@@ -2029,6 +2071,16 @@
           "format": "uuid"
         },
         "description": "A valid controller UUID"
+      },
+      "networkId": {
+        "name": "networkId",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "description": "A valid network UUID"
       }
     },
     "examples": {
@@ -2449,6 +2501,13 @@
       "Update-Controller-Body": {
         "value": {
           "name": "New Name"
+        }
+      },
+      "Get-Network": {
+        "value": {
+          "id": "",
+          "name": "",
+          "created": ""
         }
       }
     }
