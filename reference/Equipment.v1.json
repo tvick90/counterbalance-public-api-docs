@@ -157,7 +157,206 @@
     }
   },
   "components": {
-    "schemas": {},
+    "schemas": {
+      "Equipment-Node-Object": {
+        "description": "",
+        "type": "object",
+        "x-examples": {},
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "description": {
+            "type": "string",
+            "minLength": 1
+          },
+          "@site": {
+            "type": "string",
+            "minLength": 1
+          },
+          "@floor": {},
+          "@room": {},
+          "@parent": {},
+          "references": {
+            "type": "object",
+            "properties": {
+              "": {
+                "type": "object"
+              }
+            }
+          },
+          "haystack": {
+            "type": "object",
+            "required": [
+              "equipment",
+              "marker",
+              "available_references"
+            ],
+            "properties": {
+              "equipment": {
+                "type": "object",
+                "required": [
+                  "tag",
+                  "name",
+                  "description",
+                  "parent_ref",
+                  "permitted_children_equipment"
+                ],
+                "properties": {
+                  "tag": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "name": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "description": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "parent_ref": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "permitted_children_equipment": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "marker": {
+                "type": "object",
+                "required": [
+                  "tags",
+                  "tags_string",
+                  "tag_definitions"
+                ],
+                "properties": {
+                  "tags": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "tags_string": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "tag_definitions": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/Tag-Definition-Object"
+                    }
+                  }
+                }
+              },
+              "available_references": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "metadata": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          },
+          "telemetry": {
+            "type": "object",
+            "required": [
+              "relationship_count",
+              "base",
+              "via_markers",
+              "all"
+            ],
+            "properties": {
+              "relationship_count": {
+                "type": "number"
+              },
+              "base": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              },
+              "via_markers": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              },
+              "all": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "description",
+          "@site",
+          "references",
+          "haystack",
+          "metadata",
+          "telemetry"
+        ],
+        "title": "Equipment Node Object"
+      },
+      "Tag-Definition-Object": {
+        "description": "",
+        "type": "object",
+        "x-examples": {},
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "description": {
+            "type": "string",
+            "minLength": 1
+          },
+          "references": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "telemetry": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "description",
+          "references",
+          "telemetry"
+        ],
+        "title": "Tag Definition Object"
+      }
+    },
     "securitySchemes": {
       "Bearer Token": {
         "type": "http",
@@ -195,6 +394,15 @@
           "example": "0fa60c71-a611-418a-93a0-0bdf2dfa5ac3"
         },
         "description": "Filter results by their associated site UUID"
+      },
+      "tag": {
+        "name": "tag",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "string"
+        },
+        "description": "Filter results by their Haystack equipment tag"
       }
     }
   },
