@@ -23,13 +23,13 @@
       },
       "post": {
         "summary": "Create Equipment Node",
-        "operationId": "create-equipment",
+        "operationId": "create-equipment-node",
         "responses": {
           "201": {
             "description": "Created"
           }
         },
-        "description": "",
+        "description": "### Synopsis\nCreate a new equipment node\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`equipment:*`,`equipment:node:*`,`equipment:node:read`\n* Licensed Feature: `sites_base` \n* Adequate quota for `equipment`",
         "tags": [
           "Equipment"
         ],
@@ -112,14 +112,21 @@
         "tags": [
           "Equipment"
         ],
-        "responses": {},
         "operationId": "get-equipment-node",
-        "description": "Retrieve equipment details",
+        "description": "### Synopsis\nRetrieve the specified equipment node\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`equipment:*`,`equipment:node:*`,`equipment:node:read`",
         "security": [
           {
             "Bearer Token": []
           }
-        ]
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/200-Equipment-Node-Object"
+          },
+          "404": {
+            "$ref": "#/components/responses/404-Equipment-Node-Not-Found"
+          }
+        }
       },
       "patch": {
         "summary": "Update Equipment Node",
@@ -403,6 +410,281 @@
           "type": "string"
         },
         "description": "Filter results by their Haystack equipment tag"
+      }
+    },
+    "responses": {
+      "200-Equipment-Node-Object": {
+        "description": "Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Equipment-Node-Object"
+            },
+            "examples": {
+              "Response": {
+                "$ref": "#/components/examples/Equipment-Node-Object"
+              }
+            }
+          }
+        }
+      },
+      "404-Equipment-Node-Not-Found": {
+        "description": "Not Found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../models/Error-Response.v1.yaml"
+            },
+            "examples": {
+              "Response": {
+                "value": {
+                  "error": {
+                    "message": "Equipment node not found",
+                    "console": "Please check the node ID and try your request again",
+                    "code": 404
+                  },
+                  "logging_hash": "..."
+                }
+              }
+            }
+          }
+        }
+      },
+      "201-Equipment-Node-Created": {
+        "description": "Created",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Equipment-Node-Object"
+            },
+            "examples": {
+              "Response": {
+                "$ref": "#/components/examples/Equipment-Node-Object"
+              }
+            }
+          }
+        }
+      }
+    },
+    "examples": {
+      "Equipment-Node-Object": {
+        "value": {
+          "id": "60ec71bc-5a72-4e29-9db8-87bb2097047c",
+          "name": "AHU S2",
+          "description": "Air Handler S2 - Low-Rise North",
+          "@site": "723a9c16-1790-4386-b17b-54bc9ed6d901",
+          "@floor": null,
+          "@room": null,
+          "@parent": null,
+          "references": {
+            "hotWaterPlantRef": null,
+            "chilledWaterPlantRef": "74c8d53f-d657-49ab-8240-532645628839"
+          },
+          "haystack": {
+            "equipment": {
+              "tag": "ahu",
+              "name": "Air Handler",
+              "description": "An enclosure with a fan that delivers air to a space via ductwork and performs one or more of the functions of cleaning, heating, cooling, humidifying, dehumidifying, ventilating or circulating the air",
+              "parent_ref": "ahuRef",
+              "permitted_children_equipment": [
+                "fan",
+                "vav",
+                "zone"
+              ]
+            },
+            "marker": {
+              "tags": [
+                "hotWaterHeat",
+                "chilledWaterCool",
+                "variableVolume",
+                "vavZone",
+                "dualDuct"
+              ],
+              "tags_string": "hotWaterHeat chilledWaterCool variableVolume vavZone dualDuct",
+              "tag_definitions": [
+                {
+                  "id": "hotWaterHeat",
+                  "name": "Hot Water Heat",
+                  "description": "The AHU utilizes a hot water heating coil",
+                  "references": [
+                    "hotWaterPlantRef"
+                  ],
+                  "telemetry": [
+                    "heat valve cmd",
+                    "heat valve sensor",
+                    "heat circ pump cmd",
+                    "heat circ pump sensor"
+                  ]
+                },
+                {
+                  "id": "chilledWaterCool",
+                  "name": "Chilled Water Cooling",
+                  "description": "The AHU utilizes a chilled water coil",
+                  "references": [
+                    "chilledWaterPlantRef"
+                  ],
+                  "telemetry": [
+                    "cool valve cmd",
+                    "cool valve sensor"
+                  ]
+                },
+                {
+                  "id": "variableVolume",
+                  "name": "Variable Volume",
+                  "description": "The AHU supplies a variable volume of air",
+                  "references": [],
+                  "telemetry": [
+                    "discharge air fan speed cmd",
+                    "discharge air fan speed sensor"
+                  ]
+                },
+                {
+                  "id": "vavZone",
+                  "name": "VAV Zone",
+                  "description": "The AHU supplies air to VAV terminal units",
+                  "references": [],
+                  "telemetry": []
+                },
+                {
+                  "id": "dualDuct",
+                  "name": "Dual Duct",
+                  "description": "The AHU uses two ducts which is some combination of hotDeck, coldDeck, or neutralDeck",
+                  "references": [],
+                  "telemetry": [
+                    "hotDeck air temp sensor",
+                    "hotDeck air humidity sensor",
+                    "hotDeck air pressure sensor",
+                    "hotDeck air flow sensor",
+                    "hotDeck air fan cmd",
+                    "hotDeck air fan sensor",
+                    "coldDeck air temp sensor",
+                    "coldDeck air humidity sensor",
+                    "coldDeck air pressure sensor",
+                    "coldDeck air flow sensor",
+                    "coldDeck air fan cmd",
+                    "coldDeck air fan sensor",
+                    "neutralDeck air temp sensor",
+                    "neutralDeck air humidity sensor",
+                    "neutralDeck air pressure sensor",
+                    "neutralDeck air flow sensor",
+                    "neutralDeck air fan cmd",
+                    "neutralDeck air fan sensor"
+                  ]
+                }
+              ]
+            },
+            "available_references": [
+              "hotWaterPlantRef",
+              "chilledWaterPlantRef"
+            ]
+          },
+          "metadata": [],
+          "telemetry": {
+            "relationship_count": 0,
+            "base": [
+              "return air temp sensor",
+              "return air humidity sensor",
+              "return air pressure sensor",
+              "return air flow sensor",
+              "return air co2 sensor",
+              "return air fan cmd",
+              "return air damper cmd",
+              "mixed air temp sensor",
+              "outside air temp sensor",
+              "outside air humidity sensor",
+              "outside air pressure sensor",
+              "outside air flow sensor",
+              "outside air flow sp",
+              "outside air damper cmd",
+              "exhaust air fan cmd",
+              "exhaust air damper cmd",
+              "humidifier cmd",
+              "filter sensor",
+              "freezeStat sensor",
+              "heatWheel cmd",
+              "faceBypass cmd",
+              "bypass damper cmd"
+            ],
+            "via_markers": [
+              "heat valve cmd",
+              "heat valve sensor",
+              "heat circ pump cmd",
+              "heat circ pump sensor",
+              "cool valve cmd",
+              "cool valve sensor",
+              "discharge air fan speed cmd",
+              "discharge air fan speed sensor",
+              "hotDeck air temp sensor",
+              "hotDeck air humidity sensor",
+              "hotDeck air pressure sensor",
+              "hotDeck air flow sensor",
+              "hotDeck air fan cmd",
+              "hotDeck air fan sensor",
+              "coldDeck air temp sensor",
+              "coldDeck air humidity sensor",
+              "coldDeck air pressure sensor",
+              "coldDeck air flow sensor",
+              "coldDeck air fan cmd",
+              "coldDeck air fan sensor",
+              "neutralDeck air temp sensor",
+              "neutralDeck air humidity sensor",
+              "neutralDeck air pressure sensor",
+              "neutralDeck air flow sensor",
+              "neutralDeck air fan cmd",
+              "neutralDeck air fan sensor"
+            ],
+            "all": [
+              "return air temp sensor",
+              "return air humidity sensor",
+              "return air pressure sensor",
+              "return air flow sensor",
+              "return air co2 sensor",
+              "return air fan cmd",
+              "return air damper cmd",
+              "mixed air temp sensor",
+              "outside air temp sensor",
+              "outside air humidity sensor",
+              "outside air pressure sensor",
+              "outside air flow sensor",
+              "outside air flow sp",
+              "outside air damper cmd",
+              "exhaust air fan cmd",
+              "exhaust air damper cmd",
+              "humidifier cmd",
+              "filter sensor",
+              "freezeStat sensor",
+              "heatWheel cmd",
+              "faceBypass cmd",
+              "bypass damper cmd",
+              "heat valve cmd",
+              "heat valve sensor",
+              "heat circ pump cmd",
+              "heat circ pump sensor",
+              "cool valve cmd",
+              "cool valve sensor",
+              "discharge air fan speed cmd",
+              "discharge air fan speed sensor",
+              "hotDeck air temp sensor",
+              "hotDeck air humidity sensor",
+              "hotDeck air pressure sensor",
+              "hotDeck air flow sensor",
+              "hotDeck air fan cmd",
+              "hotDeck air fan sensor",
+              "coldDeck air temp sensor",
+              "coldDeck air humidity sensor",
+              "coldDeck air pressure sensor",
+              "coldDeck air flow sensor",
+              "coldDeck air fan cmd",
+              "coldDeck air fan sensor",
+              "neutralDeck air temp sensor",
+              "neutralDeck air humidity sensor",
+              "neutralDeck air pressure sensor",
+              "neutralDeck air flow sensor",
+              "neutralDeck air fan cmd",
+              "neutralDeck air fan sensor"
+            ]
+          }
+        }
       }
     }
   },
