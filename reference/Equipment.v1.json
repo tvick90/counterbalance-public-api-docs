@@ -3,7 +3,7 @@
   "info": {
     "title": "Equipment",
     "version": "1.0",
-    "description": "## Defining Equipment Nodes\nEquipment nodes are the Counterbalance representation of the physical pieces of equipment on a site. \n\n### Parent/Child Relationships\nEquipment nodes can be defined to create a parent/child relationship that follows-that of the actual equipment onsite. Exaamples include an air handler that serves multiple VAV boxes or zones or chilled water plant and its associated refrigeration equipment, pumps, etc.\n\n#### Permitted Relationships\nThe permitted parent/child components for each type of equipment are listed below.\n\n| Parent Tag | Permitted Children Tags |\n|---|---|\n| `ahu` | `vav`, `zone` |"
+    "description": "## Defining Equipment Nodes\nEquipment nodes are the Counterbalance representation of the physical pieces of equipment on a site. \n\n### Equipment & Marker Tags\nEquipment nodes are defined using a top-level equipment tag and a variety of marker tags. \n\n### Parent/Child Relationships\nEquipment nodes can be defined to create a parent/child relationship that follows-that of the actual equipment onsite. Examples include an air handler that serves multiple VAV boxes or zones or chilled water plant and its associated chillers, pumps, cooling towers, etc.\n\n#### Permitted Relationships\nThe permitted parent/child components for each type of equipment are listed below.\n\n| Parent Tag | Permitted Children Tags |\n|---|---|\n| `ahu` | `vav`, `zone` |"
   },
   "servers": [
     {
@@ -101,10 +101,10 @@
         }
       }
     },
-    "/v1/equipment/{equipmentId}": {
+    "/v1/equipment/node/{nodeId}": {
       "parameters": [
         {
-          "$ref": "#/components/parameters/equipmentId"
+          "$ref": "#/components/parameters/nodeId"
         }
       ],
       "get": {
@@ -113,12 +113,17 @@
           "Equipment"
         ],
         "responses": {},
-        "operationId": "get-equipment",
-        "description": "Retrieve equipment details"
+        "operationId": "get-equipment-node",
+        "description": "Retrieve equipment details",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ]
       },
       "patch": {
         "summary": "Update Equipment Node",
-        "operationId": "update-equipment",
+        "operationId": "update-equipment-node",
         "responses": {
           "200": {
             "description": "OK"
@@ -127,11 +132,16 @@
         "tags": [
           "Equipment Nodes"
         ],
-        "description": ""
+        "description": "",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ]
       },
       "delete": {
         "summary": "Delete Equipment Node",
-        "operationId": "delete-equipment",
+        "operationId": "delete-equipment-node",
         "responses": {
           "200": {
             "description": "OK"
@@ -142,64 +152,6 @@
           {
             "Bearer Token": []
           }
-        ]
-      }
-    },
-    "/v1/equipment/classifications": {
-      "get": {
-        "summary": "List Equipment Classifications",
-        "tags": [
-          "Classifications"
-        ],
-        "responses": {},
-        "operationId": "list-equipment-classifications",
-        "description": ""
-      },
-      "post": {
-        "summary": "Create Equipment Classification",
-        "operationId": "create-equipment-classifications",
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        },
-        "description": "Create a new equipment class",
-        "tags": [
-          "Classifications"
-        ]
-      }
-    },
-    "/v1/equipment/{equipmentId}/component": {
-      "parameters": [
-        {
-          "schema": {
-            "type": "string"
-          },
-          "name": "equipmentId",
-          "in": "path",
-          "required": true
-        }
-      ],
-      "get": {
-        "summary": "Get Equipment Components",
-        "tags": [
-          "Components"
-        ],
-        "responses": {},
-        "operationId": "list-equipment-components",
-        "description": ""
-      },
-      "put": {
-        "summary": "Create New Equipment Component",
-        "operationId": "create-equipment-component",
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        },
-        "description": "Create a new component for the specified equipment",
-        "tags": [
-          "Components"
         ]
       }
     }
@@ -213,8 +165,8 @@
       }
     },
     "parameters": {
-      "equipmentId": {
-        "name": "equipmentId",
+      "nodeId": {
+        "name": "nodeId",
         "in": "path",
         "required": true,
         "schema": {
@@ -222,6 +174,27 @@
           "format": "uuid"
         },
         "description": "A valid equipment node UUID"
+      },
+      "@ref": {
+        "name": "@ref",
+        "in": "query",
+        "schema": {
+          "type": "string",
+          "format": "uuid",
+          "example": "74c8d53f-d657-49ab-8240-532645628839"
+        },
+        "description": "Filter results by their parent or dependent node UUID"
+      },
+      "@siteId": {
+        "name": "@site",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "string",
+          "format": "uuid",
+          "example": "0fa60c71-a611-418a-93a0-0bdf2dfa5ac3"
+        },
+        "description": "Filter results by their associated site UUID"
       }
     }
   },
