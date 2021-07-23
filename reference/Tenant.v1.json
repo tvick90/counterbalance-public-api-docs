@@ -440,7 +440,7 @@
           }
         },
         "operationId": "get-tenant-quota",
-        "description": "Retrieve a list of authorized platform features and a summary of metered tenant objects and their usage for the authenticated user's tenant account\n\n__ Required Permissions:__ `*`,`tenant:*`,`tenant:quota:*`,`tenant:quota:read`\n\n> ℹ️ **Please Note:** This endpoint will return all the features and quotas for the tenant account, regardless of the authenticated user's ability to use or access them",
+        "description": "Retrieve a list of authorized platform features and a summary of metered tenant objects and their usage for the authenticated user's tenant account\n\n__Required Permissions:__ `*`,`tenant:*`,`tenant:quota:*`,`tenant:quota:read`\n\n> **Please Note:** This endpoint will return all the features and quotas for the tenant account, regardless of the authenticated user's ability to use or access them",
         "security": [
           {
             "Bearer Token": []
@@ -476,7 +476,7 @@
             }
           }
         },
-        "description": "Confirm a newly-created tenant account\n\nThe following prerequisites are required for this endpoint:\n* The tenant account confirmation code _(emailed to the new user)_\n* Permissions _(at least one):_ `*`,`tenant:*`,`tenant:account:*`,`tenant:account:update`\n\n> ℹ️ **Please Note:** A confirm operation can only be completed by the user who created the tenant acccount",
+        "description": "Confirm a newly-created tenant account\n\nThe following prerequisites are required for this endpoint:\n* The tenant account confirmation code _(emailed to the new user)_\n* Permissions _(at least one):_ `*`,`tenant:*`,`tenant:account:*`,`tenant:account:update`\n\n> **Please Note:** A confirm operation can only be completed by the user who created the tenant acccount",
         "security": [
           {
             "Bearer Token": []
