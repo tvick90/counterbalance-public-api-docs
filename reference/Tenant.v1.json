@@ -61,6 +61,9 @@
                 }
               }
             }
+          },
+          "503": {
+            "$ref": "#/components/responses/503-Tenant-Create-Error"
           }
         },
         "description": "Create a new tenant account (aka, account signup)\n\n__Required Permissions:__ _none_\n\n### Accepting the Terms of Service\nThe [Terms of Service](https://www.counterbalance.io/terms) must be accepted before the account can be created. The `accept_terms` body field must be set to `true` in order for the request to be completed successfully.\n\n### Account Confirmation\nNew tenant accounts created via this endpoint must be confirmed before they will be activated. The user will be emailed a confirmation code and the account must be confirmed using the __Confirm Tenant Account__ operations endpoint.\n\n### Password Strength\nThe password specified must meet the following requirements:\n\n* Must be at least 8-characters in length\n* Lower case (a-z), upper case (A-Z) and numbers (0-9)\n* Special characters (!@#$%^&*)\n* No more than 2 identical characters in a row\n\nNIST recommends a minimum character length of 8, and suggests that length is a better indicator of strength than complexity.\n\n<!-- theme: warning -->\n> **Heads Up:** A password will be rejected if it contains common dictionary phrases or the user's first name, last name, or shortname.",
@@ -307,32 +310,13 @@
       "parameters": [],
       "post": {
         "summary": "Complete Tenant Onboarding",
-        "operationId": "post-v1-tenant-onboarding",
+        "operationId": "complete-tenant-onboarding",
         "responses": {
           "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "success_message": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "examples": {
-                  "Response": {
-                    "value": {
-                      "success_message": "Onboarding has been completed!"
-                    }
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/200-Complete-Onboarding"
           }
         },
-        "description": "Mark the tenant account for the authenticated user as having completed onboarding",
+        "description": "Mark the tenant account for the authenticated user as having completed onboarding\n\n__Required Permissions:__ `*`,`tenant:*`,`tenant:account:*`,`tenant:account:update`",
         "security": [
           {
             "Bearer Token": []
@@ -418,7 +402,7 @@
       "Tenant-Account": {
         "description": "",
         "type": "object",
-        "title": "Tenant Account Model",
+        "title": "Object",
         "x-examples": {
           "Example": {
             "id": "d6797ebf-5b00-4a59-b3e5-19711b4c55bb",
@@ -916,7 +900,7 @@
           "composition",
           "features"
         ],
-        "title": "Tenant-Quota-Summary"
+        "title": "Object"
       },
       "Tenant-Preferences": {
         "description": "",
@@ -954,7 +938,7 @@
             }
           }
         },
-        "title": "Tenant Preferences Object Model",
+        "title": "Object",
         "x-tags": [
           "Tenant Preferences"
         ]
@@ -1028,6 +1012,21 @@
             }
           }
         }
+      },
+      "Generic-Response": {
+        "description": "",
+        "type": "object",
+        "x-examples": {
+          "example-1": {
+            "success_message": "..."
+          }
+        },
+        "properties": {
+          "success_message": {
+            "type": "string"
+          }
+        },
+        "title": "Generic Response"
       }
     },
     "securitySchemes": {
@@ -1365,6 +1364,16 @@
             "sites_equipment"
           ]
         }
+      },
+      "Confirm-Tenant-Account": {
+        "value": {
+          "success_message": "Tenant account has been successfully confirmed!"
+        }
+      },
+      "Onboard-Tenant-Account": {
+        "value": {
+          "success_message": "Onboarding has been completed!"
+        }
       }
     },
     "responses": {
@@ -1388,12 +1397,7 @@
         "content": {
           "application/json": {
             "schema": {
-              "type": "object",
-              "properties": {
-                "success_message": {
-                  "type": "string"
-                }
-              }
+              "$ref": "#/components/schemas/Generic-Response"
             },
             "examples": {
               "Response": {
@@ -1413,6 +1417,58 @@
             "examples": {
               "Response": {
                 "$ref": "#/components/examples/Tenant-Quota-Summary"
+              }
+            }
+          }
+        }
+      },
+      "200-Tenant-Confirmed": {
+        "description": "Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Generic-Response"
+            },
+            "examples": {
+              "Response": {
+                "$ref": "#/components/examples/Confirm-Tenant-Account"
+              }
+            }
+          }
+        }
+      },
+      "503-Tenant-Create-Error": {
+        "description": "Service Unavailable",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../models/Error-Response.v1.yaml"
+            },
+            "examples": {
+              "Response": {
+                "value": {
+                  "error": {
+                    "message": "We are unable to process your request right now. Please try again later.",
+                    "console": "There was an error while creating your account. Please try again later. If the issue persists, please contact support and provide the loggin hash provided.",
+                    "code": 503
+                  },
+                  "logging_hash": "..."
+                }
+              }
+            }
+          }
+        }
+      },
+      "200-Complete-Onboarding": {
+        "description": "Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Generic-Response"
+            },
+            "examples": {
+              "Response": {
+                "$ref": "#/components/examples/Onboard-Tenant-Account"
               }
             }
           }
