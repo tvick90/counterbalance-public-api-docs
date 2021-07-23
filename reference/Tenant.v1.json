@@ -25,93 +25,7 @@
         ],
         "responses": {
           "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Tenant-Account"
-                },
-                "examples": {
-                  "Response": {
-                    "value": {
-                      "id": "d6797ebf-5b00-4a59-b3e5-19711b4c55bb",
-                      "name": "Figgis Agency",
-                      "flags": {
-                        "active": true,
-                        "has_subscription": true,
-                        "has_billing_account": true,
-                        "locked": false,
-                        "confirmed": true,
-                        "deleted": false
-                      },
-                      "billing_id": "cus_GZBdOM86hQZldD",
-                      "locale": "en-us",
-                      "primary_contact": {
-                        "id": "1b17e73b-4cf7-4b47-a0f8-46f878ef7bf1",
-                        "name": {
-                          "given": "Cyril",
-                          "family": "Figgis",
-                          "full": "Cyril Figgis"
-                        },
-                        "email": "cyril@figgisagency.com",
-                        "phone": {
-                          "primary": {
-                            "type": null,
-                            "number": null
-                          }
-                        }
-                      },
-                      "subscription": {
-                        "tier": 3,
-                        "sku": "plan_GvzroFXIrnFYdH",
-                        "active": true
-                      },
-                      "trial": {
-                        "status": "Never Started",
-                        "used": false,
-                        "active": false,
-                        "expired": false,
-                        "expires": 0
-                      },
-                      "addresses": {
-                        "mailing": "f3643601-d122-47c5-893c-1f108c07d840",
-                        "billing": null
-                      },
-                      "milestones": {
-                        "account_created": {
-                          "status": true,
-                          "timestamp": 1517451002
-                        },
-                        "account_deleted": {
-                          "status": false,
-                          "timestamp": 0
-                        },
-                        "account_confirmation": {
-                          "status": true,
-                          "timestamp": 1580183430
-                        },
-                        "onboarded": {
-                          "status": true,
-                          "timestamp": 1580183430
-                        },
-                        "accepted_terms": {
-                          "status": false,
-                          "timestamp": 0
-                        },
-                        "accepted_billing_terms": {
-                          "status": false,
-                          "timestamp": 0
-                        },
-                        "accepted_subscription_terms": {
-                          "status": false,
-                          "timestamp": 0
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/200-Tenant-Account"
           }
         },
         "operationId": "get-tenant",
@@ -124,7 +38,7 @@
       },
       "post": {
         "summary": "Create Tenant Account",
-        "operationId": "post-v1-tenant",
+        "operationId": "create-tenant",
         "responses": {
           "201": {
             "description": "Created",
@@ -221,96 +135,10 @@
         "operationId": "update-tenant",
         "responses": {
           "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Tenant-Account"
-                },
-                "examples": {
-                  "Response": {
-                    "value": {
-                      "id": "d6797ebf-5b00-4a59-b3e5-19711b4c55bb",
-                      "name": "Figgis Agency",
-                      "flags": {
-                        "active": true,
-                        "has_subscription": true,
-                        "has_billing_account": true,
-                        "locked": false,
-                        "confirmed": true,
-                        "deleted": false
-                      },
-                      "billing_id": "cus_GZBdOM86hQZldD",
-                      "locale": "en-us",
-                      "primary_contact": {
-                        "id": "1b17e73b-4cf7-4b47-a0f8-46f878ef7bf1",
-                        "name": {
-                          "given": "Cyril",
-                          "family": "Figgis",
-                          "full": "Cyril Figgis"
-                        },
-                        "email": "cyril@figgisagency.com",
-                        "phone": {
-                          "primary": {
-                            "type": null,
-                            "number": null
-                          }
-                        }
-                      },
-                      "subscription": {
-                        "tier": 3,
-                        "sku": "plan_GvzroFXIrnFYdH",
-                        "active": true
-                      },
-                      "trial": {
-                        "status": "Never Started",
-                        "used": false,
-                        "active": false,
-                        "expired": false,
-                        "expires": 0
-                      },
-                      "addresses": {
-                        "mailing": "f3643601-d122-47c5-893c-1f108c07d840",
-                        "billing": null
-                      },
-                      "milestones": {
-                        "account_created": {
-                          "status": true,
-                          "timestamp": 1517451002
-                        },
-                        "account_deleted": {
-                          "status": false,
-                          "timestamp": 0
-                        },
-                        "account_confirmation": {
-                          "status": true,
-                          "timestamp": 1580183430
-                        },
-                        "onboarded": {
-                          "status": true,
-                          "timestamp": 1580183430
-                        },
-                        "accepted_terms": {
-                          "status": false,
-                          "timestamp": 0
-                        },
-                        "accepted_billing_terms": {
-                          "status": false,
-                          "timestamp": 0
-                        },
-                        "accepted_subscription_terms": {
-                          "status": false,
-                          "timestamp": 0
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/200-Tenant-Account"
           }
         },
-        "description": "Update the tenant account details for the authenticated user\n\nThe following prerequisites are required for this endpoint:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`tenant:*`,`tenant:account:*`,`tenant:account:update`",
+        "description": "Update the tenant account for the authenticated user\n\n__Required Permissions:__ `*`,`tenant:*`,`tenant:account:*`,`tenant:account:update`",
         "security": [
           {
             "Bearer Token": []
@@ -325,7 +153,8 @@
                   "name": {
                     "type": "string",
                     "maxLength": 240,
-                    "description": "Your tenant company name"
+                    "description": "Your tenant company name",
+                    "minLength": 1
                   },
                   "primary_contact": {
                     "type": "string",
@@ -336,10 +165,7 @@
               },
               "examples": {
                 "Example": {
-                  "value": {
-                    "name": "Figgis Agency",
-                    "primary_contact": "5152763b-7d76-4d22-8484-ff27da40fe98"
-                  }
+                  "$ref": "#/components/examples/Update-Tenant-Body"
                 }
               }
             }
@@ -1531,6 +1357,29 @@
             "accepted_subscription_terms": {
               "status": false,
               "timestamp": null
+            }
+          }
+        }
+      },
+      "Update-Tenant-Body": {
+        "value": {
+          "name": "Figgis Agency",
+          "primary_contact": "5152763b-7d76-4d22-8484-ff27da40fe98"
+        }
+      }
+    },
+    "responses": {
+      "200-Tenant-Account": {
+        "description": "Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Tenant-Account"
+            },
+            "examples": {
+              "Response": {
+                "$ref": "#/components/examples/Tenant-Account"
+              }
             }
           }
         }
