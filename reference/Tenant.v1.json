@@ -153,13 +153,13 @@
                   "name": {
                     "type": "string",
                     "maxLength": 240,
-                    "description": "Your tenant company name",
+                    "description": "The company or organization name for the tenant",
                     "minLength": 1
                   },
                   "primary_contact": {
                     "type": "string",
                     "format": "uuid",
-                    "description": "The UUID of the user designated as the primary contact for your account"
+                    "description": "UUID of the user designated as the primary contact for the tenant account"
                   }
                 }
               },
@@ -190,11 +190,11 @@
         "summary": "Delete Tenant Account",
         "operationId": "delete-tenant",
         "responses": {
-          "200": {
-            "description": "OK"
+          "204": {
+            "description": "No Content"
           }
         },
-        "description": "Delete the tenant account of the authenticated user\n\nThe following prerequisites are required for this endpoint:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`tenant:*`,`tenant:account:*`,`tenant:account:delete`",
+        "description": "Delete the tenant account of the authenticated user\n\nThe following prerequisites are required for this endpoint:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`tenant:*`,`tenant:account:*`,`tenant:account:delete`\n\n### Immediate Account Termination",
         "tags": [
           "Tenant Account"
         ]
