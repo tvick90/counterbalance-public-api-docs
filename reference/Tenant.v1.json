@@ -889,7 +889,8 @@
         "properties": {
           "id": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "description": "The UUID of the tenant account"
           },
           "name": {
             "type": "string"
@@ -898,9 +899,6 @@
             "type": "object",
             "properties": {
               "active": {
-                "type": "boolean"
-              },
-              "has_subscription": {
                 "type": "boolean"
               },
               "has_billing_account": {
