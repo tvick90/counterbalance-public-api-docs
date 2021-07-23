@@ -3,7 +3,7 @@
   "info": {
     "title": "Tenant",
     "version": "1.2.3",
-    "description": "The Tenant API provides endpoints for tenant account management, including:\n* Creating new tenant accounts\n* Updating or deleting a tenant profile\n* Viewing platform object quotas and licensed features\n* Managing global platform preferences\n\n### What is a Tenant\nA tenant account can be created in several ways\n\n#### Natural Account Creation\nlorem ipsum\n\n### Activating an Issued Account\nA tenant account may be created by Counterbalance on behalf of a customer or user. New accounts must be activated\n\n## Object Limits & Quotas\nLorem ipsum\n\n### \n\n### Account Creation\nThe tenant",
+    "description": "The Tenant API provides endpoints for tenant account management, including:\n* Creating new tenant accounts\n* Updating or deleting a tenant profile\n* Viewing platform object quotas and licensed features\n* Managing global platform preferences\n\n### What is a Tenant\nA Tenant Account, or simply Tenant, is the top-level platform account object for an organization or company. A tenant account contains all the other platform objects, maintains global object quotas, dictates feature availability, and allows platform customization through global account preferences. \n\nEvery other platform object (users, sites, gateways, controllers, points, etc) belong to one and only one tenant account. \n\n### Self-Service Account creation\nlorem ipsum\n\n### Activating an Issued Account\nA tenant account may be created by Counterbalance on behalf of a customer or user. New accounts must be activated\n\n### Object Limits & Quotas\nLorem ipsum\n\n",
     "termsOfService": "https://www.counterbalance.io/legal/api-terms",
     "contact": {
       "name": "Taylor Vick",
