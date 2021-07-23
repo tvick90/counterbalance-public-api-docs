@@ -900,7 +900,8 @@
           "composition",
           "features"
         ],
-        "title": "Object"
+        "title": "Object",
+        "x-internal": true
       },
       "Tenant-Preferences": {
         "description": "",
