@@ -63,7 +63,7 @@
             }
           }
         },
-        "description": "Create a new tenant account (aka, account signup)\n\n__Required Permissions:__ _none_\n\n### Accepting the Terms of Service\nThe terms of service must be accepted before the account can be created. The `accept_terms` body field must be set to `true` in order for the request to be completed successfully.\n\n### Account Confirmation\nOnce an account is successfully completed, a six-digit confirmation code is emailed to the new user. The new account must be confirmed with the Confirm Tenant Account endpoint before it can be used.",
+        "description": "Create a new tenant account (aka, account signup)\n\n__Required Permissions:__ _none_\n\n### Accepting the Terms of Service\nThe terms of service must be accepted before the account can be created. The `accept_terms` body field must be set to `true` in order for the request to be completed successfully.\n\n### Account Confirmation\nOnce an account is successfully completed, a six-digit confirmation code is emailed to the new user. The new account must be confirmed with the [Confirm Tenant Account](../b3A6MTY0NzgyODc-confirm-tenant-account) endpoint before it can be used.",
         "requestBody": {
           "content": {
             "application/json": {
