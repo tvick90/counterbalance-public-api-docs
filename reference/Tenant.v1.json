@@ -901,7 +901,7 @@
           "features"
         ],
         "title": "Object",
-        "x-internal": true
+        "x-internal": false
       },
       "Tenant-Preferences": {
         "description": "",
