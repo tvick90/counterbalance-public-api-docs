@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
   title: Tenant Management
-  version: 1.1.6
+  version: 1.2.3
   description: Endpoints for creating and managing Counterbalance tenant accounts
   termsOfService: 'https://www.counterbalance.io/legal/api-terms'
   contact:
@@ -85,12 +85,9 @@ paths:
                         timestamp: 0
       operationId: get-tenant
       description: |-
-        ### Synopsis
-        Retrieve the tenant account details for the authenticated user
+        __Required Permissions:__ `*`,`tenant:*`,`tenant:account:*`,`tenant:account:read`
 
-        ### Prerequisites
-        The following prerequisites are required for this endpoint:
-        * Permissions _(at least one):_ `*`,`tenant:*`,`tenant:account:*`,`tenant:account:read`
+        Retrieve the tenant account for the authenticated user
       security:
         - Bearer Token: []
     post:
@@ -1137,6 +1134,7 @@ components:
     Bearer Token:
       type: http
       scheme: bearer
+      description: ''
 tags:
   - name: Tenant Account
   - name: Tenant Operations
