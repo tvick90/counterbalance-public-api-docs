@@ -997,10 +997,6 @@
               },
               "account_deleted": {
                 "type": "object",
-                "required": [
-                  "status",
-                  "timestamp"
-                ],
                 "properties": {
                   "status": {
                     "type": "boolean"
@@ -1014,10 +1010,6 @@
               },
               "account_confirmation": {
                 "type": "object",
-                "required": [
-                  "status",
-                  "timestamp"
-                ],
                 "properties": {
                   "status": {
                     "type": "boolean"
@@ -1031,10 +1023,6 @@
               },
               "onboarded": {
                 "type": "object",
-                "required": [
-                  "status",
-                  "timestamp"
-                ],
                 "properties": {
                   "status": {
                     "type": "boolean"
@@ -1048,10 +1036,6 @@
               },
               "accepted_terms": {
                 "type": "object",
-                "required": [
-                  "status",
-                  "timestamp"
-                ],
                 "properties": {
                   "status": {
                     "type": "boolean"
@@ -1065,10 +1049,6 @@
               },
               "accepted_billing_terms": {
                 "type": "object",
-                "required": [
-                  "status",
-                  "timestamp"
-                ],
                 "properties": {
                   "status": {
                     "type": "boolean"
@@ -1082,10 +1062,6 @@
               },
               "accepted_subscription_terms": {
                 "type": "object",
-                "required": [
-                  "status",
-                  "timestamp"
-                ],
                 "properties": {
                   "status": {
                     "type": "boolean"
@@ -1097,15 +1073,7 @@
                   }
                 }
               }
-            },
-            "required": [
-              "account_deleted",
-              "account_confirmation",
-              "onboarded",
-              "accepted_terms",
-              "accepted_billing_terms",
-              "accepted_subscription_terms"
-            ]
+            }
           }
         }
       },
