@@ -1,9 +1,9 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "title": "Tenant Management",
+    "title": "Tenant",
     "version": "1.2.3",
-    "description": "Endpoints for creating and managing Counterbalance tenant accounts",
+    "description": "The Tenant API provides endpoints for tenant account management, including:\n* Creating new tenant accounts\n* Updating or deleting a tenant profile\n* Viewing platform object quotas and licensed features\n* Managing global platform preferences\n\n## Tenant Lifecycle\n### Account Creation\nThe tenant",
     "termsOfService": "https://www.counterbalance.io/legal/api-terms",
     "contact": {
       "name": "Taylor Vick",
@@ -207,236 +207,7 @@
         ],
         "responses": {
           "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Tenant-Quota-Summary"
-                },
-                "examples": {
-                  "Response": {
-                    "value": {
-                      "usage": {
-                        "record_user": 11,
-                        "seat": 3,
-                        "user": 3,
-                        "site": 7,
-                        "building": 0,
-                        "gateway": 0,
-                        "controller": 0,
-                        "point": 0,
-                        "equipment": 0,
-                        "meter": 0
-                      },
-                      "tenant": {
-                        "id": "75a14450-2aa9-4785-a7dd-add5655953a4",
-                        "subscription_sku": "plan_GvzqNsab8C5SG8",
-                        "billing_id": "cus_GfeG3goOpZMblf"
-                      },
-                      "quotas": {
-                        "building": {
-                          "usage": 0,
-                          "quota": {
-                            "included": 2,
-                            "purchased": 0,
-                            "total": 2
-                          },
-                          "remaining": 2,
-                          "status": {
-                            "can_add_more": true,
-                            "is_exceeded": false,
-                            "is_met": false
-                          }
-                        },
-                        "controller": {
-                          "usage": 0,
-                          "quota": {
-                            "included": 5,
-                            "purchased": 0,
-                            "total": 5
-                          },
-                          "remaining": 5,
-                          "status": {
-                            "can_add_more": true,
-                            "is_exceeded": false,
-                            "is_met": false
-                          }
-                        },
-                        "equipment": {
-                          "usage": 0,
-                          "quota": {
-                            "included": 10,
-                            "purchased": 0,
-                            "total": 10
-                          },
-                          "remaining": 10,
-                          "status": {
-                            "can_add_more": true,
-                            "is_exceeded": false,
-                            "is_met": false
-                          }
-                        },
-                        "gateway": {
-                          "usage": 0,
-                          "quota": null,
-                          "remaining": null,
-                          "status": {
-                            "can_add_more": true,
-                            "is_exceeded": false
-                          }
-                        },
-                        "meter": {
-                          "usage": 0,
-                          "quota": {
-                            "included": 5,
-                            "purchased": 0,
-                            "total": 5
-                          },
-                          "remaining": 5,
-                          "status": {
-                            "can_add_more": true,
-                            "is_exceeded": false,
-                            "is_met": false
-                          }
-                        },
-                        "point": {
-                          "usage": 0,
-                          "quota": {
-                            "included": 100,
-                            "purchased": 0,
-                            "total": 100
-                          },
-                          "remaining": 100,
-                          "status": {
-                            "can_add_more": true,
-                            "is_exceeded": false,
-                            "is_met": false
-                          }
-                        },
-                        "seat": {
-                          "usage": 3,
-                          "quota": {
-                            "included": 2,
-                            "purchased": 3,
-                            "total": 5
-                          },
-                          "remaining": 2,
-                          "status": {
-                            "can_add_more": true,
-                            "is_exceeded": false,
-                            "is_met": false
-                          }
-                        },
-                        "site": {
-                          "usage": 7,
-                          "quota": {
-                            "included": 1,
-                            "purchased": 6,
-                            "total": 7
-                          },
-                          "remaining": 0,
-                          "status": {
-                            "can_add_more": false,
-                            "is_exceeded": false,
-                            "is_met": true
-                          }
-                        },
-                        "user": {
-                          "usage": 3,
-                          "quota": {
-                            "included": 0,
-                            "purchased": 0,
-                            "total": 0
-                          },
-                          "remaining": 0,
-                          "status": {
-                            "can_add_more": false,
-                            "is_exceeded": true,
-                            "is_met": true
-                          }
-                        },
-                        "record_user": {
-                          "usage": 11,
-                          "quota": null,
-                          "remaining": null,
-                          "status": {
-                            "can_add_more": true,
-                            "is_exceeded": false
-                          }
-                        }
-                      },
-                      "subscription": {
-                        "base": {
-                          "id": "plan_GvzqNsab8C5SG8",
-                          "name": "Essentials",
-                          "tier": 1,
-                          "enabled": true,
-                          "billing_frequency": "month",
-                          "seat_price": 27,
-                          "included_quotas": {
-                            "building": 2,
-                            "controller": 5,
-                            "equipment": 10,
-                            "gateway": null,
-                            "meter": 5,
-                            "point": 100,
-                            "seat": 2,
-                            "site": 1,
-                            "user": 0,
-                            "record_user": null
-                          },
-                          "included_features": [
-                            "commander",
-                            "dynamic_plotter",
-                            "favorites",
-                            "sites_base",
-                            "sites_equipment",
-                            "user_management",
-                            "weather_alerts",
-                            "weather_conditions"
-                          ]
-                        },
-                        "purchased_items": [
-                          {
-                            "id": "si_IGWLaFhj6bhyLx",
-                            "product": "prod_HZ4TOtIlNA9QCE",
-                            "plan": "price_1GzwKcJ5K0z3IHPXutddmh3D",
-                            "quantity": 6
-                          },
-                          {
-                            "id": "si_IGWajoRwdI0Q47",
-                            "product": "prod_HZJ7uDhRzsf6lo",
-                            "plan": "price_1H0AVBJ5K0z3IHPXTV47pZ3C",
-                            "quantity": 1
-                          },
-                          {
-                            "id": "si_IGWjOMxXGL0678",
-                            "product": "prod_GZIOOnp2EtrDOE",
-                            "plan": "plan_GvzqNsab8C5SG8",
-                            "quantity": 5
-                          }
-                        ]
-                      },
-                      "features": [
-                        "commander",
-                        "dynamic_plotter",
-                        "favorites",
-                        "sites_base",
-                        "sites_equipment",
-                        "user_management",
-                        "weather_alerts",
-                        "weather_conditions",
-                        "sites_base",
-                        "sites_base",
-                        "sites_forecasts",
-                        "sites_weather",
-                        "sites_weather_alerts"
-                      ]
-                    }
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/200-Tenant-Quota-Summary"
           }
         },
         "operationId": "get-tenant-quota",
@@ -444,6 +215,17 @@
         "security": [
           {
             "Bearer Token": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "boolean",
+              "default": "false"
+            },
+            "in": "query",
+            "name": "features_only",
+            "description": "Only return the authorized features, excludes quota summary and usage details"
           }
         ]
       }
@@ -905,6 +687,7 @@
       "Tenant-Quota-Summary": {
         "description": "",
         "type": "object",
+        "x-examples": {},
         "properties": {
           "usage": {
             "type": "object",
@@ -913,10 +696,10 @@
               "seat",
               "user",
               "site",
-              "building",
               "gateway",
               "controller",
               "point",
+              "collector",
               "equipment",
               "meter"
             ],
@@ -933,9 +716,6 @@
               "site": {
                 "type": "number"
               },
-              "building": {
-                "type": "number"
-              },
               "gateway": {
                 "type": "number"
               },
@@ -943,6 +723,9 @@
                 "type": "number"
               },
               "point": {
+                "type": "number"
+              },
+              "collector": {
                 "type": "number"
               },
               "equipment": {
@@ -957,19 +740,23 @@
             "type": "object",
             "required": [
               "id",
-              "subscription_sku",
-              "billing_id"
+              "billing_id",
+              "tier",
+              "account_type"
             ],
             "properties": {
               "id": {
                 "type": "string",
                 "minLength": 1
               },
-              "subscription_sku": {
+              "billing_id": {
                 "type": "string",
                 "minLength": 1
               },
-              "billing_id": {
+              "tier": {
+                "type": "number"
+              },
+              "account_type": {
                 "type": "string",
                 "minLength": 1
               }
@@ -978,7 +765,7 @@
           "quotas": {
             "type": "object",
             "required": [
-              "building",
+              "collector",
               "controller",
               "equipment",
               "gateway",
@@ -990,7 +777,7 @@
               "record_user"
             ],
             "properties": {
-              "building": {
+              "collector": {
                 "$ref": "#/components/schemas/Tenant-Quota-Item-Summary"
               },
               "controller": {
@@ -1022,7 +809,7 @@
               }
             }
           },
-          "subscription": {
+          "composition": {
             "type": "object",
             "required": [
               "base",
@@ -1032,60 +819,27 @@
               "base": {
                 "type": "object",
                 "required": [
-                  "id",
-                  "name",
-                  "tier",
-                  "enabled",
-                  "billing_frequency",
-                  "seat_price",
                   "included_quotas",
-                  "included_features"
+                  "features"
                 ],
                 "properties": {
-                  "id": {
-                    "type": "string",
-                    "minLength": 1
-                  },
-                  "name": {
-                    "type": "string",
-                    "minLength": 1
-                  },
-                  "tier": {
-                    "type": "number"
-                  },
-                  "enabled": {
-                    "type": "boolean"
-                  },
-                  "billing_frequency": {
-                    "type": "string",
-                    "minLength": 1
-                  },
-                  "seat_price": {
-                    "type": "number"
-                  },
                   "included_quotas": {
                     "type": "object",
                     "required": [
-                      "building",
                       "controller",
-                      "equipment",
+                      "gateway",
                       "meter",
                       "point",
                       "seat",
-                      "site",
-                      "user"
+                      "site"
                     ],
                     "properties": {
-                      "building": {
-                        "type": "number"
-                      },
                       "controller": {
                         "type": "number"
                       },
-                      "equipment": {
+                      "gateway": {
                         "type": "number"
                       },
-                      "gateway": {},
                       "meter": {
                         "type": "number"
                       },
@@ -1098,16 +852,13 @@
                       "site": {
                         "type": "number"
                       },
-                      "user": {
-                        "type": "number"
-                      },
                       "record_user": {}
                     }
                   },
-                  "included_features": {
+                  "features": {
                     "type": "array",
                     "items": {
-                      "type": "object"
+                      "type": "string"
                     }
                   }
                 }
@@ -1121,15 +872,15 @@
                   "properties": {
                     "id": {
                       "type": "string",
-                      "minLength": 1
+                      "example": "si_HZ3bajOlRzV6Yz"
                     },
                     "product": {
                       "type": "string",
-                      "minLength": 1
+                      "example": "prod_HZ369tGn3VJSVa"
                     },
                     "plan": {
                       "type": "string",
-                      "minLength": 1
+                      "example": "price_1Gzv76J5K0z3IHPXeoVpLSY0"
                     },
                     "quantity": {
                       "type": "number"
@@ -1148,7 +899,7 @@
           "features": {
             "type": "array",
             "items": {
-              "type": "object"
+              "type": "string"
             }
           }
         },
@@ -1156,10 +907,10 @@
           "usage",
           "tenant",
           "quotas",
-          "subscription",
+          "composition",
           "features"
         ],
-        "title": "Tenant Quota Summary"
+        "title": "Tenant-Quota-Summary"
       },
       "Tenant-Preferences": {
         "description": "",
@@ -1234,56 +985,43 @@
           },
           "quota": {
             "type": "object",
-            "required": [
-              "included",
-              "purchased",
-              "total"
-            ],
             "properties": {
               "included": {
                 "type": "number",
-                "description": "The quantity of of this object included in the subscription plan"
+                "description": "The quota quantity included with the base account"
               },
               "purchased": {
                 "type": "number",
-                "description": "The quantity of this object that has been purchased in addition to the base quantity"
+                "description": "The quota quantity that has been added via purchased SKUs"
               },
               "total": {
                 "type": "number",
-                "description": "The total quantity of this object permitted in the tenant account"
+                "description": "A simple formula of `included` + `purchased`"
               }
             }
           },
           "remaining": {
             "type": "number",
-            "description": "A simple formlula of `total` - `usage`"
+            "description": "A simple formula of `total` - `usage`"
           },
           "status": {
             "type": "object",
-            "required": [
-              "can_add_more",
-              "is_exceeded",
-              "is_met"
-            ],
             "properties": {
               "can_add_more": {
-                "type": "boolean"
+                "type": "boolean",
+                "description": "Indicates that the quota has not been met and additional objects can be added"
               },
               "is_exceeded": {
-                "type": "boolean"
+                "type": "boolean",
+                "description": "Indicates that the quota limit has been exceeded"
               },
               "is_met": {
-                "type": "boolean"
+                "type": "boolean",
+                "description": "Indicates the quota limit has been reached"
               }
             }
           }
-        },
-        "required": [
-          "usage",
-          "quota",
-          "remaining",
-          "status"
-        ]
+        }
       }
     },
     "securitySchemes": {
@@ -1370,6 +1108,257 @@
         "value": {
           "success_message": "The tenant has been created! Account confirmation is required to unlock the account."
         }
+      },
+      "Tenant-Quota-Summary": {
+        "value": {
+          "usage": {
+            "record_user": 4,
+            "seat": 8,
+            "user": 1,
+            "site": 9,
+            "gateway": 2,
+            "controller": 4,
+            "point": 57,
+            "collector": 1,
+            "equipment": 27,
+            "meter": 0
+          },
+          "tenant": {
+            "id": "7d5a9e81-0902-4137-b71e-40ea913b5bfa",
+            "billing_id": "cus_Gr2tvkQK7Yrujz",
+            "tier": 1,
+            "account_type": "T1 - Standard"
+          },
+          "quotas": {
+            "collector": {
+              "usage": 1,
+              "quota": {
+                "included": 0,
+                "purchased": 25,
+                "total": 25
+              },
+              "remaining": 24,
+              "status": {
+                "can_add_more": true,
+                "is_exceeded": false,
+                "is_met": false
+              }
+            },
+            "controller": {
+              "usage": 4,
+              "quota": {
+                "included": 2,
+                "purchased": 8,
+                "total": 10
+              },
+              "remaining": 6,
+              "status": {
+                "can_add_more": true,
+                "is_exceeded": false,
+                "is_met": false
+              }
+            },
+            "equipment": {
+              "usage": 27,
+              "quota": {
+                "included": 0,
+                "purchased": 50,
+                "total": 50
+              },
+              "remaining": 23,
+              "status": {
+                "can_add_more": true,
+                "is_exceeded": false,
+                "is_met": false
+              }
+            },
+            "gateway": {
+              "usage": 2,
+              "quota": {
+                "included": 1,
+                "purchased": 0,
+                "total": 1
+              },
+              "remaining": 0,
+              "status": {
+                "can_add_more": false,
+                "is_exceeded": true,
+                "is_met": true
+              }
+            },
+            "meter": {
+              "usage": 0,
+              "quota": {
+                "included": 5,
+                "purchased": 0,
+                "total": 5
+              },
+              "remaining": 5,
+              "status": {
+                "can_add_more": true,
+                "is_exceeded": false,
+                "is_met": false
+              }
+            },
+            "point": {
+              "usage": 57,
+              "quota": {
+                "included": 20,
+                "purchased": 550,
+                "total": 570
+              },
+              "remaining": 513,
+              "status": {
+                "can_add_more": true,
+                "is_exceeded": false,
+                "is_met": false
+              }
+            },
+            "seat": {
+              "usage": 8,
+              "quota": {
+                "included": 1,
+                "purchased": 10,
+                "total": 11
+              },
+              "remaining": 3,
+              "status": {
+                "can_add_more": true,
+                "is_exceeded": false,
+                "is_met": false
+              }
+            },
+            "site": {
+              "usage": 9,
+              "quota": {
+                "included": 1,
+                "purchased": 10,
+                "total": 11
+              },
+              "remaining": 2,
+              "status": {
+                "can_add_more": true,
+                "is_exceeded": false,
+                "is_met": false
+              }
+            },
+            "user": {
+              "usage": 1,
+              "quota": {
+                "included": 0,
+                "purchased": 5,
+                "total": 5
+              },
+              "remaining": 4,
+              "status": {
+                "can_add_more": true,
+                "is_exceeded": false,
+                "is_met": false
+              }
+            },
+            "record_user": {
+              "usage": 4,
+              "quota": {
+                "included": 0,
+                "purchased": 0,
+                "total": 0
+              },
+              "remaining": 0,
+              "status": {
+                "can_add_more": false,
+                "is_exceeded": true,
+                "is_met": true
+              }
+            }
+          },
+          "composition": {
+            "base": {
+              "included_quotas": {
+                "controller": 2,
+                "gateway": 1,
+                "meter": 5,
+                "point": 20,
+                "seat": 1,
+                "site": 1,
+                "record_user": null
+              },
+              "features": [
+                "browser",
+                "favorites",
+                "metering",
+                "sites_base",
+                "user_management"
+              ]
+            },
+            "purchased_items": [
+              {
+                "id": "si_HZ3bajOlRzV6Yz",
+                "product": "prod_HZ369tGn3VJSVa",
+                "plan": "price_1Gzv76J5K0z3IHPXeoVpLSY0",
+                "quantity": 1
+              },
+              {
+                "id": "si_HZ7U2OIcslO2QI",
+                "product": "prod_HZ4TOtIlNA9QCE",
+                "plan": "price_1GzwKcJ5K0z3IHPXutddmh3D",
+                "quantity": 10
+              },
+              {
+                "id": "si_HZJ9liaeMMwD69",
+                "product": "prod_HZJ7uDhRzsf6lo",
+                "plan": "price_1H0AVBJ5K0z3IHPXTV47pZ3C",
+                "quantity": 1
+              },
+              {
+                "id": "si_JooZUUSQ2PkjQu",
+                "product": "prod_Jonb7n6NgZwJPs",
+                "plan": "price_1JBASEJ5K0z3IHPX1fIfVOTj",
+                "quantity": 10
+              },
+              {
+                "id": "si_JrO2pVG3a7H9OG",
+                "product": "prod_Joo94eFbavxlBO",
+                "plan": "price_1JBAXLJ5K0z3IHPXk8KRXmYz",
+                "quantity": 550
+              },
+              {
+                "id": "si_JrO2j5us2oZRiw",
+                "product": "prod_Joo1OUr6YfqMaA",
+                "plan": "price_1JBAPDJ5K0z3IHPXKXPsmQe9",
+                "quantity": 25
+              },
+              {
+                "id": "si_JrP2d6sPjwvlZx",
+                "product": "prod_JrOsYAC275DsZV",
+                "plan": "price_1JDg4fJ5K0z3IHPX5Iu0DvEH",
+                "quantity": 50
+              },
+              {
+                "id": "si_JrQAr6iR15RAh3",
+                "product": "prod_JrQ5bpNpFpJMIH",
+                "plan": "price_1JDhFhJ5K0z3IHPXQmXXDlZJ",
+                "quantity": 8
+              }
+            ]
+          },
+          "features": [
+            "browser",
+            "favorites",
+            "metering",
+            "sites_base",
+            "user_management",
+            "user_groups",
+            "user_management",
+            "sites_base",
+            "sites_base",
+            "sites_forecasts",
+            "sites_weather",
+            "sites_weather_alerts",
+            "user_groups",
+            "user_management",
+            "sites_equipment"
+          ]
+        }
       }
     },
     "responses": {
@@ -1403,6 +1392,21 @@
             "examples": {
               "Response": {
                 "$ref": "#/components/examples/Create-Tenant-Account"
+              }
+            }
+          }
+        }
+      },
+      "200-Tenant-Quota-Summary": {
+        "description": "Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Tenant-Quota-Summary"
+            },
+            "examples": {
+              "Response": {
+                "$ref": "#/components/examples/Tenant-Quota-Summary"
               }
             }
           }
