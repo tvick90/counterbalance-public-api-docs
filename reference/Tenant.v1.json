@@ -88,7 +88,8 @@
                     "type": "string"
                   },
                   "accept_terms": {
-                    "type": "boolean"
+                    "type": "boolean",
+                    "description": "Set to `true` to indicate acceptance of the Counterbalance Terms of Service"
                   }
                 },
                 "required": [
