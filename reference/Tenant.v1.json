@@ -1,1581 +1,1588 @@
 {
-   "openapi": "3.0.0",
-   "info": {
-      "title": "Tenant Management",
-      "version": "1.2.3",
-      "description": "Endpoints for creating and managing Counterbalance tenant accounts",
-      "termsOfService": "https://www.counterbalance.io/legal/api-terms",
-      "contact": {
-         "name": "Taylor Vick",
-         "email": "support@counterbalance.io"
-      }
-   },
-   "servers": [
-      {
-         "url": "https://api.counterbalance.io",
-         "description": "Production API"
-      }
-   ],
-   "paths": {
-      "/v1/tenant": {
-         "get": {
-            "summary": "Get Tenant Account",
-            "tags": [
-               "Tenant Account"
-            ],
-            "responses": {
-               "200": {
-                  "description": "OK",
-                  "content": {
-                     "application/json": {
-                        "schema": {
-                           "$ref": "#/components/schemas/Tenant-Account"
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Tenant Management",
+    "version": "1.2.3",
+    "description": "Endpoints for creating and managing Counterbalance tenant accounts",
+    "termsOfService": "https://www.counterbalance.io/legal/api-terms",
+    "contact": {
+      "name": "Taylor Vick",
+      "email": "support@counterbalance.io"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://api.counterbalance.io",
+      "description": "Production API"
+    }
+  ],
+  "paths": {
+    "/v1/tenant": {
+      "get": {
+        "summary": "Get Tenant Account",
+        "tags": [
+          "Tenant Account"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Tenant-Account"
+                },
+                "examples": {
+                  "Response": {
+                    "value": {
+                      "id": "d6797ebf-5b00-4a59-b3e5-19711b4c55bb",
+                      "name": "Figgis Agency",
+                      "flags": {
+                        "active": true,
+                        "has_subscription": true,
+                        "has_billing_account": true,
+                        "locked": false,
+                        "confirmed": true,
+                        "deleted": false
+                      },
+                      "billing_id": "cus_GZBdOM86hQZldD",
+                      "locale": "en-us",
+                      "primary_contact": {
+                        "id": "1b17e73b-4cf7-4b47-a0f8-46f878ef7bf1",
+                        "name": {
+                          "given": "Cyril",
+                          "family": "Figgis",
+                          "full": "Cyril Figgis"
                         },
-                        "examples": {
-                           "Response": {
-                              "value": {
-                                 "id": "d6797ebf-5b00-4a59-b3e5-19711b4c55bb",
-                                 "name": "Figgis Agency",
-                                 "flags": {
-                                    "active": true,
-                                    "has_subscription": true,
-                                    "has_billing_account": true,
-                                    "locked": false,
-                                    "confirmed": true,
-                                    "deleted": false
-                                 },
-                                 "billing_id": "cus_GZBdOM86hQZldD",
-                                 "locale": "en-us",
-                                 "primary_contact": {
-                                    "id": "1b17e73b-4cf7-4b47-a0f8-46f878ef7bf1",
-                                    "name": {
-                                       "given": "Cyril",
-                                       "family": "Figgis",
-                                       "full": "Cyril Figgis"
-                                    },
-                                    "email": "cyril@figgisagency.com",
-                                    "phone": {
-                                       "primary": {
-                                          "type": null,
-                                          "number": null
-                                       }
-                                    }
-                                 },
-                                 "subscription": {
-                                    "tier": 3,
-                                    "sku": "plan_GvzroFXIrnFYdH",
-                                    "active": true
-                                 },
-                                 "trial": {
-                                    "status": "Never Started",
-                                    "used": false,
-                                    "active": false,
-                                    "expired": false,
-                                    "expires": 0
-                                 },
-                                 "addresses": {
-                                    "mailing": "f3643601-d122-47c5-893c-1f108c07d840",
-                                    "billing": null
-                                 },
-                                 "milestones": {
-                                    "account_created": {
-                                       "status": true,
-                                       "timestamp": 1517451002
-                                    },
-                                    "account_deleted": {
-                                       "status": false,
-                                       "timestamp": 0
-                                    },
-                                    "account_confirmation": {
-                                       "status": true,
-                                       "timestamp": 1580183430
-                                    },
-                                    "onboarded": {
-                                       "status": true,
-                                       "timestamp": 1580183430
-                                    },
-                                    "accepted_terms": {
-                                       "status": false,
-                                       "timestamp": 0
-                                    },
-                                    "accepted_billing_terms": {
-                                       "status": false,
-                                       "timestamp": 0
-                                    },
-                                    "accepted_subscription_terms": {
-                                       "status": false,
-                                       "timestamp": 0
-                                    }
-                                 }
-                              }
-                           }
+                        "email": "cyril@figgisagency.com",
+                        "phone": {
+                          "primary": {
+                            "type": null,
+                            "number": null
+                          }
                         }
-                     }
-                  }
-               }
-            },
-            "operationId": "get-tenant",
-            "description": "Retrieve the tenant account for the authenticated user\n\n__Required Permissions:__ `*`,`tenant:*`,`tenant:account:*`,`tenant:account:read`",
-            "security": [
-               {
-                  "Bearer Token": []
-               }
-            ]
-         },
-         "post": {
-            "summary": "Create Tenant Account",
-            "operationId": "post-v1-tenant",
-            "responses": {
-               "201": {
-                  "description": "Created",
-                  "content": {
-                     "application/json": {
-                        "schema": {
-                           "type": "object",
-                           "properties": {
-                              "success_message": {
-                                 "type": "string"
-                              }
-                           }
+                      },
+                      "subscription": {
+                        "tier": 3,
+                        "sku": "plan_GvzroFXIrnFYdH",
+                        "active": true
+                      },
+                      "trial": {
+                        "status": "Never Started",
+                        "used": false,
+                        "active": false,
+                        "expired": false,
+                        "expires": 0
+                      },
+                      "addresses": {
+                        "mailing": "f3643601-d122-47c5-893c-1f108c07d840",
+                        "billing": null
+                      },
+                      "milestones": {
+                        "account_created": {
+                          "status": true,
+                          "timestamp": 1517451002
                         },
-                        "examples": {
-                           "Response": {
-                              "value": {
-                                 "success_message": "The new tenant account was created! Email confirmation required."
-                              }
-                           }
-                        }
-                     }
-                  }
-               }
-            },
-            "description": "Create a new tenant account (aka, account signup)\n\n_None_\n\nThe terms of service must be accepted before the account can be created. The `accept_terms` body field must be set to `true` in order for the request to be completed successfully.\n\nOnce an account is successfully completed, a six-digit confirmation code is emailed to the new user. The new account must be confirmed with the Confirm Tenant Account endpoint before it can be used.",
-            "requestBody": {
-               "content": {
-                  "application/json": {
-                     "schema": {
-                        "type": "object",
-                        "properties": {
-                           "given_name": {
-                              "type": "string"
-                           },
-                           "family_name": {
-                              "type": "string"
-                           },
-                           "email": {
-                              "type": "string",
-                              "format": "email"
-                           },
-                           "password": {
-                              "type": "string",
-                              "format": "password"
-                           },
-                           "company_name": {
-                              "type": "string"
-                           },
-                           "accept_terms": {
-                              "type": "boolean"
-                           }
+                        "account_deleted": {
+                          "status": false,
+                          "timestamp": 0
                         },
-                        "required": [
-                           "given_name",
-                           "family_name",
-                           "email",
-                           "password",
-                           "company_name",
-                           "accept_terms"
-                        ]
-                     },
-                     "examples": {
-                        "Example": {
-                           "value": {
-                              "given_name": "Taylor",
-                              "family_name": "Vick",
-                              "email": "hello@counterbalance.io",
-                              "password": "Se@ttle1!",
-                              "company_name": "Counterbalance Software",
-                              "accept_terms": true
-                           }
-                        }
-                     }
-                  }
-               }
-            },
-            "tags": [
-               "Tenant Account"
-            ],
-            "parameters": [
-               {
-                  "schema": {
-                     "type": "string",
-                     "default": "application/json"
-                  },
-                  "in": "header",
-                  "name": "Content-Type",
-                  "required": true
-               }
-            ]
-         },
-         "patch": {
-            "summary": "Update Tenant Account",
-            "operationId": "update-tenant",
-            "responses": {
-               "200": {
-                  "description": "OK",
-                  "content": {
-                     "application/json": {
-                        "schema": {
-                           "$ref": "#/components/schemas/Tenant-Account"
+                        "account_confirmation": {
+                          "status": true,
+                          "timestamp": 1580183430
                         },
-                        "examples": {
-                           "Response": {
-                              "value": {
-                                 "id": "d6797ebf-5b00-4a59-b3e5-19711b4c55bb",
-                                 "name": "Figgis Agency",
-                                 "flags": {
-                                    "active": true,
-                                    "has_subscription": true,
-                                    "has_billing_account": true,
-                                    "locked": false,
-                                    "confirmed": true,
-                                    "deleted": false
-                                 },
-                                 "billing_id": "cus_GZBdOM86hQZldD",
-                                 "locale": "en-us",
-                                 "primary_contact": {
-                                    "id": "1b17e73b-4cf7-4b47-a0f8-46f878ef7bf1",
-                                    "name": {
-                                       "given": "Cyril",
-                                       "family": "Figgis",
-                                       "full": "Cyril Figgis"
-                                    },
-                                    "email": "cyril@figgisagency.com",
-                                    "phone": {
-                                       "primary": {
-                                          "type": null,
-                                          "number": null
-                                       }
-                                    }
-                                 },
-                                 "subscription": {
-                                    "tier": 3,
-                                    "sku": "plan_GvzroFXIrnFYdH",
-                                    "active": true
-                                 },
-                                 "trial": {
-                                    "status": "Never Started",
-                                    "used": false,
-                                    "active": false,
-                                    "expired": false,
-                                    "expires": 0
-                                 },
-                                 "addresses": {
-                                    "mailing": "f3643601-d122-47c5-893c-1f108c07d840",
-                                    "billing": null
-                                 },
-                                 "milestones": {
-                                    "account_created": {
-                                       "status": true,
-                                       "timestamp": 1517451002
-                                    },
-                                    "account_deleted": {
-                                       "status": false,
-                                       "timestamp": 0
-                                    },
-                                    "account_confirmation": {
-                                       "status": true,
-                                       "timestamp": 1580183430
-                                    },
-                                    "onboarded": {
-                                       "status": true,
-                                       "timestamp": 1580183430
-                                    },
-                                    "accepted_terms": {
-                                       "status": false,
-                                       "timestamp": 0
-                                    },
-                                    "accepted_billing_terms": {
-                                       "status": false,
-                                       "timestamp": 0
-                                    },
-                                    "accepted_subscription_terms": {
-                                       "status": false,
-                                       "timestamp": 0
-                                    }
-                                 }
-                              }
-                           }
-                        }
-                     }
-                  }
-               }
-            },
-            "description": "Update the tenant account details for the authenticated user\n\nThe following prerequisites are required for this endpoint:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`tenant:*`,`tenant:account:*`,`tenant:account:update`",
-            "security": [
-               {
-                  "Bearer Token": []
-               }
-            ],
-            "requestBody": {
-               "content": {
-                  "application/json": {
-                     "schema": {
-                        "type": "object",
-                        "properties": {
-                           "name": {
-                              "type": "string",
-                              "maxLength": 240,
-                              "description": "Your tenant company name"
-                           },
-                           "primary_contact": {
-                              "type": "string",
-                              "format": "uuid",
-                              "description": "The UUID of the user designated as the primary contact for your account"
-                           }
-                        }
-                     },
-                     "examples": {
-                        "Example": {
-                           "value": {
-                              "name": "Figgis Agency",
-                              "primary_contact": "5152763b-7d76-4d22-8484-ff27da40fe98"
-                           }
-                        }
-                     }
-                  }
-               },
-               "description": ""
-            },
-            "tags": [
-               "Tenant Account"
-            ],
-            "parameters": [
-               {
-                  "schema": {
-                     "type": "string",
-                     "default": "application/json"
-                  },
-                  "in": "header",
-                  "name": "Content-Type"
-               }
-            ]
-         },
-         "delete": {
-            "summary": "Delete Tenant Account",
-            "operationId": "delete-tenant",
-            "responses": {
-               "200": {
-                  "description": "OK"
-               }
-            },
-            "description": "Delete the tenant account of the authenticated user\n\nThe following prerequisites are required for this endpoint:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`tenant:*`,`tenant:account:*`,`tenant:account:delete`",
-            "tags": [
-               "Tenant Account"
-            ]
-         }
-      },
-      "/v1/tenant/quota": {
-         "get": {
-            "summary": "Get Tenant Quota Summary",
-            "tags": [
-               "Tenant Quota"
-            ],
-            "responses": {
-               "200": {
-                  "description": "OK",
-                  "content": {
-                     "application/json": {
-                        "schema": {
-                           "$ref": "#/components/schemas/Tenant-Quota-Summary"
+                        "onboarded": {
+                          "status": true,
+                          "timestamp": 1580183430
                         },
-                        "examples": {
-                           "Response": {
-                              "value": {
-                                 "usage": {
-                                    "record_user": 11,
-                                    "seat": 3,
-                                    "user": 3,
-                                    "site": 7,
-                                    "building": 0,
-                                    "gateway": 0,
-                                    "controller": 0,
-                                    "point": 0,
-                                    "equipment": 0,
-                                    "meter": 0
-                                 },
-                                 "tenant": {
-                                    "id": "75a14450-2aa9-4785-a7dd-add5655953a4",
-                                    "subscription_sku": "plan_GvzqNsab8C5SG8",
-                                    "billing_id": "cus_GfeG3goOpZMblf"
-                                 },
-                                 "quotas": {
-                                    "building": {
-                                       "usage": 0,
-                                       "quota": {
-                                          "included": 2,
-                                          "purchased": 0,
-                                          "total": 2
-                                       },
-                                       "remaining": 2,
-                                       "status": {
-                                          "can_add_more": true,
-                                          "is_exceeded": false,
-                                          "is_met": false
-                                       }
-                                    },
-                                    "controller": {
-                                       "usage": 0,
-                                       "quota": {
-                                          "included": 5,
-                                          "purchased": 0,
-                                          "total": 5
-                                       },
-                                       "remaining": 5,
-                                       "status": {
-                                          "can_add_more": true,
-                                          "is_exceeded": false,
-                                          "is_met": false
-                                       }
-                                    },
-                                    "equipment": {
-                                       "usage": 0,
-                                       "quota": {
-                                          "included": 10,
-                                          "purchased": 0,
-                                          "total": 10
-                                       },
-                                       "remaining": 10,
-                                       "status": {
-                                          "can_add_more": true,
-                                          "is_exceeded": false,
-                                          "is_met": false
-                                       }
-                                    },
-                                    "gateway": {
-                                       "usage": 0,
-                                       "quota": null,
-                                       "remaining": null,
-                                       "status": {
-                                          "can_add_more": true,
-                                          "is_exceeded": false
-                                       }
-                                    },
-                                    "meter": {
-                                       "usage": 0,
-                                       "quota": {
-                                          "included": 5,
-                                          "purchased": 0,
-                                          "total": 5
-                                       },
-                                       "remaining": 5,
-                                       "status": {
-                                          "can_add_more": true,
-                                          "is_exceeded": false,
-                                          "is_met": false
-                                       }
-                                    },
-                                    "point": {
-                                       "usage": 0,
-                                       "quota": {
-                                          "included": 100,
-                                          "purchased": 0,
-                                          "total": 100
-                                       },
-                                       "remaining": 100,
-                                       "status": {
-                                          "can_add_more": true,
-                                          "is_exceeded": false,
-                                          "is_met": false
-                                       }
-                                    },
-                                    "seat": {
-                                       "usage": 3,
-                                       "quota": {
-                                          "included": 2,
-                                          "purchased": 3,
-                                          "total": 5
-                                       },
-                                       "remaining": 2,
-                                       "status": {
-                                          "can_add_more": true,
-                                          "is_exceeded": false,
-                                          "is_met": false
-                                       }
-                                    },
-                                    "site": {
-                                       "usage": 7,
-                                       "quota": {
-                                          "included": 1,
-                                          "purchased": 6,
-                                          "total": 7
-                                       },
-                                       "remaining": 0,
-                                       "status": {
-                                          "can_add_more": false,
-                                          "is_exceeded": false,
-                                          "is_met": true
-                                       }
-                                    },
-                                    "user": {
-                                       "usage": 3,
-                                       "quota": {
-                                          "included": 0,
-                                          "purchased": 0,
-                                          "total": 0
-                                       },
-                                       "remaining": 0,
-                                       "status": {
-                                          "can_add_more": false,
-                                          "is_exceeded": true,
-                                          "is_met": true
-                                       }
-                                    },
-                                    "record_user": {
-                                       "usage": 11,
-                                       "quota": null,
-                                       "remaining": null,
-                                       "status": {
-                                          "can_add_more": true,
-                                          "is_exceeded": false
-                                       }
-                                    }
-                                 },
-                                 "subscription": {
-                                    "base": {
-                                       "id": "plan_GvzqNsab8C5SG8",
-                                       "name": "Essentials",
-                                       "tier": 1,
-                                       "enabled": true,
-                                       "billing_frequency": "month",
-                                       "seat_price": 27,
-                                       "included_quotas": {
-                                          "building": 2,
-                                          "controller": 5,
-                                          "equipment": 10,
-                                          "gateway": null,
-                                          "meter": 5,
-                                          "point": 100,
-                                          "seat": 2,
-                                          "site": 1,
-                                          "user": 0,
-                                          "record_user": null
-                                       },
-                                       "included_features": [
-                                          "commander",
-                                          "dynamic_plotter",
-                                          "favorites",
-                                          "sites_base",
-                                          "sites_equipment",
-                                          "user_management",
-                                          "weather_alerts",
-                                          "weather_conditions"
-                                       ]
-                                    },
-                                    "purchased_items": [
-                                       {
-                                          "id": "si_IGWLaFhj6bhyLx",
-                                          "product": "prod_HZ4TOtIlNA9QCE",
-                                          "plan": "price_1GzwKcJ5K0z3IHPXutddmh3D",
-                                          "quantity": 6
-                                       },
-                                       {
-                                          "id": "si_IGWajoRwdI0Q47",
-                                          "product": "prod_HZJ7uDhRzsf6lo",
-                                          "plan": "price_1H0AVBJ5K0z3IHPXTV47pZ3C",
-                                          "quantity": 1
-                                       },
-                                       {
-                                          "id": "si_IGWjOMxXGL0678",
-                                          "product": "prod_GZIOOnp2EtrDOE",
-                                          "plan": "plan_GvzqNsab8C5SG8",
-                                          "quantity": 5
-                                       }
-                                    ]
-                                 },
-                                 "features": [
-                                    "commander",
-                                    "dynamic_plotter",
-                                    "favorites",
-                                    "sites_base",
-                                    "sites_equipment",
-                                    "user_management",
-                                    "weather_alerts",
-                                    "weather_conditions",
-                                    "sites_base",
-                                    "sites_base",
-                                    "sites_forecasts",
-                                    "sites_weather",
-                                    "sites_weather_alerts"
-                                 ]
-                              }
-                           }
-                        }
-                     }
-                  }
-               }
-            },
-            "operationId": "get-tenant-quota",
-            "description": "Retrieve a summary of metered tenant objects and their usage\n\nThe following prerequisites are required for this endpoint:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`tenant:*`,`tenant:quota:*`,`tenant:quota:read`",
-            "security": [
-               {
-                  "Bearer Token": []
-               }
-            ]
-         }
-      },
-      "/v1/tenant/confirm": {
-         "post": {
-            "summary": "Confirm Tenant Account",
-            "operationId": "post-v1-tenant-confirm",
-            "responses": {
-               "200": {
-                  "description": "OK",
-                  "content": {
-                     "application/json": {
-                        "schema": {
-                           "type": "object",
-                           "properties": {
-                              "success_message": {
-                                 "type": "string"
-                              }
-                           }
+                        "accepted_terms": {
+                          "status": false,
+                          "timestamp": 0
                         },
-                        "examples": {
-                           "Example": {
-                              "value": {
-                                 "success_message": "Tenant account has been successfully confirmed!"
-                              }
-                           }
-                        }
-                     }
-                  }
-               }
-            },
-            "description": "Confirm a newly-created tenant account\n\nThe following prerequisites are required for this endpoint:\n* The tenant account confirmation code _(emailed to the new user)_\n* Permissions _(at least one):_ `*`,`tenant:*`,`tenant:account:*`,`tenant:account:update`\n\n> _**Note** A confirm operation can only be completed by the user who created the tenant acccount_",
-            "security": [
-               {
-                  "Bearer Token": []
-               }
-            ],
-            "requestBody": {
-               "content": {
-                  "application/json": {
-                     "schema": {
-                        "type": "object",
-                        "properties": {
-                           "code": {
-                              "type": "string",
-                              "description": "A six-digit confirmation code",
-                              "minLength": 6,
-                              "maxLength": 6,
-                              "default": "645881"
-                           }
+                        "accepted_billing_terms": {
+                          "status": false,
+                          "timestamp": 0
                         },
-                        "required": [
-                           "code"
-                        ]
-                     },
-                     "examples": {
-                        "Example": {
-                           "value": {
-                              "code": "645881"
-                           }
+                        "accepted_subscription_terms": {
+                          "status": false,
+                          "timestamp": 0
                         }
-                     }
+                      }
+                    }
                   }
-               }
-            },
-            "tags": [
-               "Tenant Operations"
-            ]
-         }
-      },
-      "/v1/tenant/onboarding": {
-         "parameters": [],
-         "post": {
-            "summary": "Complete Tenant Onboarding",
-            "operationId": "post-v1-tenant-onboarding",
-            "responses": {
-               "200": {
-                  "description": "OK",
-                  "content": {
-                     "application/json": {
-                        "schema": {
-                           "type": "object",
-                           "properties": {
-                              "success_message": {
-                                 "type": "string"
-                              }
-                           }
-                        },
-                        "examples": {
-                           "Response": {
-                              "value": {
-                                 "success_message": "Onboarding has been completed!"
-                              }
-                           }
-                        }
-                     }
-                  }
-               }
-            },
-            "description": "Mark the tenant account for the authenticated user as having completed onboarding",
-            "security": [
-               {
-                  "Bearer Token": []
-               }
-            ],
-            "requestBody": {
-               "content": {
-                  "application/json": {
-                     "schema": {
-                        "type": "null"
-                     },
-                     "examples": {
-                        "Example": {
-                           "value": null
-                        }
-                     }
-                  }
-               },
-               "description": "*No request body is necesssary for this request*"
-            },
-            "tags": [
-               "Tenant Operations"
-            ]
-         }
-      },
-      "/v1/tenant/preferences": {
-         "get": {
-            "summary": "Get Tenant Preferences",
-            "tags": [
-               "Tenant Preferences"
-            ],
-            "responses": {
-               "200": {
-                  "description": "OK",
-                  "content": {
-                     "application/json": {
-                        "schema": {
-                           "$ref": "#/components/schemas/Tenant-Preferences"
-                        }
-                     }
-                  }
-               }
-            },
-            "operationId": "get-v1-tenant-preferences",
-            "description": "Retrieve platform preferences set for the authenticated user's tenant account",
-            "security": [
-               {
-                  "Bearer Token": []
-               }
-            ]
-         }
-      },
-      "/v1/tenant/deletion-pin": {
-         "post": {
-            "summary": "Set Deletion PIN",
-            "operationId": "post-v1-tenant-deletion-pin",
-            "responses": {
-               "201": {
-                  "description": "Created",
-                  "content": {
-                     "application/json": {
-                        "schema": {
-                           "$ref": "#/components/schemas/Tenant-Deletion-PIN"
-                        }
-                     }
-                  }
-               }
-            },
-            "description": "Set a deletion PIN that allows Counterbalance Support to permanently delete a tenant account",
-            "security": [
-               {
-                  "Bearer Token": []
-               }
-            ],
-            "tags": [
-               "Tenant Operations"
-            ]
-         }
-      }
-   },
-   "components": {
-      "schemas": {
-         "Tenant-Account": {
-            "description": "",
-            "type": "object",
-            "properties": {
-               "id": {
-                  "type": "string",
-                  "minLength": 1
-               },
-               "name": {
-                  "type": "string",
-                  "minLength": 1
-               },
-               "flags": {
-                  "type": "object",
-                  "properties": {
-                     "active": {
-                        "type": "boolean"
-                     },
-                     "has_subscription": {
-                        "type": "boolean"
-                     },
-                     "has_billing_account": {
-                        "type": "boolean"
-                     },
-                     "locked": {
-                        "type": "boolean"
-                     },
-                     "confirmed": {
-                        "type": "boolean"
-                     },
-                     "deleted": {
-                        "type": "boolean"
-                     }
-                  }
-               },
-               "billing_id": {
-                  "type": [
-                     "string",
-                     "null"
-                  ],
-                  "minLength": 1
-               },
-               "locale": {
-                  "type": "string",
-                  "minLength": 1
-               },
-               "primary_contact": {
-                  "type": "object",
-                  "properties": {
-                     "id": {
-                        "type": "string",
-                        "minLength": 1
-                     },
-                     "name": {
-                        "type": "object",
-                        "properties": {
-                           "given": {
-                              "type": "string",
-                              "minLength": 1
-                           },
-                           "family": {
-                              "type": "string",
-                              "minLength": 1
-                           },
-                           "full": {
-                              "type": "string",
-                              "minLength": 1
-                           }
-                        }
-                     },
-                     "email": {
-                        "type": "string",
-                        "minLength": 1
-                     },
-                     "phone": {
-                        "type": "object",
-                        "properties": {
-                           "primary": {
-                              "type": "object",
-                              "properties": {
-                                 "type": {},
-                                 "number": {}
-                              }
-                           }
-                        }
-                     }
-                  }
-               },
-               "subscription": {
-                  "type": "object",
-                  "required": [
-                     "active"
-                  ],
-                  "properties": {
-                     "tier": {
-                        "type": "number"
-                     },
-                     "sku": {
-                        "type": "string",
-                        "minLength": 1
-                     },
-                     "active": {
-                        "type": "boolean"
-                     }
-                  }
-               },
-               "trial": {
-                  "type": "object",
-                  "required": [
-                     "status",
-                     "used",
-                     "active",
-                     "expired",
-                     "expires"
-                  ],
-                  "properties": {
-                     "status": {
-                        "type": "string",
-                        "minLength": 1
-                     },
-                     "used": {
-                        "type": "boolean"
-                     },
-                     "active": {
-                        "type": "boolean"
-                     },
-                     "expired": {
-                        "type": "boolean"
-                     },
-                     "expires": {
-                        "type": "number"
-                     }
-                  }
-               },
-               "addresses": {
-                  "type": "object",
-                  "required": [
-                     "mailing"
-                  ],
-                  "properties": {
-                     "mailing": {
-                        "type": "string",
-                        "minLength": 1
-                     },
-                     "billing": {}
-                  }
-               },
-               "milestones": {
-                  "type": "object",
-                  "required": [
-                     "account_created",
-                     "account_deleted",
-                     "account_confirmation",
-                     "onboarded",
-                     "accepted_terms",
-                     "accepted_billing_terms",
-                     "accepted_subscription_terms"
-                  ],
-                  "properties": {
-                     "account_created": {
-                        "type": "object",
-                        "required": [
-                           "status",
-                           "timestamp"
-                        ],
-                        "properties": {
-                           "status": {
-                              "type": "boolean"
-                           },
-                           "timestamp": {
-                              "type": "number"
-                           }
-                        }
-                     },
-                     "account_deleted": {
-                        "type": "object",
-                        "required": [
-                           "status",
-                           "timestamp"
-                        ],
-                        "properties": {
-                           "status": {
-                              "type": "boolean"
-                           },
-                           "timestamp": {
-                              "type": "number"
-                           }
-                        }
-                     },
-                     "account_confirmation": {
-                        "type": "object",
-                        "required": [
-                           "status",
-                           "timestamp"
-                        ],
-                        "properties": {
-                           "status": {
-                              "type": "boolean"
-                           },
-                           "timestamp": {
-                              "type": "number"
-                           }
-                        }
-                     },
-                     "onboarded": {
-                        "type": "object",
-                        "required": [
-                           "status",
-                           "timestamp"
-                        ],
-                        "properties": {
-                           "status": {
-                              "type": "boolean"
-                           },
-                           "timestamp": {
-                              "type": "number"
-                           }
-                        }
-                     },
-                     "accepted_terms": {
-                        "type": "object",
-                        "required": [
-                           "status",
-                           "timestamp"
-                        ],
-                        "properties": {
-                           "status": {
-                              "type": "boolean"
-                           },
-                           "timestamp": {
-                              "type": "number"
-                           }
-                        }
-                     },
-                     "accepted_billing_terms": {
-                        "type": "object",
-                        "required": [
-                           "status",
-                           "timestamp"
-                        ],
-                        "properties": {
-                           "status": {
-                              "type": "boolean"
-                           },
-                           "timestamp": {
-                              "type": "number"
-                           }
-                        }
-                     },
-                     "accepted_subscription_terms": {
-                        "type": "object",
-                        "required": [
-                           "status",
-                           "timestamp"
-                        ],
-                        "properties": {
-                           "status": {
-                              "type": "boolean"
-                           },
-                           "timestamp": {
-                              "type": "number"
-                           }
-                        }
-                     }
-                  }
-               }
-            },
-            "required": [
-               "trial",
-               "addresses",
-               "milestones"
-            ],
-            "title": "Tenant Account Model",
-            "x-examples": {
-               "Example": {
-                  "id": "d6797ebf-5b00-4a59-b3e5-19711b4c55bb",
-                  "name": "Figgis Agency",
-                  "flags": {
-                     "active": true,
-                     "has_subscription": true,
-                     "has_billing_account": true,
-                     "locked": false,
-                     "confirmed": true,
-                     "deleted": false
-                  },
-                  "billing_id": "cus_GZBdOM86hQZldD",
-                  "locale": "en-us",
-                  "primary_contact": {
-                     "id": "1b17e73b-4cf7-4b47-a0f8-46f878ef7bf1",
-                     "name": {
-                        "given": "Cyril",
-                        "family": "Figgis",
-                        "full": "Cyril Figgis"
-                     },
-                     "email": "cyril@figgisagency.com",
-                     "phone": {
-                        "primary": {
-                           "type": null,
-                           "number": null
-                        }
-                     }
-                  },
-                  "subscription": {
-                     "tier": 3,
-                     "sku": "plan_GvzroFXIrnFYdH",
-                     "active": true
-                  },
-                  "trial": {
-                     "status": "Never Started",
-                     "used": false,
-                     "active": false,
-                     "expired": false,
-                     "expires": 0
-                  },
-                  "addresses": {
-                     "mailing": "f3643601-d122-47c5-893c-1f108c07d840",
-                     "billing": null
-                  },
-                  "milestones": {
-                     "account_created": {
-                        "status": true,
-                        "timestamp": 1517451002
-                     },
-                     "account_deleted": {
-                        "status": false,
-                        "timestamp": 0
-                     },
-                     "account_confirmation": {
-                        "status": true,
-                        "timestamp": 1580183430
-                     },
-                     "onboarded": {
-                        "status": true,
-                        "timestamp": 1580183430
-                     },
-                     "accepted_terms": {
-                        "status": false,
-                        "timestamp": 0
-                     },
-                     "accepted_billing_terms": {
-                        "status": false,
-                        "timestamp": 0
-                     },
-                     "accepted_subscription_terms": {
-                        "status": false,
-                        "timestamp": 0
-                     }
-                  }
-               }
-            },
-            "x-tags": [
-               "Tenant Account"
-            ]
-         },
-         "Tenant-Quota-Summary": {
-            "description": "",
-            "type": "object",
-            "properties": {
-               "usage": {
-                  "type": "object",
-                  "required": [
-                     "record_user",
-                     "seat",
-                     "user",
-                     "site",
-                     "building",
-                     "gateway",
-                     "controller",
-                     "point",
-                     "equipment",
-                     "meter"
-                  ],
-                  "properties": {
-                     "record_user": {
-                        "type": "number"
-                     },
-                     "seat": {
-                        "type": "number"
-                     },
-                     "user": {
-                        "type": "number"
-                     },
-                     "site": {
-                        "type": "number"
-                     },
-                     "building": {
-                        "type": "number"
-                     },
-                     "gateway": {
-                        "type": "number"
-                     },
-                     "controller": {
-                        "type": "number"
-                     },
-                     "point": {
-                        "type": "number"
-                     },
-                     "equipment": {
-                        "type": "number"
-                     },
-                     "meter": {
-                        "type": "number"
-                     }
-                  }
-               },
-               "tenant": {
-                  "type": "object",
-                  "required": [
-                     "id",
-                     "subscription_sku",
-                     "billing_id"
-                  ],
-                  "properties": {
-                     "id": {
-                        "type": "string",
-                        "minLength": 1
-                     },
-                     "subscription_sku": {
-                        "type": "string",
-                        "minLength": 1
-                     },
-                     "billing_id": {
-                        "type": "string",
-                        "minLength": 1
-                     }
-                  }
-               },
-               "quotas": {
-                  "type": "object",
-                  "required": [
-                     "building",
-                     "controller",
-                     "equipment",
-                     "gateway",
-                     "meter",
-                     "point",
-                     "seat",
-                     "site",
-                     "user",
-                     "record_user"
-                  ],
-                  "properties": {
-                     "building": {
-                        "$ref": "#/components/schemas/Tenant-Quota-Item-Summary"
-                     },
-                     "controller": {
-                        "$ref": "#/components/schemas/Tenant-Quota-Item-Summary"
-                     },
-                     "equipment": {
-                        "$ref": "#/components/schemas/Tenant-Quota-Item-Summary"
-                     },
-                     "gateway": {
-                        "$ref": "#/components/schemas/Tenant-Quota-Item-Summary"
-                     },
-                     "meter": {
-                        "$ref": "#/components/schemas/Tenant-Quota-Item-Summary"
-                     },
-                     "point": {
-                        "$ref": "#/components/schemas/Tenant-Quota-Item-Summary"
-                     },
-                     "seat": {
-                        "$ref": "#/components/schemas/Tenant-Quota-Item-Summary"
-                     },
-                     "site": {
-                        "$ref": "#/components/schemas/Tenant-Quota-Item-Summary"
-                     },
-                     "user": {
-                        "$ref": "#/components/schemas/Tenant-Quota-Item-Summary"
-                     },
-                     "record_user": {
-                        "$ref": "#/components/schemas/Tenant-Quota-Item-Summary"
-                     }
-                  }
-               },
-               "subscription": {
-                  "type": "object",
-                  "required": [
-                     "base",
-                     "purchased_items"
-                  ],
-                  "properties": {
-                     "base": {
-                        "type": "object",
-                        "required": [
-                           "id",
-                           "name",
-                           "tier",
-                           "enabled",
-                           "billing_frequency",
-                           "seat_price",
-                           "included_quotas",
-                           "included_features"
-                        ],
-                        "properties": {
-                           "id": {
-                              "type": "string",
-                              "minLength": 1
-                           },
-                           "name": {
-                              "type": "string",
-                              "minLength": 1
-                           },
-                           "tier": {
-                              "type": "number"
-                           },
-                           "enabled": {
-                              "type": "boolean"
-                           },
-                           "billing_frequency": {
-                              "type": "string",
-                              "minLength": 1
-                           },
-                           "seat_price": {
-                              "type": "number"
-                           },
-                           "included_quotas": {
-                              "type": "object",
-                              "required": [
-                                 "building",
-                                 "controller",
-                                 "equipment",
-                                 "meter",
-                                 "point",
-                                 "seat",
-                                 "site",
-                                 "user"
-                              ],
-                              "properties": {
-                                 "building": {
-                                    "type": "number"
-                                 },
-                                 "controller": {
-                                    "type": "number"
-                                 },
-                                 "equipment": {
-                                    "type": "number"
-                                 },
-                                 "gateway": {},
-                                 "meter": {
-                                    "type": "number"
-                                 },
-                                 "point": {
-                                    "type": "number"
-                                 },
-                                 "seat": {
-                                    "type": "number"
-                                 },
-                                 "site": {
-                                    "type": "number"
-                                 },
-                                 "user": {
-                                    "type": "number"
-                                 },
-                                 "record_user": {}
-                              }
-                           },
-                           "included_features": {
-                              "type": "array",
-                              "items": {
-                                 "type": "object"
-                              }
-                           }
-                        }
-                     },
-                     "purchased_items": {
-                        "type": "array",
-                        "uniqueItems": true,
-                        "minItems": 1,
-                        "items": {
-                           "type": "object",
-                           "properties": {
-                              "id": {
-                                 "type": "string",
-                                 "minLength": 1
-                              },
-                              "product": {
-                                 "type": "string",
-                                 "minLength": 1
-                              },
-                              "plan": {
-                                 "type": "string",
-                                 "minLength": 1
-                              },
-                              "quantity": {
-                                 "type": "number"
-                              }
-                           },
-                           "required": [
-                              "id",
-                              "product",
-                              "plan",
-                              "quantity"
-                           ]
-                        }
-                     }
-                  }
-               },
-               "features": {
-                  "type": "array",
-                  "items": {
-                     "type": "object"
-                  }
-               }
-            },
-            "required": [
-               "usage",
-               "tenant",
-               "quotas",
-               "subscription",
-               "features"
-            ],
-            "title": "Tenant Quota Summary"
-         },
-         "Tenant-Preferences": {
-            "description": "",
-            "type": "object",
-            "properties": {
-               "display_name_format": {
-                  "type": "string",
-                  "minLength": 1
-               },
-               "shell": {
-                  "type": "object",
-                  "properties": {
-                     "theme": {
-                        "type": "string",
-                        "minLength": 1
-                     },
-                     "pagination": {
-                        "type": "object",
-                        "properties": {
-                           "enabled": {
-                              "type": "boolean"
-                           },
-                           "default_limit": {
-                              "type": "number",
-                              "default": 10
-                           }
-                        }
-                     },
-                     "disabled_applications": {
-                        "type": "array",
-                        "items": {
-                           "type": "string"
-                        }
-                     }
-                  }
-               }
-            },
-            "title": "Tenant Preferences Object Model",
-            "x-tags": [
-               "Tenant Preferences"
-            ]
-         },
-         "Tenant-Deletion-PIN": {
-            "description": "",
-            "type": "object",
-            "properties": {
-               "pin": {
-                  "type": "string",
-                  "minLength": 8,
-                  "maxLength": 8,
-                  "description": "An eight-character deletion PIN"
-               }
-            },
-            "x-examples": {
-               "Example": {
-                  "pin": "71VIFU22"
-               }
-            },
-            "title": "Tenant Deletion PIN Request Body",
-            "x-tags": [
-               "Tenant Operations"
-            ]
-         },
-         "Tenant-Quota-Item-Summary": {
-            "description": "",
-            "type": "object",
-            "title": "Quota Item Summary",
-            "properties": {
-               "usage": {
-                  "type": "number",
-                  "description": "The number of objects of this type"
-               },
-               "quota": {
-                  "type": "object",
-                  "required": [
-                     "included",
-                     "purchased",
-                     "total"
-                  ],
-                  "properties": {
-                     "included": {
-                        "type": "number",
-                        "description": "The quantity of of this object included in the subscription plan"
-                     },
-                     "purchased": {
-                        "type": "number",
-                        "description": "The quantity of this object that has been purchased in addition to the base quantity"
-                     },
-                     "total": {
-                        "type": "number",
-                        "description": "The total quantity of this object permitted in the tenant account"
-                     }
-                  }
-               },
-               "remaining": {
-                  "type": "number",
-                  "description": "A simple formlula of `total` - `usage`"
-               },
-               "status": {
-                  "type": "object",
-                  "required": [
-                     "can_add_more",
-                     "is_exceeded",
-                     "is_met"
-                  ],
-                  "properties": {
-                     "can_add_more": {
-                        "type": "boolean"
-                     },
-                     "is_exceeded": {
-                        "type": "boolean"
-                     },
-                     "is_met": {
-                        "type": "boolean"
-                     }
-                  }
-               }
-            },
-            "required": [
-               "usage",
-               "quota",
-               "remaining",
-               "status"
-            ]
-         }
-      },
-      "securitySchemes": {
-         "Bearer Token": {
-            "type": "http",
-            "scheme": "bearer",
-            "description": ""
-         }
-      },
-      "examples": {
-         "Tenant-Account": {
-            "value": {
-               "description": "Example shared example",
-               "type": "object",
-               "properties": {
-                  "id": {
-                     "type": "string"
-                  }
-               },
-               "required": [
-                  "id"
-               ]
+                }
+              }
             }
-         }
+          }
+        },
+        "operationId": "get-tenant",
+        "description": "Retrieve the tenant account for the authenticated user\n\n__Required Permissions:__ `*`,`tenant:*`,`tenant:account:*`,`tenant:account:read`",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ]
+      },
+      "post": {
+        "summary": "Create Tenant Account",
+        "operationId": "post-v1-tenant",
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success_message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "Response": {
+                    "value": {
+                      "success_message": "The new tenant account was created! Email confirmation required."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "Create a new tenant account (aka, account signup)\n\n_None_\n\nThe terms of service must be accepted before the account can be created. The `accept_terms` body field must be set to `true` in order for the request to be completed successfully.\n\nOnce an account is successfully completed, a six-digit confirmation code is emailed to the new user. The new account must be confirmed with the Confirm Tenant Account endpoint before it can be used.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "given_name": {
+                    "type": "string"
+                  },
+                  "family_name": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string",
+                    "format": "email"
+                  },
+                  "password": {
+                    "type": "string",
+                    "format": "password"
+                  },
+                  "company_name": {
+                    "type": "string"
+                  },
+                  "accept_terms": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "given_name",
+                  "family_name",
+                  "email",
+                  "password",
+                  "company_name",
+                  "accept_terms"
+                ]
+              },
+              "examples": {
+                "Example": {
+                  "value": {
+                    "given_name": "Taylor",
+                    "family_name": "Vick",
+                    "email": "hello@counterbalance.io",
+                    "password": "Se@ttle1!",
+                    "company_name": "Counterbalance Software",
+                    "accept_terms": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Tenant Account"
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "default": "application/json"
+            },
+            "in": "header",
+            "name": "Content-Type",
+            "required": true
+          }
+        ]
+      },
+      "patch": {
+        "summary": "Update Tenant Account",
+        "operationId": "update-tenant",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Tenant-Account"
+                },
+                "examples": {
+                  "Response": {
+                    "value": {
+                      "id": "d6797ebf-5b00-4a59-b3e5-19711b4c55bb",
+                      "name": "Figgis Agency",
+                      "flags": {
+                        "active": true,
+                        "has_subscription": true,
+                        "has_billing_account": true,
+                        "locked": false,
+                        "confirmed": true,
+                        "deleted": false
+                      },
+                      "billing_id": "cus_GZBdOM86hQZldD",
+                      "locale": "en-us",
+                      "primary_contact": {
+                        "id": "1b17e73b-4cf7-4b47-a0f8-46f878ef7bf1",
+                        "name": {
+                          "given": "Cyril",
+                          "family": "Figgis",
+                          "full": "Cyril Figgis"
+                        },
+                        "email": "cyril@figgisagency.com",
+                        "phone": {
+                          "primary": {
+                            "type": null,
+                            "number": null
+                          }
+                        }
+                      },
+                      "subscription": {
+                        "tier": 3,
+                        "sku": "plan_GvzroFXIrnFYdH",
+                        "active": true
+                      },
+                      "trial": {
+                        "status": "Never Started",
+                        "used": false,
+                        "active": false,
+                        "expired": false,
+                        "expires": 0
+                      },
+                      "addresses": {
+                        "mailing": "f3643601-d122-47c5-893c-1f108c07d840",
+                        "billing": null
+                      },
+                      "milestones": {
+                        "account_created": {
+                          "status": true,
+                          "timestamp": 1517451002
+                        },
+                        "account_deleted": {
+                          "status": false,
+                          "timestamp": 0
+                        },
+                        "account_confirmation": {
+                          "status": true,
+                          "timestamp": 1580183430
+                        },
+                        "onboarded": {
+                          "status": true,
+                          "timestamp": 1580183430
+                        },
+                        "accepted_terms": {
+                          "status": false,
+                          "timestamp": 0
+                        },
+                        "accepted_billing_terms": {
+                          "status": false,
+                          "timestamp": 0
+                        },
+                        "accepted_subscription_terms": {
+                          "status": false,
+                          "timestamp": 0
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "Update the tenant account details for the authenticated user\n\nThe following prerequisites are required for this endpoint:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`tenant:*`,`tenant:account:*`,`tenant:account:update`",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "maxLength": 240,
+                    "description": "Your tenant company name"
+                  },
+                  "primary_contact": {
+                    "type": "string",
+                    "format": "uuid",
+                    "description": "The UUID of the user designated as the primary contact for your account"
+                  }
+                }
+              },
+              "examples": {
+                "Example": {
+                  "value": {
+                    "name": "Figgis Agency",
+                    "primary_contact": "5152763b-7d76-4d22-8484-ff27da40fe98"
+                  }
+                }
+              }
+            }
+          },
+          "description": ""
+        },
+        "tags": [
+          "Tenant Account"
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "default": "application/json"
+            },
+            "in": "header",
+            "name": "Content-Type"
+          }
+        ]
+      },
+      "delete": {
+        "summary": "Delete Tenant Account",
+        "operationId": "delete-tenant",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "description": "Delete the tenant account of the authenticated user\n\nThe following prerequisites are required for this endpoint:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`tenant:*`,`tenant:account:*`,`tenant:account:delete`",
+        "tags": [
+          "Tenant Account"
+        ]
       }
-   },
-   "tags": [
-      {
-         "name": "Tenant Account"
-      },
-      {
-         "name": "Tenant Operations"
-      },
-      {
-         "name": "Tenant Quota"
-      },
-      {
-         "name": "Tenant Preferences"
+    },
+    "/v1/tenant/quota": {
+      "get": {
+        "summary": "Get Tenant Quota Summary",
+        "tags": [
+          "Tenant Quota"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Tenant-Quota-Summary"
+                },
+                "examples": {
+                  "Response": {
+                    "value": {
+                      "usage": {
+                        "record_user": 11,
+                        "seat": 3,
+                        "user": 3,
+                        "site": 7,
+                        "building": 0,
+                        "gateway": 0,
+                        "controller": 0,
+                        "point": 0,
+                        "equipment": 0,
+                        "meter": 0
+                      },
+                      "tenant": {
+                        "id": "75a14450-2aa9-4785-a7dd-add5655953a4",
+                        "subscription_sku": "plan_GvzqNsab8C5SG8",
+                        "billing_id": "cus_GfeG3goOpZMblf"
+                      },
+                      "quotas": {
+                        "building": {
+                          "usage": 0,
+                          "quota": {
+                            "included": 2,
+                            "purchased": 0,
+                            "total": 2
+                          },
+                          "remaining": 2,
+                          "status": {
+                            "can_add_more": true,
+                            "is_exceeded": false,
+                            "is_met": false
+                          }
+                        },
+                        "controller": {
+                          "usage": 0,
+                          "quota": {
+                            "included": 5,
+                            "purchased": 0,
+                            "total": 5
+                          },
+                          "remaining": 5,
+                          "status": {
+                            "can_add_more": true,
+                            "is_exceeded": false,
+                            "is_met": false
+                          }
+                        },
+                        "equipment": {
+                          "usage": 0,
+                          "quota": {
+                            "included": 10,
+                            "purchased": 0,
+                            "total": 10
+                          },
+                          "remaining": 10,
+                          "status": {
+                            "can_add_more": true,
+                            "is_exceeded": false,
+                            "is_met": false
+                          }
+                        },
+                        "gateway": {
+                          "usage": 0,
+                          "quota": null,
+                          "remaining": null,
+                          "status": {
+                            "can_add_more": true,
+                            "is_exceeded": false
+                          }
+                        },
+                        "meter": {
+                          "usage": 0,
+                          "quota": {
+                            "included": 5,
+                            "purchased": 0,
+                            "total": 5
+                          },
+                          "remaining": 5,
+                          "status": {
+                            "can_add_more": true,
+                            "is_exceeded": false,
+                            "is_met": false
+                          }
+                        },
+                        "point": {
+                          "usage": 0,
+                          "quota": {
+                            "included": 100,
+                            "purchased": 0,
+                            "total": 100
+                          },
+                          "remaining": 100,
+                          "status": {
+                            "can_add_more": true,
+                            "is_exceeded": false,
+                            "is_met": false
+                          }
+                        },
+                        "seat": {
+                          "usage": 3,
+                          "quota": {
+                            "included": 2,
+                            "purchased": 3,
+                            "total": 5
+                          },
+                          "remaining": 2,
+                          "status": {
+                            "can_add_more": true,
+                            "is_exceeded": false,
+                            "is_met": false
+                          }
+                        },
+                        "site": {
+                          "usage": 7,
+                          "quota": {
+                            "included": 1,
+                            "purchased": 6,
+                            "total": 7
+                          },
+                          "remaining": 0,
+                          "status": {
+                            "can_add_more": false,
+                            "is_exceeded": false,
+                            "is_met": true
+                          }
+                        },
+                        "user": {
+                          "usage": 3,
+                          "quota": {
+                            "included": 0,
+                            "purchased": 0,
+                            "total": 0
+                          },
+                          "remaining": 0,
+                          "status": {
+                            "can_add_more": false,
+                            "is_exceeded": true,
+                            "is_met": true
+                          }
+                        },
+                        "record_user": {
+                          "usage": 11,
+                          "quota": null,
+                          "remaining": null,
+                          "status": {
+                            "can_add_more": true,
+                            "is_exceeded": false
+                          }
+                        }
+                      },
+                      "subscription": {
+                        "base": {
+                          "id": "plan_GvzqNsab8C5SG8",
+                          "name": "Essentials",
+                          "tier": 1,
+                          "enabled": true,
+                          "billing_frequency": "month",
+                          "seat_price": 27,
+                          "included_quotas": {
+                            "building": 2,
+                            "controller": 5,
+                            "equipment": 10,
+                            "gateway": null,
+                            "meter": 5,
+                            "point": 100,
+                            "seat": 2,
+                            "site": 1,
+                            "user": 0,
+                            "record_user": null
+                          },
+                          "included_features": [
+                            "commander",
+                            "dynamic_plotter",
+                            "favorites",
+                            "sites_base",
+                            "sites_equipment",
+                            "user_management",
+                            "weather_alerts",
+                            "weather_conditions"
+                          ]
+                        },
+                        "purchased_items": [
+                          {
+                            "id": "si_IGWLaFhj6bhyLx",
+                            "product": "prod_HZ4TOtIlNA9QCE",
+                            "plan": "price_1GzwKcJ5K0z3IHPXutddmh3D",
+                            "quantity": 6
+                          },
+                          {
+                            "id": "si_IGWajoRwdI0Q47",
+                            "product": "prod_HZJ7uDhRzsf6lo",
+                            "plan": "price_1H0AVBJ5K0z3IHPXTV47pZ3C",
+                            "quantity": 1
+                          },
+                          {
+                            "id": "si_IGWjOMxXGL0678",
+                            "product": "prod_GZIOOnp2EtrDOE",
+                            "plan": "plan_GvzqNsab8C5SG8",
+                            "quantity": 5
+                          }
+                        ]
+                      },
+                      "features": [
+                        "commander",
+                        "dynamic_plotter",
+                        "favorites",
+                        "sites_base",
+                        "sites_equipment",
+                        "user_management",
+                        "weather_alerts",
+                        "weather_conditions",
+                        "sites_base",
+                        "sites_base",
+                        "sites_forecasts",
+                        "sites_weather",
+                        "sites_weather_alerts"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-tenant-quota",
+        "description": "Retrieve a summary of metered tenant objects and their usage\n\nThe following prerequisites are required for this endpoint:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`tenant:*`,`tenant:quota:*`,`tenant:quota:read`",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ]
       }
-   ]
+    },
+    "/v1/tenant/confirm": {
+      "post": {
+        "summary": "Confirm Tenant Account",
+        "operationId": "post-v1-tenant-confirm",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success_message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "Example": {
+                    "value": {
+                      "success_message": "Tenant account has been successfully confirmed!"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "Confirm a newly-created tenant account\n\nThe following prerequisites are required for this endpoint:\n* The tenant account confirmation code _(emailed to the new user)_\n* Permissions _(at least one):_ `*`,`tenant:*`,`tenant:account:*`,`tenant:account:update`\n\n> _**Note** A confirm operation can only be completed by the user who created the tenant acccount_",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "code": {
+                    "type": "string",
+                    "description": "A six-digit confirmation code",
+                    "minLength": 6,
+                    "maxLength": 6,
+                    "default": "645881"
+                  }
+                },
+                "required": [
+                  "code"
+                ]
+              },
+              "examples": {
+                "Example": {
+                  "value": {
+                    "code": "645881"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Tenant Operations"
+        ]
+      }
+    },
+    "/v1/tenant/onboarding": {
+      "parameters": [],
+      "post": {
+        "summary": "Complete Tenant Onboarding",
+        "operationId": "post-v1-tenant-onboarding",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success_message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "Response": {
+                    "value": {
+                      "success_message": "Onboarding has been completed!"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "Mark the tenant account for the authenticated user as having completed onboarding",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "null"
+              },
+              "examples": {
+                "Example": {
+                  "value": null
+                }
+              }
+            }
+          },
+          "description": "*No request body is necesssary for this request*"
+        },
+        "tags": [
+          "Tenant Operations"
+        ]
+      }
+    },
+    "/v1/tenant/preferences": {
+      "get": {
+        "summary": "Get Tenant Preferences",
+        "tags": [
+          "Tenant Preferences"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Tenant-Preferences"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-v1-tenant-preferences",
+        "description": "Retrieve platform preferences set for the authenticated user's tenant account",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ]
+      }
+    },
+    "/v1/tenant/deletion-pin": {
+      "post": {
+        "summary": "Set Deletion PIN",
+        "operationId": "post-v1-tenant-deletion-pin",
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Tenant-Deletion-PIN"
+                }
+              }
+            }
+          }
+        },
+        "description": "Set a deletion PIN that allows Counterbalance Support to permanently delete a tenant account",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ],
+        "tags": [
+          "Tenant Operations"
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Tenant-Account": {
+        "description": "",
+        "type": "object",
+        "title": "Tenant Account Model",
+        "x-examples": {
+          "Example": {
+            "id": "d6797ebf-5b00-4a59-b3e5-19711b4c55bb",
+            "name": "Figgis Agency",
+            "flags": {
+              "active": true,
+              "has_subscription": true,
+              "has_billing_account": true,
+              "locked": false,
+              "confirmed": true,
+              "deleted": false
+            },
+            "billing_id": "cus_GZBdOM86hQZldD",
+            "locale": "en-us",
+            "primary_contact": {
+              "id": "1b17e73b-4cf7-4b47-a0f8-46f878ef7bf1",
+              "name": {
+                "given": "Cyril",
+                "family": "Figgis",
+                "full": "Cyril Figgis"
+              },
+              "email": "cyril@figgisagency.com",
+              "phone": {
+                "primary": {
+                  "type": null,
+                  "number": null
+                }
+              }
+            },
+            "subscription": {
+              "tier": 3,
+              "sku": "plan_GvzroFXIrnFYdH",
+              "active": true
+            },
+            "trial": {
+              "status": "Never Started",
+              "used": false,
+              "active": false,
+              "expired": false,
+              "expires": 0
+            },
+            "addresses": {
+              "mailing": "f3643601-d122-47c5-893c-1f108c07d840",
+              "billing": null
+            },
+            "milestones": {
+              "account_created": {
+                "status": true,
+                "timestamp": 1517451002
+              },
+              "account_deleted": {
+                "status": false,
+                "timestamp": 0
+              },
+              "account_confirmation": {
+                "status": true,
+                "timestamp": 1580183430
+              },
+              "onboarded": {
+                "status": true,
+                "timestamp": 1580183430
+              },
+              "accepted_terms": {
+                "status": false,
+                "timestamp": 0
+              },
+              "accepted_billing_terms": {
+                "status": false,
+                "timestamp": 0
+              },
+              "accepted_subscription_terms": {
+                "status": false,
+                "timestamp": 0
+              }
+            }
+          }
+        },
+        "x-tags": [
+          "Tenant Account"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "flags": {
+            "type": "object",
+            "properties": {
+              "active": {
+                "type": "boolean"
+              },
+              "has_subscription": {
+                "type": "boolean"
+              },
+              "has_billing_account": {
+                "type": "boolean"
+              },
+              "locked": {
+                "type": "boolean"
+              },
+              "confirmed": {
+                "type": "boolean"
+              },
+              "deleted": {
+                "type": "boolean"
+              }
+            }
+          },
+          "tier": {
+            "default": 1,
+            "type": "integer",
+            "readOnly": true
+          },
+          "billing_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "locale": {
+            "type": "string"
+          },
+          "primary_contact": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "name": {
+                "type": "object",
+                "properties": {
+                  "given": {
+                    "type": "string"
+                  },
+                  "family": {
+                    "type": "string"
+                  },
+                  "full": {
+                    "type": "string"
+                  }
+                }
+              },
+              "email": {
+                "type": "string"
+              },
+              "phone": {
+                "type": "object",
+                "properties": {
+                  "primary": {
+                    "type": "object",
+                    "properties": {
+                      "type": {},
+                      "number": {}
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "addresses": {
+            "type": "object",
+            "properties": {
+              "mailing": {
+                "type": "string",
+                "format": "uuid",
+                "nullable": true
+              },
+              "billing": {
+                "type": "string",
+                "format": "uuid",
+                "nullable": true
+              }
+            }
+          },
+          "milestones": {
+            "type": "object",
+            "properties": {
+              "account_created": {
+                "type": "object",
+                "properties": {
+                  "status": {
+                    "type": "boolean"
+                  },
+                  "timestamp": {
+                    "type": "string",
+                    "nullable": true
+                  }
+                }
+              },
+              "account_deleted": {
+                "type": "object",
+                "required": [
+                  "status",
+                  "timestamp"
+                ],
+                "properties": {
+                  "status": {
+                    "type": "boolean"
+                  },
+                  "timestamp": {
+                    "type": "string",
+                    "format": "date-time",
+                    "nullable": true
+                  }
+                }
+              },
+              "account_confirmation": {
+                "type": "object",
+                "required": [
+                  "status",
+                  "timestamp"
+                ],
+                "properties": {
+                  "status": {
+                    "type": "boolean"
+                  },
+                  "timestamp": {
+                    "type": "string",
+                    "format": "date-time",
+                    "nullable": true
+                  }
+                }
+              },
+              "onboarded": {
+                "type": "object",
+                "required": [
+                  "status",
+                  "timestamp"
+                ],
+                "properties": {
+                  "status": {
+                    "type": "boolean"
+                  },
+                  "timestamp": {
+                    "type": "string",
+                    "format": "date-time",
+                    "nullable": true
+                  }
+                }
+              },
+              "accepted_terms": {
+                "type": "object",
+                "required": [
+                  "status",
+                  "timestamp"
+                ],
+                "properties": {
+                  "status": {
+                    "type": "boolean"
+                  },
+                  "timestamp": {
+                    "type": "string",
+                    "format": "date-time",
+                    "nullable": true
+                  }
+                }
+              },
+              "accepted_billing_terms": {
+                "type": "object",
+                "required": [
+                  "status",
+                  "timestamp"
+                ],
+                "properties": {
+                  "status": {
+                    "type": "boolean"
+                  },
+                  "timestamp": {
+                    "type": "string",
+                    "format": "date-time",
+                    "nullable": true
+                  }
+                }
+              },
+              "accepted_subscription_terms": {
+                "type": "object",
+                "required": [
+                  "status",
+                  "timestamp"
+                ],
+                "properties": {
+                  "status": {
+                    "type": "boolean"
+                  },
+                  "timestamp": {
+                    "type": "string",
+                    "format": "date-time",
+                    "nullable": true
+                  }
+                }
+              }
+            },
+            "required": [
+              "account_deleted",
+              "account_confirmation",
+              "onboarded",
+              "accepted_terms",
+              "accepted_billing_terms",
+              "accepted_subscription_terms"
+            ]
+          }
+        }
+      },
+      "Tenant-Quota-Summary": {
+        "description": "",
+        "type": "object",
+        "properties": {
+          "usage": {
+            "type": "object",
+            "required": [
+              "record_user",
+              "seat",
+              "user",
+              "site",
+              "building",
+              "gateway",
+              "controller",
+              "point",
+              "equipment",
+              "meter"
+            ],
+            "properties": {
+              "record_user": {
+                "type": "number"
+              },
+              "seat": {
+                "type": "number"
+              },
+              "user": {
+                "type": "number"
+              },
+              "site": {
+                "type": "number"
+              },
+              "building": {
+                "type": "number"
+              },
+              "gateway": {
+                "type": "number"
+              },
+              "controller": {
+                "type": "number"
+              },
+              "point": {
+                "type": "number"
+              },
+              "equipment": {
+                "type": "number"
+              },
+              "meter": {
+                "type": "number"
+              }
+            }
+          },
+          "tenant": {
+            "type": "object",
+            "required": [
+              "id",
+              "subscription_sku",
+              "billing_id"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "subscription_sku": {
+                "type": "string",
+                "minLength": 1
+              },
+              "billing_id": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "quotas": {
+            "type": "object",
+            "required": [
+              "building",
+              "controller",
+              "equipment",
+              "gateway",
+              "meter",
+              "point",
+              "seat",
+              "site",
+              "user",
+              "record_user"
+            ],
+            "properties": {
+              "building": {
+                "$ref": "#/components/schemas/Tenant-Quota-Item-Summary"
+              },
+              "controller": {
+                "$ref": "#/components/schemas/Tenant-Quota-Item-Summary"
+              },
+              "equipment": {
+                "$ref": "#/components/schemas/Tenant-Quota-Item-Summary"
+              },
+              "gateway": {
+                "$ref": "#/components/schemas/Tenant-Quota-Item-Summary"
+              },
+              "meter": {
+                "$ref": "#/components/schemas/Tenant-Quota-Item-Summary"
+              },
+              "point": {
+                "$ref": "#/components/schemas/Tenant-Quota-Item-Summary"
+              },
+              "seat": {
+                "$ref": "#/components/schemas/Tenant-Quota-Item-Summary"
+              },
+              "site": {
+                "$ref": "#/components/schemas/Tenant-Quota-Item-Summary"
+              },
+              "user": {
+                "$ref": "#/components/schemas/Tenant-Quota-Item-Summary"
+              },
+              "record_user": {
+                "$ref": "#/components/schemas/Tenant-Quota-Item-Summary"
+              }
+            }
+          },
+          "subscription": {
+            "type": "object",
+            "required": [
+              "base",
+              "purchased_items"
+            ],
+            "properties": {
+              "base": {
+                "type": "object",
+                "required": [
+                  "id",
+                  "name",
+                  "tier",
+                  "enabled",
+                  "billing_frequency",
+                  "seat_price",
+                  "included_quotas",
+                  "included_features"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "name": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "tier": {
+                    "type": "number"
+                  },
+                  "enabled": {
+                    "type": "boolean"
+                  },
+                  "billing_frequency": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "seat_price": {
+                    "type": "number"
+                  },
+                  "included_quotas": {
+                    "type": "object",
+                    "required": [
+                      "building",
+                      "controller",
+                      "equipment",
+                      "meter",
+                      "point",
+                      "seat",
+                      "site",
+                      "user"
+                    ],
+                    "properties": {
+                      "building": {
+                        "type": "number"
+                      },
+                      "controller": {
+                        "type": "number"
+                      },
+                      "equipment": {
+                        "type": "number"
+                      },
+                      "gateway": {},
+                      "meter": {
+                        "type": "number"
+                      },
+                      "point": {
+                        "type": "number"
+                      },
+                      "seat": {
+                        "type": "number"
+                      },
+                      "site": {
+                        "type": "number"
+                      },
+                      "user": {
+                        "type": "number"
+                      },
+                      "record_user": {}
+                    }
+                  },
+                  "included_features": {
+                    "type": "array",
+                    "items": {
+                      "type": "object"
+                    }
+                  }
+                }
+              },
+              "purchased_items": {
+                "type": "array",
+                "uniqueItems": true,
+                "minItems": 1,
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "product": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "plan": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "quantity": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "product",
+                    "plan",
+                    "quantity"
+                  ]
+                }
+              }
+            }
+          },
+          "features": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          }
+        },
+        "required": [
+          "usage",
+          "tenant",
+          "quotas",
+          "subscription",
+          "features"
+        ],
+        "title": "Tenant Quota Summary"
+      },
+      "Tenant-Preferences": {
+        "description": "",
+        "type": "object",
+        "properties": {
+          "display_name_format": {
+            "type": "string",
+            "minLength": 1
+          },
+          "shell": {
+            "type": "object",
+            "properties": {
+              "theme": {
+                "type": "string",
+                "minLength": 1
+              },
+              "pagination": {
+                "type": "object",
+                "properties": {
+                  "enabled": {
+                    "type": "boolean"
+                  },
+                  "default_limit": {
+                    "type": "number",
+                    "default": 10
+                  }
+                }
+              },
+              "disabled_applications": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "title": "Tenant Preferences Object Model",
+        "x-tags": [
+          "Tenant Preferences"
+        ]
+      },
+      "Tenant-Deletion-PIN": {
+        "description": "",
+        "type": "object",
+        "properties": {
+          "pin": {
+            "type": "string",
+            "minLength": 8,
+            "maxLength": 8,
+            "description": "An eight-character deletion PIN"
+          }
+        },
+        "x-examples": {
+          "Example": {
+            "pin": "71VIFU22"
+          }
+        },
+        "title": "Tenant Deletion PIN Request Body",
+        "x-tags": [
+          "Tenant Operations"
+        ]
+      },
+      "Tenant-Quota-Item-Summary": {
+        "description": "",
+        "type": "object",
+        "title": "Quota Item Summary",
+        "properties": {
+          "usage": {
+            "type": "number",
+            "description": "The number of objects of this type"
+          },
+          "quota": {
+            "type": "object",
+            "required": [
+              "included",
+              "purchased",
+              "total"
+            ],
+            "properties": {
+              "included": {
+                "type": "number",
+                "description": "The quantity of of this object included in the subscription plan"
+              },
+              "purchased": {
+                "type": "number",
+                "description": "The quantity of this object that has been purchased in addition to the base quantity"
+              },
+              "total": {
+                "type": "number",
+                "description": "The total quantity of this object permitted in the tenant account"
+              }
+            }
+          },
+          "remaining": {
+            "type": "number",
+            "description": "A simple formlula of `total` - `usage`"
+          },
+          "status": {
+            "type": "object",
+            "required": [
+              "can_add_more",
+              "is_exceeded",
+              "is_met"
+            ],
+            "properties": {
+              "can_add_more": {
+                "type": "boolean"
+              },
+              "is_exceeded": {
+                "type": "boolean"
+              },
+              "is_met": {
+                "type": "boolean"
+              }
+            }
+          }
+        },
+        "required": [
+          "usage",
+          "quota",
+          "remaining",
+          "status"
+        ]
+      }
+    },
+    "securitySchemes": {
+      "Bearer Token": {
+        "type": "http",
+        "scheme": "bearer",
+        "description": ""
+      }
+    },
+    "examples": {
+      "Tenant-Account": {
+        "value": {
+          "id": "d6797ebf-5b00-4a59-b3e5-19711b4c55bb",
+          "name": "Figgis Agency",
+          "flags": {
+            "active": true,
+            "has_subscription": true,
+            "has_billing_account": true,
+            "locked": false,
+            "confirmed": true,
+            "deleted": false
+          },
+          "tier": 3,
+          "billing_id": "cus_GZBdOM86hQZldD",
+          "locale": "en-us",
+          "primary_contact": {
+            "id": "1b17e73b-4cf7-4b47-a0f8-46f878ef7bf1",
+            "name": {
+              "given": "Cyril",
+              "family": "Figgis",
+              "full": "Cyril Figgis"
+            },
+            "email": "cyril@figgisagency.com",
+            "phone": {
+              "primary": {
+                "type": null,
+                "number": null
+              }
+            }
+          },
+          "addresses": {
+            "mailing": "f3643601-d122-47c5-893c-1f108c07d840",
+            "billing": null
+          },
+          "milestones": {
+            "account_created": {
+              "status": true,
+              "timestamp": "2018-02-01T02:10:02+0000"
+            },
+            "account_deleted": {
+              "status": false,
+              "timestamp": null
+            },
+            "account_confirmation": {
+              "status": true,
+              "timestamp": "2020-01-28T03:50:30+0000"
+            },
+            "onboarded": {
+              "status": true,
+              "timestamp": "2020-01-28T03:50:30+0000"
+            },
+            "accepted_terms": {
+              "status": true,
+              "timestamp": "2018-02-01T02:10:02+0000"
+            },
+            "accepted_billing_terms": {
+              "status": false,
+              "timestamp": null
+            },
+            "accepted_subscription_terms": {
+              "status": false,
+              "timestamp": null
+            }
+          }
+        }
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Tenant Account"
+    },
+    {
+      "name": "Tenant Operations"
+    },
+    {
+      "name": "Tenant Quota"
+    },
+    {
+      "name": "Tenant Preferences"
+    }
+  ]
 }
