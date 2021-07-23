@@ -85,9 +85,9 @@ paths:
                         timestamp: 0
       operationId: get-tenant
       description: |-
-        __Required Permissions:__ `*`,`tenant:*`,`tenant:account:*`,`tenant:account:read`
-
         Retrieve the tenant account for the authenticated user
+
+        __Required Permissions:__ `*`,`tenant:*`,`tenant:account:*`,`tenant:account:read`
       security:
         - Bearer Token: []
     post:
