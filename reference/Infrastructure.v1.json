@@ -96,7 +96,7 @@
         "tags": [
           "Gateways"
         ],
-        "description": "### Synopsis\nRetrieve a gateway device\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`infrastructure:*`,`infrastructure:gateway:*`,`infrastructure:gateway:read`\n\n### Checking Gateway Vitals\n",
+        "description": "Retrieve a gateway device by ID\n\n**Required Permissions:** `*`,`infrastructure:*`,`infrastructure:gateway:*`,`infrastructure:gateway:read`",
         "parameters": [
           {
             "schema": {
@@ -133,7 +133,7 @@
             "$ref": "#/components/responses/404-Gateway-Not-Found"
           }
         },
-        "description": "### Synopsis\nUpdate a gateway device\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`infrastructure:*`,`infrastructure:gateway:*`,`infrastructure:gateway:update`",
+        "description": "Update a gateway device\n\n**Required Permissions:** `*`,`infrastructure:*`,`infrastructure:gateway:*`,`infrastructure:gateway:update`",
         "tags": [
           "Gateways"
         ],
@@ -191,7 +191,7 @@
         "tags": [
           "Gateways"
         ],
-        "description": "### Synopsis\nDelete a gateway device\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`infrastructure:*`,`infrastructure:gateway:*`,`infrastructure:gateway:delete`\n\n### Connected Controllers\nWhen a gateway is deleted, the connected controllers are retained but all data collection activities will stop, building intelligence rules will be unavailable, and any associated meters will be in fault. \n\nA controller can be re-associated with an active gateway via the [Update Controller](/reference/Infrastructure.v1.json/paths/~1v1~1infrastructure~1gateway~1%7BgatewayId%7D/patch) endpoint.\n\n### Deleting an Offline Gateway\nBy default, when a gateway is deleted, the system will attempt to contact and initialize it. If the gateway cannot be contacted, the delete operation will fail. \n\nTo override this default action, set the `force` query parameter to `true`.",
+        "description": "Delete a gateway device\n\n**Required Permissions:** `*`,`infrastructure:*`,`infrastructure:gateway:*`,`infrastructure:gateway:delete`\n\n### Connected Controllers\nWhen a gateway is deleted, the connected controllers are retained but all data collection activities will stop, building intelligence rules will be unavailable, and any associated meters will be in fault. \n\nA controller can be re-associated with an active gateway via the [Update Controller](/reference/Infrastructure.v1.json/paths/~1v1~1infrastructure~1gateway~1%7BgatewayId%7D/patch) endpoint.\n\n### Deleting an Offline Gateway\nBy default, when a gateway is deleted, the system will attempt to contact and initialize it. If the gateway cannot be contacted, the delete operation will fail. \n\nTo override this default action, set the `force` query parameter to `true`. This will require an additional manual reset in the local web GUI of the gateway device.\n\nRefer to support article [Manually Resetting a Gateway Device]() for additional information.",
         "security": [
           {
             "Bearer Token": []
@@ -1598,6 +1598,9 @@
         "title": "Update Gateway Request Body",
         "type": "object",
         "description": "",
+        "x-tags": [
+          "Schemas"
+        ],
         "properties": {
           "name": {
             "type": "string",
@@ -1611,10 +1614,7 @@
             "type": "string",
             "description": "The installed location of the device"
           }
-        },
-        "x-tags": [
-          "Schemas"
-        ]
+        }
       },
       "Gateway-Whois": {
         "description": "",
