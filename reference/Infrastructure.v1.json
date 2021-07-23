@@ -30,7 +30,7 @@
           }
         },
         "operationId": "get-gateway-list",
-        "description": "### Synopsis\nRetrieve a list of gateway devices\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`infrastructure:*`,`infrastructure:gateway:*`,`infrastructure:gateway:list`",
+        "description": "Retrieve a list of gateway devices\n\n**Required Permissions:** `*`,`infrastructure:*`,`infrastructure:gateway:*`,`infrastructure:gateway:list`",
         "security": [
           {
             "Bearer Token": []
@@ -45,7 +45,7 @@
             "$ref": "#/components/responses/201-Gateway-Created"
           }
         },
-        "description": "### Synopsis\nActivate a new gateway device and register it with a tenant account\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`infrastructure:*`,`infrastructure:gateway:*`,`infrastructure:gateway:register`\n* Adequate gateway quota\n* A physical gateway device serial number\n\n### Gateway Serial Number\nA valid gateway serial number is required in order to activate a new gateway. The serial number is found on the bottom of the device or by loading the web GUI of the gateway.\n\n### Registration Process\nThe registration of a gateway is a two-step process. First, the gateway device must be created and assigned a tenant account using this endpoint. \n\nA successful creation will generate a unique gateway UUID and a registration PIN. These values will be emailed to the authenticated user and will be needed to link the device.\n\nSecond, the Register Gateway Device endpoint is used from the device to link it with the tenant account using the newly registered UUID and registration secret.",
+        "description": "Activate a gateway device and register it with a tenant account\n\n**Required Permissions:** `*`,`infrastructure:*`,`infrastructure:gateway:*`,`infrastructure:gateway:register`\n\n> **Heads Up** This endpoint is subject to `gateway` quota availabilty\n\n### Prerequisite Setup\nThe target gateway device must be fully configured on a network with Internet access. Setup instructions are available in the support portal:\n\n##### Support Articles\n* [Configure a New Gateway](https://counterbalance.zendesk.com/hc/en-us/articles/360063269293)\n\n### Gateway Serial Number\nThe gateway serial number is required in order to activate it. The serial number is found on the bottom of the device or by loading the local web GUI of the gateway.\n\n### Registration Process\nThe registration of a gateway is a two-step process. First, the gateway device must be created and assigned a tenant account using this endpoint. \n\nA successful creation will generate a unique gateway UUID and a registration PIN. These values will be emailed to the authenticated user and will be needed to link the device.\n\nSecond, the Register Gateway Device endpoint is used from the device to link it with the tenant account using the newly registered UUID and registration secret.",
         "tags": [
           "Gateways"
         ],
