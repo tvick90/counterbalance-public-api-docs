@@ -18,7 +18,7 @@
     {
       "type": "item",
       "title": "Account Management",
-      "uri": "reference/Tenant.v1.yaml"
+      "uri": "reference/Tenant.v1.json"
     },
     {
       "type": "item",
