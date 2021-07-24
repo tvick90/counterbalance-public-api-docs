@@ -16,7 +16,7 @@
     }
   ],
   "paths": {
-    "/v1/equipment": {
+    "/v1/equipment/node": {
       "get": {
         "summary": "List Equipment Nodes",
         "tags": [
@@ -457,6 +457,20 @@
             }
           }
         }
+      },
+      "200-Equipment-Node-List": {
+        "description": "Example response",
+        "content": {
+          "application/json": {
+            "schema": {
+              "properties": {
+                "id": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
       }
     },
     "examples": {
@@ -692,6 +706,747 @@
             "manufacturer": "Carrier",
             "model": "XGV-75-R-14"
           }
+        }
+      },
+      "Equipment-Node-List": {
+        "value": {
+          "count": 6,
+          "index": [
+            "16de136d-6ed0-4337-96a0-e07c36d093ff",
+            "2f87c296-fc78-41d7-8ad2-32d5f6bb128a",
+            "474d3408-3ab9-459a-9bf8-13f139c3eae8",
+            "6a945fe1-387a-4fca-871c-75d303afa440",
+            "c50d92f9-384b-47a8-9574-ade06fcb01cc",
+            "dfec65a2-268b-4eb2-a2de-9bf916389450"
+          ],
+          "data": [
+            {
+              "id": "16de136d-6ed0-4337-96a0-e07c36d093ff",
+              "created": "2021-07-20T18:20:52+0000",
+              "last_modified": null,
+              "name": "AHU-01",
+              "description": "Main air handler",
+              "@site": "82478e3a-a212-41bf-9e2b-7522a1504a6b",
+              "@floor": null,
+              "@room": null,
+              "@parent": null,
+              "references": [],
+              "haystack": {
+                "equipment": {
+                  "tag": "ahu",
+                  "name": "Air Handler",
+                  "description": "An enclosure with a fan that delivers air to a space via ductwork and performs one or more of the functions of cleaning, heating, cooling, humidifying, dehumidifying, ventilating or circulating the air",
+                  "parent_ref": "ahuRef",
+                  "permitted_children_equipment": [
+                    "fan",
+                    "vav",
+                    "zone"
+                  ]
+                },
+                "marker": {
+                  "tags": [
+                    "dxCool",
+                    "variableVolume",
+                    "vavZone",
+                    "multiZone",
+                    "singleDuct"
+                  ],
+                  "tags_string": "dxCool variableVolume vavZone multiZone singleDuct",
+                  "tag_definitions": [
+                    {
+                      "id": "dxCool",
+                      "name": "Direct Expansion (DX) Cooling",
+                      "description": "The AHU utilizes a direct expansion (DX) cooling coil",
+                      "references": [],
+                      "telemetry": [
+                        "cool stage cmd",
+                        "cool stage sensor"
+                      ]
+                    },
+                    {
+                      "id": "variableVolume",
+                      "name": "Variable Volume",
+                      "description": "The AHU supplies a variable volume of air",
+                      "references": [],
+                      "telemetry": [
+                        "discharge air fan speed cmd",
+                        "discharge air fan speed sensor"
+                      ]
+                    },
+                    {
+                      "id": "vavZone",
+                      "name": "VAV Zone",
+                      "description": "The AHU supplies air to VAV terminal units",
+                      "references": [],
+                      "telemetry": []
+                    },
+                    {
+                      "id": "multiZone",
+                      "name": "Multi Zone",
+                      "description": "The AHU supplies air to multiple zones",
+                      "references": [],
+                      "telemetry": []
+                    },
+                    {
+                      "id": "singleDuct",
+                      "name": "Single Duct",
+                      "description": "The AHU uses a single supply duct",
+                      "references": [],
+                      "telemetry": [
+                        "discharge air temp sensor",
+                        "discharge air humidity sensor",
+                        "discharge air pressure sensor",
+                        "discharge air flow sensor",
+                        "discharge air fan cmd",
+                        "discharge air fan sensor"
+                      ]
+                    }
+                  ]
+                },
+                "available_references": []
+              },
+              "metadata": [],
+              "telemetry": {
+                "relationship_count": 0,
+                "base": [
+                  "return air temp sensor",
+                  "return air humidity sensor",
+                  "return air pressure sensor",
+                  "return air flow sensor",
+                  "return air co2 sensor",
+                  "return air fan cmd",
+                  "return air damper cmd",
+                  "mixed air temp sensor",
+                  "outside air temp sensor",
+                  "outside air humidity sensor",
+                  "outside air pressure sensor",
+                  "outside air flow sensor",
+                  "outside air flow sp",
+                  "outside air damper cmd",
+                  "exhaust air fan cmd",
+                  "exhaust air damper cmd",
+                  "humidifier cmd",
+                  "filter sensor",
+                  "freezeStat sensor",
+                  "heatWheel cmd",
+                  "faceBypass cmd",
+                  "bypass damper cmd"
+                ],
+                "via_markers": [
+                  "cool stage cmd",
+                  "cool stage sensor",
+                  "discharge air fan speed cmd",
+                  "discharge air fan speed sensor",
+                  "discharge air temp sensor",
+                  "discharge air humidity sensor",
+                  "discharge air pressure sensor",
+                  "discharge air flow sensor",
+                  "discharge air fan cmd",
+                  "discharge air fan sensor"
+                ],
+                "all": [
+                  "return air temp sensor",
+                  "return air humidity sensor",
+                  "return air pressure sensor",
+                  "return air flow sensor",
+                  "return air co2 sensor",
+                  "return air fan cmd",
+                  "return air damper cmd",
+                  "mixed air temp sensor",
+                  "outside air temp sensor",
+                  "outside air humidity sensor",
+                  "outside air pressure sensor",
+                  "outside air flow sensor",
+                  "outside air flow sp",
+                  "outside air damper cmd",
+                  "exhaust air fan cmd",
+                  "exhaust air damper cmd",
+                  "humidifier cmd",
+                  "filter sensor",
+                  "freezeStat sensor",
+                  "heatWheel cmd",
+                  "faceBypass cmd",
+                  "bypass damper cmd",
+                  "cool stage cmd",
+                  "cool stage sensor",
+                  "discharge air fan speed cmd",
+                  "discharge air fan speed sensor",
+                  "discharge air temp sensor",
+                  "discharge air humidity sensor",
+                  "discharge air pressure sensor",
+                  "discharge air flow sensor",
+                  "discharge air fan cmd",
+                  "discharge air fan sensor"
+                ]
+              }
+            },
+            {
+              "id": "2f87c296-fc78-41d7-8ad2-32d5f6bb128a",
+              "created": "2021-07-10T23:37:36+0000",
+              "last_modified": null,
+              "name": "CH-2",
+              "description": "Chiller #2",
+              "@site": "82478e3a-a212-41bf-9e2b-7522a1504a6b",
+              "@floor": null,
+              "@room": null,
+              "@parent": "c50d92f9-384b-47a8-9574-ade06fcb01cc",
+              "references": {
+                "chilledWaterPlantRef": "c50d92f9-384b-47a8-9574-ade06fcb01cc"
+              },
+              "haystack": {
+                "equipment": {
+                  "tag": "chiller",
+                  "name": "Chiller",
+                  "description": "Equipment to remove heat from a liquid. Chillers typically use a vapor compression or an absorption refrigeration cycle",
+                  "parent_ref": null,
+                  "permitted_children_equipment": []
+                },
+                "marker": {
+                  "tags": [
+                    "waterCooled",
+                    "centrifugal"
+                  ],
+                  "tags_string": "waterCooled centrifugal",
+                  "tag_definitions": [
+                    {
+                      "id": "waterCooled",
+                      "name": "Water Cooled",
+                      "description": "The chiller is cooled by a condenser water system",
+                      "references": [],
+                      "telemetry": []
+                    },
+                    {
+                      "id": "centrifugal",
+                      "name": "Centrifugal",
+                      "description": "",
+                      "references": [],
+                      "telemetry": []
+                    }
+                  ]
+                },
+                "available_references": [
+                  "chilledWaterPlantRef"
+                ]
+              },
+              "metadata": {
+                "manufacturer": "Trane"
+              },
+              "telemetry": {
+                "relationship_count": 0,
+                "base": [
+                  "run cmd",
+                  "run sensor",
+                  "enable cmd",
+                  "load cmd",
+                  "load sensor",
+                  "efficiency sensor",
+                  "power sensor",
+                  "energy sensor",
+                  "chilled water leaving temp sensor",
+                  "chilled water leaving temp sp",
+                  "chilled water leaving flow sensor",
+                  "chilled water leaving pressure sensor",
+                  "chilled water entering temp sensor",
+                  "chilled water entering flow sensor",
+                  "chilled water entering pressure sensor",
+                  "chilled water delta temp sensor",
+                  "chilled water delta flow sensor",
+                  "chilled water delta pressure sensor",
+                  "chilled water valve isolation cmd",
+                  "condenser water leaving temp sensor",
+                  "condenser water leaving flow sensor",
+                  "condenser water leaving pressure sensor",
+                  "condenser water entering temp sensor",
+                  "condenser water entering pressure sensor",
+                  "condenser water entering flow sensor",
+                  "condenser water valve isolation cmd",
+                  "condenser cmd",
+                  "condenser refrig temp sensor",
+                  "condenser refrig pressure sensor",
+                  "evaporator refrig temp sensor",
+                  "evaporator refrig pressure sensor"
+                ],
+                "via_markers": [],
+                "all": [
+                  "run cmd",
+                  "run sensor",
+                  "enable cmd",
+                  "load cmd",
+                  "load sensor",
+                  "efficiency sensor",
+                  "power sensor",
+                  "energy sensor",
+                  "chilled water leaving temp sensor",
+                  "chilled water leaving temp sp",
+                  "chilled water leaving flow sensor",
+                  "chilled water leaving pressure sensor",
+                  "chilled water entering temp sensor",
+                  "chilled water entering flow sensor",
+                  "chilled water entering pressure sensor",
+                  "chilled water delta temp sensor",
+                  "chilled water delta flow sensor",
+                  "chilled water delta pressure sensor",
+                  "chilled water valve isolation cmd",
+                  "condenser water leaving temp sensor",
+                  "condenser water leaving flow sensor",
+                  "condenser water leaving pressure sensor",
+                  "condenser water entering temp sensor",
+                  "condenser water entering pressure sensor",
+                  "condenser water entering flow sensor",
+                  "condenser water valve isolation cmd",
+                  "condenser cmd",
+                  "condenser refrig temp sensor",
+                  "condenser refrig pressure sensor",
+                  "evaporator refrig temp sensor",
+                  "evaporator refrig pressure sensor"
+                ]
+              }
+            },
+            {
+              "id": "474d3408-3ab9-459a-9bf8-13f139c3eae8",
+              "created": "2021-07-24T16:15:57+0000",
+              "last_modified": null,
+              "name": "VAV-1-02",
+              "description": "Conference Room",
+              "@site": "82478e3a-a212-41bf-9e2b-7522a1504a6b",
+              "@floor": null,
+              "@room": null,
+              "@parent": "16de136d-6ed0-4337-96a0-e07c36d093ff",
+              "references": {
+                "ahuRef": "16de136d-6ed0-4337-96a0-e07c36d093ff"
+              },
+              "haystack": {
+                "equipment": {
+                  "tag": "vav",
+                  "name": "Variable Air Volume Terminal Unit",
+                  "description": "VAV systems use a constant air temperature with a variable air flow rate",
+                  "parent_ref": null,
+                  "permitted_children_equipment": []
+                },
+                "marker": {
+                  "tags": [
+                    "coolOnly",
+                    "elecReheat",
+                    "singleDuct"
+                  ],
+                  "tags_string": "coolOnly elecReheat singleDuct",
+                  "tag_definitions": [
+                    {
+                      "id": "coolOnly",
+                      "name": "Cooling Only",
+                      "description": "The VAV does not have a fan",
+                      "references": [],
+                      "telemetry": []
+                    },
+                    {
+                      "id": "elecReheat",
+                      "name": "Electric Reheat",
+                      "description": "The VAV has electric reheat",
+                      "references": [],
+                      "telemetry": [
+                        "heat stage cmd",
+                        "heat stage sensor"
+                      ]
+                    },
+                    {
+                      "id": "singleDuct",
+                      "name": "Single Duct",
+                      "description": "The VAV has a single supply duct",
+                      "references": [],
+                      "telemetry": [
+                        "air damper cmd",
+                        "air damper sensor"
+                      ]
+                    }
+                  ]
+                },
+                "available_references": [
+                  "ahuRef"
+                ]
+              },
+              "metadata": [],
+              "telemetry": {
+                "relationship_count": 0,
+                "base": [
+                  "zone air temp sensor",
+                  "zone air temp effective sp",
+                  "zone air temp occ cooling sp",
+                  "zone air temp occ heating sp",
+                  "zone air temp unocc cooling sp",
+                  "zone air temp unocc heating sp",
+                  "zone air temp standby cooling sp",
+                  "zone air temp standby heating sp",
+                  "zone air humidity sensor",
+                  "zone air co2 sensor",
+                  "zone air co2 sp",
+                  "discharge air temp sensor",
+                  "entering air temp sensor",
+                  "air pressure sensor",
+                  "air flow sensor",
+                  "air flow effective sp",
+                  "air flow min sp",
+                  "air flow max sp",
+                  "air flow reheating max sp",
+                  "air flow standby sp",
+                  "vavMode sp",
+                  "ductArea sp",
+                  "perimeterHeat cmd"
+                ],
+                "via_markers": [
+                  "heat stage cmd",
+                  "heat stage sensor",
+                  "air damper cmd",
+                  "air damper sensor"
+                ],
+                "all": [
+                  "zone air temp sensor",
+                  "zone air temp effective sp",
+                  "zone air temp occ cooling sp",
+                  "zone air temp occ heating sp",
+                  "zone air temp unocc cooling sp",
+                  "zone air temp unocc heating sp",
+                  "zone air temp standby cooling sp",
+                  "zone air temp standby heating sp",
+                  "zone air humidity sensor",
+                  "zone air co2 sensor",
+                  "zone air co2 sp",
+                  "discharge air temp sensor",
+                  "entering air temp sensor",
+                  "air pressure sensor",
+                  "air flow sensor",
+                  "air flow effective sp",
+                  "air flow min sp",
+                  "air flow max sp",
+                  "air flow reheating max sp",
+                  "air flow standby sp",
+                  "vavMode sp",
+                  "ductArea sp",
+                  "perimeterHeat cmd",
+                  "heat stage cmd",
+                  "heat stage sensor",
+                  "air damper cmd",
+                  "air damper sensor"
+                ]
+              }
+            },
+            {
+              "id": "6a945fe1-387a-4fca-871c-75d303afa440",
+              "created": "2021-07-24T16:15:36+0000",
+              "last_modified": null,
+              "name": "VAV-1-01",
+              "description": "Open Office Area 101",
+              "@site": "82478e3a-a212-41bf-9e2b-7522a1504a6b",
+              "@floor": null,
+              "@room": null,
+              "@parent": "16de136d-6ed0-4337-96a0-e07c36d093ff",
+              "references": {
+                "ahuRef": "16de136d-6ed0-4337-96a0-e07c36d093ff"
+              },
+              "haystack": {
+                "equipment": {
+                  "tag": "vav",
+                  "name": "Variable Air Volume Terminal Unit",
+                  "description": "VAV systems use a constant air temperature with a variable air flow rate",
+                  "parent_ref": null,
+                  "permitted_children_equipment": []
+                },
+                "marker": {
+                  "tags": [
+                    "coolOnly",
+                    "elecReheat",
+                    "singleDuct"
+                  ],
+                  "tags_string": "coolOnly elecReheat singleDuct",
+                  "tag_definitions": [
+                    {
+                      "id": "coolOnly",
+                      "name": "Cooling Only",
+                      "description": "The VAV does not have a fan",
+                      "references": [],
+                      "telemetry": []
+                    },
+                    {
+                      "id": "elecReheat",
+                      "name": "Electric Reheat",
+                      "description": "The VAV has electric reheat",
+                      "references": [],
+                      "telemetry": [
+                        "heat stage cmd",
+                        "heat stage sensor"
+                      ]
+                    },
+                    {
+                      "id": "singleDuct",
+                      "name": "Single Duct",
+                      "description": "The VAV has a single supply duct",
+                      "references": [],
+                      "telemetry": [
+                        "air damper cmd",
+                        "air damper sensor"
+                      ]
+                    }
+                  ]
+                },
+                "available_references": [
+                  "ahuRef"
+                ]
+              },
+              "metadata": [],
+              "telemetry": {
+                "relationship_count": 0,
+                "base": [
+                  "zone air temp sensor",
+                  "zone air temp effective sp",
+                  "zone air temp occ cooling sp",
+                  "zone air temp occ heating sp",
+                  "zone air temp unocc cooling sp",
+                  "zone air temp unocc heating sp",
+                  "zone air temp standby cooling sp",
+                  "zone air temp standby heating sp",
+                  "zone air humidity sensor",
+                  "zone air co2 sensor",
+                  "zone air co2 sp",
+                  "discharge air temp sensor",
+                  "entering air temp sensor",
+                  "air pressure sensor",
+                  "air flow sensor",
+                  "air flow effective sp",
+                  "air flow min sp",
+                  "air flow max sp",
+                  "air flow reheating max sp",
+                  "air flow standby sp",
+                  "vavMode sp",
+                  "ductArea sp",
+                  "perimeterHeat cmd"
+                ],
+                "via_markers": [
+                  "heat stage cmd",
+                  "heat stage sensor",
+                  "air damper cmd",
+                  "air damper sensor"
+                ],
+                "all": [
+                  "zone air temp sensor",
+                  "zone air temp effective sp",
+                  "zone air temp occ cooling sp",
+                  "zone air temp occ heating sp",
+                  "zone air temp unocc cooling sp",
+                  "zone air temp unocc heating sp",
+                  "zone air temp standby cooling sp",
+                  "zone air temp standby heating sp",
+                  "zone air humidity sensor",
+                  "zone air co2 sensor",
+                  "zone air co2 sp",
+                  "discharge air temp sensor",
+                  "entering air temp sensor",
+                  "air pressure sensor",
+                  "air flow sensor",
+                  "air flow effective sp",
+                  "air flow min sp",
+                  "air flow max sp",
+                  "air flow reheating max sp",
+                  "air flow standby sp",
+                  "vavMode sp",
+                  "ductArea sp",
+                  "perimeterHeat cmd",
+                  "heat stage cmd",
+                  "heat stage sensor",
+                  "air damper cmd",
+                  "air damper sensor"
+                ]
+              }
+            },
+            {
+              "id": "c50d92f9-384b-47a8-9574-ade06fcb01cc",
+              "created": "2021-07-10T20:37:38+0000",
+              "last_modified": null,
+              "name": "Central Plant - Chilled",
+              "description": "Primary CHW plant for building",
+              "@site": "82478e3a-a212-41bf-9e2b-7522a1504a6b",
+              "@floor": null,
+              "@room": null,
+              "@parent": null,
+              "references": [],
+              "haystack": {
+                "equipment": {
+                  "tag": "chilledWaterPlant",
+                  "name": "Chilled Water Plant",
+                  "description": "Plant used to generate chilled water for cooling",
+                  "parent_ref": "chilledWaterPlantRef",
+                  "permitted_children_equipment": [
+                    "chiller",
+                    "pump",
+                    "coolingTower"
+                  ]
+                },
+                "marker": {
+                  "tags": [],
+                  "tags_string": "",
+                  "tag_definitions": []
+                },
+                "available_references": []
+              },
+              "metadata": {
+                "year_built": "2015"
+              },
+              "telemetry": {
+                "relationship_count": 0,
+                "base": [
+                  "chilled water plant enable cmd",
+                  "chilled water leaving temp sensor",
+                  "chilled water leaving temp sp",
+                  "chilled water leaving flow sensor",
+                  "chilled water leaving pressure sensor",
+                  "chilled water entering temp sensor",
+                  "chilled water entering flow sensor",
+                  "chilled water entering pressure sensor",
+                  "chilled water delta temp sensor",
+                  "chilled water delta flow sensor",
+                  "chilled water delta pressure sensor",
+                  "chilled water delta pressure sp",
+                  "chilled water bypass valve cmd"
+                ],
+                "via_markers": [],
+                "all": [
+                  "chilled water plant enable cmd",
+                  "chilled water leaving temp sensor",
+                  "chilled water leaving temp sp",
+                  "chilled water leaving flow sensor",
+                  "chilled water leaving pressure sensor",
+                  "chilled water entering temp sensor",
+                  "chilled water entering flow sensor",
+                  "chilled water entering pressure sensor",
+                  "chilled water delta temp sensor",
+                  "chilled water delta flow sensor",
+                  "chilled water delta pressure sensor",
+                  "chilled water delta pressure sp",
+                  "chilled water bypass valve cmd"
+                ]
+              }
+            },
+            {
+              "id": "dfec65a2-268b-4eb2-a2de-9bf916389450",
+              "created": "2021-07-10T23:31:31+0000",
+              "last_modified": null,
+              "name": "CH-1",
+              "description": "Chiller #1",
+              "@site": "82478e3a-a212-41bf-9e2b-7522a1504a6b",
+              "@floor": null,
+              "@room": null,
+              "@parent": "c50d92f9-384b-47a8-9574-ade06fcb01cc",
+              "references": {
+                "chilledWaterPlantRef": "c50d92f9-384b-47a8-9574-ade06fcb01cc"
+              },
+              "haystack": {
+                "equipment": {
+                  "tag": "chiller",
+                  "name": "Chiller",
+                  "description": "Equipment to remove heat from a liquid. Chillers typically use a vapor compression or an absorption refrigeration cycle",
+                  "parent_ref": null,
+                  "permitted_children_equipment": []
+                },
+                "marker": {
+                  "tags": [
+                    "waterCooled",
+                    "centrifugal"
+                  ],
+                  "tags_string": "waterCooled centrifugal",
+                  "tag_definitions": [
+                    {
+                      "id": "waterCooled",
+                      "name": "Water Cooled",
+                      "description": "The chiller is cooled by a condenser water system",
+                      "references": [],
+                      "telemetry": []
+                    },
+                    {
+                      "id": "centrifugal",
+                      "name": "Centrifugal",
+                      "description": "",
+                      "references": [],
+                      "telemetry": []
+                    }
+                  ]
+                },
+                "available_references": [
+                  "chilledWaterPlantRef"
+                ]
+              },
+              "metadata": {
+                "manufacturer": "Trane"
+              },
+              "telemetry": {
+                "relationship_count": 0,
+                "base": [
+                  "run cmd",
+                  "run sensor",
+                  "enable cmd",
+                  "load cmd",
+                  "load sensor",
+                  "efficiency sensor",
+                  "power sensor",
+                  "energy sensor",
+                  "chilled water leaving temp sensor",
+                  "chilled water leaving temp sp",
+                  "chilled water leaving flow sensor",
+                  "chilled water leaving pressure sensor",
+                  "chilled water entering temp sensor",
+                  "chilled water entering flow sensor",
+                  "chilled water entering pressure sensor",
+                  "chilled water delta temp sensor",
+                  "chilled water delta flow sensor",
+                  "chilled water delta pressure sensor",
+                  "chilled water valve isolation cmd",
+                  "condenser water leaving temp sensor",
+                  "condenser water leaving flow sensor",
+                  "condenser water leaving pressure sensor",
+                  "condenser water entering temp sensor",
+                  "condenser water entering pressure sensor",
+                  "condenser water entering flow sensor",
+                  "condenser water valve isolation cmd",
+                  "condenser cmd",
+                  "condenser refrig temp sensor",
+                  "condenser refrig pressure sensor",
+                  "evaporator refrig temp sensor",
+                  "evaporator refrig pressure sensor"
+                ],
+                "via_markers": [],
+                "all": [
+                  "run cmd",
+                  "run sensor",
+                  "enable cmd",
+                  "load cmd",
+                  "load sensor",
+                  "efficiency sensor",
+                  "power sensor",
+                  "energy sensor",
+                  "chilled water leaving temp sensor",
+                  "chilled water leaving temp sp",
+                  "chilled water leaving flow sensor",
+                  "chilled water leaving pressure sensor",
+                  "chilled water entering temp sensor",
+                  "chilled water entering flow sensor",
+                  "chilled water entering pressure sensor",
+                  "chilled water delta temp sensor",
+                  "chilled water delta flow sensor",
+                  "chilled water delta pressure sensor",
+                  "chilled water valve isolation cmd",
+                  "condenser water leaving temp sensor",
+                  "condenser water leaving flow sensor",
+                  "condenser water leaving pressure sensor",
+                  "condenser water entering temp sensor",
+                  "condenser water entering pressure sensor",
+                  "condenser water entering flow sensor",
+                  "condenser water valve isolation cmd",
+                  "condenser cmd",
+                  "condenser refrig temp sensor",
+                  "condenser refrig pressure sensor",
+                  "evaporator refrig temp sensor",
+                  "evaporator refrig pressure sensor"
+                ]
+              }
+            }
+          ]
         }
       }
     }
