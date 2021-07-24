@@ -38,7 +38,7 @@
           }
         },
         "operationId": "get-point-list",
-        "description": "### Synopsis\nRetrieve a list of points. Optionally filter the list by controller and/or site.\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`telemetry:*`,`telemetry:datapoint:*`,`telemetry:datapoint:list`\n* One or more BACnet data points",
+        "description": "Retrieve a list of points\n\n**Required Permissions:** `*`,`telemetry:*`,`telemetry:datapoint:*`,`telemetry:datapoint:list`",
         "tags": [
           "Points"
         ],
@@ -70,7 +70,7 @@
             "$ref": "#/components/responses/404-Controller-Not-Found"
           }
         },
-        "description": "### Synopsis\nCreate a new point definition\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`telemetry:*`,`telemetry:datapoint:*`,`telemetry:datapoint:create`\n* A registered gateway connected to the Internet\n* A connected BACnet field controller\n* Adequate point quota",
+        "description": "Create a new point definition\n\n**Required Permissions:** `*`,`telemetry:*`,`telemetry:datapoint:*`,`telemetry:datapoint:create`",
         "tags": [
           "Points"
         ],
@@ -706,12 +706,10 @@
         "title": "Point Object",
         "properties": {
           "id": {
-            "type": "string",
-            "minLength": 1
+            "type": "string"
           },
           "@controller": {
             "type": "string",
-            "minLength": 1,
             "format": "uuid"
           },
           "created": {
@@ -719,12 +717,10 @@
             "format": "date-time"
           },
           "name": {
-            "type": "string",
-            "minLength": 1
+            "type": "string"
           },
           "description": {
-            "type": "string",
-            "minLength": 1
+            "type": "string"
           },
           "instance_id": {
             "type": "number"
@@ -739,7 +735,6 @@
           },
           "@site": {
             "type": "string",
-            "minLength": 1,
             "format": "uuid"
           },
           "is_online": {
@@ -747,23 +742,9 @@
           },
           "bacnet": {
             "type": "object",
-            "required": [
-              "object",
-              "telemetry",
-              "status",
-              "priority_array",
-              "alarming",
-              "totalization"
-            ],
             "properties": {
               "object": {
                 "type": "object",
-                "required": [
-                  "instance",
-                  "type",
-                  "name",
-                  "description"
-                ],
                 "properties": {
                   "instance": {
                     "type": "number"
@@ -772,42 +753,27 @@
                     "type": "number"
                   },
                   "name": {
-                    "type": "string",
-                    "minLength": 1
+                    "type": "string"
                   },
                   "description": {
-                    "type": "string",
-                    "minLength": 1
+                    "type": "string"
                   }
                 }
               },
               "telemetry": {
                 "type": "object",
-                "required": [
-                  "present_value",
-                  "reliability",
-                  "device_type",
-                  "event_state",
-                  "state_text",
-                  "polarity",
-                  "feedback_value",
-                  "relinquish_default"
-                ],
                 "properties": {
                   "present_value": {
                     "type": "number"
                   },
                   "reliability": {
-                    "type": "string",
-                    "minLength": 1
+                    "type": "string"
                   },
                   "device_type": {
-                    "type": "string",
-                    "minLength": 1
+                    "type": "string"
                   },
                   "event_state": {
-                    "type": "string",
-                    "minLength": 1
+                    "type": "string"
                   },
                   "state_text": {
                     "type": "array",
@@ -816,8 +782,7 @@
                     }
                   },
                   "polarity": {
-                    "type": "string",
-                    "minLength": 1
+                    "type": "string"
                   },
                   "feedback_value": {
                     "type": "number"
@@ -829,12 +794,6 @@
               },
               "status": {
                 "type": "object",
-                "required": [
-                  "in_alarm",
-                  "fault",
-                  "out_of_service",
-                  "overridden"
-                ],
                 "properties": {
                   "in_alarm": {
                     "type": "boolean"
@@ -858,23 +817,12 @@
               },
               "alarming": {
                 "type": "object",
-                "required": [
-                  "enabled",
-                  "acked_transitions",
-                  "notify",
-                  "time_delay"
-                ],
                 "properties": {
                   "enabled": {
                     "type": "boolean"
                   },
                   "acked_transitions": {
                     "type": "object",
-                    "required": [
-                      "to_normal",
-                      "to_offnormal",
-                      "to_fault"
-                    ],
                     "properties": {
                       "to_normal": {
                         "type": "boolean"
@@ -889,14 +837,9 @@
                   },
                   "notify": {
                     "type": "object",
-                    "required": [
-                      "type",
-                      "notification_class"
-                    ],
                     "properties": {
                       "type": {
-                        "type": "string",
-                        "minLength": 1
+                        "type": "string"
                       },
                       "notification_class": {
                         "type": "number"
@@ -910,12 +853,6 @@
               },
               "totalization": {
                 "type": "object",
-                "required": [
-                  "enabled",
-                  "elapsed_active_time",
-                  "last_reset",
-                  "ealpsed_inactive_time"
-                ],
                 "properties": {
                   "enabled": {
                     "type": "boolean"
@@ -933,57 +870,34 @@
               }
             }
           }
-        },
-        "required": [
-          "id",
-          "@controller",
-          "created",
-          "name",
-          "description",
-          "instance_id",
-          "object_type",
-          "@site",
-          "is_online",
-          "bacnet"
-        ]
+        }
       },
       "Point-Listing": {
         "description": "",
         "type": "object",
+        "title": "Point Listing",
         "properties": {
           "count": {
             "type": "number"
           },
           "data": {
             "type": "array",
-            "uniqueItems": true,
-            "minItems": 1,
+            "uniqueItems": false,
             "items": {
-              "required": [
-                "id",
-                "controller",
-                "created",
-                "name",
-                "description",
-                "object_type",
-                "instance_id",
-                "site"
-              ],
+              "type": "object",
+              "additionalProperties": false,
               "properties": {
                 "id": {
-                  "type": "string",
-                  "minLength": 1
+                  "type": "string"
                 },
                 "controller": {
-                  "type": "string",
-                  "minLength": 1
+                  "type": "string"
                 },
                 "created": {
                   "type": "number"
                 },
                 "name": {
-                  "type": "string",
-                  "minLength": 1
+                  "type": "string"
                 },
                 "description": {
                   "type": "string"
@@ -995,19 +909,13 @@
                   "type": "number"
                 },
                 "site": {
-                  "type": "string",
-                  "minLength": 1
+                  "type": "string"
                 },
                 "bacnet": {}
               }
             }
           }
-        },
-        "required": [
-          "count",
-          "data"
-        ],
-        "title": "Point Listing"
+        }
       }
     },
     "parameters": {
