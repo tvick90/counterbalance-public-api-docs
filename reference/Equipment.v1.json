@@ -3,7 +3,7 @@
   "info": {
     "title": "Equipment",
     "version": "1.0",
-    "description": "The Equipment API provides endpoints for equipment and asset management, including:\n* Creating & managing site equipment nodes\n* Defining equipment hierarchy & node relationships\n* Attaching & managing equipment telemetry\n\n### Understanding Equipment Nodes \n An **Equipment Node** is a platform representation of a piece of physical equipment on-site, such as an air handler, chiller, or pump.\n\nEquipment node definition and taxonomy in Counterbalance is defined by the guidelines in [Project Haystack](https://project-haystack.org/).\n\n The top-level Haystack equipment tags currently supported are: `ahu`, `chilledWaterPlant`, `chiller`, `coolingTower`, `boiler`, `fan`, `heatExchanger`, `heatPump`, `hotWaterPlant`, `pump`, `vav`\n\n#### Equipment & Marker Tags\nEquipment nodes are defined using a top-level equipment tag and a variety of marker tags.  \n\n#### Parent/Child Relationships\nEquipment nodes can be defined to create a parent/child relationship that follows-that of the actual equipment onsite. Examples include an air handler that serves multiple VAV boxes or chilled water plant and its associated chillers, pumps, cooling towers, etc.\n\n##### Permitted Relationships\n\n| Parent Tag | Permitted Children Tags |\n|---|---|\n| `ahu` | `fan`, `vav`, `zone` |\n| `chilledWaterPlant` | `chiller`, `heatExchanger`, `pump`, `coolingTower` |\n| `hotWaterPlant` | `boiler`, `heatExchanger`, `pump` |\n\n#### Dependent Relationships\nEquipment nodes can also define dependent relationships between nodes. A dependent node is attached via a Haystack system reference (such as `chilledWaterPlantRef`, `hotWaterPlantRef`, etc). The available references for a particular equipment node are dictated by the Haystack tags assigned to the node.\n\nFor example, let's say you define an AHU with a `chilledWaterCool` marker tag. When this tag is assigned, the `chilledWaterPlantRef` reference also becomes available. If this references is attached to a chilled water plant node, this AHU will become dependent on the chilled water plant.\n\n> **Remember** Parent/child and dependent relationships are critical for accurate fault detectionand building intelligence routines. We highly recommend being as thorough and complete with these relationship definitions as possible.\n\n"
+    "description": "The Equipment API provides endpoints for equipment and asset management, including:\n* Creating & managing site equipment nodes\n* Defining equipment hierarchy & node relationships\n* Attaching & managing equipment telemetry\n\n### Understanding Equipment Nodes \n An **Equipment Node** is a platform representation of a piece of physical equipment on-site, such as an air handler, chiller, or pump.\n\nEquipment node definition and taxonomy in Counterbalance is defined by the guidelines in [Project Haystack](https://project-haystack.org/).\n\n The top-level Haystack equipment tags currently supported are: `ahu`, `chilledWaterPlant`, `chiller`, `coolingTower`, `boiler`, `fan`, `heatExchanger`, `heatPump`, `hotWaterPlant`, `pump`, `vav`\n\n#### Equipment & Marker Tags\nEquipment nodes are defined using a top-level equipment tag and a variety of marker tags.  \n\n#### Parent/Child Relationships\nEquipment nodes can be defined to create a parent/child relationship that follows-that of the actual equipment onsite. Examples include an air handler that serves multiple VAV boxes or chilled water plant and its associated chillers, pumps, cooling towers, etc.\n\nThe permitted parent/child taxonomy is shown in the following table.\n\n| Parent Equipment Tag | Permitted Children Equipment Tags |\n|---|---|\n| `ahu` | `fan`, `vav`, `zone` |\n| `chilledWaterPlant` | `chiller`, `heatExchanger`, `pump`, `coolingTower` |\n| `hotWaterPlant` | `boiler`, `heatExchanger`, `pump` |\n\n#### Dependent Relationships\nEquipment nodes can also define dependent relationships between nodes. A dependent node is attached via a Haystack system reference (such as `chilledWaterPlantRef`, `hotWaterPlantRef`, etc). The available references for a particular equipment node are dictated by the Haystack tags assigned to the node.\n\nFor example, let's say you define an AHU with a `chilledWaterCool` marker tag. When this tag is assigned, the `chilledWaterPlantRef` reference also becomes available. If this references is attached to a chilled water plant node, this AHU will become dependent on the chilled water plant.\n\n> **Remember** Parent/child and dependent relationships are critical for accurate fault detectionand building intelligence routines. We highly recommend being as thorough and complete with these relationship definitions as possible.\n\n"
   },
   "servers": [
     {
@@ -24,7 +24,12 @@
         ],
         "responses": {},
         "operationId": "list-equipment",
-        "description": ""
+        "description": "Retreieve a list of equipment nodes\n\n**Required Permissions:** `*`,`equipment:*`,`equipment:node:*`,`equipment:node:list`",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ]
       },
       "post": {
         "summary": "Create Equipment Node",
@@ -110,7 +115,7 @@
           "Equipment"
         ],
         "operationId": "get-equipment-node",
-        "description": "### Synopsis\nRetrieve the specified equipment node\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`equipment:*`,`equipment:node:*`,`equipment:node:read`",
+        "description": "Retrieve an equipment node\n\n**Required Permissions:** `*`,`equipment:*`,`equipment:node:*`,`equipment:node:read`",
         "security": [
           {
             "Bearer Token": []
@@ -169,70 +174,75 @@
         "description": "",
         "type": "object",
         "x-examples": {},
+        "title": "Equipment Node Object",
         "properties": {
           "id": {
             "type": "string",
-            "minLength": 1
+            "format": "uuid"
           },
           "name": {
+            "type": "string"
+          },
+          "created": {
             "type": "string",
-            "minLength": 1
+            "format": "date-time"
+          },
+          "last_modified": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
           },
           "description": {
-            "type": "string",
-            "minLength": 1
+            "type": "string"
           },
           "@site": {
             "type": "string",
-            "minLength": 1
+            "nullable": true
           },
-          "@floor": {},
-          "@room": {},
-          "@parent": {},
+          "@floor": {
+            "type": "string",
+            "nullable": true
+          },
+          "@room": {
+            "type": "string",
+            "nullable": true
+          },
+          "@parent": {
+            "type": "string",
+            "nullable": true
+          },
           "references": {
-            "type": "object",
-            "properties": {
-              "": {
-                "type": "object"
-              }
+            "type": "array",
+            "items": {
+              "type": "string"
             }
           },
           "haystack": {
             "type": "object",
-            "required": [
-              "equipment",
-              "marker",
-              "available_references"
-            ],
             "properties": {
               "equipment": {
                 "type": "object",
-                "required": [
-                  "tag",
-                  "name",
-                  "description",
-                  "parent_ref",
-                  "permitted_children_equipment"
-                ],
                 "properties": {
                   "tag": {
                     "type": "string",
-                    "minLength": 1
+                    "description": "The Haystack equipment tag that defines the node"
                   },
                   "name": {
                     "type": "string",
-                    "minLength": 1
+                    "description": "The Haystack equipment type name"
                   },
                   "description": {
                     "type": "string",
-                    "minLength": 1
+                    "description": "The Haystack description of the node"
                   },
                   "parent_ref": {
                     "type": "string",
-                    "minLength": 1
+                    "description": "Indicates that children nodes can be attached via the Haystack equipment reference provided",
+                    "nullable": true
                   },
                   "permitted_children_equipment": {
                     "type": "array",
+                    "description": "The permitted children node types that can be attached to this node. *Only present if `parent_ref` is not null.*",
                     "items": {
                       "type": "string"
                     }
@@ -241,11 +251,6 @@
               },
               "marker": {
                 "type": "object",
-                "required": [
-                  "tags",
-                  "tags_string",
-                  "tag_definitions"
-                ],
                 "properties": {
                   "tags": {
                     "type": "array",
@@ -254,8 +259,7 @@
                     }
                   },
                   "tags_string": {
-                    "type": "string",
-                    "minLength": 1
+                    "type": "string"
                   },
                   "tag_definitions": {
                     "type": "array",
@@ -281,12 +285,6 @@
           },
           "telemetry": {
             "type": "object",
-            "required": [
-              "relationship_count",
-              "base",
-              "via_markers",
-              "all"
-            ],
             "properties": {
               "relationship_count": {
                 "type": "number"
@@ -311,18 +309,7 @@
               }
             }
           }
-        },
-        "required": [
-          "id",
-          "name",
-          "description",
-          "@site",
-          "references",
-          "haystack",
-          "metadata",
-          "telemetry"
-        ],
-        "title": "Equipment Node Object"
+        }
       },
       "Tag-Definition-Object": {
         "description": "",
@@ -470,6 +457,8 @@
       "Equipment-Node-Object": {
         "value": {
           "id": "60ec71bc-5a72-4e29-9db8-87bb2097047c",
+          "created": "2021-07-10T23:37:36+0000",
+          "last_modified": null,
           "name": "AHU S2",
           "description": "Air Handler S2 - Low-Rise North",
           "@site": "723a9c16-1790-4386-b17b-54bc9ed6d901",
