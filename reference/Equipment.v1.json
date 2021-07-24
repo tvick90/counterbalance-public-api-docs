@@ -180,9 +180,6 @@
             "type": "string",
             "format": "uuid"
           },
-          "name": {
-            "type": "string"
-          },
           "created": {
             "type": "string",
             "format": "date-time"
@@ -191,6 +188,9 @@
             "type": "string",
             "format": "date-time",
             "nullable": true
+          },
+          "name": {
+            "type": "string"
           },
           "description": {
             "type": "string"
@@ -238,6 +238,12 @@
                   "parent_ref": {
                     "type": "string",
                     "description": "Indicates that children nodes can be attached via the Haystack equipment reference provided",
+                    "enum": [
+                      "ahuRef",
+                      "chilledWaterPlantRef",
+                      "hotWaterPlantRef",
+                      "steamPlantRef"
+                    ],
                     "nullable": true
                   },
                   "permitted_children_equipment": {
