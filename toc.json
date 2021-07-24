@@ -16,8 +16,12 @@
       "uri": "docs/Authentication.md"
     },
     {
+      "type": "divider",
+      "title": "Divider"
+    },
+    {
       "type": "item",
-      "title": "Account Management",
+      "title": "Tenant",
       "uri": "reference/Tenant.v1.json"
     },
     {

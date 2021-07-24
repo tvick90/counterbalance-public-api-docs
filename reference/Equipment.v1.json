@@ -22,7 +22,11 @@
         "tags": [
           "Equipment"
         ],
-        "responses": {},
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/200-Equipment-Node-List"
+          }
+        },
         "operationId": "list-equipment",
         "description": "Retreieve a list of equipment nodes\n\n**Required Permissions:** `*`,`equipment:*`,`equipment:node:*`,`equipment:node:list`",
         "security": [
@@ -459,14 +463,39 @@
         }
       },
       "200-Equipment-Node-List": {
-        "description": "Example response",
+        "description": "Ok",
         "content": {
           "application/json": {
             "schema": {
+              "type": "object",
               "properties": {
-                "id": {
-                  "type": "string"
+                "count": {
+                  "type": "number",
+                  "description": "The number of equipment nodes returned",
+                  "format": "double",
+                  "readOnly": true
+                },
+                "index": {
+                  "type": "array",
+                  "description": "An array of node IDs in the order returned",
+                  "items": {
+                    "type": "string",
+                    "format": "uuid",
+                    "readOnly": true
+                  }
+                },
+                "data": {
+                  "type": "array",
+                  "description": "An array of equipment nodes",
+                  "items": {
+                    "$ref": "#/components/schemas/Equipment-Node-Object"
+                  }
                 }
+              }
+            },
+            "examples": {
+              "Response": {
+                "$ref": "#/components/examples/Equipment-Node-List"
               }
             }
           }
