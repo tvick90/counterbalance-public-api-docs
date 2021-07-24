@@ -186,7 +186,7 @@
             "Bearer Token": []
           }
         ],
-        "description": "### Synopsis\nRetrieve a point\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`telemetry:*`,`telemetry:datapoint:*`,`telemetry:datapoint:read`\n* A registered gateway connected to the Internet\n* A connected BACnet field controller (if `online` is true)\n* One or more commandable BACnet data points\n\n### Online BACnet Data\nEach BACnet object type will return a variable BACnet response body depending on the parameters present and supported by the target field controller. \n\nSeveral response examples are provided to illustrate the variety of paremeters available."
+        "description": "Retrieve a point\n\n**Required Permissions:** `*`,`telemetry:*`,`telemetry:datapoint:*`,`telemetry:datapoint:read`\n\n### Online BACnet Data\nEach BACnet object type will return a variable BACnet response body depending on the parameters present and supported by the target field controller. \n\nSeveral response examples are provided to illustrate the variety of parameters available."
       },
       "delete": {
         "summary": "Delete Point",
@@ -210,7 +210,7 @@
         "tags": [
           "Points"
         ],
-        "description": "### Synopsis\nDelete a point\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`telemetry:*`,`telemetry:datapoint:*`,`telemetry:datapoint:delete`\n* One or more BACnet data points",
+        "description": "Delete a point\n\n**Required Permissions** `*`,`telemetry:*`,`telemetry:datapoint:*`,`telemetry:datapoint:delete`",
         "security": [
           {
             "Bearer Token": []
@@ -228,7 +228,7 @@
             "$ref": "#/components/responses/404-Point-Not-Found"
           }
         },
-        "description": "### Synopsis\nUpdate a point\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`telemetry:*`,`telemetry:datapoint:*`,`telemetry:datapoint:update`\n* One or more BACnet data points\n\n<!-- theme: warning -->\n\n> _This endpoint will only update the Counterbalance definition of a defined point. This will not update the BACnet definition on the device. Future endpoints are planned to permit online BACnet updates._",
+        "description": "Update a point\n\n**Required Permissions:** `*`,`telemetry:*`,`telemetry:datapoint:*`,`telemetry:datapoint:update`\n\n<!-- theme: info -->\n> **Heads Up** This endpoint will only update the Counterbalance definition of a defined point. This will not update the BACnet definition on the device. \n> \n> _Future endpoints are planned to permit online BACnet updates._",
         "security": [
           {
             "Bearer Token": []
@@ -255,7 +255,7 @@
                     "type": "string",
                     "description": "The display and collection resolution for analog points (decimal places)"
                   },
-                  "site": {
+                  "@site": {
                     "type": "string",
                     "format": "uuid",
                     "description": "A valid site UUID to assign the point to"
@@ -521,7 +521,7 @@
         "tags": [
           "Points"
         ],
-        "description": "### Synopsis\nCommand or release a point\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`telemetry:*`,`telemetry:datapoint:*`,`telemetry:datapoint:command`\n* A registered gateway connected to the Internet\n* A connected BACnet field controller\n* One or more commandable BACnet data points\n\n### Commandable Points\nThe table below defines the BACnet object types compatible with this endpoint. Support for enumerated values is planned for a future release.\n\n| Object Type | Description |\n|-----|---------------|\n| `1` | Analog Output |\n| `2` | Analog Value |\n| `4` | Binary Output |\n| `5` | Binary Value |\n\n### Supported Command Priorities\nAll sixteen BACnet command priorities are supported. \n\n### Command vs Relinquish\nThe `operation` body parameter accepts two values: `command` or `relinquish`\n\n#### Command a New Value\nTo command a data point to a new value, set `operation` to `command` in the request body and include the desired priority and new value. The new value will be added to the command priority array at the requested priority and any previous value at the same priority is overwritten. \n\n#### Relinqush a Set Value\nTo relinquish a command priority, set `operation` to `relinquish` in the request body and include the desired priority. The requested priority will be set to _null_ in the command priority array.",
+        "description": "Command or release a point\n\n**Required Permisions:** `*`,`telemetry:*`,`telemetry:datapoint:*`,`telemetry:datapoint:command`\n* A registered gateway connected to the Internet\n* A connected BACnet field controller\n* One or more commandable BACnet data points\n\n### Commandable Points\nThe table below defines the BACnet object types compatible with this endpoint. Support for enumerated values is planned for a future release.\n\n| Object Type | Description |\n|-----|---------------|\n| `1` | Analog Output |\n| `2` | Analog Value |\n| `4` | Binary Output |\n| `5` | Binary Value |\n\n### Supported Command Priorities\nAll sixteen BACnet command priorities are supported. \n\n### Command vs Relinquish\nThe `operation` body parameter accepts two values: `command` or `relinquish`\n\n#### Command a New Value\nTo command a data point to a new value, set `operation` to `command` in the request body and include the desired priority and new value. The new value will be added to the command priority array at the requested priority and any previous value at the same priority is overwritten. \n\n#### Relinqush a Set Value\nTo relinquish a command priority, set `operation` to `relinquish` in the request body and include the desired priority. The requested priority will be set to _null_ in the command priority array.",
         "security": [
           {
             "Bearer Token": []
