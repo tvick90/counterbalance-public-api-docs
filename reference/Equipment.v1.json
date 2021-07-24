@@ -7,7 +7,12 @@
   },
   "servers": [
     {
-      "url": "http://localhost:3000"
+      "url": "https://api.counterbalance.io",
+      "description": "Production API"
+    },
+    {
+      "description": "Dev API",
+      "url": "https://api-dev.counterbalance.io"
     }
   ],
   "paths": {
@@ -29,7 +34,7 @@
             "description": "Created"
           }
         },
-        "description": "### Synopsis\nCreate a new equipment node\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`equipment:*`,`equipment:node:*`,`equipment:node:read`\n* Licensed Feature: `sites_base` \n* Adequate quota for `equipment`",
+        "description": "Create a new equipment node\n\n**Required Permissions:** `*`,`equipment:*`,`equipment:node:*`,`equipment:node:read`\n\n> **Heads Up** This endpoint is subject to `equipment` quota availabilty",
         "tags": [
           "Equipment"
         ],
@@ -70,7 +75,8 @@
                     "format": "uuid"
                   },
                   "metadata": {
-                    "type": "object"
+                    "type": "object",
+                    "description": "User-defined JSON data for this node"
                   },
                   "notes": {
                     "type": "string"
@@ -83,16 +89,7 @@
               },
               "examples": {
                 "Example": {
-                  "value": {
-                    "name": "string",
-                    "description": "string",
-                    "tag": "string",
-                    "markers": "string",
-                    "@parent": "fedbb5a3-e076-44dc-92b5-6f9f6cec4ddc",
-                    "@site": "451f769d-1122-4c11-a645-7d2ed505aa0b",
-                    "metadata": {},
-                    "notes": "string"
-                  }
+                  "$ref": "#/components/examples/Equipment-Node-Body"
                 }
               }
             }
@@ -686,6 +683,19 @@
               "neutralDeck air fan cmd",
               "neutralDeck air fan sensor"
             ]
+          }
+        }
+      },
+      "Equipment-Node-Body": {
+        "value": {
+          "name": "AHU-01",
+          "description": "Air Handler 1 - Main Penthouse",
+          "tag": "ahu",
+          "markers": "dxCool variableVolume vavZone multiZone singleDuct",
+          "@site": "451f769d-1122-4c11-a645-7d2ed505aa0b",
+          "metadata": {
+            "manufacturer": "Carrier",
+            "model": "XGV-75-R-14"
           }
         }
       }
