@@ -350,22 +350,62 @@
         ],
         "responses": {
           "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Tenant-Preferences"
-                }
-              }
-            }
+            "$ref": "#/components/responses/200-Tenant-Preferences"
           }
         },
-        "operationId": "get-v1-tenant-preferences",
-        "description": "Retrieve platform preferences set for the authenticated user's tenant account",
+        "operationId": "get-tenant-preferences",
+        "description": "Retrieve platform preferences set for the authenticated user's tenant account\n\n__Required Permissions:__ `*`,`tenant:*`,`tenant:account:*`,`tenant:account:read`",
         "security": [
           {
             "Bearer Token": []
           }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "Content-Type",
+            "description": "application/json"
+          }
+        ]
+      },
+      "patch": {
+        "summary": "Update Tenant Preferences",
+        "operationId": "update-tenant-preferences",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/200-Tenant-Preferences"
+          }
+        },
+        "description": "Update platform preferences set for the authenticated user's tenant account\n\n__Required Permissions:__ `*`,`tenant:*`,`tenant:account:*`,`tenant:account:update`",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "Content-Type",
+            "description": "Application-json"
+          }
+        ],
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Tenant-Preferences"
+              }
+            }
+          }
+        },
+        "tags": [
+          "Tenant Preferences"
         ]
       }
     },
@@ -1375,6 +1415,19 @@
         "value": {
           "success_message": "Onboarding has been completed!"
         }
+      },
+      "Tenant-Preferences": {
+        "value": {
+          "display_name_format": "first-last",
+          "shell": {
+            "theme": "#161d1b",
+            "pagination": {
+              "enabled": false,
+              "default_limit": 10
+            },
+            "disabled_applications": []
+          }
+        }
       }
     },
     "responses": {
@@ -1472,6 +1525,29 @@
                 "$ref": "#/components/examples/Onboard-Tenant-Account"
               }
             }
+          }
+        }
+      },
+      "200-Tenant-Preferences": {
+        "description": "Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Tenant-Preferences"
+            },
+            "examples": {
+              "Response": {
+                "$ref": "#/components/examples/Tenant-Preferences"
+              }
+            }
+          }
+        },
+        "headers": {
+          "Content-Type": {
+            "schema": {
+              "type": "string"
+            },
+            "description": "Application/json"
           }
         }
       }
