@@ -19,9 +19,6 @@
     "/v1/equipment/node": {
       "get": {
         "summary": "List Equipment Nodes",
-        "tags": [
-          "Equipment"
-        ],
         "responses": {
           "200": {
             "$ref": "#/components/responses/200-Equipment-Node-List"
@@ -33,6 +30,9 @@
           {
             "Bearer Token": []
           }
+        ],
+        "tags": [
+          "Equipment"
         ]
       },
       "post": {
@@ -142,14 +142,14 @@
             "description": "OK"
           }
         },
-        "tags": [
-          "Equipment Nodes"
-        ],
         "description": "",
         "security": [
           {
             "Bearer Token": []
           }
+        ],
+        "tags": [
+          "Equipment"
         ]
       },
       "delete": {
@@ -160,7 +160,7 @@
             "description": "OK"
           }
         },
-        "description": "",
+        "description": "Delete an equipment node\n\n**Required Permissions:** `*`,`equipment:*`,`equipment:node:*`,`equipment:node:delete`",
         "security": [
           {
             "Bearer Token": []
