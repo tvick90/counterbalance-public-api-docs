@@ -170,6 +170,27 @@
           "Equipment"
         ]
       }
+    },
+    "/v1/equipment/node/telemetry": {
+      "get": {
+        "summary": "Your GET endpoint",
+        "tags": [],
+        "responses": {},
+        "operationId": "get-v1-equipment-node-telemetry"
+      }
+    },
+    "/v1/equipment/node/telemetry/{telemetryId}": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/telemetryId"
+        }
+      ],
+      "get": {
+        "summary": "Your GET endpoint",
+        "tags": [],
+        "responses": {},
+        "operationId": "get-v1-equipment-node-telemetry-telemetryId"
+      }
     }
   },
   "components": {
@@ -407,6 +428,16 @@
           "type": "string"
         },
         "description": "Filter results by their Haystack equipment tag"
+      },
+      "telemetryId": {
+        "name": "telemetryId",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "description": "A valid telemetry relationship UUID"
       }
     },
     "responses": {
