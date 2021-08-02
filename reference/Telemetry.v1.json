@@ -1125,7 +1125,9 @@
         "in": "header",
         "required": false,
         "schema": {
-          "type": "string"
+          "type": "string",
+          "default": "application/json",
+          "example": "application/json"
         },
         "description": "application/json"
       }
