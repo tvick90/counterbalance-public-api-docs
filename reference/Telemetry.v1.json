@@ -433,15 +433,28 @@
         "summary": "Delete Collector",
         "operationId": "delete-collector",
         "responses": {
-          "200": {
-            "description": "OK"
+          "204": {
+            "description": "No Content",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "nullable": true
+                },
+                "examples": {}
+              }
+            }
           }
         },
         "tags": [
           "Collectors"
         ],
         "description": "Delete a point collector\n\n**Required Permissions:** `*`,`telemetry:*`,`telemetry:collector:*`,`telemetry:collector:delete`",
-        "parameters": []
+        "parameters": [],
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ]
       }
     },
     "/v1/telemetry/collector/{collectorId}/sample": {
