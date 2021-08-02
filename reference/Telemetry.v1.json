@@ -552,7 +552,8 @@
                 }
               }
             }
-          }
+          },
+          "description": "Request body subscription"
         }
       }
     }
