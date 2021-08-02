@@ -53,6 +53,9 @@
           },
           {
             "$ref": "#/components/parameters/@controllerId"
+          },
+          {
+            "$ref": "#/components/parameters/Content-Type"
           }
         ]
       },
@@ -131,12 +134,7 @@
         },
         "parameters": [
           {
-            "schema": {
-              "type": "string"
-            },
-            "in": "header",
-            "name": "Content-Type",
-            "description": "application/json"
+            "$ref": "#/components/parameters/Content-Type"
           }
         ]
       },
@@ -179,6 +177,9 @@
             "in": "query",
             "name": "online",
             "description": "Fetch the latest BACnet data for the point"
+          },
+          {
+            "$ref": "#/components/parameters/Content-Type"
           }
         ],
         "security": [
@@ -281,12 +282,7 @@
         },
         "parameters": [
           {
-            "schema": {
-              "type": "string"
-            },
-            "in": "header",
-            "name": "Content-Type",
-            "description": "application/json"
+            "$ref": "#/components/parameters/Content-Type"
           }
         ]
       }
@@ -299,22 +295,7 @@
         ],
         "responses": {},
         "operationId": "list-collectors",
-        "description": "### Synopsis\nList ",
-        "security": [
-          {
-            "Bearer Token": []
-          }
-        ]
-      },
-      "post": {
-        "summary": "Create Collector",
-        "operationId": "create-collector",
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        },
-        "description": "### Synopsis\nCreate a new Collector for a data point\n\n### Prerequisites",
+        "description": "Retreieve a list of point collectors\n\n**Required Permissions:** `*`,`telemetry:*`,`telemetry:collector:*`,`telemetry:collector:list`",
         "security": [
           {
             "Bearer Token": []
@@ -322,18 +303,71 @@
         ],
         "parameters": [
           {
-            "schema": {
-              "type": "string"
-            },
-            "in": "header",
-            "name": "Content-Type",
-            "description": "application/json",
-            "required": true
+            "$ref": "#/components/parameters/Content-Type"
+          }
+        ]
+      },
+      "post": {
+        "summary": "Create Collector",
+        "operationId": "create-collector",
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/201-Create-Collector"
+          }
+        },
+        "description": "Create a point collector\n\n**Required Permissions:** `*`,`telemetry:*`,`telemetry:collector:*`,`telemetry:collector:create`",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Content-Type"
           }
         ],
         "tags": [
           "Collectors"
-        ]
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "datapoint": {
+                    "type": "string",
+                    "format": "uuid",
+                    "description": "The UUID of the point to be collected"
+                  },
+                  "interval": {
+                    "type": "number",
+                    "format": "double",
+                    "default": 300,
+                    "enum": [
+                      300,
+                      900,
+                      1800,
+                      3600
+                    ],
+                    "description": "The frequency in which to sample the point"
+                  }
+                },
+                "required": [
+                  "datapoint"
+                ]
+              },
+              "examples": {
+                "Example": {
+                  "value": {
+                    "datapoint": "52aa66de-e553-4383-9e16-52bfcd0efb0f",
+                    "interval": 300
+                  }
+                }
+              }
+            }
+          }
+        }
       },
       "parameters": []
     },
@@ -348,12 +382,24 @@
         "tags": [
           "Collectors"
         ],
-        "responses": {},
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/200-Collector-Object"
+          },
+          "404": {
+            "$ref": "#/components/responses/404-Collector-Not-Found"
+          }
+        },
         "operationId": "get-collector",
-        "description": "",
+        "description": "Retreieve a point collector\n\n**Required Permissions:** `*`,`telemetry:*`,`telemetry:collector:*`,`telemetry:collector:read`",
         "security": [
           {
             "Bearer Token": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Content-Type"
           }
         ]
       },
@@ -365,7 +411,7 @@
             "description": "OK"
           }
         },
-        "description": "",
+        "description": "Update a point collector\n\n**Required Permissions:** `*`,`telemetry:*`,`telemetry:collector:*`,`telemetry:collector:update`",
         "tags": [
           "Collectors"
         ],
@@ -373,7 +419,26 @@
           {
             "Bearer Token": []
           }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Content-Type"
+          }
         ]
+      },
+      "delete": {
+        "summary": "Delete Collector",
+        "operationId": "delete-collector",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "Collectors"
+        ],
+        "description": "Delete a point collector\n\n**Required Permissions:** `*`,`telemetry:*`,`telemetry:collector:*`,`telemetry:collector:delete`",
+        "parameters": []
       }
     },
     "/v1/telemetry/collector/{collectorId}/sample": {
@@ -422,6 +487,9 @@
             "in": "query",
             "name": "duration",
             "description": "The length of a relative sample window in seconds"
+          },
+          {
+            "$ref": "#/components/parameters/Content-Type"
           }
         ],
         "security": [
@@ -529,12 +597,7 @@
         ],
         "parameters": [
           {
-            "schema": {
-              "type": "string"
-            },
-            "in": "header",
-            "name": "Content-Type",
-            "description": "application/json"
+            "$ref": "#/components/parameters/Content-Type"
           }
         ],
         "requestBody": {
@@ -563,6 +626,7 @@
       "Get-Collector-Samples-Response-Body": {
         "description": "",
         "type": "object",
+        "title": "Get Collector Samples",
         "properties": {
           "count": {
             "type": "number"
@@ -576,11 +640,7 @@
               "end": {
                 "type": "number"
               }
-            },
-            "required": [
-              "start",
-              "end"
-            ]
+            }
           },
           "integrity": {
             "type": "object",
@@ -597,33 +657,20 @@
               "quality": {
                 "type": "number"
               }
-            },
-            "required": [
-              "sample_duration",
-              "expected_samples",
-              "missing_samples",
-              "quality"
-            ]
+            }
           },
           "data": {
             "type": "array",
             "uniqueItems": true,
-            "minItems": 1,
             "items": {
-              "required": [
-                "id",
-                "timestamp",
-                "value",
-                "event_state"
-              ],
+              "type": "object",
               "properties": {
                 "id": {
-                  "type": "string",
-                  "minLength": 1
+                  "type": "string"
                 },
                 "timestamp": {
                   "type": "string",
-                  "minLength": 1
+                  "format": "date-time"
                 },
                 "value": {
                   "type": "number"
@@ -631,8 +678,7 @@
                 "feedback_value": {},
                 "state_text": {},
                 "event_state": {
-                  "type": "string",
-                  "minLength": 1
+                  "type": "string"
                 },
                 "priority_array": {},
                 "status_flags": {
@@ -650,25 +696,12 @@
                     "out_of_service": {
                       "type": "boolean"
                     }
-                  },
-                  "required": [
-                    "fault",
-                    "in_alarm",
-                    "overridden",
-                    "out_of_service"
-                  ]
+                  }
                 }
               }
             }
           }
-        },
-        "required": [
-          "count",
-          "range",
-          "integrity",
-          "data"
-        ],
-        "title": "Get Collector Samples"
+        }
       },
       "Command-Point-Request-Body": {
         "description": "",
@@ -917,6 +950,96 @@
             }
           }
         }
+      },
+      "Collector-Details": {
+        "description": "",
+        "type": "object",
+        "x-examples": {},
+        "title": "Collector Details",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "created": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "expires": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "interval": {
+            "type": "number",
+            "enum": [
+              300,
+              600,
+              900
+            ]
+          },
+          "sample_count": {
+            "type": "number"
+          },
+          "source": {
+            "type": "object",
+            "properties": {
+              "point": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "format": "uuid",
+                    "nullable": true
+                  },
+                  "object_type": {
+                    "type": "number"
+                  },
+                  "instance_id": {
+                    "type": "number"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  }
+                }
+              },
+              "controller": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "format": "uuid",
+                    "nullable": true
+                  },
+                  "device_id": {
+                    "type": "number"
+                  },
+                  "name": {
+                    "type": "string"
+                  }
+                }
+              },
+              "gateway": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "format": "uuid",
+                    "nullable": true
+                  }
+                }
+              }
+            }
+          },
+          "@site": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          }
+        }
       }
     },
     "parameters": {
@@ -987,6 +1110,15 @@
           "format": "uuid"
         },
         "description": "Filter results by their associated point UUID"
+      },
+      "Content-Type": {
+        "name": "Content-Type",
+        "in": "header",
+        "required": false,
+        "schema": {
+          "type": "string"
+        },
+        "description": "application/json"
       }
     },
     "securitySchemes": {
@@ -1153,6 +1285,44 @@
               },
               "Binary Output Online": {
                 "$ref": "#/components/examples/Get-Binary-Output-Point-Online"
+              }
+            }
+          }
+        }
+      },
+      "200-Collector-Object": {
+        "description": "Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Collector-Details"
+            },
+            "examples": {
+              "Response": {
+                "$ref": "#/components/examples/Get-Collector-Details"
+              }
+            }
+          }
+        },
+        "headers": {
+          "Content-Type": {
+            "schema": {
+              "type": "string"
+            },
+            "description": "application/json"
+          }
+        }
+      },
+      "201-Create-Collector": {
+        "description": "Created",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Collector-Details"
+            },
+            "examples": {
+              "Response": {
+                "$ref": "#/components/examples/Get-Collector-Details"
               }
             }
           }
@@ -1410,6 +1580,33 @@
               "...": null
             }
           ]
+        }
+      },
+      "Get-Collector-Details": {
+        "value": {
+          "id": "7a3795f5-9ce4-49d5-a8ff-8d8bb96d6f38",
+          "created": "2021-05-27T23:50:17+0000",
+          "expires": null,
+          "interval": 300,
+          "sample_count": 19034,
+          "source": {
+            "point": {
+              "id": "32481fc1-a14e-44e7-a459-9259820b0d96",
+              "object_type": 4,
+              "instance_id": 0,
+              "name": "SEA.AH1.SS",
+              "description": "AH-1 FAN S/S"
+            },
+            "controller": {
+              "id": "5a9d2264-72aa-4ec8-bfe5-98ecd4173dda",
+              "device_id": 10200,
+              "name": "USSEA-HVAC-BMSNODE02"
+            },
+            "gateway": {
+              "id": "7a3795f5-9ce4-49d5-a8ff-8d8bb96d6f38"
+            }
+          },
+          "@site": null
         }
       }
     }
