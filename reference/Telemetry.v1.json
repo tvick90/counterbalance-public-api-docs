@@ -313,6 +313,9 @@
         "responses": {
           "201": {
             "$ref": "#/components/responses/201-Create-Collector"
+          },
+          "404": {
+            "$ref": "#/components/responses/404-Point-Not-Found"
           }
         },
         "description": "Create a point collector\n\n**Required Permissions:** `*`,`telemetry:*`,`telemetry:collector:*`,`telemetry:collector:create`",
