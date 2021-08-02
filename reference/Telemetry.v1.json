@@ -293,9 +293,13 @@
         "tags": [
           "Collectors"
         ],
-        "responses": {},
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/200-Get-Collector-Listing"
+          }
+        },
         "operationId": "list-collectors",
-        "description": "Retreieve a list of point collectors\n\n**Required Permissions:** `*`,`telemetry:*`,`telemetry:collector:*`,`telemetry:collector:list`",
+        "description": "Retrieve a list of point collectors\n\n**Required Permissions:** `*`,`telemetry:*`,`telemetry:collector:*`,`telemetry:collector:list`",
         "security": [
           {
             "Bearer Token": []
@@ -304,6 +308,18 @@
         "parameters": [
           {
             "$ref": "#/components/parameters/Content-Type"
+          },
+          {
+            "$ref": "#/components/parameters/@controllerId"
+          },
+          {
+            "$ref": "#/components/parameters/@gatewayId"
+          },
+          {
+            "$ref": "#/components/parameters/@siteId"
+          },
+          {
+            "$ref": "#/components/parameters/@pointId"
           }
         ]
       },
@@ -387,7 +403,7 @@
         ],
         "responses": {
           "200": {
-            "$ref": "#/components/responses/200-Collector-Object"
+            "$ref": "#/components/responses/200-Get-Collector"
           },
           "404": {
             "$ref": "#/components/responses/404-Collector-Not-Found"
@@ -395,29 +411,6 @@
         },
         "operationId": "get-collector",
         "description": "Retreieve a point collector\n\n**Required Permissions:** `*`,`telemetry:*`,`telemetry:collector:*`,`telemetry:collector:read`",
-        "security": [
-          {
-            "Bearer Token": []
-          }
-        ],
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/Content-Type"
-          }
-        ]
-      },
-      "patch": {
-        "summary": "Update Collector",
-        "operationId": "update-collector",
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        },
-        "description": "Update a point collector\n\n**Required Permissions:** `*`,`telemetry:*`,`telemetry:collector:*`,`telemetry:collector:update`",
-        "tags": [
-          "Collectors"
-        ],
         "security": [
           {
             "Bearer Token": []
@@ -987,15 +980,15 @@
             "nullable": true
           },
           "interval": {
-            "type": "number",
             "enum": [
               300,
               600,
               900
-            ]
+            ],
+            "type": "integer"
           },
           "sample_count": {
-            "type": "number"
+            "type": "integer"
           },
           "source": {
             "type": "object",
@@ -1009,10 +1002,10 @@
                     "nullable": true
                   },
                   "object_type": {
-                    "type": "number"
+                    "type": "integer"
                   },
                   "instance_id": {
-                    "type": "number"
+                    "type": "integer"
                   },
                   "name": {
                     "type": "string"
@@ -1031,7 +1024,7 @@
                     "nullable": true
                   },
                   "device_id": {
-                    "type": "number"
+                    "type": "integer"
                   },
                   "name": {
                     "type": "string"
@@ -1306,7 +1299,7 @@
           }
         }
       },
-      "200-Collector-Object": {
+      "200-Get-Collector": {
         "description": "Ok",
         "content": {
           "application/json": {
@@ -1339,6 +1332,62 @@
             "examples": {
               "Response": {
                 "$ref": "#/components/examples/Get-Collector-Details"
+              }
+            }
+          }
+        }
+      },
+      "200-Get-Collector-Listing": {
+        "description": "Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "count": {
+                  "type": "integer",
+                  "readOnly": true
+                },
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Collector-Details"
+                  }
+                }
+              }
+            },
+            "examples": {
+              "Response": {
+                "value": {
+                  "count": 1,
+                  "data": [
+                    {
+                      "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                      "created": "2019-08-24T14:15:22Z",
+                      "expires": null,
+                      "interval": 300,
+                      "sample_count": 0,
+                      "source": {
+                        "point": {
+                          "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                          "object_type": 0,
+                          "instance_id": 0,
+                          "name": "string",
+                          "description": "string"
+                        },
+                        "controller": {
+                          "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                          "device_id": 0,
+                          "name": "string"
+                        },
+                        "gateway": {
+                          "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08"
+                        }
+                      },
+                      "@site": "451f769d-1122-4c11-a645-7d2ed505aa0b"
+                    }
+                  ]
+                }
               }
             }
           }
