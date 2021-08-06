@@ -25,38 +25,7 @@
         ],
         "responses": {
           "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "count": {
-                      "type": "number",
-                      "description": "The number of site objects returned"
-                    },
-                    "data": {
-                      "type": "array",
-                      "minItems": 0,
-                      "uniqueItems": true,
-                      "description": "An array of site objects",
-                      "items": {
-                        "$ref": "#/components/schemas/Site-Object"
-                      }
-                    }
-                  },
-                  "required": [
-                    "count",
-                    "data"
-                  ]
-                },
-                "examples": {
-                  "Response": {
-                    "$ref": "#/components/examples/Get-Site-List-Response"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/200-Site-Listing"
           }
         },
         "operationId": "get-site-list",
@@ -65,7 +34,7 @@
             "Bearer Token": []
           }
         ],
-        "description": "### Synopsis\nRetrieve a list of sites available to the authenticated user\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:site:*`,`sites:site:list`\n* Licensed Feature: `sites_base`\n\n### Filtering Results\nA combination of one or more query parameters may be used to filter returned data. Query parameters are stacked such that using multiple parameters will result in a narrower data set.\n\nWildcard searches are permitted on all query parameters. Wildcard searches are case insensitive and all data is forced to lowercase for matching purposes. See usage examples below.\n\n<!--\ntitle: \"Site Code Wildcard Search\"\nlineNumbers: false\n-->\n```text\nhttps://api.counterbalance.io/v1/site?code=*MN*\n```\n<!--\ntitle: \"Site Name Wildcard Search\"\nlineNumbers: false\n-->\n```text\nhttps://api.counterbalance.io/v1/site?name=*elementary*\n```",
+        "description": "Retrieve a list of sites\n\n**Required Permissions:** `*`,`sites:*`,`sites:site:*`,`sites:site:list`\n\n### Filtering Results\nA combination of one or more query parameters may be used to filter returned data. Query parameters are stacked such that using multiple parameters will result in a narrower data set.\n\nWildcard searches are permitted on all query parameters. Wildcard searches are case insensitive and all data is forced to lowercase for matching purposes. See usage examples below.\n\n<!--\ntitle: \"Site Code Wildcard Search\"\nlineNumbers: false\n-->\n```text\nhttps://api.counterbalance.io/v1/site?code=*MN*\n```\n<!--\ntitle: \"Site Name Wildcard Search\"\nlineNumbers: false\n-->\n```text\nhttps://api.counterbalance.io/v1/site?name=*elementary*\n```",
         "parameters": [
           {
             "schema": {
@@ -73,7 +42,7 @@
             },
             "in": "query",
             "name": "code",
-            "description": "Return only sites with a matching code. Accepts * wildcard searches."
+            "description": "Filter results by site code. Accepts * wildcard searches."
           },
           {
             "schema": {
@@ -81,7 +50,7 @@
             },
             "in": "query",
             "name": "name",
-            "description": "Return only sites with a matching name. Accepts * wildcard searches."
+            "description": "Filter results by site name. Accepts * wildcard searches."
           },
           {
             "schema": {
@@ -89,7 +58,7 @@
             },
             "in": "query",
             "name": "description",
-            "description": "Return only sites with a matching description. Accepts * wildcard searches."
+            "description": "Filter sites by description. Accepts * wildcard searches."
           }
         ]
       },
@@ -98,22 +67,10 @@
         "operationId": "create-site",
         "responses": {
           "201": {
-            "description": "Created",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Site-Object"
-                },
-                "examples": {
-                  "Response": {
-                    "$ref": "#/components/examples/Get-Site-Object-Response"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/200-Site-Object"
           }
         },
-        "description": "### Synopsis\nCreate a new site\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:site:*`,`sites:site:create`\n* Licensed Feature: `sites_base` \n* Adequate quota of the requested type",
+        "description": "Create a new site\n\n**Required Permissions:** `*`,`sites:*`,`sites:site:*`,`sites:site:create`\n\n> **Heads Up** This endpoint is subject to `site` quota availabilty",
         "security": [
           {
             "Bearer Token": []
@@ -198,7 +155,7 @@
           }
         },
         "operationId": "get-site",
-        "description": "### Synopsis\nRetrieve the details for the specified site\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:site:*`,`sites:site:read`",
+        "description": "Retrieve a site\n\n**Required Permissions:** `*`,`sites:*`,`sites:site:*`,`sites:site:read`",
         "security": [
           {
             "Bearer Token": []
@@ -216,7 +173,7 @@
             "$ref": "#/components/responses/404-Site-Not-Found"
           }
         },
-        "description": "### Synopsis\nUpdate the details for the specified site\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:site:*`,`sites:site:update`\n* Licensed Feature: `sites_base` and/or `sites_virtual`",
+        "description": "Update a site\n\n**Required Permissions:** `*`,`sites:*`,`sites:site:*`,`sites:site:update`",
         "security": [
           {
             "Bearer Token": []
@@ -284,7 +241,7 @@
             "$ref": "#/components/responses/404-Site-Not-Found"
           }
         },
-        "description": "### Synopsis\nDelete the specified site\n\n<!-- theme: danger -->\n> _**Heads Up** This cannot be undone!_\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:site:*`,`sites:site:delete`\n* Specified site must be void of any associated objects (floors, rooms, equipment, etc)",
+        "description": "Delete a site\n\n**Required Permissions:** `*`,`sites:*`,`sites:site:*`,`sites:site:delete`\n\n<!--theme: info -->\n> **Heads Up** Specified site must be void of any associated objects (floors, rooms, equipment, etc) otherwise the delete operation will fail\n\n<!-- theme: danger -->\n> **Danger** This cannot be undone!",
         "security": [
           {
             "Bearer Token": []
@@ -1584,34 +1541,11 @@
         ],
         "responses": {
           "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "count": {
-                      "type": "number"
-                    },
-                    "data": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/Floor-Object"
-                      }
-                    }
-                  }
-                },
-                "examples": {
-                  "Response": {
-                    "$ref": "#/components/examples/Floor-Object-List"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/200-Floor-Listing"
           }
         },
         "operationId": "list-floors",
-        "description": "### Synopsis\nRetrieve a list of floors available to the authenticated user\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:floor:*`,`sites:floor:list`",
+        "description": "Retrieve a list of floors\n\n**Required Permissions:** `*`,`sites:*`,`sites:floor:*`,`sites:floor:list`",
         "security": [
           {
             "Bearer Token": []
@@ -1628,25 +1562,13 @@
         "operationId": "create-floor",
         "responses": {
           "201": {
-            "description": "Created",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Floor-Object"
-                },
-                "examples": {
-                  "Response": {
-                    "$ref": "#/components/examples/Room-Object"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/200-Floor-Object"
           },
           "404": {
             "$ref": "#/components/responses/404-Site-Not-Found"
           }
         },
-        "description": "### Synopsis\nCreate a new floor and assign it to a site\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:floor:*`,`sites:floor:create`\n* Licensed Feature: `sites_base`",
+        "description": "Create a new floor and assign it to a site\n\n**Required Permissions:** `*`,`sites:*`,`sites:floor:*`,`sites:floor:create`",
         "tags": [
           "Floors"
         ],
@@ -1721,7 +1643,7 @@
           }
         },
         "operationId": "get-floor",
-        "description": "### Synopsis\nRetrieve the details for the specified floor\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:floor:*`,`sites:floor:read`",
+        "description": "Retrieve a floor\n\n**Required Permissions:** `*`,`sites:*`,`sites:floor:*`,`sites:floor:read`",
         "security": [
           {
             "Bearer Token": []
@@ -1739,7 +1661,7 @@
             "$ref": "#/components/responses/404-Floor-Not-Found"
           }
         },
-        "description": "### Synopsis\nUpdate the details for the specified floor\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:floor:*`,`sites:floor:update`\n* Licensed Feature: `sites_base`",
+        "description": "Update a floor\n\n**Required Permissions:** `*`,`sites:*`,`sites:floor:*`,`sites:floor:update`",
         "tags": [
           "Floors"
         ],
@@ -1747,7 +1669,30 @@
           {
             "Bearer Token": []
           }
-        ]
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "code": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "gross_floor_area": {
+                    "type": "integer"
+                  },
+                  "below_grade": {
+                    "type": "boolean"
+                  }
+                }
+              }
+            }
+          }
+        }
       },
       "delete": {
         "summary": "Delete Floor",
@@ -1770,7 +1715,7 @@
             "$ref": "#/components/responses/404-Floor-Not-Found"
           }
         },
-        "description": "### Synopsis\nDelete the specified floor\n\n<!-- theme: danger -->\n> _**Heads Up** This cannot be undone!_\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:floor:*`,`sites:floor:delete`\n* Specified floor must be void of any associated rooms",
+        "description": "Delete a floor\n\n**Required Permissions:** `*`,`sites:*`,`sites:floor:*`,`sites:floor:delete`\n\n<!-- theme: danger -->\n> **Danger** This cannot be undone!",
         "tags": [
           "Floors"
         ]
@@ -4286,6 +4231,76 @@
                   },
                   "logging_hash": "..."
                 }
+              }
+            }
+          }
+        }
+      },
+      "200-Site-Listing": {
+        "description": "OK",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "count": {
+                  "type": "number",
+                  "description": "The number of site objects returned"
+                },
+                "index": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "data": {
+                  "type": "array",
+                  "uniqueItems": true,
+                  "description": "An array of site objects",
+                  "items": {
+                    "$ref": "#/components/schemas/Site-Object"
+                  }
+                }
+              }
+            },
+            "examples": {
+              "Response": {
+                "$ref": "#/components/examples/Get-Site-List-Response"
+              }
+            }
+          }
+        }
+      },
+      "200-Floor-Listing": {
+        "description": "OK",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "count": {
+                  "type": "number"
+                },
+                "index": {
+                  "type": [
+                    "string",
+                    "array"
+                  ],
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Floor-Object"
+                  }
+                }
+              }
+            },
+            "examples": {
+              "Response": {
+                "$ref": "#/components/examples/Floor-Object-List"
               }
             }
           }
