@@ -354,7 +354,7 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "datapoint": {
+                  "@point": {
                     "type": "string",
                     "format": "uuid",
                     "description": "The UUID of the point to be collected"
@@ -373,7 +373,7 @@
                   }
                 },
                 "required": [
-                  "datapoint"
+                  "@point"
                 ]
               },
               "examples": {
