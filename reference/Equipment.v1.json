@@ -179,6 +179,46 @@
         "operationId": "get-v1-equipment-node-telemetry"
       }
     },
+    "/v1/equipment/node/{nodeId}/telemetry": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/nodeId"
+        }
+      ],
+      "put": {
+        "summary": "Associate Equipment Telemetry",
+        "operationId": "put-v1-equipment-node-nodeId-telemetry",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "description": "",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "tags": {
+                    "type": "string",
+                    "description": ""
+                  },
+                  "@point": {
+                    "type": "string",
+                    "format": "uuid"
+                  }
+                },
+                "required": [
+                  "tags",
+                  "@point"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
     "/v1/equipment/node/telemetry/{telemetryId}": {
       "parameters": [
         {
