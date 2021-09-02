@@ -1728,7 +1728,7 @@
           "Rooms"
         ],
         "operationId": "list-rooms",
-        "description": "### Synopsis\nRetrieve a list of rooms available to the authenticated user\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:room:*`,`sites:room:list`",
+        "description": "Retrieve a list of rooms\n\n**Required Permissions:** `*`,`sites:*`,`sites:room:*`,`sites:room:list`",
         "security": [
           {
             "Bearer Token": []
@@ -1744,37 +1744,14 @@
         ],
         "responses": {
           "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "count": {
-                      "type": "number"
-                    },
-                    "data": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/Room-Object"
-                      }
-                    }
-                  }
-                },
-                "examples": {
-                  "Response": {
-                    "$ref": "#/components/examples/Room-Object"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/200-Room-Listing"
           }
         }
       },
       "post": {
         "summary": "Create Room",
         "operationId": "create-room",
-        "description": "### Synopsis\nCreate a new room and assign it to a floor\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:room:*`,`sites:room:create`\n* Licensed Feature: `sites_base`\n\n### Defining Room Occupancy\nThe room occupancy classification must be specifid in the `occupancy` body parameter. One of the [International Building Code (IBC)](https://buildingcodetrainer.com/building-occupancy-classification-occupancy-types-explained/) occupancy codes is required and all occupancies are considered valid values.\n\n### Defining Room Area\nThe `area` body parameter is required and should contain the net area of the room in localized units (square meters or square feet). Only integer values are permitted.",
+        "description": "Create a new room and assign it to a floor\n\n**Required Permissions:** `*`,`sites:*`,`sites:room:*`,`sites:room:create`\n\n### Defining Room Occupancy\nThe room occupancy classification must be specifid in the `occupancy` body parameter. One of the [International Building Code (IBC)](https://buildingcodetrainer.com/building-occupancy-classification-occupancy-types-explained/) occupancy codes is required and all occupancies are considered valid values.\n\n### Defining Room Area\nThe `area` body parameter is required and should contain the net area of the room in localized units (square meters or square feet). Only integer values are permitted.",
         "tags": [
           "Rooms"
         ],
@@ -1907,7 +1884,7 @@
           }
         },
         "operationId": "get-room",
-        "description": "### Synopsis\nRetrieve the details for the specified room\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:room:*`,`sites:room:read`",
+        "description": "Retrieve a room\n\n**Required Permissions:** `*`,`sites:*`,`sites:room:*`,`sites:room:read`",
         "security": [
           {
             "Bearer Token": []
@@ -1933,7 +1910,7 @@
         "tags": [
           "Rooms"
         ],
-        "description": "### Synopsis\nUpdate the details for the specified room\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:room:*`,`sites:room:update`",
+        "description": "Update a room\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:room:*`,`sites:room:update`",
         "requestBody": {
           "content": {
             "application/json": {
@@ -2000,7 +1977,7 @@
             "$ref": "#/components/responses/404-Room-Not-Found"
           }
         },
-        "description": "### Synopsis\nDelete the specified room\n\n<!-- theme: danger -->\n> _**Heads Up** This cannot be undone!_\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:room:*`,`sites:room:delete`\n* Specified room must be void of any associated equipment",
+        "description": "Delete a room\n\n**Required Permissions:** `*`,`sites:*`,`sites:room:*`,`sites:room:delete`\n\n<!-- theme: danger -->\n> _**Heads Up** This cannot be undone!_",
         "tags": [
           "Rooms"
         ],
@@ -3846,6 +3823,7 @@
                 },
                 "index": {
                   "type": "array",
+                  "description": "An array of the returned site object UUIDs",
                   "items": {
                     "type": "string"
                   }
@@ -3876,7 +3854,8 @@
               "type": "object",
               "properties": {
                 "count": {
-                  "type": "number"
+                  "type": "number",
+                  "description": "The number of floor objects returned"
                 },
                 "index": {
                   "type": [
@@ -3889,6 +3868,7 @@
                 },
                 "data": {
                   "type": "array",
+                  "description": "An array of floor objects",
                   "items": {
                     "$ref": "#/components/schemas/Floor-Object"
                   }
@@ -3898,6 +3878,41 @@
             "examples": {
               "Response": {
                 "$ref": "#/components/examples/Floor-Object-List"
+              }
+            }
+          }
+        }
+      },
+      "200-Room-Listing": {
+        "description": "Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "count": {
+                  "type": "integer",
+                  "description": "The number of room objects returned"
+                },
+                "index": {
+                  "type": "array",
+                  "description": "",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "data": {
+                  "type": "array",
+                  "description": "An array of room objects",
+                  "items": {
+                    "$ref": "#/components/schemas/Room-Object"
+                  }
+                }
+              }
+            },
+            "examples": {
+              "Response": {
+                "$ref": "#/components/examples/Room-Object-List"
               }
             }
           }
