@@ -1429,6 +1429,32 @@
         ]
       }
     },
+    "/v1/site/utilities/geocode": {
+      "get": {
+        "summary": "Get Geocoding by Query",
+        "tags": [
+          "Utilities"
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/200-Geocode-Search"
+          }
+        },
+        "operationId": "get-geocode",
+        "description": "Geocode a search query\n\n**Required Permissions:** `*`,`view:console*`\n\n### Accepted Queries\n*coming soon*",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "query",
+            "required": true,
+            "description": "A geocode search query"
+          }
+        ]
+      }
+    },
     "/v1/site/utilities/timezone": {
       "get": {
         "summary": "Get Timezone Details",
@@ -3237,6 +3263,36 @@
             }
           }
         }
+      },
+      "Geocode-Search": {
+        "description": "",
+        "type": "object",
+        "x-examples": {
+          "Example": {
+            "$ref": "#/components/examples/Geocode-Search"
+          }
+        },
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "geolocation": {
+            "type": "object",
+            "properties": {
+              "latitude": {
+                "type": "number"
+              },
+              "longitude": {
+                "type": "number"
+              }
+            }
+          },
+          "geometry": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "title": "Geocode Search"
       }
     },
     "securitySchemes": {
@@ -3533,6 +3589,16 @@
             "standard": "Pacific Standard Time",
             "daylight": "Pacific Daylight Time"
           }
+        }
+      },
+      "Geocode-Search": {
+        "value": {
+          "name": "Seattle, WA 98119",
+          "geolocation": {
+            "latitude": 47.63777,
+            "longitude": -122.36731
+          },
+          "geometry": "00005557-4100-2800-0000-00000bf9eda4"
         }
       }
     },
@@ -3913,6 +3979,21 @@
             "examples": {
               "Response": {
                 "$ref": "#/components/examples/Room-Object-List"
+              }
+            }
+          }
+        }
+      },
+      "200-Geocode-Search": {
+        "description": "Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Geocode-Search"
+            },
+            "examples": {
+              "Response": {
+                "$ref": "#/components/examples/Geocode-Search"
               }
             }
           }
