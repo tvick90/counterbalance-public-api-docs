@@ -379,13 +379,14 @@
               "examples": {
                 "Example": {
                   "value": {
-                    "datapoint": "52aa66de-e553-4383-9e16-52bfcd0efb0f",
+                    "@point": "52aa66de-e553-4383-9e16-52bfcd0efb0f",
                     "interval": 300
                   }
                 }
               }
             }
-          }
+          },
+          "description": ""
         }
       },
       "parameters": []
