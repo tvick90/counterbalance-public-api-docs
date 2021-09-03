@@ -107,7 +107,7 @@
               },
               "examples": {
                 "Example": {
-                  "$ref": "#/components/examples/Post-Create-Site-Body"
+                  "$ref": "#/components/examples/Create-Site-Body"
                 }
               }
             },
@@ -1429,6 +1429,50 @@
         ]
       }
     },
+    "/v1/site/weather/indices": {
+      "get": {
+        "summary": "Get Activity Indices",
+        "tags": [
+          "Weather"
+        ],
+        "responses": {},
+        "operationId": "get-weather-indices",
+        "description": "",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "default": "47.620506,-122.349277"
+            },
+            "in": "query",
+            "name": "coordinates",
+            "description": "Get weather alerts for the specified lat/lon position"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "in": "query",
+            "name": "@address",
+            "description": "Get weather alerts for the specified address ID"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "language",
+            "description": "Language in which search results should be returned. Should be one of supported IETF language tags, case insensitive."
+          }
+        ],
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ]
+      }
+    },
     "/v1/site/utilities/geocode": {
       "get": {
         "summary": "Get Geocoding by Query",
@@ -1451,6 +1495,11 @@
             "name": "query",
             "required": true,
             "description": "A geocode search query"
+          }
+        ],
+        "security": [
+          {
+            "Bearer Token": []
           }
         ]
       }
@@ -3368,6 +3417,12 @@
       "Site-Object-List": {
         "value": {
           "count": 4,
+          "index": [
+            "0fa60c71-a611-418a-93a0-0bdf2dfa5ac3",
+            "723a9c16-1790-4386-b17b-54bc9ed6d901",
+            "82478e3a-a212-41bf-9e2b-7522a1504a6b",
+            "c1b5593a-6f59-46fa-ae38-15e4c4262ffa"
+          ],
           "data": [
             {
               "id": "0fa60c71-a611-418a-93a0-0bdf2dfa5ac3",
@@ -3906,7 +3961,7 @@
             },
             "examples": {
               "Response": {
-                "$ref": "#/components/examples/Get-Site-List-Response"
+                "$ref": "#/components/examples/Site-Object-List"
               }
             }
           }
