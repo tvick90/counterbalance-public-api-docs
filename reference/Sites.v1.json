@@ -1446,7 +1446,7 @@
             },
             "in": "query",
             "name": "coordinates",
-            "description": "Get weather alerts for the specified lat/lon position"
+            "description": "Get weather indices for the specified lat/lon position"
           },
           {
             "schema": {
@@ -1455,7 +1455,7 @@
             },
             "in": "query",
             "name": "@address",
-            "description": "Get weather alerts for the specified address ID"
+            "description": "Get weather indices for the specified address ID"
           },
           {
             "schema": {
