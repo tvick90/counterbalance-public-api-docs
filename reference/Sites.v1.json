@@ -1830,7 +1830,7 @@
       "post": {
         "summary": "Create Room",
         "operationId": "create-room",
-        "description": "Create a new room and assign it to a floor\n\n**Required Permissions:** `*`,`sites:*`,`sites:room:*`,`sites:room:create`\n\n### Defining Room Occupancy\nThe room occupancy classification must be specifid in the `occupancy` body parameter. One of the [International Building Code (IBC)](https://buildingcodetrainer.com/building-occupancy-classification-occupancy-types-explained/) occupancy codes is required and all occupancies are considered valid values.\n\n### Defining Room Area\nThe `area` body parameter is required and should contain the net area of the room in localized units (square meters or square feet). Only integer values are permitted.",
+        "description": "Create a new room and assign it to a floor\n\n**Required Permissions:** `*`,`sites:*`,`sites:room:*`,`sites:room:create`\n\n### Defining Room Occupancy\nThe room occupancy classification must be specifid in the `occupancy` body parameter. One of the [International Building Code (IBC)](https://buildingcodetrainer.com/building-occupancy-classification-occupancy-types-explained/) occupancy codes is required and all occupancies are considered valid values.\n\n### Defining Room Area\nThe `area` body parameter is required and should contain the net area of the room in localized units (square meters or square feet). Only integer values are permitted.\n\n### Defining Room Volume\nThe room volume can be explicitly provided in the `volume` body parameter. The volume should be expressed in the same localized units as the room area. Only integer values are permitted.\n\nIf the volume is not defined, the `ceiling_height` body parameter, if provided, is used to calculate the room volume using the area specified. ",
         "tags": [
           "Rooms"
         ],
@@ -1903,6 +1903,12 @@
                       "S-2",
                       "U"
                     ]
+                  },
+                  "ceiling_height": {
+                    "type": "number"
+                  },
+                  "volume": {
+                    "type": "integer"
                   }
                 },
                 "required": [
@@ -3312,6 +3318,12 @@
               },
               "area": {
                 "type": "number"
+              },
+              "ceiling_height": {
+                "type": "number"
+              },
+              "volume": {
+                "type": "integer"
               }
             }
           }
@@ -3516,7 +3528,8 @@
                 "floor_count": 1,
                 "room_count": 8,
                 "gross_floor_area": 18000,
-                "net_room_area": 17850
+                "net_room_area": 17850,
+                "net_room_volume": 0
               }
             },
             {
@@ -3531,7 +3544,8 @@
                 "floor_count": 0,
                 "room_count": 0,
                 "gross_floor_area": 0,
-                "net_room_area": 0
+                "net_room_area": 0,
+                "net_room_volume": 0
               }
             },
             {
@@ -3546,7 +3560,8 @@
                 "floor_count": 27,
                 "room_count": 241,
                 "gross_floor_area": 570000,
-                "net_room_area": 570000
+                "net_room_area": 570000,
+                "net_room_volume": 0
               }
             },
             {
@@ -3561,7 +3576,8 @@
                 "floor_count": 2,
                 "room_count": 36,
                 "gross_floor_area": 18560,
-                "net_room_area": 18000
+                "net_room_area": 18000,
+                "net_room_volume": 0
               }
             }
           ]
@@ -3589,7 +3605,8 @@
             "floor_count": 0,
             "room_count": 0,
             "gross_floor_area": 0,
-            "net_room_area": 0
+            "net_room_area": 0,
+            "net_room_volume": 0
           }
         }
       },
@@ -3605,7 +3622,8 @@
             "below_grade": true,
             "gross_floor_area": 16000,
             "room_count": 5,
-            "net_room_area": 5480
+            "net_room_area": 5480,
+            "net_room_volume": 0
           }
         }
       },
@@ -3620,19 +3638,76 @@
       },
       "Floor-Object-List": {
         "value": {
-          "count": 1,
+          "count": 4,
+          "index": [
+            "0fa60c71-a611-418a-93a0-0bdf2dfa5ac3",
+            "723a9c16-1790-4386-b17b-54bc9ed6d901",
+            "82478e3a-a212-41bf-9e2b-7522a1504a6b",
+            "c1b5593a-6f59-46fa-ae38-15e4c4262ffa"
+          ],
           "data": [
             {
-              "id": "d2fa3901-8649-46dc-bbfb-4864007895da",
-              "created": "2021-04-10T18:58:46+0000",
-              "site": "0fa60c71-a611-418a-93a0-0bdf2dfa5ac3",
-              "code": "Floor 1",
+              "id": "0fa60c71-a611-418a-93a0-0bdf2dfa5ac3",
+              "created": "2021-02-05T03:13:05+0000",
+              "code": "MSP",
+              "name": "Minneapolis Office",
               "description": "",
+              "address": "1fb555c1-c683-4254-820b-f6e7a7add74c",
               "attributes": {
-                "below_grade": false,
+                "year_built": "1927",
+                "floor_count": 1,
+                "room_count": 8,
                 "gross_floor_area": 18000,
+                "net_room_area": 17850,
+                "net_room_volume": 0
+              }
+            },
+            {
+              "id": "723a9c16-1790-4386-b17b-54bc9ed6d901",
+              "created": "2021-02-05T15:11:48+0000",
+              "code": "SFO",
+              "name": "San Francisco Office",
+              "description": "",
+              "address": "6517a08a-ab53-4c23-b4c1-d685d8e25a1c",
+              "attributes": {
+                "year_built": "2005",
+                "floor_count": 0,
                 "room_count": 0,
-                "net_room_area": 0
+                "gross_floor_area": 0,
+                "net_room_area": 0,
+                "net_room_volume": 0
+              }
+            },
+            {
+              "id": "82478e3a-a212-41bf-9e2b-7522a1504a6b",
+              "created": "2021-02-05T03:00:27+0000",
+              "code": "SEA",
+              "name": "Seattle Office",
+              "description": "",
+              "address": "032183ea-087d-43a6-94e8-5688ef909771",
+              "attributes": {
+                "year_built": "1945",
+                "floor_count": 27,
+                "room_count": 241,
+                "gross_floor_area": 570000,
+                "net_room_area": 570000,
+                "net_room_volume": 0
+              }
+            },
+            {
+              "id": "c1b5593a-6f59-46fa-ae38-15e4c4262ffa",
+              "created": "2021-02-06T05:51:29+0000",
+              "code": "AUS",
+              "name": "Austin Office",
+              "description": "",
+              "address": "8aac0478-7b6f-448f-952b-dd710a94ee7a",
+              "attributes": {
+                "year_built": "1997",
+                "floor_count": 2,
+                "room_count": 36,
+                "gross_floor_area": 18560,
+                "net_room_area": 18000,
+                "net_room_volume": 0
               }
             }
           ]
@@ -3660,7 +3735,9 @@
           "description": "Hall area",
           "attributes": {
             "occupancy": "B",
-            "area": 150
+            "area": 150,
+            "ceiling_height": 9,
+            "volume": 1350
           }
         }
       },
