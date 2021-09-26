@@ -434,6 +434,18 @@
             "format": "uuid",
             "description": "The gateway UUID"
           },
+          "created": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The timestamp the gateway was created",
+            "readOnly": true
+          },
+          "last_modified": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The timestamp the gateway was last modified",
+            "readOnly": true
+          },
           "serial": {
             "type": "string",
             "description": "The serial number of the gateway"
@@ -584,123 +596,7 @@
         "description": "",
         "type": "object",
         "title": "Field Controller Details",
-        "x-examples": {
-          "Example": {
-            "id": "341efcb4-b884-47b5-af5e-aa44ddb6f22a",
-            "tenant": "1d1776fe-0437-426c-a796-06e2b5eaccf6",
-            "gateway": "87e2c5f6-d961-4464-87c0-ec52863da975",
-            "created": 1610379813,
-            "name": "US SEA Node 02",
-            "description": "AHU-1 Controller",
-            "location": "Mech Room 126",
-            "instance_id": 10200,
-            "site": "c0142a11-62d1-460a-9be5-9e7881ae7b58",
-            "is_online": null,
-            "is_ostracized": false,
-            "bacnet": {
-              "object": {
-                "name": "USSEA-HVAC-BMSNODE02",
-                "description": "AHU-1",
-                "instance": "10200"
-              },
-              "protocol": {
-                "version": 1,
-                "revision": 7,
-                "max_master": 127,
-                "device_id": "10200",
-                "max_segments_accepted": 16,
-                "apdu": {
-                  "timeout": 15000,
-                  "retries": 1,
-                  "segment_timeout": 15000,
-                  "max_length": 1476
-                },
-                "services_supported": {
-                  "atomic-read-file": true,
-                  "confirmed-text-message": true,
-                  "unconfirmed-text-message": true,
-                  "time-synchronization": true,
-                  "confirmed-event-notification": true,
-                  "reinitialize-device": true,
-                  "who-is": true,
-                  "who-has": true,
-                  "unconfirmed-event-notification": true,
-                  "subscribe-cov-property": false,
-                  "vt-data": false,
-                  "unconfirmed-private-transfer": false,
-                  "create-object": true,
-                  "delete-object": true,
-                  "read-property-conditional": false,
-                  "add-list-element": true,
-                  "vt-open": false,
-                  "remove-list-element": true,
-                  "get-event-information": true,
-                  "confirmed-cov-notification": true,
-                  "i-am": true,
-                  "device-communication-control": true,
-                  "acknowledge-alarm": true,
-                  "get-alarm-summary": true,
-                  "i-have": true,
-                  "subscribe-cov": true,
-                  "confirmed-private-transfer": true,
-                  "vt-close": false,
-                  "request-key": false,
-                  "read-property-multiple": true,
-                  "write-property": true,
-                  "life-safety-operation": false,
-                  "read-property": true,
-                  "atomic-write-file": true,
-                  "utc-time-synchronization": false,
-                  "get-enrollment-summary": true,
-                  "write-property-multiple": true,
-                  "unconfirmed-cov-notification": true,
-                  "read-range": true,
-                  "authenticate": false
-                },
-                "object_types_supported": {
-                  "averaging": false,
-                  "multi-state-input": false,
-                  "schedule": true,
-                  "multi-state-output": true,
-                  "binary-output": true,
-                  "analog-value": true,
-                  "life-safety-point": false,
-                  "group": false,
-                  "notification-class": true,
-                  "analog-input": true,
-                  "file": true,
-                  "command": true,
-                  "life-safety-zone": false,
-                  "binary-input": true,
-                  "loop": false,
-                  "multi-state-value": true,
-                  "analog-output": true,
-                  "calendar": true,
-                  "event-enrollment": true,
-                  "pulse-converter": false,
-                  "device": true,
-                  "trend-log": true,
-                  "binary-value": true,
-                  "program": false,
-                  "accumulator": false
-                }
-              },
-              "hardware": {
-                "make": "Siemens Industry Inc., Bldg Tech",
-                "model": "Siemens BACnet Field Panel",
-                "vendor_id": 7,
-                "location": "MAINT SHOP",
-                "firmware_revision": "PXCE V3.4 BACnet 4.3g"
-              },
-              "system": {
-                "application_software_version": "BCE1265_0039",
-                "status": "operational",
-                "date": "2021-01-19",
-                "time": "7:15:41.89"
-              }
-            }
-          }
-        },
+        "x-examples": {},
         "x-tags": [
           "Schemas"
         ],
@@ -708,14 +604,18 @@
           "id": {
             "type": "string"
           },
-          "tenant": {
-            "type": "string"
+          "created": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "last_modified": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
           },
           "gateway": {
             "type": "string"
-          },
-          "created": {
-            "type": "number"
           },
           "name": {
             "type": "string"
@@ -1248,6 +1148,9 @@
             ]
           }
         },
+        "x-tags": [
+          "Schemas"
+        ],
         "properties": {
           "count": {
             "type": "number"
@@ -1257,73 +1160,10 @@
             "uniqueItems": true,
             "minItems": 1,
             "items": {
-              "type": "object",
-              "properties": {
-                "id": {
-                  "type": "string",
-                  "minLength": 1
-                },
-                "tenant": {
-                  "type": "string",
-                  "minLength": 1
-                },
-                "gateway": {
-                  "type": "string",
-                  "minLength": 1,
-                  "format": "uuid"
-                },
-                "created": {
-                  "type": "number"
-                },
-                "name": {
-                  "type": "string",
-                  "minLength": 1
-                },
-                "description": {
-                  "type": "string",
-                  "minLength": 1
-                },
-                "location": {
-                  "type": "string",
-                  "minLength": 1
-                },
-                "instance_id": {
-                  "type": "number"
-                },
-                "is_ostracized": {
-                  "type": "boolean"
-                },
-                "site": {
-                  "type": [
-                    "string",
-                    "null"
-                  ],
-                  "minLength": 1,
-                  "format": "uuid"
-                }
-              },
-              "required": [
-                "id",
-                "tenant",
-                "gateway",
-                "created",
-                "name",
-                "description",
-                "location",
-                "instance_id",
-                "is_ostracized",
-                "site"
-              ]
+              "$ref": "#/components/schemas/Field-Controller-Details"
             }
           }
-        },
-        "required": [
-          "count",
-          "data"
-        ],
-        "x-tags": [
-          "Schemas"
-        ]
+        }
       },
       "Gateway-Vitals": {
         "description": "The information returned by the gateway device when it is queried for vitals",
@@ -1901,9 +1741,12 @@
       "Get-Gateway": {
         "value": {
           "id": "539fea81-d151-46e1-b1f6-36e3864ebeff",
+          "created": "2021-02-21T17:49:36+0000",
+          "last_modified": null,
           "serial": "dca6327364b3",
-          "name": "Primary Gateway",
-          "description": "",
+          "name": "Gateway SEA-BMS",
+          "description": "Main gateway",
+          "location": "Seattle Office MDF, Rack #2",
           "is_registered": true,
           "vitals": null
         }
@@ -1955,10 +1798,14 @@
           "data": [
             {
               "id": "539fea81-d151-46e1-b1f6-36e3864ebeff",
+              "created": "2021-02-21T17:49:36+0000",
+              "last_modified": null,
               "serial": "dca6327364b3",
-              "name": "Primary Gateway",
-              "description": "The primary gateway we use",
-              "is_registered": true
+              "name": "Gateway SEA-BMS",
+              "description": "Test gateway",
+              "location": "Seattle Office MDF, Rack #2",
+              "is_registered": true,
+              "vitals": null
             }
           ]
         }
@@ -2057,133 +1904,46 @@
       },
       "Get-Controller-Details": {
         "value": {
-          "id": "48f6bef2-1d57-4333-b9af-be687876e997",
-          "tenant": "7d5a9e81-0902-4137-b71e-40ea913b5bfa",
-          "gateway": "539fea81-d151-46e1-b1f6-36e3864ebeff",
-          "created": 1614139068,
-          "name": "USSEA-HVAC-BMSNODE02",
-          "description": "",
-          "location": "",
-          "instance_id": 10200,
-          "site": "82478e3a-a212-41bf-9e2b-7522a1504a6b",
-          "is_online": null,
+          "id": "d4cf4450-b314-420d-b8e9-243b56330acc",
+          "created": "2021-05-27T21:30:02+0000",
+          "last_modified": "2021-09-26T04:55:36+0000",
+          "@gateway": "539fea81-d151-46e1-b1f6-36e3864ebeff",
+          "name": "SEA-BMS Node #01",
+          "description": "Central plant controller",
+          "location": "Mech Room 126",
+          "instance_id": 10100,
+          "@site": "82478e3a-a212-41bf-9e2b-7522a1504a6b",
+          "is_online": false,
           "is_ostracized": false,
+          "dependents": {
+            "point_count": 29
+          },
           "bacnet": null
         }
       },
       "Get-Gateway-Details-Online": {
         "value": {
-          "id": "48f6bef2-1d57-4333-b9af-be687876e997",
-          "tenant": "7d5a9e81-0902-4137-b71e-40ea913b5bfa",
-          "gateway": "539fea81-d151-46e1-b1f6-36e3864ebeff",
-          "created": 1614139068,
-          "name": "USSEA-HVAC-BMSNODE02",
-          "description": "",
-          "location": "",
-          "instance_id": 10200,
-          "site": "82478e3a-a212-41bf-9e2b-7522a1504a6b",
-          "is_online": true,
-          "is_ostracized": false,
-          "bacnet": {
-            "object": {
-              "name": "USSEA-HVAC-BMSNODE02",
-              "description": "AHU-1",
-              "instance": "10200"
-            },
-            "protocol": {
-              "version": 1,
-              "revision": 7,
-              "max_master": 127,
-              "device_id": "10200",
-              "max_segments_accepted": 16,
-              "apdu": {
-                "timeout": 15000,
-                "retries": 1,
-                "segment_timeout": 15000,
-                "max_length": 1476
-              },
-              "services_supported": {
-                "atomic-read-file": true,
-                "confirmed-text-message": true,
-                "unconfirmed-text-message": true,
-                "time-synchronization": true,
-                "confirmed-event-notification": true,
-                "reinitialize-device": true,
-                "who-is": true,
-                "who-has": true,
-                "unconfirmed-event-notification": true,
-                "subscribe-cov-property": false,
-                "vt-data": false,
-                "unconfirmed-private-transfer": false,
-                "create-object": true,
-                "delete-object": true,
-                "read-property-conditional": false,
-                "add-list-element": true,
-                "vt-open": false,
-                "remove-list-element": true,
-                "get-event-information": true,
-                "confirmed-cov-notification": true,
-                "i-am": true,
-                "device-communication-control": true,
-                "acknowledge-alarm": true,
-                "get-alarm-summary": true,
-                "i-have": true,
-                "subscribe-cov": true,
-                "confirmed-private-transfer": true,
-                "vt-close": false,
-                "request-key": false,
-                "read-property-multiple": true,
-                "write-property": true,
-                "life-safety-operation": false,
-                "read-property": true,
-                "atomic-write-file": true,
-                "utc-time-synchronization": false,
-                "get-enrollment-summary": true,
-                "write-property-multiple": true,
-                "unconfirmed-cov-notification": true,
-                "read-range": true,
-                "authenticate": false
-              },
-              "object_types_supported": {
-                "averaging": false,
-                "multi-state-input": false,
-                "schedule": true,
-                "multi-state-output": true,
-                "binary-output": true,
-                "analog-value": true,
-                "life-safety-point": false,
-                "group": false,
-                "notification-class": true,
-                "analog-input": true,
-                "file": true,
-                "command": true,
-                "life-safety-zone": false,
-                "binary-input": true,
-                "loop": false,
-                "multi-state-value": true,
-                "analog-output": true,
-                "calendar": true,
-                "event-enrollment": true,
-                "pulse-converter": false,
-                "device": true,
-                "trend-log": true,
-                "binary-value": true,
-                "program": false,
-                "accumulator": false
+          "id": "539fea81-d151-46e1-b1f6-36e3864ebeff",
+          "created": "2021-02-21T17:49:36+0000",
+          "last_modified": null,
+          "serial": "dca6327364b3",
+          "name": "Gateway SEA-BMS",
+          "description": "Main gateway",
+          "location": "Seattle Office MDF, Rack #2",
+          "is_registered": true,
+          "vitals": {
+            "serial": "dca6327364b3",
+            "hostname": "ussea-bms-gw01",
+            "uptime": "52 days",
+            "services": {
+              "running": 147,
+              "status": {
+                "web_server": true,
+                "cache": true,
+                "ssh": true,
+                "bacnet": true,
+                "tunnel": true
               }
-            },
-            "hardware": {
-              "make": "Siemens Industry Inc., Bldg Tech",
-              "model": "Siemens BACnet Field Panel",
-              "vendor_id": 7,
-              "location": "MAINT SHOP",
-              "firmware_revision": "PXCE V3.4 BACnet 4.3g"
-            },
-            "system": {
-              "application_software_version": "BCE1265_0039",
-              "status": "operational",
-              "date": "2021-02-23",
-              "time": "20:58:26.18"
             }
           }
         }
@@ -2197,17 +1957,20 @@
       },
       "Get-Controller-Details-Online": {
         "value": {
-          "id": "48f6bef2-1d57-4333-b9af-be687876e997",
-          "tenant": "7d5a9e81-0902-4137-b71e-40ea913b5bfa",
-          "gateway": "539fea81-d151-46e1-b1f6-36e3864ebeff",
-          "created": 1614139068,
-          "name": "USSEA-HVAC-BMSNODE02",
-          "description": "",
-          "location": "",
-          "instance_id": 10200,
-          "site": "82478e3a-a212-41bf-9e2b-7522a1504a6b",
-          "is_online": true,
+          "id": "d4cf4450-b314-420d-b8e9-243b56330acc",
+          "created": "2021-05-27T21:30:02+0000",
+          "last_modified": "2021-09-26T04:55:36+0000",
+          "@gateway": "539fea81-d151-46e1-b1f6-36e3864ebeff",
+          "name": "SEA-BMS Node #01",
+          "description": "Central plant controller",
+          "location": "Mech Room 126",
+          "instance_id": 10100,
+          "@site": "82478e3a-a212-41bf-9e2b-7522a1504a6b",
+          "is_online": false,
           "is_ostracized": false,
+          "dependents": {
+            "point_count": 29
+          },
           "bacnet": {
             "object": {
               "name": "USSEA-HVAC-BMSNODE02",
