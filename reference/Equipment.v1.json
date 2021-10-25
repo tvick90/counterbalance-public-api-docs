@@ -173,7 +173,7 @@
     },
     "/v1/equipment/node/telemetry": {
       "get": {
-        "summary": "Get Equipment Telemetry",
+        "summary": "List Equipment Telemetry Relationships",
         "tags": [
           "Telemetry"
         ],
@@ -188,7 +188,7 @@
         }
       ],
       "put": {
-        "summary": "Associate Equipment Telemetry",
+        "summary": "Create Equipment Telemetry Relationship",
         "operationId": "put-v1-equipment-node-nodeId-telemetry",
         "responses": {
           "200": {
@@ -236,7 +236,8 @@
           "Telemetry"
         ],
         "responses": {},
-        "operationId": "get-v1-equipment-node-telemetry-telemetryId"
+        "operationId": "get-v1-equipment-node-telemetry-telemetryId",
+        "description": ""
       }
     }
   },
