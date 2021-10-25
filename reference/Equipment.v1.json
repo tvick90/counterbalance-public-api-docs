@@ -201,7 +201,7 @@
             "description": "OK"
           }
         },
-        "description": "",
+        "description": "Create an equipment telemetry relationship\n\n**Required Permissions:** `*`,`equipment:*`,`equipment:telemetry:*`,`equipment:telemetry:create`",
         "requestBody": {
           "content": {
             "application/json": {
