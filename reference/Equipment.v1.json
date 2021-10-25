@@ -173,7 +173,7 @@
     },
     "/v1/equipment/node/telemetry": {
       "get": {
-        "summary": "Your GET endpoint",
+        "summary": "Get Equipment Telemetry",
         "tags": [],
         "responses": {},
         "operationId": "get-v1-equipment-node-telemetry"
