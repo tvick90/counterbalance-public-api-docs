@@ -174,7 +174,9 @@
     "/v1/equipment/node/telemetry": {
       "get": {
         "summary": "Get Equipment Telemetry",
-        "tags": [],
+        "tags": [
+          "Telemetry"
+        ],
         "responses": {},
         "operationId": "get-v1-equipment-node-telemetry"
       }
@@ -216,7 +218,10 @@
               }
             }
           }
-        }
+        },
+        "tags": [
+          "Telemetry"
+        ]
       }
     },
     "/v1/equipment/node/telemetry/{telemetryId}": {
@@ -226,8 +231,10 @@
         }
       ],
       "get": {
-        "summary": "Your GET endpoint",
-        "tags": [],
+        "summary": "Get Equipment Telemetry Relationship",
+        "tags": [
+          "Telemetry"
+        ],
         "responses": {},
         "operationId": "get-v1-equipment-node-telemetry-telemetryId"
       }
