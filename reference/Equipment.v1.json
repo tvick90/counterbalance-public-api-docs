@@ -178,7 +178,13 @@
           "Telemetry"
         ],
         "responses": {},
-        "operationId": "get-v1-equipment-node-telemetry"
+        "operationId": "get-telemetry-list",
+        "description": "Retrieve a list of equipment telemetry relationships\n\n**Required Permissions:** `*`,`equipment:*`,`equipment:telemetry:*`,`equipment:telemetry:read`",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ]
       }
     },
     "/v1/equipment/node/{nodeId}/telemetry": {
@@ -236,8 +242,13 @@
           "Telemetry"
         ],
         "responses": {},
-        "operationId": "get-v1-equipment-node-telemetry-telemetryId",
-        "description": ""
+        "operationId": "get-equipment-telemetry-relationship",
+        "description": "Retrieve an equipment telemetry relationship by ID\n\n**Required Permissions:** `*`,`equipment:*`,`equipment:telemetry:*`,`equipment:telemetry:read`",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ]
       }
     }
   },
