@@ -37,7 +37,7 @@
             }
           }
         },
-        "operationId": "get-point-list",
+        "operationId": "list-points",
         "description": "Retrieve a list of points\n\n**Required Permissions:** `*`,`telemetry:*`,`telemetry:datapoint:*`,`telemetry:datapoint:list`",
         "tags": [
           "Points"
@@ -61,7 +61,7 @@
       },
       "post": {
         "summary": "Create Point",
-        "operationId": "create-data-point",
+        "operationId": "create-point",
         "responses": {
           "200": {
             "$ref": "#/components/responses/200-Point-Object"
