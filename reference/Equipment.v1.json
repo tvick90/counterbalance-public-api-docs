@@ -69,7 +69,8 @@
               ]
             },
             "in": "query",
-            "name": "relationship"
+            "name": "relationship",
+            "description": "Filter results by their associate to `@ref`"
           }
         ]
       },
