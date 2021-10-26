@@ -56,7 +56,20 @@
               "type": "string"
             },
             "in": "query",
-            "name": "@ref"
+            "name": "@ref",
+            "description": "Filter results by their parent equipment ID"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "enum": [
+                "all",
+                "children",
+                "dependents"
+              ]
+            },
+            "in": "query",
+            "name": "relationship"
           }
         ]
       },
