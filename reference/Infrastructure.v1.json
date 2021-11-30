@@ -614,7 +614,7 @@
             "format": "date-time",
             "readOnly": true
           },
-          "gateway": {
+          "@gateway": {
             "type": "string"
           },
           "name": {
@@ -629,7 +629,7 @@
           "instance_id": {
             "type": "number"
           },
-          "site": {
+          "@site": {
             "type": "string"
           },
           "is_online": {
@@ -638,6 +638,11 @@
           },
           "is_ostracized": {
             "type": "boolean"
+          },
+          "point_count": {
+            "type": "integer",
+            "description": "The number of points that are connected to this controller",
+            "readOnly": true
           },
           "bacnet": {
             "$ref": "#/components/schemas/Field-Controller-BACnet-Details"
@@ -1054,28 +1059,41 @@
       "Gateway-Listing": {
         "description": "",
         "type": "object",
+        "title": "Gateway Listing",
+        "x-examples": {},
+        "x-tags": [
+          "Schemas"
+        ],
         "properties": {
           "count": {
             "type": "number"
+          },
+          "index": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           },
           "data": {
             "type": "array",
             "uniqueItems": true,
             "minItems": 1,
             "items": {
-              "required": [
-                "id",
-                "serial",
-                "tunnel",
-                "tenant",
-                "name",
-                "description",
-                "is_registered"
-              ],
+              "type": "object",
               "properties": {
                 "id": {
                   "type": "string",
                   "minLength": 1
+                },
+                "created": {
+                  "type": "string",
+                  "format": "date-time",
+                  "readOnly": true
+                },
+                "last_modified": {
+                  "type": "string",
+                  "format": "date-time",
+                  "readOnly": true
                 },
                 "serial": {
                   "type": "string",
@@ -1102,16 +1120,7 @@
               }
             }
           }
-        },
-        "required": [
-          "count",
-          "data"
-        ],
-        "title": "Gateway Listing",
-        "x-examples": {},
-        "x-tags": [
-          "Schemas"
-        ]
+        }
       },
       "Field-Controller-Listing": {
         "description": "",
@@ -1119,33 +1128,7 @@
         "title": "Field Controller Listing",
         "x-examples": {
           "Example": {
-            "count": 2,
-            "data": [
-              {
-                "id": "341efcb4-b884-47b5-af5e-aa44ddb6f22a",
-                "tenant": "1d1776fe-0437-426c-a796-06e2b5eaccf6",
-                "gateway": "87e2c5f6-d961-4464-87c0-ec52863da975",
-                "created": 1610379813,
-                "name": "BMS Node 02",
-                "description": "AHU-1 Controller",
-                "location": "Mechanical Room 126",
-                "instance_id": 10200,
-                "is_ostracized": false,
-                "site": "c0142a11-62d1-460a-9be5-9e7881ae7b58"
-              },
-              {
-                "id": "6953222d-3705-4da3-06e8-ee66ab41a700",
-                "tenant": "1d1776fe-0437-426c-a796-06e2b5eaccf6",
-                "gateway": "87e2c5f6-d961-4464-87c0-ec52863da975",
-                "created": 1610992645,
-                "name": "BMS Node 01",
-                "description": "Central Plant Controller",
-                "location": "Chiller Room",
-                "instance_id": 10100,
-                "is_ostracized": false,
-                "site": null
-              }
-            ]
+            "$ref": "#/components/examples/Get-Controller-Listing"
           }
         },
         "x-tags": [
@@ -1154,6 +1137,12 @@
         "properties": {
           "count": {
             "type": "number"
+          },
+          "index": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           },
           "data": {
             "type": "array",
@@ -1795,6 +1784,9 @@
       "Get-Gateway-List": {
         "value": {
           "count": 1,
+          "index": [
+            "539fea81-d151-46e1-b1f6-36e3864ebeff"
+          ],
           "data": [
             {
               "id": "539fea81-d151-46e1-b1f6-36e3864ebeff",
@@ -1848,7 +1840,7 @@
                 "name": "USSEA-HVAC-BMSNODE01",
                 "description": "",
                 "location": "",
-                "site": "82478e3a-a212-41bf-9e2b-7522a1504a6b",
+                "@site": "82478e3a-a212-41bf-9e2b-7522a1504a6b",
                 "online": true,
                 "bacnet": {
                   "id": 10100,
@@ -1874,30 +1866,36 @@
       "Get-Controller-Listing": {
         "value": {
           "count": 2,
+          "index": [
+            "48f6bef2-1d57-4333-b9af-be687876e997",
+            "4f668b28-c30d-4fc1-b751-7cc30dcc4964"
+          ],
           "data": [
             {
               "id": "48f6bef2-1d57-4333-b9af-be687876e997",
-              "tenant": "7d5a9e81-0902-4137-b71e-40ea913b5bfa",
-              "gateway": "539fea81-d151-46e1-b1f6-36e3864ebeff",
               "created": 1614139068,
+              "last_modified": null,
+              "@gateway": "539fea81-d151-46e1-b1f6-36e3864ebeff",
               "name": "USSEA-HVAC-BMSNODE02",
               "description": "",
               "location": "",
               "instance_id": 10200,
               "is_ostracized": false,
-              "site": "82478e3a-a212-41bf-9e2b-7522a1504a6b"
+              "point_count": 1,
+              "@site": "82478e3a-a212-41bf-9e2b-7522a1504a6b"
             },
             {
               "id": "4f668b28-c30d-4fc1-b751-7cc30dcc4964",
-              "tenant": "7d5a9e81-0902-4137-b71e-40ea913b5bfa",
-              "gateway": "539fea81-d151-46e1-b1f6-36e3864ebeff",
               "created": 1613717286,
+              "last_modified": null,
+              "@gateway": "539fea81-d151-46e1-b1f6-36e3864ebeff",
               "name": "USSEA-HVAC-BMSNODE01",
               "description": "",
               "location": "",
               "instance_id": 10100,
               "is_ostracized": false,
-              "site": "82478e3a-a212-41bf-9e2b-7522a1504a6b"
+              "point_count": 19,
+              "@site": "82478e3a-a212-41bf-9e2b-7522a1504a6b"
             }
           ]
         }
@@ -1915,9 +1913,7 @@
           "@site": "82478e3a-a212-41bf-9e2b-7522a1504a6b",
           "is_online": false,
           "is_ostracized": false,
-          "dependents": {
-            "point_count": 29
-          },
+          "point_count": 29,
           "bacnet": null
         }
       },
@@ -1966,11 +1962,9 @@
           "location": "Mech Room 126",
           "instance_id": 10100,
           "@site": "82478e3a-a212-41bf-9e2b-7522a1504a6b",
-          "is_online": false,
+          "is_online": true,
           "is_ostracized": false,
-          "dependents": {
-            "point_count": 29
-          },
+          "point_count": 29,
           "bacnet": {
             "object": {
               "name": "USSEA-HVAC-BMSNODE02",
