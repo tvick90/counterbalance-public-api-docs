@@ -669,6 +669,124 @@
               }
             }
           },
+          "statistics": {
+            "type": "object",
+            "properties": {
+              "min": {
+                "type": [
+                  "number",
+                  "integer"
+                ],
+                "readOnly": true
+              },
+              "max": {
+                "type": [
+                  "number",
+                  "integer"
+                ],
+                "readOnly": true
+              },
+              "mean": {
+                "type": [
+                  "number",
+                  "integer"
+                ],
+                "readOnly": true
+              }
+            }
+          },
+          "health": {
+            "type": "object",
+            "properties": {
+              "event_state_distribution": {
+                "type": "object",
+                "properties": {
+                  "normal": {
+                    "type": "object",
+                    "properties": {
+                      "sample_count": {
+                        "type": "integer"
+                      },
+                      "percent_total": {
+                        "type": "integer"
+                      }
+                    }
+                  },
+                  "offnormal": {
+                    "type": "object",
+                    "properties": {
+                      "sample_count": {
+                        "type": "integer"
+                      },
+                      "percent_total": {
+                        "type": "integer"
+                      }
+                    }
+                  },
+                  "fault": {
+                    "type": "object",
+                    "properties": {
+                      "sample_count": {
+                        "type": "integer"
+                      },
+                      "percent_total": {
+                        "type": "integer"
+                      }
+                    }
+                  }
+                }
+              },
+              "status_distribution": {
+                "type": "object",
+                "properties": {
+                  "fault": {
+                    "type": "object",
+                    "properties": {
+                      "sample_count": {
+                        "type": "integer"
+                      },
+                      "percent_total": {
+                        "type": "integer"
+                      }
+                    }
+                  },
+                  "in_alarm": {
+                    "type": "object",
+                    "properties": {
+                      "sample_count": {
+                        "type": "integer"
+                      },
+                      "percent_total": {
+                        "type": "integer"
+                      }
+                    }
+                  },
+                  "overridden": {
+                    "type": "object",
+                    "properties": {
+                      "sample_count": {
+                        "type": "integer"
+                      },
+                      "percent_total": {
+                        "type": "integer"
+                      }
+                    }
+                  },
+                  "out_of_service": {
+                    "type": "object",
+                    "properties": {
+                      "sample_count": {
+                        "type": "integer"
+                      },
+                      "percent_total": {
+                        "type": "integer"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
           "data": {
             "type": "array",
             "uniqueItems": true,
@@ -710,6 +828,9 @@
                 }
               }
             }
+          },
+          "": {
+            "type": "string"
           }
         }
       },
@@ -1410,6 +1531,45 @@
             "expected_samples": 336,
             "missing_samples": 1,
             "quality": 99
+          },
+          "statistics": {
+            "min": 63.9,
+            "max": 154.4,
+            "mean": 101.9
+          },
+          "health": {
+            "event_state_distribution": {
+              "normal": {
+                "sample_count": 142,
+                "percent_total": 100
+              },
+              "offnormal": {
+                "sample_count": 0,
+                "percent_total": 0
+              },
+              "fault": {
+                "sample_count": 0,
+                "percent_total": 0
+              }
+            },
+            "status_distribution": {
+              "fault": {
+                "sample_count": 0,
+                "percent_total": 0
+              },
+              "in_alarm": {
+                "sample_count": 0,
+                "percent_total": 0
+              },
+              "overridden": {
+                "sample_count": 0,
+                "percent_total": 0
+              },
+              "out_of_service": {
+                "sample_count": 3,
+                "percent_total": 2
+              }
+            }
           },
           "data": [
             {
