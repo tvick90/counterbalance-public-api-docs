@@ -902,8 +902,19 @@
             "type": "string",
             "format": "uuid"
           },
-          "is_online": {
-            "type": "boolean"
+          "units": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer"
+              },
+              "raw": {
+                "type": "string"
+              },
+              "short": {
+                "type": "string"
+              }
+            }
           },
           "bacnet": {
             "type": "object",
