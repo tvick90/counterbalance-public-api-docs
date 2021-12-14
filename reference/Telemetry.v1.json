@@ -112,7 +112,7 @@
                   "instance": {
                     "type": "string"
                   },
-                  "site": {
+                  "@site": {
                     "type": "string",
                     "format": "uuid"
                   },
@@ -120,6 +120,9 @@
                     "type": "string",
                     "format": "uuid",
                     "example": "48f6bef2-1d57-4333-b9af-be687876e997"
+                  },
+                  "units": {
+                    "type": "string"
                   }
                 },
                 "required": [
@@ -264,6 +267,10 @@
                   "instance_id": {
                     "type": "number",
                     "description": "The BACnet object instance ID"
+                  },
+                  "units": {
+                    "type": "string",
+                    "description": "A valid BACnet units ID"
                   }
                 }
               },
@@ -1084,10 +1091,27 @@
                 "instance_id": {
                   "type": "number"
                 },
-                "site": {
-                  "type": "string"
+                "@site": {
+                  "type": "string",
+                  "format": "uuid"
                 },
-                "bacnet": {}
+                "units": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer"
+                    },
+                    "raw": {
+                      "type": "string"
+                    },
+                    "short": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "bacnet": {
+                  "nullable": true
+                }
               }
             }
           }
