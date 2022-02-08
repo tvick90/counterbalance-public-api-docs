@@ -507,6 +507,19 @@
           },
           {
             "$ref": "#/components/parameters/Content-Type"
+          },
+          {
+            "schema": {
+              "type": "array",
+              "enum": [
+                "data",
+                "health",
+                "statistics"
+              ]
+            },
+            "in": "query",
+            "name": "include",
+            "description": "Specify which sample components to return with the response"
           }
         ],
         "security": [
