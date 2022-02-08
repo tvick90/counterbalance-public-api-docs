@@ -266,7 +266,13 @@
         },
         "tags": [
           "Telemetry"
-        ]
+        ],
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ],
+        "parameters": []
       }
     },
     "/v1/equipment/node/telemetry/{telemetryId}": {

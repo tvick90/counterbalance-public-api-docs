@@ -17,7 +17,12 @@
     },
     {
       "type": "divider",
-      "title": "Divider"
+      "title": "Account Management"
+    },
+    {
+      "type": "item",
+      "title": "Subscription & Billing",
+      "uri": "reference/Billing.v1.yaml"
     },
     {
       "type": "item",
@@ -26,13 +31,12 @@
     },
     {
       "type": "item",
-      "title": "Sites",
-      "uri": "reference/Sites.v1.json"
+      "title": "Users",
+      "uri": "reference/User.v1.json"
     },
     {
-      "type": "item",
-      "title": "Equipment",
-      "uri": "reference/Equipment.v1.json"
+      "type": "divider",
+      "title": "Connectivity"
     },
     {
       "type": "item",
@@ -45,14 +49,18 @@
       "uri": "reference/Telemetry.v1.json"
     },
     {
-      "type": "item",
-      "title": "Users",
-      "uri": "reference/User.v1.json"
+      "type": "divider",
+      "title": "Digital Twin"
     },
     {
       "type": "item",
-      "title": "Subscription & Billing",
-      "uri": "reference/Billing.v1.yaml"
+      "title": "Equipment",
+      "uri": "reference/Equipment.v1.json"
+    },
+    {
+      "type": "item",
+      "title": "Sites",
+      "uri": "reference/Sites.v1.json"
     }
   ]
 }
