@@ -21,6 +21,11 @@
     },
     {
       "type": "item",
+      "title": "Reporting",
+      "uri": "reference/Reporting.v1.json"
+    },
+    {
+      "type": "item",
       "title": "Subscription & Billing",
       "uri": "reference/Billing.v1.yaml"
     },
