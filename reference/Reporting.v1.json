@@ -20,17 +20,34 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "$ref": "#/components/responses/200-Plot-Listing"
           }
         },
         "operationId": "get-plot",
-        "description": "",
+        "description": "Retrieve a list of trend plot objects\n\n**Required Permissions:** `*`,`reporting:*`,`reporting:plot:*`,`reporting:plot:read`\n\n### Filtering Results\nA combination of one or more query parameters may be used to filter returned data. Query parameters are stacked such that using multiple parameters will result in a narrower data set.\n\nWildcard searches are permitted on all query parameters. Wildcard searches are case insensitive and all data is forced to lowercase for matching purposes. See usage examples below.\n\n<!--\ntitle: \"Plot Name Wildcard Search\"\nlineNumbers: false\n-->\n```Name\nhttps://api.counterbalance.io/v1/reporting/plot?name=*MN*\n```\n<!--\ntitle: \"Plot Description Wildcard Search\"\nlineNumbers: false\n-->\n```Description\nhttps://api.counterbalance.io/v1/reporting/plot?description=*MN*\n```",
         "security": [
           {
             "Bearer": []
           }
         ],
-        "parameters": []
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "description": "Filter results by plot object name. Accepts * wildcard searches.",
+            "name": "name"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "description",
+            "description": "Filter results by plot object description. Accepts * wildcard searches."
+          }
+        ]
       },
       "post": {
         "summary": "Create Trend Plot",
@@ -40,7 +57,7 @@
             "$ref": "#/components/responses/200-Plot-Object"
           }
         },
-        "description": "",
+        "description": "Create a trend plot object\n\n**Required Permissions:** `*`,`reporting:*`,`reporting:plot:*`,`reporting:plot:create`",
         "tags": [
           "Trend Plots"
         ],
@@ -82,11 +99,11 @@
             "$ref": "#/components/responses/200-Plot-Object"
           },
           "404": {
-            "description": "Not Found"
+            "$ref": "#/components/responses/404-Plot-Not-Found"
           }
         },
         "operationId": "get-plot",
-        "description": "",
+        "description": "Retrieve a trend plot object\n\n**Required Permissions:** `*`,`reporting:*`,`reporting:plot:*`,`reporting:plot:read`",
         "security": [
           {
             "Bearer": []
@@ -101,13 +118,13 @@
             "$ref": "#/components/responses/200-Plot-Object"
           },
           "404": {
-            "description": "Not Found"
+            "$ref": "#/components/responses/404-Plot-Not-Found"
           }
         },
         "tags": [
           "Trend Plots"
         ],
-        "description": "",
+        "description": "Update a trend plot object\n\n**Required Permissions:** `*`,`reporting:*`,`reporting:plot:*`,`reporting:plot:update`",
         "parameters": [
           {
             "schema": {
@@ -135,9 +152,12 @@
         "responses": {
           "204": {
             "description": "No Content"
+          },
+          "404": {
+            "$ref": "#/components/responses/404-Plot-Not-Found"
           }
         },
-        "description": "",
+        "description": "Delete a trend plot object\n\n**Required Permissions:** `*`,`reporting:*`,`reporting:plot:*`,`reporting:plot:delete`",
         "security": [
           {
             "Bearer": []
@@ -315,6 +335,28 @@
             "examples": {
               "Response": {
                 "$ref": "#/components/examples/Plot-Object-Listing"
+              }
+            }
+          }
+        }
+      },
+      "404-Plot-Not-Found": {
+        "description": "Not Found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../models/Error-Response.v1.yaml"
+            },
+            "examples": {
+              "Response": {
+                "value": {
+                  "error": {
+                    "message": "Plot ID ... could not be found",
+                    "console": "Sorry, we couldn't find that plot",
+                    "code": 404
+                  },
+                  "logging_hash": "..."
+                }
               }
             }
           }
