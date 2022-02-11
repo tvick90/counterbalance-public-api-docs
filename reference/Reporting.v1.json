@@ -46,6 +46,24 @@
             "in": "query",
             "name": "description",
             "description": "Filter results by plot object description. Accepts * wildcard searches."
+          },
+          {
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "in": "query",
+            "name": "id",
+            "description": "Filter results with a comma-separated list of plot IDs"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "in": "query",
+            "name": "@owner",
+            "description": "Filter results by owner UUID"
           }
         ]
       },
