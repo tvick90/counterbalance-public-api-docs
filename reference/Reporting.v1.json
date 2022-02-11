@@ -200,7 +200,7 @@
             ],
             "format": "date-time",
             "example": "2022-01-01T00:00:00+0000",
-            "description": "Date/time the plot object was last modified (`NULL` if never modified)",
+            "description": "Date/time the plot object was last modified *(`null` if never modified)*",
             "readOnly": true
           },
           "@owner": {
