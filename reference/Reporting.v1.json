@@ -73,7 +73,7 @@
           {
             "schema": {
               "type": "string",
-              "example": "application/json"
+              "default": "application/json"
             },
             "in": "header",
             "name": "Content-Type",
