@@ -33,22 +33,6 @@
         "parameters": [
           {
             "schema": {
-              "type": "string"
-            },
-            "in": "query",
-            "description": "Filter results by plot object name. Accepts * wildcard searches.",
-            "name": "name"
-          },
-          {
-            "schema": {
-              "type": "string"
-            },
-            "in": "query",
-            "name": "description",
-            "description": "Filter results by plot object description. Accepts * wildcard searches."
-          },
-          {
-            "schema": {
               "type": "string",
               "format": "uuid"
             },
@@ -64,6 +48,22 @@
             "in": "query",
             "name": "@owner",
             "description": "Filter results by owner UUID"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "description": "Filter results by plot object name. Accepts * wildcard searches.",
+            "name": "name"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "description",
+            "description": "Filter results by plot object description. Accepts * wildcard searches."
           }
         ]
       },
