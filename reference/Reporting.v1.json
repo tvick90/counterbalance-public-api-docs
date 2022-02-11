@@ -294,32 +294,74 @@
           "format": "uuid"
         },
         "description": "A valid plot UUID"
+      },
+      "Content-Type": {
+        "name": "Content-Type",
+        "in": "header",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "default": "application/json",
+          "example": "application/json"
+        }
       }
     },
     "responses": {
       "200-Plot-Object": {
-        "description": "Example response",
+        "description": "Ok",
         "content": {
           "application/json": {
             "schema": {
-              "properties": {
-                "id": {
-                  "type": "string"
-                }
+              "$ref": "#/components/schemas/Plot-Object"
+            },
+            "examples": {
+              "Response": {
+                "$ref": "#/components/examples/Plot-Object"
               }
+            }
+          }
+        },
+        "headers": {
+          "Content-Type": {
+            "schema": {
+              "type": "string",
+              "default": "application/json",
+              "example": "application/json"
             }
           }
         }
       },
       "200-Plot-Listing": {
-        "description": "Example response",
+        "description": "Ok",
         "content": {
           "application/json": {
             "schema": {
+              "type": "object",
               "properties": {
-                "id": {
-                  "type": "string"
+                "count": {
+                  "type": "integer",
+                  "description": "The number of plot objects returned",
+                  "readOnly": true
+                },
+                "index": {
+                  "type": "array",
+                  "description": "An array of plot object IDs",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "data": {
+                  "type": "array",
+                  "description": "An array of plot objects",
+                  "items": {
+                    "$ref": "#/components/schemas/Plot-Object"
+                  }
                 }
+              }
+            },
+            "examples": {
+              "Response": {
+                "$ref": "#/components/examples/Plot-Object-Listing"
               }
             }
           }
@@ -380,7 +422,42 @@
         "content": {
           "application/json": {
             "schema": {
-              "type": "object"
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "The desired name of the new plot object",
+                  "minLength": 1,
+                  "maxLength": 96
+                },
+                "description": {
+                  "type": "string",
+                  "description": "An optional description of the new plot object",
+                  "minLength": 0,
+                  "maxLength": 120
+                },
+                "@owner": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "format": "uuid"
+                },
+                "public": {
+                  "type": "boolean",
+                  "default": false,
+                  "description": "Set to `true` to make the plot visible to all users"
+                },
+                "config": {
+                  "type": "object",
+                  "description": "The plot object configuration data"
+                }
+              },
+              "required": [
+                "name",
+                "config"
+              ]
             },
             "examples": {
               "Example": {
@@ -395,7 +472,32 @@
         "content": {
           "application/json": {
             "schema": {
-              "type": "object"
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 96,
+                  "description": "The desired name of the plot object"
+                },
+                "description": {
+                  "type": "string",
+                  "description": "The desired description of the plot object"
+                },
+                "@owner": {
+                  "type": "string",
+                  "description": "The desired owner's user object UUID",
+                  "format": "uuid"
+                },
+                "public": {
+                  "type": "boolean",
+                  "description": "The desired public visibility of the plot object"
+                },
+                "config": {
+                  "description": "The trend plot configuration data",
+                  "type": "object"
+                }
+              }
             },
             "examples": {
               "Example": {
@@ -403,7 +505,8 @@
               }
             }
           }
-        }
+        },
+        "description": ""
       }
     }
   }
