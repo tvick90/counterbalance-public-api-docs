@@ -284,16 +284,6 @@
           "format": "uuid"
         },
         "description": "A valid plot UUID"
-      },
-      "Content-Type": {
-        "name": "Content-Type",
-        "in": "header",
-        "required": true,
-        "schema": {
-          "type": "string",
-          "default": "application/json",
-          "example": "application/json"
-        }
       }
     },
     "responses": {
