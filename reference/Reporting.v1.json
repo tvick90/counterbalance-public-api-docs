@@ -151,64 +151,14 @@
   },
   "components": {
     "schemas": {
-      "User": {
-        "title": "User",
-        "type": "object",
-        "description": "",
-        "examples": [
-          {
-            "id": 142,
-            "firstName": "Alice",
-            "lastName": "Smith",
-            "email": "alice.smith@gmail.com",
-            "dateOfBirth": "1997-10-31",
-            "emailVerified": true,
-            "signUpDate": "2019-08-24"
-          }
-        ],
-        "properties": {
-          "id": {
-            "type": "integer",
-            "description": "Unique identifier for the given user."
-          },
-          "firstName": {
-            "type": "string"
-          },
-          "lastName": {
-            "type": "string"
-          },
-          "email": {
-            "type": "string",
-            "format": "email"
-          },
-          "dateOfBirth": {
-            "type": "string",
-            "format": "date",
-            "example": "1997-10-31"
-          },
-          "emailVerified": {
-            "type": "boolean",
-            "description": "Set to true if the user's email has been verified."
-          },
-          "createDate": {
-            "type": "string",
-            "format": "date",
-            "description": "The date that the user was created."
-          }
-        },
-        "required": [
-          "id",
-          "firstName",
-          "lastName",
-          "email",
-          "emailVerified"
-        ]
-      },
       "Plot-Object": {
         "title": "Plot Object",
         "type": "object",
         "description": "",
         "examples": [],
+        "x-tags": [
+          "Trend Plots"
+        ],
         "properties": {
           "id": {
             "type": "string",
@@ -238,7 +188,7 @@
             "type": "string",
             "format": "uuid",
             "example": "9d6b9387-1721-4e62-a6c4-8457d2d16ded",
-            "description": "The user UUID who created and maintains the plot"
+            "description": "The user UUID responsible for the plot object"
           },
           "public": {
             "type": "boolean",
@@ -263,8 +213,11 @@
             "additionalProperties": false
           }
         },
-        "x-tags": [
-          "Trend Plots"
+        "required": [
+          "id",
+          "@owner",
+          "name",
+          "config"
         ]
       }
     },
@@ -509,5 +462,10 @@
         "description": ""
       }
     }
-  }
+  },
+  "tags": [
+    {
+      "name": "Account Management"
+    }
+  ]
 }

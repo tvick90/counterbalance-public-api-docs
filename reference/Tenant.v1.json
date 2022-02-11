@@ -1555,16 +1555,19 @@
   },
   "tags": [
     {
+      "name": "Account Management"
+    },
+    {
       "name": "Tenant Account"
     },
     {
       "name": "Tenant Operations"
     },
     {
-      "name": "Tenant Quota"
+      "name": "Tenant Preferences"
     },
     {
-      "name": "Tenant Preferences"
+      "name": "Tenant Quota"
     }
   ]
 }
