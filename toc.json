@@ -27,7 +27,7 @@
     {
       "type": "item",
       "title": "Subscription & Billing",
-      "uri": "reference/Billing.v1.yaml"
+      "uri": "reference/Billing.v1.json"
     },
     {
       "type": "item",
