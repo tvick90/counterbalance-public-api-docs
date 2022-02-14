@@ -184,6 +184,38 @@
           "Trend Plots"
         ]
       }
+    },
+    "/reporting/group": {
+      "get": {
+        "summary": "List Report Groups",
+        "tags": [
+          "Report Groups"
+        ],
+        "responses": {},
+        "operationId": "get-groups",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      },
+      "post": {
+        "summary": "Create Report Group",
+        "operationId": "create-group",
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        },
+        "tags": [
+          "Report Groups"
+        ],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
     }
   },
   "components": {
