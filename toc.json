@@ -59,6 +59,11 @@
     },
     {
       "type": "item",
+      "title": "Automation",
+      "uri": "reference/Automation.v1.json"
+    },
+    {
+      "type": "item",
       "title": "Equipment",
       "uri": "reference/Equipment.v1.json"
     },
