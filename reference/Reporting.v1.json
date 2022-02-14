@@ -23,7 +23,7 @@
             "$ref": "#/components/responses/200-Plot-Listing"
           }
         },
-        "operationId": "get-plot",
+        "operationId": "list-plots",
         "description": "Retrieve a list of trend plot objects\n\n**Required Permissions:** `*`,`reporting:*`,`reporting:plot:*`,`reporting:plot:read`\n\n### Filtering Results\nA combination of one or more query parameters may be used to filter returned data. Query parameters are stacked such that using multiple parameters will result in a narrower data set.\n\nWildcard searches are permitted on all query parameters. Wildcard searches are case insensitive and all data is forced to lowercase for matching purposes. See usage examples below.\n\n<!--\ntitle: \"Plot Name Wildcard Search\"\nlineNumbers: false\n-->\n```Name\nhttps://api.counterbalance.io/v1/reporting/plot?name=*MN*\n```\n<!--\ntitle: \"Plot Description Wildcard Search\"\nlineNumbers: false\n-->\n```Description\nhttps://api.counterbalance.io/v1/reporting/plot?description=*MN*\n```",
         "security": [
           {
@@ -188,16 +188,21 @@
     "/reporting/group": {
       "get": {
         "summary": "List Report Groups",
-        "tags": [
-          "Report Groups"
-        ],
-        "responses": {},
-        "operationId": "get-groups",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "operationId": "list-groups",
         "security": [
           {
             "Bearer": []
           }
-        ]
+        ],
+        "tags": [
+          "Report Group"
+        ],
+        "description": ""
       },
       "post": {
         "summary": "Create Report Group",
@@ -207,8 +212,67 @@
             "description": "Created"
           }
         },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
         "tags": [
-          "Report Groups"
+          "Report Group"
+        ]
+      }
+    },
+    "/reporting/group/{groupId}": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/groupId"
+        }
+      ],
+      "get": {
+        "summary": "Get Report Group",
+        "tags": [
+          "Report Group"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "operationId": "get-group",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      },
+      "patch": {
+        "summary": "Update Report Group",
+        "operationId": "update-group",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "tags": [
+          "Report Group"
+        ]
+      },
+      "delete": {
+        "summary": "Delete Report Group",
+        "operationId": "delete-group",
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "description": "",
+        "tags": [
+          "Report Group"
         ],
         "security": [
           {
@@ -316,6 +380,16 @@
           "format": "uuid"
         },
         "description": "A valid plot UUID"
+      },
+      "groupId": {
+        "name": "groupId",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "description": "A valid report group UUID"
       }
     },
     "responses": {
