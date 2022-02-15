@@ -135,7 +135,7 @@
         "summary": "Get Payment Source",
         "responses": {
           "200": {
-            "description": "OK"
+            "$ref": "#/components/responses/200-GET-Payment-Source"
           }
         },
         "operationId": "get-payment-source",
