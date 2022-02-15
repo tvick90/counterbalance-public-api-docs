@@ -11,11 +11,6 @@
       "uri": "docs/Responses-and-Errors.md"
     },
     {
-      "type": "item",
-      "title": "Authentication",
-      "uri": "docs/Authentication.md"
-    },
-    {
       "type": "divider",
       "title": "Account Management"
     },
@@ -45,7 +40,7 @@
     },
     {
       "type": "item",
-      "title": "Telemetry & Data Collection",
+      "title": "Telemetry & Collectors",
       "uri": "reference/Telemetry.v1.json"
     },
     {
@@ -61,6 +56,11 @@
       "type": "item",
       "title": "Sites",
       "uri": "reference/Sites.v1.json"
+    },
+    {
+      "type": "item",
+      "title": "Weather",
+      "uri": "reference/Weather.v1.json"
     },
     {
       "type": "divider",

@@ -1,0 +1,70 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Weather.v1",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.counterbalance.io",
+      "description": "Production API"
+    }
+  ],
+  "paths": {
+    "/v1/weather/conditions": {
+      "get": {
+        "summary": "Get Current Conditions",
+        "tags": [
+          "Current Conditions"
+        ],
+        "responses": {},
+        "operationId": "get-v1-weather-conditions"
+      }
+    },
+    "/v1/weather/forecast": {
+      "get": {
+        "summary": "Get Forecasted Conditions",
+        "tags": [
+          "Forecast"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "operationId": "get-v1-weather-forecast",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {},
+    "securitySchemes": {
+      "Bearer Token": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Air Quality"
+    },
+    {
+      "name": "Alerts"
+    },
+    {
+      "name": "Current Conditions"
+    },
+    {
+      "name": "Forecast"
+    },
+    {
+      "name": "History"
+    }
+  ]
+}
