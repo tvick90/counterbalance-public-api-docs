@@ -569,451 +569,319 @@
             "readOnly": true
           },
           "bacnet": {
-            "$ref": "#/components/schemas/Field-Controller-BACnet-Details"
+            "type": "object",
+            "properties": {
+              "object": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "instance": {
+                    "type": "string"
+                  }
+                }
+              },
+              "protocol": {
+                "type": "object",
+                "properties": {
+                  "version": {
+                    "type": "number"
+                  },
+                  "revision": {
+                    "type": "number"
+                  },
+                  "max_master": {
+                    "type": "number"
+                  },
+                  "device_id": {
+                    "type": "string"
+                  },
+                  "max_segments_accepted": {
+                    "type": "number"
+                  },
+                  "apdu": {
+                    "type": "object",
+                    "properties": {
+                      "timeout": {
+                        "type": "number"
+                      },
+                      "retries": {
+                        "type": "number"
+                      },
+                      "segment_timeout": {
+                        "type": "number"
+                      },
+                      "max_length": {
+                        "type": "number"
+                      }
+                    }
+                  },
+                  "services_supported": {
+                    "type": "object",
+                    "properties": {
+                      "atomic-read-file": {
+                        "type": "boolean"
+                      },
+                      "confirmed-text-message": {
+                        "type": "boolean"
+                      },
+                      "unconfirmed-text-message": {
+                        "type": "boolean"
+                      },
+                      "time-synchronization": {
+                        "type": "boolean"
+                      },
+                      "confirmed-event-notification": {
+                        "type": "boolean"
+                      },
+                      "reinitialize-device": {
+                        "type": "boolean"
+                      },
+                      "who-is": {
+                        "type": "boolean"
+                      },
+                      "who-has": {
+                        "type": "boolean"
+                      },
+                      "unconfirmed-event-notification": {
+                        "type": "boolean"
+                      },
+                      "subscribe-cov-property": {
+                        "type": "boolean"
+                      },
+                      "vt-data": {
+                        "type": "boolean"
+                      },
+                      "unconfirmed-private-transfer": {
+                        "type": "boolean"
+                      },
+                      "create-object": {
+                        "type": "boolean"
+                      },
+                      "delete-object": {
+                        "type": "boolean"
+                      },
+                      "read-property-conditional": {
+                        "type": "boolean"
+                      },
+                      "add-list-element": {
+                        "type": "boolean"
+                      },
+                      "vt-open": {
+                        "type": "boolean"
+                      },
+                      "remove-list-element": {
+                        "type": "boolean"
+                      },
+                      "get-event-information": {
+                        "type": "boolean"
+                      },
+                      "confirmed-cov-notification": {
+                        "type": "boolean"
+                      },
+                      "i-am": {
+                        "type": "boolean"
+                      },
+                      "device-communication-control": {
+                        "type": "boolean"
+                      },
+                      "acknowledge-alarm": {
+                        "type": "boolean"
+                      },
+                      "get-alarm-summary": {
+                        "type": "boolean"
+                      },
+                      "i-have": {
+                        "type": "boolean"
+                      },
+                      "subscribe-cov": {
+                        "type": "boolean"
+                      },
+                      "confirmed-private-transfer": {
+                        "type": "boolean"
+                      },
+                      "vt-close": {
+                        "type": "boolean"
+                      },
+                      "request-key": {
+                        "type": "boolean"
+                      },
+                      "read-property-multiple": {
+                        "type": "boolean"
+                      },
+                      "write-property": {
+                        "type": "boolean"
+                      },
+                      "life-safety-operation": {
+                        "type": "boolean"
+                      },
+                      "read-property": {
+                        "type": "boolean"
+                      },
+                      "atomic-write-file": {
+                        "type": "boolean"
+                      },
+                      "utc-time-synchronization": {
+                        "type": "boolean"
+                      },
+                      "get-enrollment-summary": {
+                        "type": "boolean"
+                      },
+                      "write-property-multiple": {
+                        "type": "boolean"
+                      },
+                      "unconfirmed-cov-notification": {
+                        "type": "boolean"
+                      },
+                      "read-range": {
+                        "type": "boolean"
+                      },
+                      "authenticate": {
+                        "type": "boolean"
+                      }
+                    }
+                  },
+                  "object_types_supported": {
+                    "type": "object",
+                    "properties": {
+                      "averaging": {
+                        "type": "boolean"
+                      },
+                      "multi-state-input": {
+                        "type": "boolean"
+                      },
+                      "schedule": {
+                        "type": "boolean"
+                      },
+                      "multi-state-output": {
+                        "type": "boolean"
+                      },
+                      "binary-output": {
+                        "type": "boolean"
+                      },
+                      "analog-value": {
+                        "type": "boolean"
+                      },
+                      "life-safety-point": {
+                        "type": "boolean"
+                      },
+                      "group": {
+                        "type": "boolean"
+                      },
+                      "notification-class": {
+                        "type": "boolean"
+                      },
+                      "analog-input": {
+                        "type": "boolean"
+                      },
+                      "file": {
+                        "type": "boolean"
+                      },
+                      "command": {
+                        "type": "boolean"
+                      },
+                      "life-safety-zone": {
+                        "type": "boolean"
+                      },
+                      "binary-input": {
+                        "type": "boolean"
+                      },
+                      "loop": {
+                        "type": "boolean"
+                      },
+                      "multi-state-value": {
+                        "type": "boolean"
+                      },
+                      "analog-output": {
+                        "type": "boolean"
+                      },
+                      "calendar": {
+                        "type": "boolean"
+                      },
+                      "event-enrollment": {
+                        "type": "boolean"
+                      },
+                      "pulse-converter": {
+                        "type": "boolean"
+                      },
+                      "device": {
+                        "type": "boolean"
+                      },
+                      "trend-log": {
+                        "type": "boolean"
+                      },
+                      "binary-value": {
+                        "type": "boolean"
+                      },
+                      "program": {
+                        "type": "boolean"
+                      },
+                      "accumulator": {
+                        "type": "boolean"
+                      }
+                    }
+                  }
+                }
+              },
+              "hardware": {
+                "type": "object",
+                "properties": {
+                  "make": {
+                    "type": "string"
+                  },
+                  "model": {
+                    "type": "string"
+                  },
+                  "vendor_id": {
+                    "type": "number"
+                  },
+                  "location": {
+                    "type": "string"
+                  },
+                  "firmware_revision": {
+                    "type": "string"
+                  }
+                }
+              },
+              "system": {
+                "type": "object",
+                "properties": {
+                  "application_software_version": {
+                    "type": "string"
+                  },
+                  "status": {
+                    "type": "string"
+                  },
+                  "date": {
+                    "type": "string"
+                  },
+                  "time": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
           }
         },
         "x-tags": [
           "Controller"
         ]
       },
-      "Field-Controller-BACnet-Details": {
-        "description": "",
+      "Network-Object": {
+        "title": "Network-Object",
         "type": "object",
-        "title": "Field Controller BACnet Details",
-        "x-examples": {
-          "Example": {
-            "object": {
-              "name": "USSEA-HVAC-BMSNODE02",
-              "description": "AHU-1",
-              "instance": "10200"
-            },
-            "protocol": {
-              "version": 1,
-              "revision": 7,
-              "max_master": 127,
-              "device_id": "10200",
-              "max_segments_accepted": 16,
-              "apdu": {
-                "timeout": 15000,
-                "retries": 1,
-                "segment_timeout": 15000,
-                "max_length": 1476
-              },
-              "services_supported": {
-                "atomic-read-file": true,
-                "confirmed-text-message": true,
-                "unconfirmed-text-message": true,
-                "time-synchronization": true,
-                "confirmed-event-notification": true,
-                "reinitialize-device": true,
-                "who-is": true,
-                "who-has": true,
-                "unconfirmed-event-notification": true,
-                "subscribe-cov-property": false,
-                "vt-data": false,
-                "unconfirmed-private-transfer": false,
-                "create-object": true,
-                "delete-object": true,
-                "read-property-conditional": false,
-                "add-list-element": true,
-                "vt-open": false,
-                "remove-list-element": true,
-                "get-event-information": true,
-                "confirmed-cov-notification": true,
-                "i-am": true,
-                "device-communication-control": true,
-                "acknowledge-alarm": true,
-                "get-alarm-summary": true,
-                "i-have": true,
-                "subscribe-cov": true,
-                "confirmed-private-transfer": true,
-                "vt-close": false,
-                "request-key": false,
-                "read-property-multiple": true,
-                "write-property": true,
-                "life-safety-operation": false,
-                "read-property": true,
-                "atomic-write-file": true,
-                "utc-time-synchronization": false,
-                "get-enrollment-summary": true,
-                "write-property-multiple": true,
-                "unconfirmed-cov-notification": true,
-                "read-range": true,
-                "authenticate": false
-              },
-              "object_types_supported": {
-                "averaging": false,
-                "multi-state-input": false,
-                "schedule": true,
-                "multi-state-output": true,
-                "binary-output": true,
-                "analog-value": true,
-                "life-safety-point": false,
-                "group": false,
-                "notification-class": true,
-                "analog-input": true,
-                "file": true,
-                "command": true,
-                "life-safety-zone": false,
-                "binary-input": true,
-                "loop": false,
-                "multi-state-value": true,
-                "analog-output": true,
-                "calendar": true,
-                "event-enrollment": true,
-                "pulse-converter": false,
-                "device": true,
-                "trend-log": true,
-                "binary-value": true,
-                "program": false,
-                "accumulator": false
-              }
-            },
-            "hardware": {
-              "make": "Siemens Industry Inc., Bldg Tech",
-              "model": "Siemens BACnet Field Panel",
-              "vendor_id": 7,
-              "location": "MAINT SHOP",
-              "firmware_revision": "PXCE V3.4 BACnet 4.3g"
-            },
-            "system": {
-              "application_software_version": "BCE1265_0039",
-              "status": "operational",
-              "date": "2021-01-19",
-              "time": "7:15:41.89"
-            }
+        "properties": {
+          "id": {
+            "type": "string"
           }
         },
         "x-tags": [
-          "Schemas"
-        ],
-        "properties": {
-          "object": {
-            "type": "object",
-            "properties": {
-              "name": {
-                "type": "string"
-              },
-              "description": {
-                "type": "string"
-              },
-              "instance": {
-                "type": "string"
-              }
-            }
-          },
-          "protocol": {
-            "type": "object",
-            "properties": {
-              "version": {
-                "type": "number"
-              },
-              "revision": {
-                "type": "number"
-              },
-              "max_master": {
-                "type": "number"
-              },
-              "device_id": {
-                "type": "string"
-              },
-              "max_segments_accepted": {
-                "type": "number"
-              },
-              "apdu": {
-                "type": "object",
-                "properties": {
-                  "timeout": {
-                    "type": "number"
-                  },
-                  "retries": {
-                    "type": "number"
-                  },
-                  "segment_timeout": {
-                    "type": "number"
-                  },
-                  "max_length": {
-                    "type": "number"
-                  }
-                }
-              },
-              "services_supported": {
-                "type": "object",
-                "properties": {
-                  "atomic-read-file": {
-                    "type": "boolean"
-                  },
-                  "confirmed-text-message": {
-                    "type": "boolean"
-                  },
-                  "unconfirmed-text-message": {
-                    "type": "boolean"
-                  },
-                  "time-synchronization": {
-                    "type": "boolean"
-                  },
-                  "confirmed-event-notification": {
-                    "type": "boolean"
-                  },
-                  "reinitialize-device": {
-                    "type": "boolean"
-                  },
-                  "who-is": {
-                    "type": "boolean"
-                  },
-                  "who-has": {
-                    "type": "boolean"
-                  },
-                  "unconfirmed-event-notification": {
-                    "type": "boolean"
-                  },
-                  "subscribe-cov-property": {
-                    "type": "boolean"
-                  },
-                  "vt-data": {
-                    "type": "boolean"
-                  },
-                  "unconfirmed-private-transfer": {
-                    "type": "boolean"
-                  },
-                  "create-object": {
-                    "type": "boolean"
-                  },
-                  "delete-object": {
-                    "type": "boolean"
-                  },
-                  "read-property-conditional": {
-                    "type": "boolean"
-                  },
-                  "add-list-element": {
-                    "type": "boolean"
-                  },
-                  "vt-open": {
-                    "type": "boolean"
-                  },
-                  "remove-list-element": {
-                    "type": "boolean"
-                  },
-                  "get-event-information": {
-                    "type": "boolean"
-                  },
-                  "confirmed-cov-notification": {
-                    "type": "boolean"
-                  },
-                  "i-am": {
-                    "type": "boolean"
-                  },
-                  "device-communication-control": {
-                    "type": "boolean"
-                  },
-                  "acknowledge-alarm": {
-                    "type": "boolean"
-                  },
-                  "get-alarm-summary": {
-                    "type": "boolean"
-                  },
-                  "i-have": {
-                    "type": "boolean"
-                  },
-                  "subscribe-cov": {
-                    "type": "boolean"
-                  },
-                  "confirmed-private-transfer": {
-                    "type": "boolean"
-                  },
-                  "vt-close": {
-                    "type": "boolean"
-                  },
-                  "request-key": {
-                    "type": "boolean"
-                  },
-                  "read-property-multiple": {
-                    "type": "boolean"
-                  },
-                  "write-property": {
-                    "type": "boolean"
-                  },
-                  "life-safety-operation": {
-                    "type": "boolean"
-                  },
-                  "read-property": {
-                    "type": "boolean"
-                  },
-                  "atomic-write-file": {
-                    "type": "boolean"
-                  },
-                  "utc-time-synchronization": {
-                    "type": "boolean"
-                  },
-                  "get-enrollment-summary": {
-                    "type": "boolean"
-                  },
-                  "write-property-multiple": {
-                    "type": "boolean"
-                  },
-                  "unconfirmed-cov-notification": {
-                    "type": "boolean"
-                  },
-                  "read-range": {
-                    "type": "boolean"
-                  },
-                  "authenticate": {
-                    "type": "boolean"
-                  }
-                }
-              },
-              "object_types_supported": {
-                "type": "object",
-                "properties": {
-                  "averaging": {
-                    "type": "boolean"
-                  },
-                  "multi-state-input": {
-                    "type": "boolean"
-                  },
-                  "schedule": {
-                    "type": "boolean"
-                  },
-                  "multi-state-output": {
-                    "type": "boolean"
-                  },
-                  "binary-output": {
-                    "type": "boolean"
-                  },
-                  "analog-value": {
-                    "type": "boolean"
-                  },
-                  "life-safety-point": {
-                    "type": "boolean"
-                  },
-                  "group": {
-                    "type": "boolean"
-                  },
-                  "notification-class": {
-                    "type": "boolean"
-                  },
-                  "analog-input": {
-                    "type": "boolean"
-                  },
-                  "file": {
-                    "type": "boolean"
-                  },
-                  "command": {
-                    "type": "boolean"
-                  },
-                  "life-safety-zone": {
-                    "type": "boolean"
-                  },
-                  "binary-input": {
-                    "type": "boolean"
-                  },
-                  "loop": {
-                    "type": "boolean"
-                  },
-                  "multi-state-value": {
-                    "type": "boolean"
-                  },
-                  "analog-output": {
-                    "type": "boolean"
-                  },
-                  "calendar": {
-                    "type": "boolean"
-                  },
-                  "event-enrollment": {
-                    "type": "boolean"
-                  },
-                  "pulse-converter": {
-                    "type": "boolean"
-                  },
-                  "device": {
-                    "type": "boolean"
-                  },
-                  "trend-log": {
-                    "type": "boolean"
-                  },
-                  "binary-value": {
-                    "type": "boolean"
-                  },
-                  "program": {
-                    "type": "boolean"
-                  },
-                  "accumulator": {
-                    "type": "boolean"
-                  }
-                }
-              }
-            }
-          },
-          "hardware": {
-            "type": "object",
-            "properties": {
-              "make": {
-                "type": "string"
-              },
-              "model": {
-                "type": "string"
-              },
-              "vendor_id": {
-                "type": "number"
-              },
-              "location": {
-                "type": "string"
-              },
-              "firmware_revision": {
-                "type": "string"
-              }
-            }
-          },
-          "system": {
-            "type": "object",
-            "properties": {
-              "application_software_version": {
-                "type": "string"
-              },
-              "status": {
-                "type": "string"
-              },
-              "date": {
-                "type": "string"
-              },
-              "time": {
-                "type": "string"
-              }
-            }
-          }
-        }
-      },
-      "Field-Controller-Listing": {
-        "description": "",
-        "type": "object",
-        "title": "Field Controller Listing",
-        "x-examples": {
-          "Example": {
-            "$ref": "#/components/examples/Get-Controller-Listing"
-          }
-        },
-        "x-tags": [
-          "Schemas"
-        ],
-        "properties": {
-          "count": {
-            "type": "number"
-          },
-          "index": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "data": {
-            "type": "array",
-            "uniqueItems": true,
-            "minItems": 1,
-            "items": {
-              "$ref": "#/components/schemas/Field-Controller-Details"
-            }
-          }
-        }
+          "Network"
+        ]
       }
     },
     "securitySchemes": {
