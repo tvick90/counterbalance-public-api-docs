@@ -12,7 +12,7 @@
     }
   ],
   "paths": {
-    "/reporting/plot": {
+    "/v1/reporting/plot": {
       "get": {
         "summary": "List Trend Plots",
         "tags": [
@@ -98,12 +98,20 @@
             "required": true
           }
         ]
-      }
+      },
+      "parameters": []
     },
-    "/reporting/plot/{plotId}": {
+    "/v1/reporting/plot/{plotId}": {
       "parameters": [
         {
-          "$ref": "#/components/parameters/plotId"
+          "name": "plotId",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "description": "A valid plot UUID"
         }
       ],
       "get": {
@@ -185,7 +193,7 @@
         ]
       }
     },
-    "/reporting/group": {
+    "/v1/reporting/group": {
       "get": {
         "summary": "List Report Groups",
         "responses": {
@@ -220,12 +228,20 @@
         "tags": [
           "Report Group"
         ]
-      }
+      },
+      "parameters": []
     },
-    "/reporting/group/{groupId}": {
+    "/v1/reporting/group/{groupId}": {
       "parameters": [
         {
-          "$ref": "#/components/parameters/groupId"
+          "name": "groupId",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "description": "A valid report group UUID"
         }
       ],
       "get": {
