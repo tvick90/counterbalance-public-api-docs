@@ -14,18 +14,173 @@
   "paths": {
     "/v1/intelligence/rule": {
       "get": {
-        "summary": "List Rules",
+        "summary": "List Fault Detection Rules",
         "tags": [
           "Fault Detection"
         ],
-        "responses": {},
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
         "operationId": "list-fdd-rules",
         "description": ""
+      },
+      "post": {
+        "summary": "Create Fault Detection Rule",
+        "operationId": "create-fdd-rule",
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        },
+        "tags": [
+          "Fault Detection"
+        ],
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ]
+      }
+    },
+    "/v1/intelligence/rule/{ruleId}": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/ruleId"
+        }
+      ],
+      "get": {
+        "summary": "Get Fault Detection Rule",
+        "tags": [
+          "Fault Detection"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "operationId": "get-fdd-rule",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ]
+      },
+      "patch": {
+        "summary": "Update Fault Detection Rule",
+        "operationId": "update-fdd-rule",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "description": "",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ],
+        "tags": [
+          "Fault Detection"
+        ]
+      },
+      "delete": {
+        "summary": "Delete Fault Detection Rule",
+        "operationId": "delete-fdd-rule",
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "tags": [
+          "Fault Detection"
+        ],
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ]
+      }
+    },
+    "/v1/intelligence/equipment/{equipmentId}": {
+      "get": {
+        "summary": "Get Equipment Insights Summary",
+        "tags": [
+          "Equipment Insights"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "operationId": "get-equipment-intelligence",
+        "description": "",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ]
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/equipmentId"
+        }
+      ]
+    },
+    "/v1/intelligence/equipment/{equipmentId}/health": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/equipmentId"
+        }
+      ],
+      "get": {
+        "summary": "Get Equipment Health",
+        "tags": [
+          "Equipment Insights"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "operationId": "get-equipment-health",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ]
       }
     }
   },
   "components": {
-    "schemas": {}
+    "schemas": {},
+    "parameters": {
+      "ruleId": {
+        "name": "ruleId",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      },
+      "equipmentId": {
+        "name": "equipmentId",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "description": "A valid equipment node UUID"
+      }
+    },
+    "securitySchemes": {
+      "Bearer Token": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
   },
   "tags": [
     {
