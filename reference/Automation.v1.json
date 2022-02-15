@@ -359,31 +359,42 @@
   "components": {
     "schemas": {
       "Setpoint-Reset-Object": {
-        "title": "Setpoint-Reset",
+        "title": "Setpoint Reset Object",
         "type": "object",
         "properties": {
           "id": {
             "type": "string"
           }
-        }
+        },
+        "x-tags": [
+          "Setpoint Reset"
+        ],
+        "description": ""
       },
       "Trigger-Object": {
-        "title": "Trigger",
+        "title": "Trigger Object",
         "type": "object",
         "properties": {
           "id": {
             "type": "string"
           }
-        }
+        },
+        "x-tags": [
+          "Trigger"
+        ],
+        "description": ""
       },
       "Routine-Object": {
-        "title": "Routibne-Object",
+        "title": "Routine Object",
         "type": "object",
         "properties": {
           "id": {
             "type": "string"
           }
-        }
+        },
+        "x-tags": [
+          "Routine"
+        ]
       }
     },
     "securitySchemes": {
