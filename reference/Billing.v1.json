@@ -339,7 +339,8 @@
           {
             "Bearer Token": []
           }
-        ]
+        ],
+        "description": ""
       }
     }
   },
@@ -780,6 +781,218 @@
               "type": "object"
             }
           }
+        }
+      }
+    },
+    "responses": {
+      "200-GET-Billing-Account": {
+        "description": "Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Billing-Account-Object"
+            },
+            "examples": {
+              "Response": {
+                "$ref": "#/components/examples/Billing-Account"
+              }
+            }
+          }
+        }
+      },
+      "200-GET-Payment-Sources": {
+        "description": "Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "count": {
+                  "type": "integer"
+                },
+                "index": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Payment-Source-Object"
+                  }
+                }
+              }
+            },
+            "examples": {}
+          }
+        }
+      },
+      "200-GET-Payment-Source": {
+        "description": "Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Payment-Source-Object"
+            },
+            "examples": {
+              "Response": {
+                "$ref": "#/components/examples/Payment-Source"
+              }
+            }
+          }
+        }
+      },
+      "404-GET-Payment-Source-Not-Found": {
+        "description": "Not Found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../models/Error-Response.v1.yaml"
+            },
+            "examples": {
+              "Response": {
+                "value": {
+                  "error": {
+                    "message": "string",
+                    "console": "string",
+                    "code": 0
+                  },
+                  "logging_hash": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "examples": {
+      "Billing-Account": {
+        "value": {
+          "id": "cus_Gr2tvkQK7Yrujz",
+          "created": "2020-03-05T14:36:12+0000",
+          "currency": "usd",
+          "description": "",
+          "subscriptions": {
+            "count": 2,
+            "index": [
+              "...",
+              "..."
+            ],
+            "data": [
+              {
+                "...": null
+              },
+              {
+                "...": null
+              }
+            ]
+          },
+          "sources": {
+            "count": 2,
+            "index": [
+              "...",
+              "..."
+            ],
+            "data": [
+              {
+                "...": null
+              },
+              {
+                "...": null
+              }
+            ]
+          },
+          "default_source": "card_1GJKp7J5K0z3IHPXD1ciFRwt",
+          "invoicing": {
+            "prefix": "F2A29AE0",
+            "next_sequence": 38
+          },
+          "balance": 0,
+          "delinquent": false,
+          "billing": {
+            "company": {
+              "name": "Peterbalance Architecture",
+              "email": "alexw@peterbalance.com",
+              "phone": "2069030575"
+            },
+            "address": {
+              "lines": [
+                "2333 3rd Ave",
+                ""
+              ],
+              "city": "Seattle",
+              "state": "WA",
+              "postcode": "98121"
+            }
+          }
+        }
+      },
+      "Payment-Source": {
+        "value": {
+          "id": "card_1GJKp7J5K0z3IHPXD1ciFRwt",
+          "nickname": "Default Card",
+          "cardholder_name": "Taylor Vick",
+          "type": "card",
+          "brand": "American Express",
+          "funding": "credit",
+          "last4": "0005",
+          "expiration": {
+            "month": 9,
+            "year": 2022
+          },
+          "fingerprint": "o19iQvRGhtvzbzRm",
+          "cvc_check": "pass"
+        }
+      },
+      "Subscription": {
+        "value": {
+          "id": "sub_K5UfhyQEJEfg2R",
+          "created": "2021-08-22T16:37:31+0000",
+          "start_date": "2021-08-22T16:37:31+0000",
+          "status": "active",
+          "billing": {
+            "cycle_anchor": "2021-08-22T16:37:31+0000",
+            "collection_method": "send_invoice",
+            "paused": false,
+            "pause_collection": null,
+            "current_period": {
+              "start": "2022-01-22T16:37:31+0000",
+              "end": "2022-02-22T16:37:31+0000"
+            },
+            "default_source": null
+          },
+          "days_until_due": 30,
+          "latest_invoice": "in_1KKmbuJ5K0z3IHPX0CUko1Ti",
+          "items": {
+            "count": 1,
+            "index": [
+              "..."
+            ],
+            "data": [
+              {
+                "...": null
+              }
+            ]
+          }
+        }
+      },
+      "Subscription-Item": {
+        "value": {
+          "id": "si_K5p1H0XbUF2OF0",
+          "created": "2021-08-23T13:40:18+0000",
+          "product": "prod_JrQ5bpNpFpJMIH",
+          "plan": "price_1JDhFhJ5K0z3IHPXQmXXDlZJ",
+          "price": {
+            "id": "price_1JDhFhJ5K0z3IHPXQmXXDlZJ",
+            "scheme": "per_unit",
+            "unit_amount": 200,
+            "frequency": "month",
+            "interval": 1
+          },
+          "usage_type": "licensed",
+          "quantity": 12,
+          "name": null
         }
       }
     }
