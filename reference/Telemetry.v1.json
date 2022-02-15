@@ -539,6 +539,118 @@
           "$ref": "#/components/requestBodies/Command-Point"
         }
       }
+    },
+    "/v1/telemetry/schedule": {
+      "get": {
+        "summary": "List Schedules",
+        "tags": [
+          "Schedule"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "operationId": "list-schedules",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ]
+      },
+      "post": {
+        "summary": "Create Schedule",
+        "operationId": "create-schedule",
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        },
+        "tags": [
+          "Schedule"
+        ],
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ]
+      }
+    },
+    "/v1/telemetry/schedule/{scheduleId}": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/scheduleId"
+        }
+      ],
+      "get": {
+        "summary": "Get Schedule",
+        "tags": [
+          "Schedule"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "operationId": "get-schedule",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ]
+      },
+      "patch": {
+        "summary": "Update Schedule",
+        "operationId": "update-schedule",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "Schedule"
+        ],
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ]
+      },
+      "delete": {
+        "summary": "Delete Schedule",
+        "operationId": "delete-schedule",
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "tags": [
+          "Schedule"
+        ],
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ]
+      },
+      "put": {
+        "summary": "Update Schedule Object",
+        "operationId": "update-schedule-object",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "Schedule"
+        ],
+        "description": "",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ]
+      }
     }
   },
   "components": {
@@ -1017,6 +1129,18 @@
         "x-tags": [
           "Collector"
         ]
+      },
+      "Schedule-Object": {
+        "title": "Schedule Object",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          }
+        },
+        "x-tags": [
+          "Schedule"
+        ]
       }
     },
     "parameters": {
@@ -1098,6 +1222,16 @@
           "example": "application/json"
         },
         "description": "application/json"
+      },
+      "scheduleId": {
+        "name": "scheduleId",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "description": "A valid schedule UUID"
       }
     },
     "securitySchemes": {
