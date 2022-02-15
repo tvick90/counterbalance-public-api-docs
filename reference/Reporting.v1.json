@@ -15,9 +15,6 @@
     "/v1/reporting/plot": {
       "get": {
         "summary": "List Trend Plots",
-        "tags": [
-          "Trend Plots"
-        ],
         "responses": {
           "200": {
             "$ref": "#/components/responses/200-Plot-Listing"
@@ -65,6 +62,9 @@
             "name": "description",
             "description": "Filter results by plot object description. Accepts * wildcard searches."
           }
+        ],
+        "tags": [
+          "Trend Plot"
         ]
       },
       "post": {
@@ -76,9 +76,6 @@
           }
         },
         "description": "Create a trend plot object\n\n**Required Permissions:** `*`,`reporting:*`,`reporting:plot:*`,`reporting:plot:create`",
-        "tags": [
-          "Trend Plots"
-        ],
         "requestBody": {
           "$ref": "#/components/requestBodies/Create-Plot-Object"
         },
@@ -97,6 +94,9 @@
             "name": "Content-Type",
             "required": true
           }
+        ],
+        "tags": [
+          "Trend Plot"
         ]
       },
       "parameters": []
@@ -116,9 +116,6 @@
       ],
       "get": {
         "summary": "Get Trend Plot",
-        "tags": [
-          "Trend Plots"
-        ],
         "responses": {
           "200": {
             "$ref": "#/components/responses/200-Plot-Object"
@@ -133,6 +130,9 @@
           {
             "Bearer": []
           }
+        ],
+        "tags": [
+          "Trend Plot"
         ]
       },
       "patch": {
@@ -146,9 +146,6 @@
             "$ref": "#/components/responses/404-Plot-Not-Found"
           }
         },
-        "tags": [
-          "Trend Plots"
-        ],
         "description": "Update a trend plot object\n\n**Required Permissions:** `*`,`reporting:*`,`reporting:plot:*`,`reporting:plot:update`",
         "parameters": [
           {
@@ -169,6 +166,9 @@
           {
             "Bearer": []
           }
+        ],
+        "tags": [
+          "Trend Plot"
         ]
       },
       "delete": {
@@ -189,7 +189,7 @@
           }
         ],
         "tags": [
-          "Trend Plots"
+          "Trend Plot"
         ]
       }
     },
@@ -296,12 +296,108 @@
           }
         ]
       }
+    },
+    "/v1/reporting/schedule": {
+      "get": {
+        "summary": "List Scheduled Reports",
+        "tags": [
+          "Report Scheduler"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "operationId": "list-scheduled-reports",
+        "description": "",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      },
+      "post": {
+        "summary": "Create Scheduled Report",
+        "operationId": "create-scheduled-report",
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        },
+        "tags": [
+          "Report Scheduler"
+        ],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/v1/reporting/schedule/{scheduleId}": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/scheduleId"
+        }
+      ],
+      "get": {
+        "summary": "Get Scheduled Report",
+        "tags": [
+          "Report Scheduler"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "operationId": "get-scheduled-report",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      },
+      "patch": {
+        "summary": "Update Scheduled Report",
+        "operationId": "update-scheduled-report",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "tags": [
+          "Report Scheduler"
+        ],
+        "description": ""
+      },
+      "delete": {
+        "summary": "Delete Scheduled Report",
+        "operationId": "delete-scheduled-report",
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "tags": [
+          "Report Scheduler"
+        ]
+      }
     }
   },
   "components": {
     "schemas": {
       "Plot-Object": {
-        "title": "Plot Object",
+        "title": "Trend Plot Object",
         "type": "object",
         "description": "",
         "examples": [],
@@ -368,6 +464,30 @@
           "name",
           "config"
         ]
+      },
+      "Report-Schedule-Object": {
+        "title": "Report Schedule Object",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          }
+        },
+        "x-tags": [
+          "Report Scheduler"
+        ]
+      },
+      "Report-Group-Object": {
+        "title": "Report Group Object",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          }
+        },
+        "x-tags": [
+          "Report Group"
+        ]
       }
     },
     "securitySchemes": {
@@ -406,6 +526,16 @@
           "format": "uuid"
         },
         "description": "A valid report group UUID"
+      },
+      "scheduleId": {
+        "name": "scheduleId",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "description": "A valid scheduled report UUID"
       }
     },
     "responses": {
@@ -636,7 +766,13 @@
   },
   "tags": [
     {
-      "name": "Account Management"
+      "name": "Report Group"
+    },
+    {
+      "name": "Report Scheduler"
+    },
+    {
+      "name": "Trend Plot"
     }
   ]
 }
