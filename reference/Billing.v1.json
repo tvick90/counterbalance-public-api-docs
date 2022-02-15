@@ -6,270 +6,781 @@
   },
   "servers": [
     {
-      "url": "https://api.counterbalance.io"
+      "url": "https://api.counterbalance.io",
+      "description": "Production API"
     }
   ],
   "paths": {
-    "/users/{userId}": {
+    "/v1/billing/account": {
+      "get": {
+        "summary": "Get Billing Account",
+        "tags": [
+          "Billing Account"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "operationId": "get-billing-account",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ]
+      },
+      "post": {
+        "summary": "Create Billing Account",
+        "operationId": "create-billing-account",
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        },
+        "description": "",
+        "tags": [
+          "Billing Account"
+        ],
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ]
+      },
+      "parameters": [],
+      "patch": {
+        "summary": "Update Billing Account",
+        "operationId": "update-billing-account",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "Billing Account"
+        ],
+        "description": "",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ]
+      },
+      "delete": {
+        "summary": "Delete Billing Account",
+        "operationId": "delete-billing-account",
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ],
+        "tags": [
+          "Billing Account"
+        ],
+        "description": ""
+      }
+    },
+    "/v1/billing/account/sources": {
+      "get": {
+        "summary": "List Payment Sources",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "operationId": "list-payment-sources",
+        "description": "",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ],
+        "tags": [
+          "Payment Source"
+        ]
+      },
+      "parameters": [],
+      "post": {
+        "summary": "Create Payment Source",
+        "operationId": "create-payment-source",
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        },
+        "description": "",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ],
+        "tags": [
+          "Payment Source"
+        ]
+      }
+    },
+    "/v1/billing/account/sources/{sourceId}": {
       "parameters": [
         {
-          "schema": {
-            "type": "integer"
-          },
-          "name": "userId",
-          "in": "path",
-          "required": true,
-          "description": "Id of an existing user."
+          "$ref": "#/components/parameters/sourceId"
         }
       ],
       "get": {
-        "summary": "Get User Info by User ID",
-        "tags": [],
+        "summary": "Get Payment Source",
         "responses": {
           "200": {
-            "description": "User Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/User"
-                },
-                "examples": {
-                  "Get User Alice Smith": {
-                    "value": {
-                      "id": 142,
-                      "firstName": "Alice",
-                      "lastName": "Smith",
-                      "email": "alice.smith@gmail.com",
-                      "dateOfBirth": "1997-10-31",
-                      "emailVerified": true,
-                      "signUpDate": "2019-08-24"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "User Not Found"
+            "description": "OK"
           }
         },
-        "operationId": "get-users-userId",
-        "description": "Retrieve the information of the user with the matching user ID."
+        "operationId": "get-payment-source",
+        "description": "",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ],
+        "tags": [
+          "Payment Source"
+        ]
       },
       "patch": {
-        "summary": "Update User Information",
-        "operationId": "patch-users-userId",
+        "summary": "Update Payment Source",
+        "operationId": "update-payment-source",
         "responses": {
           "200": {
-            "description": "User Updated",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/User"
-                },
-                "examples": {
-                  "Updated User Rebecca Baker": {
-                    "value": {
-                      "id": 13,
-                      "firstName": "Rebecca",
-                      "lastName": "Baker",
-                      "email": "rebecca@gmail.com",
-                      "dateOfBirth": "1985-10-02",
-                      "emailVerified": false,
-                      "createDate": "2019-08-24"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "User Not Found"
-          },
-          "409": {
-            "description": "Email Already Taken"
+            "description": "OK"
           }
         },
-        "description": "Update the information of an existing user.",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "firstName": {
-                    "type": "string"
-                  },
-                  "lastName": {
-                    "type": "string"
-                  },
-                  "email": {
-                    "type": "string",
-                    "description": "If a new email is given, the user's email verified property will be set to false."
-                  },
-                  "dateOfBirth": {
-                    "type": "string"
-                  }
-                }
-              },
-              "examples": {
-                "Update First Name": {
-                  "value": {
-                    "firstName": "Rebecca"
-                  }
-                },
-                "Update Email": {
-                  "value": {
-                    "email": "rebecca@gmail.com"
-                  }
-                },
-                "Update Last Name & Date of Birth": {
-                  "value": {
-                    "lastName": "Baker",
-                    "dateOfBirth": "1985-10-02"
-                  }
-                }
-              }
-            }
-          },
-          "description": "Patch user properties to update."
-        }
+        "tags": [
+          "Payment Source"
+        ],
+        "description": "",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ]
+      },
+      "delete": {
+        "summary": "Delete Payment Source",
+        "operationId": "delete-payment-source",
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "tags": [
+          "Payment Source"
+        ],
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ]
       }
     },
-    "/user": {
+    "/v1/billing/subscription": {
+      "get": {
+        "summary": "List Subscriptions",
+        "tags": [
+          "Subscription"
+        ],
+        "responses": {},
+        "operationId": "list-subscriptions"
+      },
       "post": {
-        "summary": "Create New User",
-        "operationId": "post-user",
+        "summary": "Create Subscription",
+        "operationId": "create-subscription",
         "responses": {
-          "200": {
-            "description": "User Created",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/User"
-                },
-                "examples": {
-                  "New User Bob Fellow": {
-                    "value": {
-                      "id": 12,
-                      "firstName": "Bob",
-                      "lastName": "Fellow",
-                      "email": "bob.fellow@gmail.com",
-                      "dateOfBirth": "1996-08-24",
-                      "emailVerified": false,
-                      "createDate": "2020-11-18"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Missing Required Information"
-          },
-          "409": {
-            "description": "Email Already Taken"
+          "201": {
+            "description": "Created"
           }
         },
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "firstName": {
-                    "type": "string"
-                  },
-                  "lastName": {
-                    "type": "string"
-                  },
-                  "email": {
-                    "type": "string"
-                  },
-                  "dateOfBirth": {
-                    "type": "string",
-                    "format": "date"
-                  }
-                },
-                "required": [
-                  "firstName",
-                  "lastName",
-                  "email",
-                  "dateOfBirth"
-                ]
-              },
-              "examples": {
-                "Create User Bob Fellow": {
-                  "value": {
-                    "firstName": "Bob",
-                    "lastName": "Fellow",
-                    "email": "bob.fellow@gmail.com",
-                    "dateOfBirth": "1996-08-24"
-                  }
-                }
-              }
-            }
-          },
-          "description": "Post the necessary fields for the API to create a new user."
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ],
+        "description": "",
+        "tags": [
+          "Subscription"
+        ]
+      }
+    },
+    "/v1/billing/subscription/{subscriptionId}": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/subscriptionId"
+        }
+      ],
+      "get": {
+        "summary": "Get Subscription",
+        "tags": [
+          "Subscription"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
         },
-        "description": "Create a new user."
+        "operationId": "get-subscription",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ],
+        "description": ""
+      },
+      "patch": {
+        "summary": "Update Subscription",
+        "operationId": "update-subscription",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "description": "",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ],
+        "tags": [
+          "Subscription"
+        ]
+      },
+      "delete": {
+        "summary": "Delete Subscription",
+        "operationId": "delete-subscription",
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "description": "",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ],
+        "tags": [
+          "Subscription"
+        ]
+      }
+    },
+    "/v1/subscription/{subscriptionId}/upcoming-invoice": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/subscriptionId"
+        }
+      ],
+      "get": {
+        "summary": "Get Upcoming Invoice",
+        "tags": [
+          "Subscription"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "operationId": "get-subscription-upcoming-invoice",
+        "description": "",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ]
+      }
+    },
+    "/v1/billing/invoice": {
+      "get": {
+        "summary": "List Invoices",
+        "tags": [
+          "Invoice"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "operationId": "list-invoices",
+        "description": "",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ]
+      }
+    },
+    "/v1/invoice/{invoiceId}": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/invoiceId"
+        }
+      ],
+      "get": {
+        "summary": "Get Invoice",
+        "tags": [
+          "Invoice"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "operationId": "get-invoice",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ]
       }
     }
   },
   "components": {
     "schemas": {
-      "User": {
-        "title": "User",
-        "type": "object",
+      "Billing-Account-Object": {
         "description": "",
-        "x-examples": {
-          "Alice Smith": {
-            "id": 142,
-            "firstName": "Alice",
-            "lastName": "Smith",
-            "email": "alice.smith@gmail.com",
-            "dateOfBirth": "1997-10-31",
-            "emailVerified": true,
-            "signUpDate": "2019-08-24"
-          }
-        },
+        "type": "object",
+        "x-examples": {},
         "properties": {
           "id": {
-            "type": "integer",
-            "description": "Unique identifier for the given user."
+            "type": "string",
+            "readOnly": true
           },
-          "firstName": {
+          "created": {
+            "type": "string",
+            "minLength": 1
+          },
+          "currency": {
+            "type": "string",
+            "minLength": 1
+          },
+          "description": {
             "type": "string"
           },
-          "lastName": {
-            "type": "string"
+          "subscriptions": {
+            "type": "object",
+            "properties": {
+              "count": {
+                "type": "integer",
+                "readOnly": true
+              },
+              "index": {
+                "type": "array",
+                "uniqueItems": true,
+                "items": {
+                  "type": "string",
+                  "format": "uuid",
+                  "readOnly": true
+                }
+              },
+              "data": {
+                "type": "array",
+                "uniqueItems": true,
+                "minItems": 1,
+                "items": {
+                  "$ref": "#/components/schemas/Subscription-Object"
+                }
+              }
+            }
           },
-          "email": {
+          "sources": {
+            "type": "object",
+            "properties": {
+              "count": {
+                "type": "integer"
+              },
+              "index": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "data": {
+                "type": "array",
+                "uniqueItems": true,
+                "minItems": 1,
+                "items": {
+                  "$ref": "#/components/schemas/Payment-Source-Object"
+                }
+              }
+            }
+          },
+          "default_source": {
             "type": "string",
-            "format": "email"
+            "minLength": 1
           },
-          "dateOfBirth": {
-            "type": "string",
-            "format": "date",
-            "example": "1997-10-31"
+          "invoicing": {
+            "type": "object",
+            "properties": {
+              "prefix": {
+                "type": "string",
+                "minLength": 1
+              },
+              "next_sequence": {
+                "type": "integer",
+                "readOnly": true
+              }
+            }
           },
-          "emailVerified": {
+          "balance": {
+            "type": "number",
+            "readOnly": true
+          },
+          "delinquent": {
             "type": "boolean",
-            "description": "Set to true if the user's email has been verified."
+            "readOnly": true
           },
-          "createDate": {
-            "type": "string",
-            "format": "date",
-            "description": "The date that the user was created."
+          "billing": {
+            "type": "object",
+            "properties": {
+              "company": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "email": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "phone": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              },
+              "address": {
+                "type": "object",
+                "properties": {
+                  "lines": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "city": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "state": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "postcode": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              }
+            }
           }
         },
-        "required": [
-          "id",
-          "firstName",
-          "lastName",
-          "email",
-          "emailVerified"
+        "title": "Billing Account Object",
+        "x-tags": [
+          "Billing Account"
         ]
+      },
+      "Subscription-Object": {
+        "description": "",
+        "type": "object",
+        "x-examples": {},
+        "title": "Subscription Object",
+        "x-tags": [
+          "Subscription"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "sub_K5p1RfYtyRnfMG"
+          },
+          "created": {
+            "type": "string",
+            "example": "2021-08-23T13:40:18+0000"
+          },
+          "start_date": {
+            "type": "string",
+            "minLength": 1,
+            "format": "date-time",
+            "example": "2021-08-23T13:40:18+0000",
+            "readOnly": true
+          },
+          "status": {
+            "type": "string"
+          },
+          "billing": {
+            "type": "object",
+            "properties": {
+              "cycle_anchor": {
+                "type": "string",
+                "minLength": 1
+              },
+              "collection_method": {
+                "type": "string",
+                "minLength": 1
+              },
+              "paused": {
+                "type": "boolean"
+              },
+              "pause_collection": {
+                "type": "object",
+                "nullable": true
+              },
+              "current_period": {
+                "type": "object",
+                "properties": {
+                  "start": {
+                    "type": "string",
+                    "format": "date-time",
+                    "readOnly": true
+                  },
+                  "end": {
+                    "type": "string",
+                    "format": "date-time",
+                    "example": "2021-08-23T13:40:17+0000",
+                    "readOnly": true
+                  }
+                }
+              },
+              "default_source": {
+                "type": "string",
+                "nullable": true
+              }
+            }
+          },
+          "days_until_due": {
+            "type": "integer",
+            "nullable": true
+          },
+          "latest_invoice": {
+            "type": "string",
+            "minLength": 1
+          },
+          "items": {
+            "type": "object",
+            "properties": {
+              "count": {
+                "type": "number"
+              },
+              "index": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "data": {
+                "type": "array",
+                "uniqueItems": true,
+                "minItems": 1,
+                "items": {
+                  "$ref": "#/components/schemas/Subscription-Item-Object"
+                }
+              }
+            }
+          }
+        }
+      },
+      "Payment-Source-Object": {
+        "description": "",
+        "type": "object",
+        "x-examples": {},
+        "title": "Payment Source Object",
+        "x-tags": [
+          "Payment Source"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "readOnly": true
+          },
+          "nickname": {
+            "type": "string"
+          },
+          "cardholder_name": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "brand": {
+            "type": "string"
+          },
+          "funding": {
+            "type": "string",
+            "readOnly": true
+          },
+          "last4": {
+            "type": "string",
+            "readOnly": true
+          },
+          "expiration": {
+            "type": "object",
+            "properties": {
+              "month": {
+                "type": "number"
+              },
+              "year": {
+                "type": "number"
+              }
+            }
+          },
+          "fingerprint": {
+            "type": "string",
+            "readOnly": true
+          },
+          "cvc_check": {
+            "type": "string",
+            "readOnly": true
+          }
+        }
+      },
+      "Invoice-Object": {
+        "title": "Invoice-Object",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          }
+        }
+      },
+      "Subscription-Item-Object": {
+        "description": "",
+        "type": "object",
+        "x-examples": {},
+        "title": "Subscription Item Object",
+        "x-tags": [
+          "Subscription"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "created": {
+            "type": "string",
+            "minLength": 1
+          },
+          "product": {
+            "type": "string",
+            "minLength": 1
+          },
+          "plan": {
+            "type": "string",
+            "minLength": 1
+          },
+          "price": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "scheme": {
+                "type": "string",
+                "minLength": 1
+              },
+              "unit_amount": {
+                "type": "number"
+              },
+              "frequency": {
+                "type": "string",
+                "minLength": 1
+              },
+              "interval": {
+                "type": "number"
+              }
+            }
+          },
+          "usage_type": {
+            "type": "string",
+            "minLength": 1
+          },
+          "quantity": {
+            "type": "number"
+          },
+          "name": {}
+        }
+      }
+    },
+    "securitySchemes": {
+      "Bearer Token": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    },
+    "parameters": {
+      "sourceId": {
+        "name": "sourceId",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "A valid payment source ID"
+      },
+      "invoiceId": {
+        "name": "invoiceId",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "A valid invoice ID"
+      },
+      "subscriptionId": {
+        "name": "subscriptionId",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "A valid subscription ID"
+      }
+    },
+    "requestBodies": {
+      "Create-Billing-Account": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      },
+      "Create-Payment-Source": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      },
+      "Update-Payment-Source": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      },
+      "Update-Billing-Account": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
       }
     }
   }
