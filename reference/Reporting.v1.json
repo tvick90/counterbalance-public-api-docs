@@ -401,9 +401,6 @@
         "type": "object",
         "description": "",
         "examples": [],
-        "x-tags": [
-          "Trend Plots"
-        ],
         "properties": {
           "id": {
             "type": "string",
@@ -463,6 +460,9 @@
           "@owner",
           "name",
           "config"
+        ],
+        "x-tags": [
+          "Trend Plot"
         ]
       },
       "Report-Schedule-Object": {
