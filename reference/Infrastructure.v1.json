@@ -403,6 +403,103 @@
           "$ref": "#/components/requestBodies/Put-Gateway-Service"
         }
       }
+    },
+    "/v1/infrastructure/network": {
+      "get": {
+        "summary": "List Networks",
+        "tags": [
+          "Network"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "operationId": "list-networks",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ]
+      },
+      "post": {
+        "summary": "Create Network",
+        "operationId": "create-network",
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        },
+        "tags": [
+          "Network"
+        ],
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ]
+      }
+    },
+    "/v1/infrastructure/network/{networkId}": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/networkId"
+        }
+      ],
+      "get": {
+        "summary": "Get Network",
+        "tags": [
+          "Network"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "operationId": "get-network",
+        "description": "",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ]
+      },
+      "patch": {
+        "summary": "Update Network",
+        "operationId": "update-network",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ],
+        "tags": [
+          "Network"
+        ],
+        "description": ""
+      },
+      "delete": {
+        "summary": "Delete Network",
+        "operationId": "delete-network",
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ],
+        "tags": [
+          "Network"
+        ],
+        "description": ""
+      }
     }
   },
   "components": {
@@ -522,7 +619,7 @@
       "Controller-Object": {
         "description": "",
         "type": "object",
-        "title": "Field Controller Object",
+        "title": "Controller Object",
         "x-examples": {},
         "properties": {
           "id": {
@@ -872,7 +969,7 @@
         ]
       },
       "Network-Object": {
-        "title": "Network-Object",
+        "title": "Network Object",
         "type": "object",
         "properties": {
           "id": {
