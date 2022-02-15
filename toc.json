@@ -21,11 +21,6 @@
     },
     {
       "type": "item",
-      "title": "Reporting",
-      "uri": "reference/Reporting.v1.json"
-    },
-    {
-      "type": "item",
       "title": "Subscription & Billing",
       "uri": "reference/Billing.v1.json"
     },
@@ -59,11 +54,6 @@
     },
     {
       "type": "item",
-      "title": "Automation",
-      "uri": "reference/Automation.v1.json"
-    },
-    {
-      "type": "item",
       "title": "Equipment",
       "uri": "reference/Equipment.v1.json"
     },
@@ -71,6 +61,25 @@
       "type": "item",
       "title": "Sites",
       "uri": "reference/Sites.v1.json"
+    },
+    {
+      "type": "divider",
+      "title": "Smart Buildings"
+    },
+    {
+      "type": "item",
+      "title": "Automation",
+      "uri": "reference/Automation.v1.json"
+    },
+    {
+      "type": "item",
+      "title": "Intelligence",
+      "uri": "reference/Intelligence.v1.json"
+    },
+    {
+      "type": "item",
+      "title": "Reporting",
+      "uri": "reference/Reporting.v1.json"
     }
   ]
 }

@@ -20,9 +20,6 @@
     "/v1/tenant": {
       "get": {
         "summary": "Get Tenant Account",
-        "tags": [
-          "Tenant Account"
-        ],
         "responses": {
           "200": {
             "$ref": "#/components/responses/200-Tenant-Account"
@@ -34,6 +31,9 @@
           {
             "Bearer Token": []
           }
+        ],
+        "tags": [
+          "Account"
         ]
       },
       "post": {
@@ -124,9 +124,6 @@
             }
           }
         },
-        "tags": [
-          "Tenant Account"
-        ],
         "parameters": [
           {
             "schema": {
@@ -136,6 +133,9 @@
             "in": "header",
             "name": "Content-Type"
           }
+        ],
+        "tags": [
+          "Account"
         ]
       },
       "patch": {
@@ -180,9 +180,6 @@
           },
           "description": ""
         },
-        "tags": [
-          "Tenant Account"
-        ],
         "parameters": [
           {
             "schema": {
@@ -192,6 +189,9 @@
             "in": "header",
             "name": "Content-Type"
           }
+        ],
+        "tags": [
+          "Account"
         ]
       },
       "delete": {
@@ -204,16 +204,13 @@
         },
         "description": "Delete the tenant account of the authenticated user\n\nThe following prerequisites are required for this endpoint:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`tenant:*`,`tenant:account:*`,`tenant:account:delete`\n\n### Immediate Account Termination",
         "tags": [
-          "Tenant Account"
+          "Account"
         ]
       }
     },
     "/v1/tenant/quota": {
       "get": {
         "summary": "Get Tenant Quota Summary",
-        "tags": [
-          "Tenant Quota"
-        ],
         "responses": {
           "200": {
             "$ref": "#/components/responses/200-Tenant-Quota-Summary"
@@ -236,6 +233,9 @@
             "name": "features_only",
             "description": "Only return the authorized features, excludes quota summary and usage details"
           }
+        ],
+        "tags": [
+          "Quota"
         ]
       }
     },
@@ -302,7 +302,7 @@
           }
         },
         "tags": [
-          "Tenant Operations"
+          "Operations"
         ]
       }
     },
@@ -338,16 +338,13 @@
           "description": "*No request body is necesssary for this request*"
         },
         "tags": [
-          "Tenant Operations"
+          "Operations"
         ]
       }
     },
     "/v1/tenant/preferences": {
       "get": {
         "summary": "Get Tenant Preferences",
-        "tags": [
-          "Tenant Preferences"
-        ],
         "responses": {
           "200": {
             "$ref": "#/components/responses/200-Tenant-Preferences"
@@ -369,6 +366,9 @@
             "name": "Content-Type",
             "description": "application/json"
           }
+        ],
+        "tags": [
+          "Preferences"
         ]
       },
       "patch": {
@@ -405,7 +405,7 @@
           }
         },
         "tags": [
-          "Tenant Preferences"
+          "Preferences"
         ]
       }
     },
@@ -432,7 +432,7 @@
           }
         ],
         "tags": [
-          "Tenant Operations"
+          "Operations"
         ]
       }
     }
@@ -442,7 +442,7 @@
       "Tenant-Account": {
         "description": "",
         "type": "object",
-        "title": "Object",
+        "title": "Tenant Account Object",
         "x-examples": {
           "Example": {
             "id": "d6797ebf-5b00-4a59-b3e5-19711b4c55bb",
@@ -520,9 +520,6 @@
             }
           }
         },
-        "x-tags": [
-          "Tenant Account"
-        ],
         "properties": {
           "id": {
             "type": "string",
@@ -712,7 +709,10 @@
               }
             }
           }
-        }
+        },
+        "x-tags": [
+          "Account"
+        ]
       },
       "Tenant-Quota-Summary": {
         "description": "",
@@ -940,8 +940,11 @@
           "composition",
           "features"
         ],
-        "title": "Object",
-        "x-internal": false
+        "title": "Tenant Quota Object",
+        "x-internal": false,
+        "x-tags": [
+          "Quota"
+        ]
       },
       "Tenant-Preferences": {
         "description": "",
@@ -979,9 +982,9 @@
             }
           }
         },
-        "title": "Object",
+        "title": "Tenant Preferences Object",
         "x-tags": [
-          "Tenant Preferences"
+          "Preferences"
         ]
       },
       "Tenant-Deletion-PIN": {
@@ -1005,10 +1008,10 @@
           "Tenant Operations"
         ]
       },
-      "Tenant-Quota-Item-Summary": {
+      "Tenant-Quota-Item-Object": {
         "description": "",
         "type": "object",
-        "title": "Quota Item Summary",
+        "title": "Quota Item Object",
         "properties": {
           "usage": {
             "type": "number",
@@ -1052,22 +1055,10 @@
               }
             }
           }
-        }
-      },
-      "Generic-Response": {
-        "description": "",
-        "type": "object",
-        "x-examples": {
-          "example-1": {
-            "success_message": "..."
-          }
         },
-        "properties": {
-          "success_message": {
-            "type": "string"
-          }
-        },
-        "title": "Generic Response"
+        "x-tags": [
+          "Quota"
+        ]
       }
     },
     "securitySchemes": {
@@ -1481,7 +1472,12 @@
         "content": {
           "application/json": {
             "schema": {
-              "$ref": "#/components/schemas/Generic-Response"
+              "type": "object",
+              "properties": {
+                "success_message": {
+                  "type": "string"
+                }
+              }
             },
             "examples": {
               "Response": {
