@@ -258,7 +258,10 @@
         ],
         "tags": [
           "Collector"
-        ]
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/Create-Collector"
+        }
       },
       "post": {
         "summary": "Create Collector",
@@ -540,207 +543,6 @@
   },
   "components": {
     "schemas": {
-      "Get-Collector-Samples-Response-Body": {
-        "description": "",
-        "type": "object",
-        "title": "Get Collector Samples",
-        "properties": {
-          "count": {
-            "type": "number"
-          },
-          "range": {
-            "type": "object",
-            "properties": {
-              "start": {
-                "type": "number"
-              },
-              "end": {
-                "type": "number"
-              }
-            }
-          },
-          "integrity": {
-            "type": "object",
-            "properties": {
-              "sample_duration": {
-                "type": "number"
-              },
-              "expected_samples": {
-                "type": "number"
-              },
-              "missing_samples": {
-                "type": "number"
-              },
-              "quality": {
-                "type": "number"
-              }
-            }
-          },
-          "statistics": {
-            "type": "object",
-            "properties": {
-              "min": {
-                "type": [
-                  "number",
-                  "integer"
-                ],
-                "readOnly": true
-              },
-              "max": {
-                "type": [
-                  "number",
-                  "integer"
-                ],
-                "readOnly": true
-              },
-              "mean": {
-                "type": [
-                  "number",
-                  "integer"
-                ],
-                "readOnly": true
-              }
-            }
-          },
-          "health": {
-            "type": "object",
-            "properties": {
-              "event_state_distribution": {
-                "type": "object",
-                "properties": {
-                  "normal": {
-                    "type": "object",
-                    "properties": {
-                      "sample_count": {
-                        "type": "integer"
-                      },
-                      "percent_total": {
-                        "type": "integer"
-                      }
-                    }
-                  },
-                  "offnormal": {
-                    "type": "object",
-                    "properties": {
-                      "sample_count": {
-                        "type": "integer"
-                      },
-                      "percent_total": {
-                        "type": "integer"
-                      }
-                    }
-                  },
-                  "fault": {
-                    "type": "object",
-                    "properties": {
-                      "sample_count": {
-                        "type": "integer"
-                      },
-                      "percent_total": {
-                        "type": "integer"
-                      }
-                    }
-                  }
-                }
-              },
-              "status_distribution": {
-                "type": "object",
-                "properties": {
-                  "fault": {
-                    "type": "object",
-                    "properties": {
-                      "sample_count": {
-                        "type": "integer"
-                      },
-                      "percent_total": {
-                        "type": "integer"
-                      }
-                    }
-                  },
-                  "in_alarm": {
-                    "type": "object",
-                    "properties": {
-                      "sample_count": {
-                        "type": "integer"
-                      },
-                      "percent_total": {
-                        "type": "integer"
-                      }
-                    }
-                  },
-                  "overridden": {
-                    "type": "object",
-                    "properties": {
-                      "sample_count": {
-                        "type": "integer"
-                      },
-                      "percent_total": {
-                        "type": "integer"
-                      }
-                    }
-                  },
-                  "out_of_service": {
-                    "type": "object",
-                    "properties": {
-                      "sample_count": {
-                        "type": "integer"
-                      },
-                      "percent_total": {
-                        "type": "integer"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "data": {
-            "type": "array",
-            "uniqueItems": true,
-            "items": {
-              "type": "object",
-              "properties": {
-                "id": {
-                  "type": "string"
-                },
-                "timestamp": {
-                  "type": "string",
-                  "format": "date-time"
-                },
-                "value": {
-                  "type": "number"
-                },
-                "feedback_value": {},
-                "state_text": {},
-                "event_state": {
-                  "type": "string"
-                },
-                "priority_array": {},
-                "status_flags": {
-                  "type": "object",
-                  "properties": {
-                    "fault": {
-                      "type": "boolean"
-                    },
-                    "in_alarm": {
-                      "type": "boolean"
-                    },
-                    "overridden": {
-                      "type": "boolean"
-                    },
-                    "out_of_service": {
-                      "type": "boolean"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "": {
-            "type": "string"
-          }
-        }
-      },
       "Point-Object": {
         "description": "",
         "type": "object",
@@ -1992,10 +1794,41 @@
         "content": {
           "application/json": {
             "schema": {
-              "type": "object"
+              "type": "object",
+              "properties": {
+                "@point": {
+                  "type": "string",
+                  "format": "uuid",
+                  "description": "The UUID of the point to be collected"
+                },
+                "interval": {
+                  "type": "number",
+                  "format": "double",
+                  "default": 300,
+                  "enum": [
+                    300,
+                    900,
+                    1800,
+                    3600
+                  ],
+                  "description": "The frequency in which to sample the point"
+                }
+              },
+              "required": [
+                "@point"
+              ]
+            },
+            "examples": {
+              "Example": {
+                "value": {
+                  "@point": "52aa66de-e553-4383-9e16-52bfcd0efb0f",
+                  "interval": 300
+                }
+              }
             }
           }
-        }
+        },
+        "description": ""
       },
       "Command-Point": {
         "content": {
