@@ -192,7 +192,7 @@
         }
       ],
       "get": {
-        "summary": "List Available Field Controllers",
+        "summary": "List Available Controllers",
         "responses": {
           "200": {
             "$ref": "#/components/responses/200-Get-Gateway-Devices"
@@ -203,13 +203,13 @@
         },
         "operationId": "get-gateway-devices",
         "description": "Retrieve a list of available controllers connected via the specified gateway\n\n**Required Permissions:** `*`,`infrastructure:*`,`infrastructure:gateway:*`,`infrastructure:gateway:query`",
-        "tags": [
-          "Gateways"
-        ],
         "security": [
           {
             "Bearer Token": []
           }
+        ],
+        "tags": [
+          "Gateway Administration"
         ]
       }
     },
