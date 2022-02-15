@@ -227,9 +227,6 @@
     "/v1/telemetry/collector": {
       "get": {
         "summary": "List Collectors",
-        "tags": [
-          "Collectors"
-        ],
         "responses": {
           "200": {
             "$ref": "#/components/responses/200-Get-Collector-Listing"
@@ -258,6 +255,9 @@
           {
             "$ref": "#/components/parameters/@pointId"
           }
+        ],
+        "tags": [
+          "Collector"
         ]
       },
       "post": {
@@ -281,9 +281,6 @@
           {
             "$ref": "#/components/parameters/Content-Type"
           }
-        ],
-        "tags": [
-          "Collectors"
         ],
         "requestBody": {
           "content": {
@@ -324,7 +321,10 @@
             }
           },
           "description": ""
-        }
+        },
+        "tags": [
+          "Collector"
+        ]
       },
       "parameters": []
     },
@@ -336,9 +336,6 @@
       ],
       "get": {
         "summary": "Get Collector",
-        "tags": [
-          "Collectors"
-        ],
         "responses": {
           "200": {
             "$ref": "#/components/responses/200-Get-Collector"
@@ -358,6 +355,9 @@
           {
             "$ref": "#/components/parameters/Content-Type"
           }
+        ],
+        "tags": [
+          "Collector"
         ]
       },
       "delete": {
@@ -376,15 +376,15 @@
             }
           }
         },
-        "tags": [
-          "Collectors"
-        ],
         "description": "Delete a point collector\n\n**Required Permissions:** `*`,`telemetry:*`,`telemetry:collector:*`,`telemetry:collector:delete`",
         "parameters": [],
         "security": [
           {
             "Bearer Token": []
           }
+        ],
+        "tags": [
+          "Collector"
         ]
       }
     },
@@ -396,9 +396,6 @@
       ],
       "get": {
         "summary": "Sample Collector Data",
-        "tags": [
-          "Collectors"
-        ],
         "responses": {
           "200": {
             "$ref": "#/components/responses/200-Get-Collector-Samples"
@@ -456,6 +453,9 @@
           {
             "Bearer Token": []
           }
+        ],
+        "tags": [
+          "Collector"
         ]
       }
     },
@@ -927,73 +927,11 @@
           "Point"
         ]
       },
-      "Point-Listing": {
-        "description": "",
-        "type": "object",
-        "title": "Point Listing",
-        "properties": {
-          "count": {
-            "type": "number"
-          },
-          "data": {
-            "type": "array",
-            "uniqueItems": false,
-            "items": {
-              "type": "object",
-              "additionalProperties": false,
-              "properties": {
-                "id": {
-                  "type": "string"
-                },
-                "controller": {
-                  "type": "string"
-                },
-                "created": {
-                  "type": "number"
-                },
-                "name": {
-                  "type": "string"
-                },
-                "description": {
-                  "type": "string"
-                },
-                "object_type": {
-                  "type": "number"
-                },
-                "instance_id": {
-                  "type": "number"
-                },
-                "@site": {
-                  "type": "string",
-                  "format": "uuid"
-                },
-                "units": {
-                  "type": "object",
-                  "properties": {
-                    "id": {
-                      "type": "integer"
-                    },
-                    "raw": {
-                      "type": "string"
-                    },
-                    "short": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "bacnet": {
-                  "nullable": true
-                }
-              }
-            }
-          }
-        }
-      },
       "Collector-Object": {
         "description": "",
         "type": "object",
         "x-examples": {},
-        "title": "Collector Details",
+        "title": "Collector Object",
         "properties": {
           "id": {
             "type": "string",
@@ -1077,7 +1015,206 @@
             "format": "uuid",
             "nullable": true
           }
-        }
+        },
+        "x-tags": [
+          "Collector"
+        ]
+      },
+      "Collector-Sample-Object": {
+        "description": "",
+        "type": "object",
+        "x-examples": {
+          "Response": {
+            "$ref": "#/components/examples/Get-Collector-Samples"
+          }
+        },
+        "properties": {
+          "count": {
+            "type": "number"
+          },
+          "range": {
+            "type": "object",
+            "properties": {
+              "start": {
+                "type": "number"
+              },
+              "end": {
+                "type": "number"
+              }
+            }
+          },
+          "integrity": {
+            "type": "object",
+            "properties": {
+              "sample_duration": {
+                "type": "number"
+              },
+              "expected_samples": {
+                "type": "number"
+              },
+              "missing_samples": {
+                "type": "number"
+              },
+              "quality": {
+                "type": "number"
+              }
+            }
+          },
+          "data": {
+            "type": "array",
+            "uniqueItems": true,
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "timestamp": {
+                  "type": "number"
+                },
+                "value": {
+                  "type": "number"
+                },
+                "feedback_value": {},
+                "state_text": {},
+                "event_state": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "priority_array": {},
+                "status_flags": {
+                  "type": "object",
+                  "properties": {
+                    "fault": {
+                      "type": "boolean"
+                    },
+                    "in_alarm": {
+                      "type": "boolean"
+                    },
+                    "overridden": {
+                      "type": "boolean"
+                    },
+                    "out_of_service": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "statistics": {
+            "type": "object",
+            "properties": {
+              "min": {
+                "type": "number"
+              },
+              "max": {
+                "type": "number"
+              },
+              "mean": {
+                "type": "number"
+              }
+            }
+          },
+          "health": {
+            "type": "object",
+            "properties": {
+              "event_state_distribution": {
+                "type": "object",
+                "properties": {
+                  "normal": {
+                    "type": "object",
+                    "properties": {
+                      "sample_count": {
+                        "type": "number"
+                      },
+                      "percent_total": {
+                        "type": "number"
+                      }
+                    }
+                  },
+                  "offnormal": {
+                    "type": "object",
+                    "properties": {
+                      "sample_count": {
+                        "type": "number"
+                      },
+                      "percent_total": {
+                        "type": "number"
+                      }
+                    }
+                  },
+                  "fault": {
+                    "type": "object",
+                    "properties": {
+                      "sample_count": {
+                        "type": "number"
+                      },
+                      "percent_total": {
+                        "type": "number"
+                      }
+                    }
+                  }
+                }
+              },
+              "status_distribution": {
+                "type": "object",
+                "properties": {
+                  "fault": {
+                    "type": "object",
+                    "properties": {
+                      "sample_count": {
+                        "type": "number"
+                      },
+                      "percent_total": {
+                        "type": "number"
+                      }
+                    }
+                  },
+                  "in_alarm": {
+                    "type": "object",
+                    "properties": {
+                      "sample_count": {
+                        "type": "number"
+                      },
+                      "percent_total": {
+                        "type": "number"
+                      }
+                    }
+                  },
+                  "overridden": {
+                    "type": "object",
+                    "properties": {
+                      "sample_count": {
+                        "type": "number"
+                      },
+                      "percent_total": {
+                        "type": "number"
+                      }
+                    }
+                  },
+                  "out_of_service": {
+                    "type": "object",
+                    "properties": {
+                      "sample_count": {
+                        "type": "number"
+                      },
+                      "percent_total": {
+                        "type": "number"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "title": "Collector Sample Object",
+        "x-tags": [
+          "Collector"
+        ]
       }
     },
     "parameters": {
@@ -1218,7 +1355,7 @@
         "content": {
           "application/json": {
             "schema": {
-              "$ref": "#/components/schemas/Get-Collector-Samples-Response-Body"
+              "$ref": "#/components/schemas/Collector-Sample-Object"
             },
             "examples": {
               "Response": {
@@ -1335,7 +1472,7 @@
         "content": {
           "application/json": {
             "schema": {
-              "$ref": "#/components/schemas/Collector-Details"
+              "$ref": "#/components/schemas/Collector-Object"
             },
             "examples": {
               "Response": {
@@ -1353,21 +1490,6 @@
           }
         }
       },
-      "201-Create-Collector": {
-        "description": "Created",
-        "content": {
-          "application/json": {
-            "schema": {
-              "$ref": "#/components/schemas/Collector-Details"
-            },
-            "examples": {
-              "Response": {
-                "$ref": "#/components/examples/Get-Collector-Details"
-              }
-            }
-          }
-        }
-      },
       "200-Get-Collector-Listing": {
         "description": "Ok",
         "content": {
@@ -1379,46 +1501,23 @@
                   "type": "integer",
                   "readOnly": true
                 },
+                "index": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
                 "data": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Collector-Details"
+                    "$ref": "#/components/schemas/Collector-Object"
                   }
                 }
               }
             },
             "examples": {
               "Response": {
-                "value": {
-                  "count": 1,
-                  "data": [
-                    {
-                      "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
-                      "created": "2019-08-24T14:15:22Z",
-                      "expires": null,
-                      "interval": 300,
-                      "sample_count": 0,
-                      "source": {
-                        "point": {
-                          "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
-                          "object_type": 0,
-                          "instance_id": 0,
-                          "name": "string",
-                          "description": "string"
-                        },
-                        "controller": {
-                          "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
-                          "device_id": 0,
-                          "name": "string"
-                        },
-                        "gateway": {
-                          "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08"
-                        }
-                      },
-                      "@site": "451f769d-1122-4c11-a645-7d2ed505aa0b"
-                    }
-                  ]
-                }
+                "$ref": "#/components/examples/Get-Collector-Details"
               }
             }
           }
