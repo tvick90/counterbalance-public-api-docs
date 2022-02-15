@@ -359,7 +359,7 @@
         "operationId": "send-whois",
         "responses": {
           "200": {
-            "$ref": "#/components/responses/200-Gateway-Updated"
+            "$ref": "#/components/responses/200-Gateway-Whois"
           },
           "404": {
             "$ref": "#/components/responses/404-Gateway-Not-Found"
