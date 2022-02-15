@@ -2,16 +2,43 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Intelligence",
-    "version": "1.0",
+    "version": "1.0.0",
     "description": ""
   },
   "servers": [
     {
-      "url": "http://localhost:3000"
+      "url": "https://api.counterbalance.io",
+      "description": "Production API"
     }
   ],
-  "paths": {},
+  "paths": {
+    "/v1/intelligence/rule": {
+      "get": {
+        "summary": "List Rules",
+        "tags": [
+          "Fault Detection"
+        ],
+        "responses": {},
+        "operationId": "list-fdd-rules",
+        "description": ""
+      }
+    }
+  },
   "components": {
     "schemas": {}
-  }
+  },
+  "tags": [
+    {
+      "name": "Connectivity & Telemetry"
+    },
+    {
+      "name": "Environment Health"
+    },
+    {
+      "name": "Equipment Insights"
+    },
+    {
+      "name": "Fault Detection"
+    }
+  ]
 }

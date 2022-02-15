@@ -78,6 +78,11 @@
     },
     {
       "type": "item",
+      "title": "Metering",
+      "uri": "reference/Metering.v1.json"
+    },
+    {
+      "type": "item",
       "title": "Reporting",
       "uri": "reference/Reporting.v1.json"
     }

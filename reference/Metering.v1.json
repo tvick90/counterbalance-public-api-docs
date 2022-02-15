@@ -1,0 +1,90 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Metering",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.counterbalance.io",
+      "description": "Production API"
+    }
+  ],
+  "paths": {
+    "/v1/metering/node": {
+      "get": {
+        "summary": "List Meter Nodes",
+        "tags": [
+          "Node"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "operationId": "list-meter-nodes",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ],
+        "description": ""
+      },
+      "post": {
+        "summary": "Create Meter Node",
+        "operationId": "create-meter-node",
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        },
+        "tags": [
+          "Node"
+        ],
+        "description": "",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Meter-Node-Object": {
+        "title": "Meter Node Object",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          }
+        },
+        "x-tags": [
+          "Node"
+        ]
+      }
+    },
+    "securitySchemes": {
+      "Bearer Token": {
+        "type": "http",
+        "scheme": "bearer",
+        "description": ""
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Consumption"
+    },
+    {
+      "name": "Fuel Types"
+    },
+    {
+      "name": "Meter Groups"
+    },
+    {
+      "name": "Node"
+    }
+  ]
+}
