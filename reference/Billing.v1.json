@@ -19,7 +19,7 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "$ref": "#/components/responses/200-GET-Billing-Account"
           }
         },
         "operationId": "get-billing-account",
@@ -27,7 +27,8 @@
           {
             "Bearer Token": []
           }
-        ]
+        ],
+        "description": "Retrieve tenant billing account\n\n**Required Permissions:** `*`,`billing:*`,`billing:account:*`,`billing:account:read`"
       },
       "post": {
         "summary": "Create Billing Account",
@@ -37,7 +38,7 @@
             "description": "Created"
           }
         },
-        "description": "",
+        "description": "Create tenant billing account\n\n**Required Permissions:** `*`,`billing:*`,`billing:account:*`,`billing:account:create`",
         "tags": [
           "Billing Account"
         ],
@@ -59,7 +60,7 @@
         "tags": [
           "Billing Account"
         ],
-        "description": "",
+        "description": "Update tenant billing account\n\n**Required Permissions:** `*`,`billing:*`,`billing:account:*`,`billing:account:update`",
         "security": [
           {
             "Bearer Token": []
@@ -82,7 +83,7 @@
         "tags": [
           "Billing Account"
         ],
-        "description": ""
+        "description": "Delete/remove tenant billing account\n\n**Required Permissions:** `*`,`billing:*`,`billing:account:*`,`billing:account:delete`"
       }
     },
     "/v1/billing/account/sources": {
@@ -90,11 +91,11 @@
         "summary": "List Payment Sources",
         "responses": {
           "200": {
-            "description": "OK"
+            "$ref": "#/components/responses/200-GET-Payment-Sources"
           }
         },
         "operationId": "list-payment-sources",
-        "description": "",
+        "description": "List payment sources\n\n**Required Permissions:** `*`,`billing:*`,`billing:sources:*`,`billing:sources:read`",
         "security": [
           {
             "Bearer Token": []
@@ -113,7 +114,7 @@
             "description": "Created"
           }
         },
-        "description": "",
+        "description": "Create a new payment source\n\n**Required Permissions:** `*`,`billing:*`,`billing:sources:*`,`billing:sources:create`",
         "security": [
           {
             "Bearer Token": []
@@ -138,7 +139,7 @@
           }
         },
         "operationId": "get-payment-source",
-        "description": "",
+        "description": "Retrieve a payment source\n\n**Required Permissions:** `*`,`billing:*`,`billing:sources:*`,`billing:sources:read`",
         "security": [
           {
             "Bearer Token": []
@@ -159,7 +160,7 @@
         "tags": [
           "Payment Source"
         ],
-        "description": "",
+        "description": "Update a payment source\n\n**Required Permissions:** `*`,`billing:*`,`billing:sources:*`,`billing:sources:update`",
         "security": [
           {
             "Bearer Token": []
@@ -181,7 +182,8 @@
           {
             "Bearer Token": []
           }
-        ]
+        ],
+        "description": "Delete a payment source\n\n**Required Permissions:** `*`,`billing:*`,`billing:sources:*`,`billing:sources:delete`"
       }
     },
     "/v1/billing/subscription": {
@@ -190,8 +192,13 @@
         "tags": [
           "Subscription"
         ],
-        "responses": {},
-        "operationId": "list-subscriptions"
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/200-GET-Subscriptions"
+          }
+        },
+        "operationId": "list-subscriptions",
+        "description": "Retrieve a list of subscriptions\n\n**Required Permissions:** `*`,`billing:*`,`billing:subscription:*`,`billing:subscription:read`"
       },
       "post": {
         "summary": "Create Subscription",
@@ -206,7 +213,7 @@
             "Bearer Token": []
           }
         ],
-        "description": "",
+        "description": "Create a new subscription\n\n**Required Permissions:** `*`,`billing:*`,`billing:subscription:*`,`billing:subscription:create`",
         "tags": [
           "Subscription"
         ]
@@ -225,7 +232,7 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "$ref": "#/components/responses/200-GET-Subscription"
           }
         },
         "operationId": "get-subscription",
@@ -234,7 +241,7 @@
             "Bearer Token": []
           }
         ],
-        "description": ""
+        "description": "Retrieve a subscription\n\n**Required Permissions:** `*`,`billing:*`,`billing:subscription:*`,`billing:subscription:read`"
       },
       "patch": {
         "summary": "Update Subscription",
@@ -244,7 +251,7 @@
             "description": "OK"
           }
         },
-        "description": "",
+        "description": "Update a subscription\n\n**Required Permissions:** `*`,`billing:*`,`billing:subscription:*`,`billing:subscription:update`",
         "security": [
           {
             "Bearer Token": []
@@ -262,7 +269,7 @@
             "description": "No Content"
           }
         },
-        "description": "",
+        "description": "Delete a subscription\n\n**Required Permissions:** `*`,`billing:*`,`billing:subscription:*`,`billing:subscription:delete`",
         "security": [
           {
             "Bearer Token": []
@@ -290,7 +297,7 @@
           }
         },
         "operationId": "get-subscription-upcoming-invoice",
-        "description": "",
+        "description": "Get upcoming invoice\n\n**Required Permissions:** `*`,`billing:*`,`billing:invoice:*`,`billing:invoice:read`",
         "security": [
           {
             "Bearer Token": []
@@ -310,7 +317,7 @@
           }
         },
         "operationId": "list-invoices",
-        "description": "",
+        "description": "List invoices\n\n**Required Permissions:** `*`,`billing:*`,`billing:invoice:*`,`billing:invoice:read`",
         "security": [
           {
             "Bearer Token": []
@@ -340,7 +347,7 @@
             "Bearer Token": []
           }
         ],
-        "description": ""
+        "description": "Retrieve an invoice\n\n**Required Permissions:** `*`,`billing:*`,`billing:invoice:*`,`billing:invoice:read`"
       }
     }
   },
@@ -860,6 +867,48 @@
                   },
                   "logging_hash": "string"
                 }
+              }
+            }
+          }
+        }
+      },
+      "200-GET-Subscriptions": {
+        "description": "Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "count": {
+                  "type": "integer"
+                },
+                "index": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Subscription-Object"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "200-GET-Subscription": {
+        "description": "Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Subscription-Object"
+            },
+            "examples": {
+              "Response": {
+                "$ref": "#/components/examples/Subscription"
               }
             }
           }
