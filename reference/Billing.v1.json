@@ -198,6 +198,11 @@
           }
         },
         "operationId": "list-subscriptions",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ],
         "description": "Retrieve a list of subscriptions\n\n**Required Permissions:** `*`,`billing:*`,`billing:subscription:*`,`billing:subscription:read`"
       },
       "post": {
@@ -325,7 +330,7 @@
         ]
       }
     },
-    "/v1/invoice/{invoiceId}": {
+    "/v1/billing/invoice/{invoiceId}": {
       "parameters": [
         {
           "$ref": "#/components/parameters/invoiceId"
