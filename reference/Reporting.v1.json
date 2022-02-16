@@ -12,6 +12,103 @@
     }
   ],
   "paths": {
+    "/v1/reporting/report": {
+      "get": {
+        "summary": "List Reports",
+        "tags": [
+          "Report"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "operationId": "list-reports",
+        "description": "",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      },
+      "post": {
+        "summary": "Create Report",
+        "operationId": "create-report",
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        },
+        "description": "## Report Types\n### Telemetry Report\n**Type:** `telemetry`",
+        "tags": [
+          "Report"
+        ],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/v1/reporting/report/{reportId}": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/reportId"
+        }
+      ],
+      "get": {
+        "summary": "Get Report",
+        "tags": [
+          "Report"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "operationId": "get-report",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      },
+      "patch": {
+        "summary": "Update Report",
+        "operationId": "update-report",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "Report"
+        ],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      },
+      "delete": {
+        "summary": "Delete Report",
+        "operationId": "delete-report",
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "tags": [
+          "Report"
+        ],
+        "description": "",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
     "/v1/reporting/plot": {
       "get": {
         "summary": "List Trend Plots",
@@ -477,7 +574,7 @@
           }
         },
         "x-tags": [
-          "Report Scheduler"
+          "Report Schedule"
         ]
       },
       "Report-Group-Object": {
@@ -768,6 +865,9 @@
     }
   },
   "tags": [
+    {
+      "name": "Report"
+    },
     {
       "name": "Report Group"
     },
