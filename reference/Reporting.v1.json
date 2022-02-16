@@ -299,39 +299,40 @@
     },
     "/v1/reporting/schedule": {
       "get": {
-        "summary": "List Scheduled Reports",
-        "tags": [
-          "Report Scheduler"
-        ],
+        "summary": "List Report Schedules",
         "responses": {
           "200": {
             "description": "OK"
           }
         },
-        "operationId": "list-scheduled-reports",
+        "operationId": "list-report-schedules",
         "description": "",
         "security": [
           {
             "Bearer": []
           }
+        ],
+        "tags": [
+          "Report Schedule"
         ]
       },
       "post": {
-        "summary": "Create Scheduled Report",
-        "operationId": "create-scheduled-report",
+        "summary": "Create Report Schedule",
+        "operationId": "create-report-schedule",
         "responses": {
           "201": {
             "description": "Created"
           }
         },
-        "tags": [
-          "Report Scheduler"
-        ],
         "security": [
           {
             "Bearer": []
           }
-        ]
+        ],
+        "tags": [
+          "Report Schedule"
+        ],
+        "description": ""
       }
     },
     "/v1/reporting/schedule/{scheduleId}": {
@@ -341,43 +342,44 @@
         }
       ],
       "get": {
-        "summary": "Get Scheduled Report",
-        "tags": [
-          "Report Scheduler"
-        ],
+        "summary": "Get Report Schedule",
         "responses": {
           "200": {
             "description": "OK"
           }
         },
-        "operationId": "get-scheduled-report",
-        "security": [
-          {
-            "Bearer": []
-          }
-        ]
-      },
-      "patch": {
-        "summary": "Update Scheduled Report",
-        "operationId": "update-scheduled-report",
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        },
+        "operationId": "get-report-schedule",
         "security": [
           {
             "Bearer": []
           }
         ],
         "tags": [
-          "Report Scheduler"
+          "Report Schedule"
         ],
         "description": ""
       },
+      "patch": {
+        "summary": "Update Report Schedule",
+        "operationId": "update-report-schedule",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "description": "",
+        "tags": [
+          "Report Schedule"
+        ]
+      },
       "delete": {
-        "summary": "Delete Scheduled Report",
-        "operationId": "delete-scheduled-report",
+        "summary": "Delete Report Schedule",
+        "operationId": "delete-report-schedule",
         "responses": {
           "204": {
             "description": "No Content"
@@ -388,8 +390,9 @@
             "Bearer": []
           }
         ],
+        "description": "",
         "tags": [
-          "Report Scheduler"
+          "Report Schedule"
         ]
       }
     }
@@ -769,7 +772,7 @@
       "name": "Report Group"
     },
     {
-      "name": "Report Scheduler"
+      "name": "Report Schedule"
     },
     {
       "name": "Trend Plot"
