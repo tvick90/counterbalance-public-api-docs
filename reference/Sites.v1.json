@@ -31,7 +31,7 @@
             "Bearer Token": []
           }
         ],
-        "description": "Retrieve a list of sites\n\n**Required Permissions:** `*`,`sites:*`,`sites:site:*`,`sites:site:list`\n\n### Filtering Results\nA combination of one or more query parameters may be used to filter returned data. Query parameters are stacked such that using multiple parameters will result in a narrower data set.\n\nWildcard searches are permitted on all query parameters. Wildcard searches are case insensitive and all data is forced to lowercase for matching purposes. See usage examples below.\n\n<!--\ntitle: \"Site Code Wildcard Search\"\nlineNumbers: false\n-->\n```text\nhttps://api.counterbalance.io/v1/site?code=*MN*\n```\n<!--\ntitle: \"Site Name Wildcard Search\"\nlineNumbers: false\n-->\n```text\nhttps://api.counterbalance.io/v1/site?name=*elementary*\n```",
+        "description": "Retrieve a list of site objects\n\n**Required Permissions:** `*`,`sites:*`,`sites:site:*`,`sites:site:list`\n\n### Filtering Results\nA combination of one or more query parameters may be used to filter returned data. Query parameters are stacked such that using multiple parameters will result in a narrower data set.\n\nWildcard searches are permitted on all query parameters. Wildcard searches are case insensitive and all data is forced to lowercase for matching purposes. See usage examples below.\n\n<!--\ntitle: \"Site Code Wildcard Search\"\nlineNumbers: false\n-->\n```text\nhttps://api.counterbalance.io/v1/site?code=*MN*\n```\n<!--\ntitle: \"Site Name Wildcard Search\"\nlineNumbers: false\n-->\n```text\nhttps://api.counterbalance.io/v1/site?name=*elementary*\n```",
         "parameters": [
           {
             "schema": {
@@ -70,7 +70,7 @@
             "$ref": "#/components/responses/200-Get-Site"
           }
         },
-        "description": "Create a new site\n\n**Required Permissions:** `*`,`sites:*`,`sites:site:*`,`sites:site:create`\n\n> **Heads Up** This endpoint is subject to `site` quota availabilty",
+        "description": "Create a new site object\n\n**Required Permissions:** `*`,`sites:*`,`sites:site:*`,`sites:site:create`\n\n> **Heads Up** This endpoint is subject to `site` quota availabilty",
         "security": [
           {
             "Bearer Token": []
@@ -112,7 +112,7 @@
           }
         },
         "operationId": "get-site",
-        "description": "Retrieve a site\n\n**Required Permissions:** `*`,`sites:*`,`sites:site:*`,`sites:site:read`",
+        "description": "Retrieve a site object\n\n**Required Permissions:** `*`,`sites:*`,`sites:site:*`,`sites:site:read`",
         "security": [
           {
             "Bearer Token": []
@@ -133,7 +133,7 @@
             "$ref": "#/components/responses/404-Site-Not-Found"
           }
         },
-        "description": "Update a site\n\n**Required Permissions:** `*`,`sites:*`,`sites:site:*`,`sites:site:update`",
+        "description": "Update a site object\n\n**Required Permissions:** `*`,`sites:*`,`sites:site:*`,`sites:site:update`",
         "security": [
           {
             "Bearer Token": []
@@ -144,7 +144,18 @@
         ],
         "requestBody": {
           "$ref": "#/components/requestBodies/Update-Site"
-        }
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "default": "application/json"
+            },
+            "in": "header",
+            "name": "Content-Type",
+            "required": true
+          }
+        ]
       },
       "delete": {
         "summary": "Delete Site",
@@ -167,7 +178,7 @@
             "$ref": "#/components/responses/404-Site-Not-Found"
           }
         },
-        "description": "Delete a site\n\n**Required Permissions:** `*`,`sites:*`,`sites:site:*`,`sites:site:delete`\n\n<!--theme: info -->\n> **Heads Up** Specified site must be void of any associated objects (floors, rooms, equipment, etc) otherwise the delete operation will fail\n\n<!-- theme: danger -->\n> **Danger** This cannot be undone!",
+        "description": "Delete a site object\n\n**Required Permissions:** `*`,`sites:*`,`sites:site:*`,`sites:site:delete`\n\n<!--theme: info -->\n> **Heads Up** Specified site must be void of any associated objects (floors, rooms, equipment, etc) otherwise the delete operation will fail\n\n<!-- theme: danger -->\n> **Danger** This cannot be undone!",
         "security": [
           {
             "Bearer Token": []
@@ -181,7 +192,7 @@
     "/v1/site/address": {
       "parameters": [],
       "put": {
-        "summary": "Add Address to Site or Building",
+        "summary": "Add Address to Site",
         "operationId": "create-address",
         "responses": {
           "201": {
@@ -212,9 +223,6 @@
             "Bearer Token": []
           }
         ],
-        "tags": [
-          "Addresses"
-        ],
         "parameters": [
           {
             "schema": {
@@ -237,7 +245,10 @@
         ],
         "requestBody": {
           "$ref": "#/components/requestBodies/Create-Address"
-        }
+        },
+        "tags": [
+          "Address"
+        ]
       }
     },
     "/v1/site/address/{addressId}": {
@@ -248,12 +259,9 @@
       ],
       "get": {
         "summary": "Get Address",
-        "tags": [
-          "Addresses"
-        ],
         "responses": {
           "200": {
-            "$ref": "#/components/responses/200-Address-Object"
+            "$ref": "#/components/responses/200-Get-Address"
           },
           "404": {
             "$ref": "#/components/responses/404-Address-Not-Found"
@@ -265,6 +273,9 @@
           {
             "Bearer Token": []
           }
+        ],
+        "tags": [
+          "Address"
         ]
       },
       "patch": {
@@ -272,13 +283,13 @@
         "operationId": "update-address",
         "responses": {
           "200": {
-            "$ref": "#/components/responses/200-Address-Object"
+            "$ref": "#/components/responses/200-Get-Address"
           },
           "404": {
             "$ref": "#/components/responses/404-Address-Not-Found"
           }
         },
-        "description": "### Synopsis\nUpdate the details for the specified address\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:address:*`,`sites:address:update`",
+        "description": "Update an address object\n\n**Required Permissions:** `*`,`sites:*`,`sites:site:*`,`sites:address:*`,`sites:address:update`",
         "parameters": [],
         "security": [
           {
@@ -286,65 +297,10 @@
           }
         ],
         "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "description": {
-                    "type": "string",
-                    "description": ""
-                  },
-                  "address": {
-                    "type": "string",
-                    "description": "Address line one"
-                  },
-                  "extended_address": {
-                    "type": "string",
-                    "description": "Address line two"
-                  },
-                  "locality": {
-                    "type": "string",
-                    "description": "The neighborhood name"
-                  },
-                  "city": {
-                    "type": "string"
-                  },
-                  "county": {
-                    "type": "string"
-                  },
-                  "state": {
-                    "type": "string"
-                  },
-                  "postcode": {
-                    "type": "number"
-                  },
-                  "country": {
-                    "type": "string"
-                  },
-                  "timezone": {
-                    "type": "string",
-                    "description": "IANA timezone ID"
-                  },
-                  "offset": {
-                    "description": "UTC Offset in seconds",
-                    "type": "number"
-                  }
-                }
-              },
-              "examples": {
-                "Example": {
-                  "value": {
-                    "extended_address": "Suite 800"
-                  }
-                }
-              }
-            }
-          },
-          "description": ""
+          "$ref": "#/components/requestBodies/Update-Address"
         },
         "tags": [
-          "Addresses"
+          "Address"
         ]
       },
       "delete": {
@@ -365,14 +321,14 @@
             "$ref": "#/components/responses/404-Address-Not-Found"
           }
         },
-        "description": "### Synopsis\nDelete the specified address\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:address:*`,`sites:address:delete`",
+        "description": "Delete an address object\n\n**Required Permissions:** `*`,`sites:*`,`sites:address:*`,`sites:address:delete`",
         "security": [
           {
             "Bearer Token": []
           }
         ],
         "tags": [
-          "Addresses"
+          "Address"
         ]
       }
     },
@@ -434,881 +390,289 @@
           }
         },
         "tags": [
-          "Addresses"
+          "Address"
         ]
       }
     },
-    "/v1/site/weather/forecast": {
+    "/v1/site/floor": {
       "get": {
-        "summary": "Get Forecast",
-        "tags": [
-          "Weather"
-        ],
+        "summary": "List Floors",
         "responses": {
           "200": {
-            "description": "OK",
+            "$ref": "#/components/responses/200-List-Floors"
+          }
+        },
+        "operationId": "list-floors",
+        "description": "Retrieve a list of floors\n\n**Required Permissions:** `*`,`sites:*`,`sites:floor:*`,`sites:floor:list`",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/@siteId"
+          }
+        ],
+        "tags": [
+          "Floor"
+        ]
+      },
+      "post": {
+        "summary": "Create Floor",
+        "operationId": "create-floor",
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/200-Get-Floor"
+          },
+          "404": {
+            "$ref": "#/components/responses/404-Site-Not-Found"
+          }
+        },
+        "description": "Create a new floor and assign it to a site\n\n**Required Permissions:** `*`,`sites:*`,`sites:floor:*`,`sites:floor:create`",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ],
+        "tags": [
+          "Floor"
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/Create-Floor"
+        }
+      },
+      "parameters": []
+    },
+    "/v1/site/floor/{floorId}": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/floorId"
+        }
+      ],
+      "get": {
+        "summary": "Get Floor",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/200-Get-Floor"
+          },
+          "404": {
+            "$ref": "#/components/responses/404-Floor-Not-Found"
+          }
+        },
+        "operationId": "get-floor",
+        "description": "Retrieve a floor\n\n**Required Permissions:** `*`,`sites:*`,`sites:floor:*`,`sites:floor:read`",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ],
+        "tags": [
+          "Floor"
+        ]
+      },
+      "patch": {
+        "summary": "Update Floor",
+        "operationId": "update-floor",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/200-Get-Floor"
+          },
+          "404": {
+            "$ref": "#/components/responses/404-Floor-Not-Found"
+          }
+        },
+        "description": "Update a floor\n\n**Required Permissions:** `*`,`sites:*`,`sites:floor:*`,`sites:floor:update`",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/Update-Floor"
+        },
+        "tags": [
+          "Floor"
+        ]
+      },
+      "delete": {
+        "summary": "Delete Floor",
+        "operationId": "delete-floor",
+        "responses": {
+          "204": {
+            "description": "No Content",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Weather-Forecast"
-                },
-                "examples": {
-                  "Response (Imperial Units)": {
-                    "value": {
-                      "effective_coordinates": {
-                        "latitude": "37.79513",
-                        "longitude": "-122.40299"
-                      },
-                      "units": "imperial",
-                      "summary": "Pleasant Sunday",
-                      "forecasts": [
-                        {
-                          "date": "2021-04-13T14:00:00+0000",
-                          "sources": [
-                            "AccuWeather"
-                          ],
-                          "air_quality": {
-                            "airquality": {
-                              "value": 53,
-                              "rating": "Moderate",
-                              "rating_value": 2
-                            },
-                            "grass": {
-                              "value": 110,
-                              "rating": "High",
-                              "rating_value": 3
-                            },
-                            "mold": {
-                              "value": 3250,
-                              "rating": "Low",
-                              "rating_value": 1
-                            },
-                            "ragweed": {
-                              "value": 30,
-                              "rating": "Moderate",
-                              "rating_value": 2
-                            },
-                            "tree": {
-                              "value": 50,
-                              "rating": "Moderate",
-                              "rating_value": 2
-                            },
-                            "uvindex": {
-                              "value": 7,
-                              "rating": "High",
-                              "rating_value": 3
-                            }
-                          },
-                          "hours_of_sun": 7,
-                          "temperature": {
-                            "minimum": {
-                              "value": 50,
-                              "unit": "F"
-                            },
-                            "maximum": {
-                              "value": 61,
-                              "unit": "F"
-                            }
-                          },
-                          "day": {
-                            "icon": 4,
-                            "phrases": {
-                              "long": "Areas of low clouds, then some sun",
-                              "short": "Partly sunny"
-                            },
-                            "is_raining": false,
-                            "probabilities": {
-                              "precipitation": 1,
-                              "thunderstorm": 0,
-                              "rain": 0,
-                              "snow": 1,
-                              "ice": 0
-                            },
-                            "wind": {
-                              "direction": {
-                                "degrees": 256,
-                                "localized": "WSW"
-                              },
-                              "speed": {
-                                "value": 11,
-                                "unit": "mi/h"
-                              },
-                              "gust": {
-                                "value": 18,
-                                "unit": "mi/h",
-                                "direction": "WSW"
-                              }
-                            },
-                            "cloud_cover": 51
-                          },
-                          "night": {
-                            "icon": 33,
-                            "phrases": {
-                              "long": "Clear",
-                              "short": "Clear"
-                            },
-                            "is_raining": false,
-                            "probabilities": {
-                              "precipitation": 1,
-                              "thunderstorm": 0,
-                              "rain": 0,
-                              "snow": 1,
-                              "ice": 0
-                            },
-                            "wind": {
-                              "direction": {
-                                "degrees": 192,
-                                "localized": "SSW"
-                              },
-                              "speed": {
-                                "value": 8,
-                                "unit": "mi/h"
-                              },
-                              "gust": {
-                                "value": 16,
-                                "unit": "mi/h",
-                                "direction": "WSW"
-                              }
-                            },
-                            "cloud_cover": 9
-                          }
-                        }
-                      ]
-                    }
-                  },
-                  "Response (Metric Units)": {
-                    "value": {
-                      "effective_coordinates": {
-                        "latitude": "37.79513",
-                        "longitude": "-122.40299"
-                      },
-                      "units": "metric",
-                      "summary": "Pleasant Sunday",
-                      "forecasts": [
-                        {
-                          "date": "2021-04-13T14:00:00+0000",
-                          "sources": [
-                            "AccuWeather"
-                          ],
-                          "air_quality": {
-                            "airquality": {
-                              "value": 53,
-                              "rating": "Moderate",
-                              "rating_value": 2
-                            },
-                            "grass": {
-                              "value": 110,
-                              "rating": "High",
-                              "rating_value": 3
-                            },
-                            "mold": {
-                              "value": 3250,
-                              "rating": "Low",
-                              "rating_value": 1
-                            },
-                            "ragweed": {
-                              "value": 30,
-                              "rating": "Moderate",
-                              "rating_value": 2
-                            },
-                            "tree": {
-                              "value": 50,
-                              "rating": "Moderate",
-                              "rating_value": 2
-                            },
-                            "uvindex": {
-                              "value": 7,
-                              "rating": "High",
-                              "rating_value": 3
-                            }
-                          },
-                          "hours_of_sun": 7,
-                          "temperature": {
-                            "minimum": {
-                              "value": 9,
-                              "unit": "C"
-                            },
-                            "maximum": {
-                              "value": 16,
-                              "unit": "C"
-                            }
-                          },
-                          "day": {
-                            "icon": 4,
-                            "phrases": {
-                              "long": "Areas of low clouds, then some sun",
-                              "short": "Partly sunny"
-                            },
-                            "is_raining": false,
-                            "probabilities": {
-                              "precipitation": 1,
-                              "thunderstorm": 0,
-                              "rain": 0,
-                              "snow": 1,
-                              "ice": 0
-                            },
-                            "wind": {
-                              "direction": {
-                                "degrees": 256,
-                                "localized": "WSW"
-                              },
-                              "speed": {
-                                "value": 18,
-                                "unit": "km/h"
-                              },
-                              "gust": {
-                                "value": 29,
-                                "unit": "km/h",
-                                "direction": "WSW"
-                              }
-                            },
-                            "cloud_cover": 51
-                          },
-                          "night": {
-                            "icon": 33,
-                            "phrases": {
-                              "long": "Clear",
-                              "short": "Clear"
-                            },
-                            "is_raining": false,
-                            "probabilities": {
-                              "precipitation": 1,
-                              "thunderstorm": 0,
-                              "rain": 0,
-                              "snow": 1,
-                              "ice": 0
-                            },
-                            "wind": {
-                              "direction": {
-                                "degrees": 192,
-                                "localized": "SSW"
-                              },
-                              "speed": {
-                                "value": 13,
-                                "unit": "km/h"
-                              },
-                              "gust": {
-                                "value": 25,
-                                "unit": "km/h",
-                                "direction": "WSW"
-                              }
-                            },
-                            "cloud_cover": 9
-                          }
-                        }
-                      ]
-                    }
-                  }
+                  "type": "null"
                 }
               }
             }
           },
           "400": {
-            "description": "Bad Request",
+            "$ref": "#/components/responses/400-Floor-Not-Empty"
+          },
+          "404": {
+            "$ref": "#/components/responses/404-Floor-Not-Found"
+          }
+        },
+        "description": "Delete a floor\n\n**Required Permissions:** `*`,`sites:*`,`sites:floor:*`,`sites:floor:delete`\n\n<!-- theme: danger -->\n> **Danger** This cannot be undone!",
+        "tags": [
+          "Floor"
+        ]
+      }
+    },
+    "/v1/site/room": {
+      "get": {
+        "summary": "List Rooms",
+        "operationId": "list-rooms",
+        "description": "Retrieve a list of rooms\n\n**Required Permissions:** `*`,`sites:*`,`sites:room:*`,`sites:room:list`",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/@siteId"
+          },
+          {
+            "$ref": "#/components/parameters/@floorId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/200-List-Rooms"
+          }
+        },
+        "tags": [
+          "Room"
+        ]
+      },
+      "post": {
+        "summary": "Create Room",
+        "operationId": "create-room",
+        "description": "Create a new room and assign it to a floor\n\n**Required Permissions:** `*`,`sites:*`,`sites:room:*`,`sites:room:create`\n\n### Defining Room Occupancy\nThe room occupancy classification must be specifid in the `occupancy` body parameter. One of the [International Building Code (IBC)](https://buildingcodetrainer.com/building-occupancy-classification-occupancy-types-explained/) occupancy codes is required and all occupancies are considered valid values.\n\n### Defining Room Area\nThe `area` body parameter is required and should contain the net area of the room in localized units (square meters or square feet). Only integer values are permitted.\n\n### Defining Room Volume\nThe room volume can be explicitly provided in the `volume` body parameter. The volume should be expressed in the same localized units as the room area. Only integer values are permitted.\n\nIf the volume is not defined, the `ceiling_height` body parameter, if provided, is used to calculate the room volume using the area specified. ",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "default": "application/json"
+            },
+            "in": "header",
+            "name": "Content-Type",
+            "required": true
+          }
+        ],
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ],
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/200-Get-Room"
+          },
+          "404": {
+            "$ref": "#/components/responses/404-Floor-Not-Found"
+          }
+        },
+        "tags": [
+          "Room"
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/Create-Room"
+        }
+      }
+    },
+    "/v1/site/room/{roomId}": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/roomId"
+        }
+      ],
+      "get": {
+        "summary": "Get Room",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/200-Get-Room"
+          },
+          "404": {
+            "$ref": "#/components/responses/404-Room-Not-Found"
+          }
+        },
+        "operationId": "get-room",
+        "description": "Retrieve a room\n\n**Required Permissions:** `*`,`sites:*`,`sites:room:*`,`sites:room:read`",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ],
+        "tags": [
+          "Room"
+        ]
+      },
+      "patch": {
+        "summary": "Update Room",
+        "operationId": "update-room",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/200-Get-Room"
+          },
+          "404": {
+            "$ref": "#/components/responses/404-Room-Not-Found"
+          }
+        },
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ],
+        "description": "Update a room\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:room:*`,`sites:room:update`",
+        "tags": [
+          "Room"
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/Update-Room"
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "default": "application/json"
+            },
+            "in": "header",
+            "name": "Content-Type",
+            "required": true
+          }
+        ]
+      },
+      "delete": {
+        "summary": "Delete Room",
+        "operationId": "delete-room",
+        "responses": {
+          "204": {
+            "description": "No Content",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "../models/Error-Response.v1.yaml"
-                },
-                "examples": {
-                  "Too Many Parameters": {
-                    "value": {
-                      "error": {
-                        "message": "Invalid request",
-                        "console": "Specify either coordinates or an address ID, but not both",
-                        "code": 400
-                      },
-                      "logging_hash": null
-                    }
-                  },
-                  "Not Enough Parameters": {
-                    "value": {
-                      "error": {
-                        "message": "Invalid request",
-                        "console": "Specify either coordinates or an address ID",
-                        "code": 400
-                      },
-                      "logging_hash": null
-                    }
-                  },
-                  "Invalid Duration": {
-                    "value": {
-                      "error": {
-                        "message": "9 is not a valid duration",
-                        "console": "Invalid duration value. Allowed value(s): 1, 5, 10, or 15",
-                        "code": 400
-                      },
-                      "logging_hash": null
-                    }
-                  }
+                  "type": "null"
                 }
               }
             }
           },
           "404": {
-            "$ref": "#/components/responses/404-Address-Not-Found"
-          },
-          "409": {
-            "description": "Conflict",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "../models/Error-Response.v1.yaml"
-                },
-                "examples": {
-                  "Invalid Address Geocoding": {
-                    "value": {
-                      "error": {
-                        "message": "Invalid address geocoding",
-                        "console": "The address ID 8ac7d5dc-803d-40ac-bc37-16c0dbffe5d8 is not geocoded and we have no coordinates to check",
-                        "code": 409
-                      },
-                      "logging_hash": null
-                    }
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/404-Room-Not-Found"
           }
         },
-        "operationId": "get-weather-forecast",
-        "description": "Retrieve a detailed daily weather forecast\n\n **Required Permissions:** `*`,`sites:*`,`sites:weather:*`,`sites:weather:forecast`\n\n ### Specifying the Location\nWeather forecasts can be obtained for a specified set of coordinates or by specifying a geocoded address object ID. Either the `coordinates` or `@address` query parameters must be passed, but not both.\n\nIf the specified address ID has not been geocoded, an error will be returned.\n\n<!-- theme: warning-->\n> Parameters `coordinates` and `@address` are mutually exclusive. Passing more than one will result in an error \n\n### Units\nBy default, data is returned in Imperial units. To return data in Metric units, pass the `metric` query parameter and set it to _true_. \n\n### Language\nBy default, data is returned in English. To return data in another language, pass the `langugage` query parameter and set it to a valid IETF language code",
-        "parameters": [
-          {
-            "schema": {
-              "type": "string",
-              "default": "47.620506,-122.349277"
-            },
-            "in": "query",
-            "name": "coordinates",
-            "description": "Get the weather forecast for the specified lat/lon position"
-          },
-          {
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            },
-            "in": "query",
-            "name": "@address",
-            "description": "Get the weather forecast for the specified address ID"
-          },
-          {
-            "schema": {
-              "type": "integer",
-              "default": 5,
-              "enum": [
-                1,
-                5,
-                10,
-                15
-              ]
-            },
-            "in": "query",
-            "name": "duration",
-            "description": "The number of forecast outlook days to return"
-          },
-          {
-            "schema": {
-              "type": "boolean",
-              "default": "false"
-            },
-            "in": "query",
-            "name": "metric",
-            "description": "Return the results with metric units instead of imperial units"
-          },
-          {
-            "schema": {
-              "type": "string"
-            },
-            "in": "query",
-            "name": "language",
-            "description": "Language in which search results should be returned. Should be one of supported IETF language tags, case insensitive."
-          }
-        ],
+        "description": "Delete a room\n\n**Required Permissions:** `*`,`sites:*`,`sites:room:*`,`sites:room:delete`\n\n<!-- theme: danger -->\n> _**Heads Up** This cannot be undone!_",
         "security": [
           {
             "Bearer Token": []
           }
-        ]
-      }
-    },
-    "/v1/site/weather/current-conditions": {
-      "get": {
-        "summary": "Get Current Conditions",
+        ],
         "tags": [
-          "Weather"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Weather-Current-Conditions"
-                },
-                "examples": {
-                  "Response (Imperial Units)": {
-                    "value": {
-                      "effective_coordinates": {
-                        "latitude": "37.79513",
-                        "longitude": "-122.40299"
-                      },
-                      "units": "imperial",
-                      "timestamp": "2021-04-13T14:15:00+0000",
-                      "phrase": "Mostly cloudy",
-                      "icon": 6,
-                      "is_raining": false,
-                      "is_daytime": true,
-                      "temperature": {
-                        "value": 49,
-                        "unit": "F"
-                      },
-                      "apparent_temperature": {
-                        "value": 52,
-                        "unit": "F"
-                      },
-                      "wetbulb_temperature": {
-                        "value": 48,
-                        "unit": "F"
-                      },
-                      "windchill_temperature": {
-                        "value": 46,
-                        "unit": "F"
-                      },
-                      "relative_humidity": 90,
-                      "dewpoint": {
-                        "value": 46,
-                        "unit": "F"
-                      },
-                      "wind": {
-                        "direction": {
-                          "degrees": 248,
-                          "localized": "WSW"
-                        },
-                        "speed": {
-                          "value": 6,
-                          "unit": "mi/h"
-                        },
-                        "gust": {
-                          "value": 15,
-                          "unit": "mi/h"
-                        }
-                      },
-                      "visibility": {
-                        "value": 5,
-                        "unit": "mi",
-                        "obstructions": ""
-                      },
-                      "cloud_cover": 78,
-                      "ceiling": {
-                        "value": 5100,
-                        "unit": "ft"
-                      },
-                      "pressure": {
-                        "value": 29.87,
-                        "unit": "inHg",
-                        "direction": "Rising"
-                      }
-                    }
-                  },
-                  "Response (Metric Units)": {
-                    "value": {
-                      "effective_coordinates": {
-                        "latitude": "37.79513",
-                        "longitude": "-122.40299"
-                      },
-                      "units": "metric",
-                      "timestamp": "2021-04-13T14:15:00+0000",
-                      "phrase": "Mostly cloudy",
-                      "icon": 6,
-                      "is_raining": false,
-                      "is_daytime": true,
-                      "temperature": {
-                        "value": 9,
-                        "unit": "C"
-                      },
-                      "apparent_temperature": {
-                        "value": 11,
-                        "unit": "C"
-                      },
-                      "wetbulb_temperature": {
-                        "value": 8,
-                        "unit": "C"
-                      },
-                      "windchill_temperature": {
-                        "value": 7,
-                        "unit": "C"
-                      },
-                      "relative_humidity": 90,
-                      "dewpoint": {
-                        "value": 8,
-                        "unit": "C"
-                      },
-                      "wind": {
-                        "direction": {
-                          "degrees": 248,
-                          "localized": "WSW"
-                        },
-                        "speed": {
-                          "value": 10,
-                          "unit": "km/h"
-                        },
-                        "gust": {
-                          "value": 24,
-                          "unit": "km/h"
-                        }
-                      },
-                      "visibility": {
-                        "value": 8,
-                        "unit": "km",
-                        "obstructions": ""
-                      },
-                      "cloud_cover": 78,
-                      "ceiling": {
-                        "value": 1554,
-                        "unit": "m"
-                      },
-                      "pressure": {
-                        "value": 1011.5,
-                        "unit": "mb",
-                        "direction": "Rising"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "../models/Error-Response.v1.yaml"
-                },
-                "examples": {
-                  "No Parameters": {
-                    "value": {
-                      "error": {
-                        "message": "Invalid request",
-                        "console": "Specify either coordinates or an address ID",
-                        "code": 400
-                      },
-                      "logging_hash": null
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "../models/Error-Response.v1.yaml"
-                },
-                "examples": {
-                  "Address Not Found": {
-                    "value": {
-                      "error": {
-                        "message": "Address not found",
-                        "console": "The address ID 8ac7d5dc-803d-40ac-bc37-16c0dbffe5d8 could not be found in the database",
-                        "code": 404
-                      },
-                      "logging_hash": null
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "409": {
-            "description": "Conflict",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "../models/Error-Response.v1.yaml"
-                },
-                "examples": {
-                  "Invalid Parameter Combination": {
-                    "value": {
-                      "error": {
-                        "message": "Invalid request",
-                        "console": "Parameters coordinates and address are mutually exclusive. Specify only one.",
-                        "code": 409
-                      },
-                      "logging_hash": null
-                    }
-                  },
-                  "Invalid Address Geocoding": {
-                    "value": {
-                      "error": {
-                        "message": "Invalid address geocoding",
-                        "console": "The address ID 8ac7d5dc-803d-40ac-bc37-16c0dbffe5d8 is not geocoded and we have no coordinates to check",
-                        "code": 409
-                      },
-                      "logging_hash": null
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "operationId": "get-current-weather-conditions",
-        "description": "Retrieve detailed current weather conditions\n\n**Required Permissions:** `*`,`sites:*`,`sites:weather:*`,`sites:weather:currently`\n\n### Specifying the Location\nWeather conditions can be obtained for a specified set of coordinates or by specifying a geocoded address object ID. Either the `coordinates` or `@address` query parameters must be passed, but not both.\n\nIf the specified address ID has not been geocoded, an error will be returned.\n\n<!-- theme: warning-->\n> _Parameters `coordinates` and `@address` are mutually exclusive. Passing more than one will result in an error_\n\n### Units\nBy default, data is returned in Imperial units. To return data in Metric units, pass the `metric` query parameter and set it to _true_. \n\n### Language\nBy default, data is returned in English. To return data in another language, pass the `langugage` query parameter and set it to a valid IETF language code",
-        "parameters": [
-          {
-            "schema": {
-              "type": "string",
-              "default": "47.620506,-122.349277"
-            },
-            "in": "query",
-            "name": "coordinates",
-            "description": "Get the current conditions for the specified lat/lon position"
-          },
-          {
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            },
-            "in": "query",
-            "name": "@address",
-            "description": "Get the current conditions for the specified address ID"
-          },
-          {
-            "schema": {
-              "type": "boolean",
-              "default": "false"
-            },
-            "in": "query",
-            "name": "metric",
-            "description": "Return the results with metric units instead of imperial units"
-          },
-          {
-            "schema": {
-              "type": "string"
-            },
-            "in": "query",
-            "name": "language",
-            "description": "Language in which search results should be returned. Should be one of supported IETF language tags, case insensitive."
-          }
-        ],
-        "security": [
-          {
-            "Bearer Token": []
-          }
-        ]
-      }
-    },
-    "/v1/site/weather/alerts": {
-      "get": {
-        "summary": "Get Alerts",
-        "tags": [
-          "Weather"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Weather-Alerts"
-                },
-                "examples": {
-                  "Response": {
-                    "value": {
-                      "count": 1,
-                      "effective_coordinates": {
-                        "latitude": 47.8877148,
-                        "longitude": -124.6237354
-                      },
-                      "data": [
-                        {
-                          "id": 2203972,
-                          "category": "FLOOD",
-                          "description": "High Surf Advisory",
-                          "source": "U.S. National Weather Service",
-                          "areas": [
-                            {
-                              "name": "North Coast",
-                              "summary": "High Surf Advisory in effect from 10:00 PM PST until Wednesday, 10:00 PM PST.  Source: U.S. National Weather Service",
-                              "status": "New",
-                              "span": {
-                                "start": "2021-04-13T14:00:00+0000",
-                                "end": "2021-04-13T14:00:00+0000"
-                              },
-                              "details": "...HIGH SURF ADVISORY IN EFFECT FROM 10 PM THIS EVENING TO 10 PM\nPST WEDNESDAY...\n\n* WHAT...Large breaking waves of 18 to 21 feet expected in the\n  surf zone.\n\n* WHERE...North Coast and Central Coast.\n\n* WHEN...From 10 PM this evening to 10 PM PST Wednesday.\n\n* IMPACTS...Dangerous conditions along the coast and in the surf\n  zone. Localized beach erosion may also occur due to large waves.\n\nPRECAUTIONARY/PREPAREDNESS ACTIONS...\n\nLarge waves may break and run up beaches farther than usual. Keep\nyour distance from the coastline and never turn your back on the\nocean.\n\nInexperienced swimmers should remain out of the water due to\ndangerous surf conditions.\n\n&&"
-                            }
-                          ]
-                        }
-                      ]
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "../models/Error-Response.v1.yaml"
-                },
-                "examples": {
-                  "No Parameters": {
-                    "value": {
-                      "error": {
-                        "message": "Invalid request",
-                        "console": "Specify either coordinates or an address ID",
-                        "code": 400
-                      },
-                      "logging_hash": null
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "../models/Error-Response.v1.yaml"
-                },
-                "examples": {
-                  "Address Not Found": {
-                    "value": {
-                      "error": {
-                        "message": "Address not found",
-                        "console": "The address ID 8ac7d5dc-803d-40ac-bc37-16c0dbffe5d8 could not be found in the database",
-                        "code": 404
-                      },
-                      "logging_hash": null
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "409": {
-            "description": "Conflict",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "../models/Error-Response.v1.yaml"
-                },
-                "examples": {
-                  "Invalid Parameter Combination": {
-                    "value": {
-                      "error": {
-                        "message": "Invalid request",
-                        "console": "Parameters coordinates and address are mutually exclusive. Specify only one.",
-                        "code": 409
-                      },
-                      "logging_hash": null
-                    }
-                  },
-                  "Invalid Address Geocoding": {
-                    "value": {
-                      "error": {
-                        "message": "Invalid address geocoding",
-                        "console": "The address ID 8ac7d5dc-803d-40ac-bc37-16c0dbffe5d8 is not geocoded and we have no coordinates to check",
-                        "code": 409
-                      },
-                      "logging_hash": null
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "operationId": "get-weather-alerts",
-        "description": "Retrieve current severe weather alerts and advisories\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:weather:*`,`sites:weather:alerts`\n* Licensed Feature: `weather_alerts`\n\n### Specifying the Location\nWeather alerts and advisories can be obtained for a specified set of coordinates or by specifying a geocoded address object ID. Either the `coordinates` or `address` query parameters must be passed, but not both.\n\nIf the specified address ID has not been geocoded, an error will be returned.\n\n<!-- theme: warning-->\n> _Parameters `coordinates` and `address` are mutually exclusive. Passing more than one will result in an error_\n\n### Language\nBy default, data is returned in English. To return data in another language, pass the `langugage` query parameter and set it to a valid IETF language code.\n\n<!-- theme: warning-->\n> _The API supports any valid IETF language code but alert data may not be available in the specified language_",
-        "parameters": [
-          {
-            "schema": {
-              "type": "string",
-              "default": "47.620506,-122.349277"
-            },
-            "in": "query",
-            "name": "coordinates",
-            "description": "Get weather alerts for the specified lat/lon position"
-          },
-          {
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            },
-            "in": "query",
-            "name": "@address",
-            "description": "Get weather alerts for the specified address ID"
-          },
-          {
-            "schema": {
-              "type": "string"
-            },
-            "in": "query",
-            "name": "language",
-            "description": "Language in which search results should be returned. Should be one of supported IETF language tags, case insensitive."
-          }
-        ],
-        "security": [
-          {
-            "Bearer Token": []
-          }
-        ]
-      }
-    },
-    "/v1/site/weather/indices": {
-      "get": {
-        "summary": "Get Activity Indices",
-        "tags": [
-          "Weather"
-        ],
-        "responses": {
-          "200": {
-            "$ref": "#/components/responses/200-Weather-Indices"
-          }
-        },
-        "operationId": "get-weather-indices",
-        "description": "Get activity indices and recommendations based on current weather conditions\n\n**Required Permissions:** `*`,`sites:*`,`sites:weather:*`,`sites:weather:currently`\n\n### Specifying the Location\nWeather indices can be obtained for a specified set of coordinates or by specifying a geocoded address object ID. Either the `coordinates` or `@address` query parameters must be passed, but not both.\n\nIf the specified address ID has not been geocoded, an error will be returned.\n\n<!-- theme: warning-->\n> _Parameters `coordinates` and `@address` are mutually exclusive. Passing more than one will result in an error_\n\n### Language\nBy default, data is returned in English. To return data in another language, pass the `langugage` query parameter and set it to a valid IETF language code",
-        "parameters": [
-          {
-            "schema": {
-              "type": "string",
-              "default": "47.620506,-122.349277"
-            },
-            "in": "query",
-            "name": "coordinates",
-            "description": "Get weather indices for the specified lat/lon position"
-          },
-          {
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            },
-            "in": "query",
-            "name": "@address",
-            "description": "Get weather indices for the specified address ID"
-          },
-          {
-            "schema": {
-              "type": "string"
-            },
-            "in": "query",
-            "name": "language",
-            "description": "Language in which search results should be returned. Should be one of supported IETF language tags, case insensitive."
-          }
-        ],
-        "security": [
-          {
-            "Bearer Token": []
-          }
+          "Room"
         ]
       }
     },
@@ -1439,467 +803,6 @@
             "name": "@address",
             "description": "Get the timezone for the specified address ID"
           }
-        ],
-        "security": [
-          {
-            "Bearer Token": []
-          }
-        ]
-      }
-    },
-    "/v1/site/floor": {
-      "get": {
-        "summary": "List Floors",
-        "tags": [
-          "Floors"
-        ],
-        "responses": {
-          "200": {
-            "$ref": "#/components/responses/200-Floor-Listing"
-          }
-        },
-        "operationId": "list-floors",
-        "description": "Retrieve a list of floors\n\n**Required Permissions:** `*`,`sites:*`,`sites:floor:*`,`sites:floor:list`",
-        "security": [
-          {
-            "Bearer Token": []
-          }
-        ],
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/@siteId"
-          }
-        ]
-      },
-      "post": {
-        "summary": "Create Floor",
-        "operationId": "create-floor",
-        "responses": {
-          "201": {
-            "$ref": "#/components/responses/200-Floor-Object"
-          },
-          "404": {
-            "$ref": "#/components/responses/404-Site-Not-Found"
-          }
-        },
-        "description": "Create a new floor and assign it to a site\n\n**Required Permissions:** `*`,`sites:*`,`sites:floor:*`,`sites:floor:create`",
-        "tags": [
-          "Floors"
-        ],
-        "security": [
-          {
-            "Bearer Token": []
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "description": "",
-                "type": "object",
-                "properties": {
-                  "code": {
-                    "type": "string",
-                    "minLength": 1,
-                    "description": "A unique code for the floor",
-                    "example": "Floor 1, Main Floor, Basement"
-                  },
-                  "description": {
-                    "type": "string",
-                    "minLength": 1
-                  },
-                  "gross_floor_area": {
-                    "type": "number"
-                  },
-                  "below_grade": {
-                    "type": "boolean",
-                    "description": "Indicate if the floor is below grade. Default is `false`"
-                  },
-                  "@site": {
-                    "type": "string",
-                    "format": "uuid",
-                    "description": "A valid site UUID that will contain this floor"
-                  }
-                },
-                "required": [
-                  "code",
-                  "@site"
-                ]
-              },
-              "examples": {
-                "Example": {
-                  "$ref": "#/components/examples/Create-Floor-Body"
-                }
-              }
-            }
-          }
-        }
-      },
-      "parameters": []
-    },
-    "/v1/site/floor/{floorId}": {
-      "parameters": [
-        {
-          "$ref": "#/components/parameters/floorId"
-        }
-      ],
-      "get": {
-        "summary": "Get Floor",
-        "tags": [
-          "Floors"
-        ],
-        "responses": {
-          "200": {
-            "$ref": "#/components/responses/200-Floor-Object"
-          },
-          "404": {
-            "$ref": "#/components/responses/404-Floor-Not-Found"
-          }
-        },
-        "operationId": "get-floor",
-        "description": "Retrieve a floor\n\n**Required Permissions:** `*`,`sites:*`,`sites:floor:*`,`sites:floor:read`",
-        "security": [
-          {
-            "Bearer Token": []
-          }
-        ]
-      },
-      "patch": {
-        "summary": "Update Floor",
-        "operationId": "update-floor",
-        "responses": {
-          "200": {
-            "$ref": "#/components/responses/200-Floor-Object"
-          },
-          "404": {
-            "$ref": "#/components/responses/404-Floor-Not-Found"
-          }
-        },
-        "description": "Update a floor\n\n**Required Permissions:** `*`,`sites:*`,`sites:floor:*`,`sites:floor:update`",
-        "tags": [
-          "Floors"
-        ],
-        "security": [
-          {
-            "Bearer Token": []
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "code": {
-                    "type": "string"
-                  },
-                  "description": {
-                    "type": "string"
-                  },
-                  "gross_floor_area": {
-                    "type": "integer"
-                  },
-                  "below_grade": {
-                    "type": "boolean"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "delete": {
-        "summary": "Delete Floor",
-        "operationId": "delete-floor",
-        "responses": {
-          "204": {
-            "description": "No Content",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "null"
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/400-Floor-Not-Empty"
-          },
-          "404": {
-            "$ref": "#/components/responses/404-Floor-Not-Found"
-          }
-        },
-        "description": "Delete a floor\n\n**Required Permissions:** `*`,`sites:*`,`sites:floor:*`,`sites:floor:delete`\n\n<!-- theme: danger -->\n> **Danger** This cannot be undone!",
-        "tags": [
-          "Floors"
-        ]
-      }
-    },
-    "/v1/site/room": {
-      "get": {
-        "summary": "List Rooms",
-        "tags": [
-          "Rooms"
-        ],
-        "operationId": "list-rooms",
-        "description": "Retrieve a list of rooms\n\n**Required Permissions:** `*`,`sites:*`,`sites:room:*`,`sites:room:list`",
-        "security": [
-          {
-            "Bearer Token": []
-          }
-        ],
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/@siteId"
-          },
-          {
-            "$ref": "#/components/parameters/@floorId"
-          }
-        ],
-        "responses": {
-          "200": {
-            "$ref": "#/components/responses/200-Room-Listing"
-          }
-        }
-      },
-      "post": {
-        "summary": "Create Room",
-        "operationId": "create-room",
-        "description": "Create a new room and assign it to a floor\n\n**Required Permissions:** `*`,`sites:*`,`sites:room:*`,`sites:room:create`\n\n### Defining Room Occupancy\nThe room occupancy classification must be specifid in the `occupancy` body parameter. One of the [International Building Code (IBC)](https://buildingcodetrainer.com/building-occupancy-classification-occupancy-types-explained/) occupancy codes is required and all occupancies are considered valid values.\n\n### Defining Room Area\nThe `area` body parameter is required and should contain the net area of the room in localized units (square meters or square feet). Only integer values are permitted.\n\n### Defining Room Volume\nThe room volume can be explicitly provided in the `volume` body parameter. The volume should be expressed in the same localized units as the room area. Only integer values are permitted.\n\nIf the volume is not defined, the `ceiling_height` body parameter, if provided, is used to calculate the room volume using the area specified. ",
-        "tags": [
-          "Rooms"
-        ],
-        "parameters": [],
-        "security": [
-          {
-            "Bearer Token": []
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "description": "",
-                "type": "object",
-                "properties": {
-                  "name": {
-                    "type": "string",
-                    "minLength": 1
-                  },
-                  "number": {
-                    "type": "string",
-                    "minLength": 1
-                  },
-                  "description": {
-                    "type": "string",
-                    "minLength": 1
-                  },
-                  "area": {
-                    "type": "number",
-                    "description": "The net area of the room in localized units (integers only)",
-                    "format": "double"
-                  },
-                  "@floor": {
-                    "type": "string",
-                    "minLength": 1,
-                    "format": "uuid",
-                    "description": "A valid floor UUID that will contain this room"
-                  },
-                  "occupancy": {
-                    "type": "string",
-                    "minLength": 1,
-                    "description": "The IBC occupancy classification of this room",
-                    "enum": [
-                      "A-1",
-                      "A-2",
-                      "A-3",
-                      "A-4",
-                      "A-5",
-                      "B",
-                      "E",
-                      "F-1",
-                      "F-2",
-                      "H-1",
-                      "H-2",
-                      "H-3",
-                      "H-4",
-                      "H-5",
-                      "I-1",
-                      "I-2",
-                      "I-3",
-                      "I-4",
-                      "M",
-                      "R-1",
-                      "R-2",
-                      "R-3",
-                      "R-3.1",
-                      "R-4",
-                      "S-1",
-                      "S-2",
-                      "U"
-                    ]
-                  },
-                  "ceiling_height": {
-                    "type": "number"
-                  },
-                  "volume": {
-                    "type": "integer"
-                  }
-                },
-                "required": [
-                  "name",
-                  "number",
-                  "area",
-                  "@floor",
-                  "occupancy"
-                ]
-              },
-              "examples": {
-                "Response": {
-                  "$ref": "#/components/examples/Create-Room-Body"
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "Created",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Room-Object"
-                },
-                "examples": {
-                  "Response": {
-                    "$ref": "#/components/examples/Room-Object"
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "$ref": "#/components/responses/404-Floor-Not-Found"
-          }
-        }
-      }
-    },
-    "/v1/site/room/{roomId}": {
-      "parameters": [
-        {
-          "$ref": "#/components/parameters/roomId"
-        }
-      ],
-      "get": {
-        "summary": "Get Room",
-        "tags": [
-          "Rooms"
-        ],
-        "responses": {
-          "200": {
-            "$ref": "#/components/responses/200-Room-Object"
-          },
-          "404": {
-            "$ref": "#/components/responses/404-Room-Not-Found"
-          }
-        },
-        "operationId": "get-room",
-        "description": "Retrieve a room\n\n**Required Permissions:** `*`,`sites:*`,`sites:room:*`,`sites:room:read`",
-        "security": [
-          {
-            "Bearer Token": []
-          }
-        ]
-      },
-      "patch": {
-        "summary": "Update Room",
-        "operationId": "update-room",
-        "responses": {
-          "200": {
-            "$ref": "#/components/responses/200-Room-Object"
-          },
-          "404": {
-            "$ref": "#/components/responses/404-Room-Not-Found"
-          }
-        },
-        "security": [
-          {
-            "Bearer Token": []
-          }
-        ],
-        "tags": [
-          "Rooms"
-        ],
-        "description": "Update a room\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:room:*`,`sites:room:update`",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "name": {
-                    "type": "string",
-                    "description": "The name of the room"
-                  },
-                  "number": {
-                    "type": "string",
-                    "description": "The room number"
-                  },
-                  "description": {
-                    "type": "string",
-                    "description": "The room description"
-                  },
-                  "occupancy": {
-                    "type": "string",
-                    "description": "The room occupancy classification"
-                  },
-                  "area": {
-                    "type": "number",
-                    "description": "The net area of the room"
-                  },
-                  "@floor": {
-                    "type": "string",
-                    "format": "uuid",
-                    "description": "The floor the room belongs to"
-                  }
-                }
-              },
-              "examples": {
-                "Example": {
-                  "value": {
-                    "name": "Circulation",
-                    "occupancy": "B",
-                    "area": 250,
-                    "floor": "f1acf44a-62d2-42f3-8dad-b917de85d75c"
-                  }
-                }
-              }
-            }
-          },
-          "description": ""
-        }
-      },
-      "delete": {
-        "summary": "Delete Room",
-        "operationId": "delete-room",
-        "responses": {
-          "204": {
-            "description": "No Content",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "null"
-                }
-              }
-            }
-          },
-          "404": {
-            "$ref": "#/components/responses/404-Room-Not-Found"
-          }
-        },
-        "description": "Delete a room\n\n**Required Permissions:** `*`,`sites:*`,`sites:room:*`,`sites:room:delete`\n\n<!-- theme: danger -->\n> _**Heads Up** This cannot be undone!_",
-        "tags": [
-          "Rooms"
         ],
         "security": [
           {
@@ -2516,548 +1419,6 @@
           }
         }
       },
-      "Weather-Forecast": {
-        "description": "",
-        "type": "object",
-        "x-examples": {
-          "Example": {
-            "effective_coordinates": {
-              "latitude": "44.98588",
-              "longitude": "-93.28069"
-            },
-            "units": "imperial",
-            "summary": "Snow between late tonight and tomorrow morning will accumulate 1-2 inches before changing to rain",
-            "forecasts": [
-              {
-                "date": 1606136400,
-                "sources": [
-                  "AccuWeather"
-                ],
-                "air_quality": {
-                  "airquality": {
-                    "value": 75,
-                    "rating": "Moderate",
-                    "rating_value": 2
-                  },
-                  "grass": {
-                    "value": 0,
-                    "rating": "Low",
-                    "rating_value": 1
-                  },
-                  "mold": {
-                    "value": 0,
-                    "rating": "Low",
-                    "rating_value": 1
-                  },
-                  "ragweed": {
-                    "value": 0,
-                    "rating": "Low",
-                    "rating_value": 1
-                  },
-                  "tree": {
-                    "value": 0,
-                    "rating": "Low",
-                    "rating_value": 1
-                  },
-                  "uvindex": {
-                    "value": 2,
-                    "rating": "Low",
-                    "rating_value": 1
-                  }
-                },
-                "hours_of_sun": 7,
-                "temperature": {
-                  "minimum": {
-                    "value": 30,
-                    "unit": "F"
-                  },
-                  "maximum": {
-                    "value": 38,
-                    "unit": "F"
-                  }
-                },
-                "day": {
-                  "icon": 3,
-                  "phrases": {
-                    "long": "Times of clouds and sun",
-                    "short": "Times of clouds and sun"
-                  },
-                  "is_raining": false,
-                  "probabilities": {
-                    "precipitation": 4,
-                    "thunderstorm": 0,
-                    "rain": 3,
-                    "snow": 1,
-                    "ice": 0
-                  },
-                  "wind": {
-                    "direction": {
-                      "degrees": 122,
-                      "localized": "ESE"
-                    },
-                    "speed": {
-                      "value": 4,
-                      "unit": "mi/h"
-                    },
-                    "gust": {
-                      "value": 10,
-                      "unit": "mi/h",
-                      "direction": "SE"
-                    }
-                  },
-                  "cloud_cover": 29
-                },
-                "night": {
-                  "icon": 22,
-                  "phrases": {
-                    "long": "Plenty of clouds with a coating to an inch of snow late",
-                    "short": "Overcast with snow late"
-                  },
-                  "is_raining": true,
-                  "probabilities": {
-                    "precipitation": 75,
-                    "thunderstorm": 0,
-                    "rain": 10,
-                    "snow": 75,
-                    "ice": 3
-                  },
-                  "wind": {
-                    "direction": {
-                      "degrees": 139,
-                      "localized": "SE"
-                    },
-                    "speed": {
-                      "value": 9,
-                      "unit": "mi/h"
-                    },
-                    "gust": {
-                      "value": 13,
-                      "unit": "mi/h",
-                      "direction": "SE"
-                    }
-                  },
-                  "cloud_cover": 97
-                }
-              }
-            ]
-          }
-        },
-        "title": "Weather Forecast",
-        "x-tags": [
-          "Object Models"
-        ],
-        "properties": {
-          "effective_coordinates": {
-            "type": "object",
-            "properties": {
-              "latitude": {
-                "type": "string"
-              },
-              "longitude": {
-                "type": "string"
-              }
-            }
-          },
-          "units": {
-            "type": "string"
-          },
-          "summary": {
-            "type": "string"
-          },
-          "forecasts": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "": {
-                  "$ref": "#/components/schemas/Daily-Forecast-Object"
-                }
-              }
-            }
-          }
-        }
-      },
-      "Weather-Current-Conditions": {
-        "description": "",
-        "type": "object",
-        "x-examples": {
-          "Example": {
-            "effective_coordinates": {
-              "latitude": "44.98588",
-              "longitude": "-93.28069"
-            },
-            "units": "imperial",
-            "timestamp": 1606150620,
-            "phrase": "Mostly sunny",
-            "icon": 2,
-            "is_raining": false,
-            "is_daytime": true,
-            "temperature": {
-              "value": 30,
-              "unit": "F"
-            },
-            "apparent_temperature": {
-              "value": 30,
-              "unit": "F"
-            },
-            "wetbulb_temperature": {
-              "value": 28,
-              "unit": "F"
-            },
-            "windchill_temperature": {
-              "value": 27,
-              "unit": "F"
-            },
-            "relative_humidity": 71,
-            "dewpoint": {
-              "value": 22,
-              "unit": "F"
-            },
-            "wind": {
-              "direction": {
-                "degrees": 113,
-                "localized": "ESE"
-              },
-              "speed": {
-                "value": 3,
-                "unit": "mi/h"
-              },
-              "gust": {
-                "value": 6,
-                "unit": "mi/h"
-              }
-            },
-            "visibility": {
-              "value": 10,
-              "unit": "mi",
-              "obstructions": ""
-            },
-            "cloud_cover": 14,
-            "ceiling": {
-              "value": 40000,
-              "unit": "ft"
-            },
-            "pressure": {
-              "value": 30.37,
-              "unit": "inHg",
-              "direction": "Steady"
-            }
-          }
-        },
-        "title": "Weather Current Conditions",
-        "x-tags": [
-          "Object Models"
-        ],
-        "properties": {
-          "effective_coordinates": {
-            "type": "object",
-            "properties": {
-              "latitude": {
-                "type": "string"
-              },
-              "longitude": {
-                "type": "string"
-              }
-            }
-          },
-          "units": {
-            "type": "string"
-          },
-          "timestamp": {
-            "type": "number"
-          },
-          "phrase": {
-            "type": "string"
-          },
-          "icon": {
-            "type": "number"
-          },
-          "is_raining": {
-            "type": "boolean"
-          },
-          "is_daytime": {
-            "type": "boolean"
-          },
-          "temperature": {
-            "type": "object",
-            "required": [
-              "value",
-              "unit"
-            ],
-            "properties": {
-              "value": {
-                "type": "number"
-              },
-              "unit": {
-                "type": "string",
-                "minLength": 1
-              }
-            }
-          },
-          "apparent_temperature": {
-            "type": "object",
-            "properties": {
-              "value": {
-                "type": "number"
-              },
-              "unit": {
-                "type": "string"
-              }
-            }
-          },
-          "wetbulb_temperature": {
-            "type": "object",
-            "properties": {
-              "value": {
-                "type": "number"
-              },
-              "unit": {
-                "type": "string"
-              }
-            }
-          },
-          "windchill_temperature": {
-            "type": "object",
-            "properties": {
-              "value": {
-                "type": "number"
-              },
-              "unit": {
-                "type": "string"
-              }
-            }
-          },
-          "relative_humidity": {
-            "type": "number"
-          },
-          "dewpoint": {
-            "type": "object",
-            "properties": {
-              "value": {
-                "type": "number"
-              },
-              "unit": {
-                "type": "string"
-              }
-            }
-          },
-          "wind": {
-            "type": "object",
-            "properties": {
-              "direction": {
-                "type": "object",
-                "properties": {
-                  "degrees": {
-                    "type": "number"
-                  },
-                  "localized": {
-                    "type": "string"
-                  }
-                }
-              },
-              "speed": {
-                "type": "object",
-                "properties": {
-                  "value": {
-                    "type": "number"
-                  },
-                  "unit": {
-                    "type": "string"
-                  }
-                }
-              },
-              "gust": {
-                "type": "object",
-                "properties": {
-                  "value": {
-                    "type": "number"
-                  },
-                  "unit": {
-                    "type": "string"
-                  }
-                }
-              }
-            }
-          },
-          "visibility": {
-            "type": "object",
-            "properties": {
-              "value": {
-                "type": "number"
-              },
-              "unit": {
-                "type": "string"
-              },
-              "obstructions": {
-                "type": "string"
-              }
-            }
-          },
-          "cloud_cover": {
-            "type": "number"
-          },
-          "ceiling": {
-            "type": "object",
-            "properties": {
-              "value": {
-                "type": "number"
-              },
-              "unit": {
-                "type": "string"
-              }
-            }
-          },
-          "pressure": {
-            "type": "object",
-            "properties": {
-              "value": {
-                "type": "number"
-              },
-              "unit": {
-                "type": "string"
-              },
-              "direction": {
-                "type": "string"
-              }
-            }
-          }
-        }
-      },
-      "Weather-Alerts": {
-        "description": "",
-        "type": "object",
-        "title": "Weather Alert Listing",
-        "x-tags": [
-          "Object Models"
-        ],
-        "x-examples": {
-          "Example": {
-            "count": 1,
-            "effective_coordinates": {
-              "latitude": 47.8877148,
-              "longitude": -124.6237354
-            },
-            "data": [
-              {
-                "id": 2203972,
-                "category": "FLOOD",
-                "description": "High Surf Advisory",
-                "source": "U.S. National Weather Service",
-                "areas": [
-                  {
-                    "name": "North Coast",
-                    "summary": "High Surf Advisory in effect from 10:00 PM PST until Wednesday, 10:00 PM PST.  Source: U.S. National Weather Service",
-                    "status": "New",
-                    "span": {
-                      "start": 1606284000,
-                      "end": 1606370400
-                    },
-                    "details": "...HIGH SURF ADVISORY IN EFFECT FROM 10 PM THIS EVENING TO 10 PM\nPST WEDNESDAY...\n\n* WHAT...Large breaking waves of 18 to 21 feet expected in the\n  surf zone.\n\n* WHERE...North Coast and Central Coast.\n\n* WHEN...From 10 PM this evening to 10 PM PST Wednesday.\n\n* IMPACTS...Dangerous conditions along the coast and in the surf\n  zone. Localized beach erosion may also occur due to large waves.\n\nPRECAUTIONARY/PREPAREDNESS ACTIONS...\n\nLarge waves may break and run up beaches farther than usual. Keep\nyour distance from the coastline and never turn your back on the\nocean.\n\nInexperienced swimmers should remain out of the water due to\ndangerous surf conditions.\n\n&&"
-                  }
-                ]
-              }
-            ]
-          }
-        },
-        "properties": {
-          "count": {
-            "type": "number"
-          },
-          "effective_coordinates": {
-            "type": "object",
-            "properties": {
-              "latitude": {
-                "type": "number"
-              },
-              "longitude": {
-                "type": "number"
-              }
-            }
-          },
-          "data": {
-            "type": "array",
-            "uniqueItems": true,
-            "minItems": 1,
-            "items": {
-              "$ref": "#/components/schemas/Weather-Alert-Detail"
-            }
-          }
-        }
-      },
-      "Weather-Alert-Detail": {
-        "description": "",
-        "type": "object",
-        "x-examples": {
-          "Example": {
-            "id": 2203972,
-            "category": "FLOOD",
-            "description": "High Surf Advisory",
-            "source": "U.S. National Weather Service",
-            "areas": [
-              {
-                "name": "North Coast",
-                "summary": "High Surf Advisory in effect from 10:00 PM PST until Wednesday, 10:00 PM PST.  Source: U.S. National Weather Service",
-                "status": "New",
-                "span": {
-                  "start": 1606284000,
-                  "end": 1606370400
-                },
-                "details": "...HIGH SURF ADVISORY IN EFFECT FROM 10 PM THIS EVENING TO 10 PM\nPST WEDNESDAY...\n\n* WHAT...Large breaking waves of 18 to 21 feet expected in the\n  surf zone.\n\n* WHERE...North Coast and Central Coast.\n\n* WHEN...From 10 PM this evening to 10 PM PST Wednesday.\n\n* IMPACTS...Dangerous conditions along the coast and in the surf\n  zone. Localized beach erosion may also occur due to large waves.\n\nPRECAUTIONARY/PREPAREDNESS ACTIONS...\n\nLarge waves may break and run up beaches farther than usual. Keep\nyour distance from the coastline and never turn your back on the\nocean.\n\nInexperienced swimmers should remain out of the water due to\ndangerous surf conditions.\n\n&&"
-              }
-            ]
-          }
-        },
-        "title": "Weather Alert Details",
-        "x-tags": [
-          "Object Models"
-        ],
-        "properties": {
-          "id": {
-            "type": "number"
-          },
-          "category": {
-            "type": "string"
-          },
-          "description": {
-            "type": "string"
-          },
-          "source": {
-            "type": "string"
-          },
-          "areas": {
-            "type": "array",
-            "uniqueItems": true,
-            "items": {
-              "type": "object",
-              "properties": {
-                "name": {
-                  "type": "string"
-                },
-                "summary": {
-                  "type": "string"
-                },
-                "status": {
-                  "type": "string"
-                },
-                "span": {
-                  "type": "object",
-                  "properties": {
-                    "start": {
-                      "type": "number"
-                    },
-                    "end": {
-                      "type": "number"
-                    }
-                  }
-                },
-                "details": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-        }
-      },
       "Floor-Object": {
         "description": "",
         "type": "object",
@@ -3205,82 +1566,6 @@
           }
         },
         "title": "Geocode Search"
-      },
-      "Weather-Indices": {
-        "description": "",
-        "type": "object",
-        "x-examples": {
-          "example-1": {
-            "count": 43,
-            "effective_coordinates": {
-              "latitude": 37.79513,
-              "longitude": -122.40299
-            },
-            "data": [
-              {
-                "id": 1,
-                "name": "Running",
-                "timestamp": "2021-09-04T07:00:00-07:00",
-                "classification": "Very Good",
-                "description": "Conditions are very good for running outdoors.",
-                "value": 4,
-                "percentage": 89
-              }
-            ]
-          }
-        },
-        "properties": {
-          "count": {
-            "type": "integer"
-          },
-          "effective_coordinates": {
-            "type": "object",
-            "properties": {
-              "latitude": {
-                "type": "number"
-              },
-              "longitude": {
-                "type": "number"
-              }
-            }
-          },
-          "data": {
-            "type": "array",
-            "uniqueItems": true,
-            "minItems": 1,
-            "items": {
-              "type": "object",
-              "properties": {
-                "id": {
-                  "type": "integer"
-                },
-                "name": {
-                  "type": "string",
-                  "minLength": 1
-                },
-                "timestamp": {
-                  "type": "string",
-                  "minLength": 1
-                },
-                "classification": {
-                  "type": "string",
-                  "minLength": 1
-                },
-                "description": {
-                  "type": "string",
-                  "minLength": 1
-                },
-                "value": {
-                  "type": "integer"
-                },
-                "percentage": {
-                  "type": "integer"
-                }
-              }
-            }
-          }
-        },
-        "title": "Weather Indices"
       }
     },
     "securitySchemes": {
@@ -3659,404 +1944,6 @@
           },
           "geometry": "00005557-4100-2800-0000-00000bf9eda4"
         }
-      },
-      "Weather-Indices-List": {
-        "value": {
-          "count": 43,
-          "effective_coordinates": {
-            "latitude": 37.79513,
-            "longitude": -122.40299
-          },
-          "data": [
-            {
-              "id": -3,
-              "name": "Flight Delays",
-              "timestamp": "2021-09-04T07:00:00-07:00",
-              "classification": "Very Unlikely",
-              "description": "Conditions are excellent for flying!",
-              "value": 5,
-              "percentage": 100
-            },
-            {
-              "id": -2,
-              "name": "Indoor Activity",
-              "timestamp": "2021-09-04T07:00:00-07:00",
-              "classification": "Poor",
-              "description": "Expect poor conditions for indoor activities.",
-              "value": 1,
-              "percentage": 19
-            },
-            {
-              "id": 1,
-              "name": "Running",
-              "timestamp": "2021-09-04T07:00:00-07:00",
-              "classification": "Very Good",
-              "description": "Conditions are very good for running outdoors.",
-              "value": 4,
-              "percentage": 89
-            },
-            {
-              "id": 2,
-              "name": "Jogging",
-              "timestamp": "2021-09-04T07:00:00-07:00",
-              "classification": "Very Good",
-              "description": "Conditions are very good for jogging outdoors.",
-              "value": 4,
-              "percentage": 85
-            },
-            {
-              "id": 3,
-              "name": "Hiking",
-              "timestamp": "2021-09-04T07:00:00-07:00",
-              "classification": "Very Good",
-              "description": "Conditions are very good for hiking.",
-              "value": 4,
-              "percentage": 80
-            },
-            {
-              "id": 4,
-              "name": "Bicycling",
-              "timestamp": "2021-09-04T07:00:00-07:00",
-              "classification": "Very Good",
-              "description": "Conditions are very good for bicycling outdoors.",
-              "value": 4,
-              "percentage": 87
-            },
-            {
-              "id": 5,
-              "name": "Golf Weather",
-              "timestamp": "2021-09-04T07:00:00-07:00",
-              "classification": "Very Good",
-              "description": "Conditions will be very good for golf.",
-              "value": 4,
-              "percentage": 81
-            },
-            {
-              "id": 6,
-              "name": "Tennis",
-              "timestamp": "2021-09-04T07:00:00-07:00",
-              "classification": "Very Good",
-              "description": "Conditions are very good for playing tennis.",
-              "value": 4,
-              "percentage": 87
-            },
-            {
-              "id": 7,
-              "name": "Skateboarding",
-              "timestamp": "2021-09-04T07:00:00-07:00",
-              "classification": "Very Good",
-              "description": "Conditions are very good for skateboarding.",
-              "value": 4,
-              "percentage": 85
-            },
-            {
-              "id": 8,
-              "name": "Outdoor Concert",
-              "timestamp": "2021-09-04T07:00:00-07:00",
-              "classification": "Very Good",
-              "description": "Conditions are very good for attending an outdoor concert.",
-              "value": 4,
-              "percentage": 70
-            },
-            {
-              "id": 9,
-              "name": "Kite Flying",
-              "timestamp": "2021-09-04T07:00:00-07:00",
-              "classification": "Very Good",
-              "description": "Conditions are very good today for kite-flying.",
-              "value": 4,
-              "percentage": 77
-            },
-            {
-              "id": 10,
-              "name": "Beach & Pool",
-              "timestamp": "2021-09-04T07:00:00-07:00",
-              "classification": "Good",
-              "description": "Conditions will be good for a visit to the beach or pool.",
-              "value": 3,
-              "percentage": 54
-            },
-            {
-              "id": 11,
-              "name": "Sailing",
-              "timestamp": "2021-09-04T07:00:00-07:00",
-              "classification": "Very Good",
-              "description": "Conditions will be very good for sailing.",
-              "value": 4,
-              "percentage": 79
-            },
-            {
-              "id": 12,
-              "name": "Stargazing",
-              "timestamp": "2021-09-04T07:00:00-07:00",
-              "classification": "Good",
-              "description": "Conditions will be good for stargazing.",
-              "value": 3,
-              "percentage": 69
-            },
-            {
-              "id": 13,
-              "name": "Fishing",
-              "timestamp": "2021-09-04T07:00:00-07:00",
-              "classification": "Good",
-              "description": "Conditions will be good for fishing.",
-              "value": 3,
-              "percentage": 69
-            },
-            {
-              "id": 14,
-              "name": "Construction",
-              "timestamp": "2021-09-04T07:00:00-07:00",
-              "classification": "Very Good",
-              "description": "Conditions will be very good for outside construction projects.",
-              "value": 4,
-              "percentage": 84
-            },
-            {
-              "id": 15,
-              "name": "Ski Weather",
-              "timestamp": "2021-09-04T07:00:00-07:00",
-              "classification": "Poor",
-              "description": "Expect poor conditions for skiing.",
-              "value": 1,
-              "percentage": 0
-            },
-            {
-              "id": 16,
-              "name": "Healthy Heart Fitness",
-              "timestamp": "2021-09-04T07:00:00-07:00",
-              "classification": "Excellent",
-              "description": "This is a great day for outdoor exercise!",
-              "value": 5,
-              "percentage": 93
-            },
-            {
-              "id": 17,
-              "name": "Mosquito Activity",
-              "timestamp": "2021-09-04T07:00:00-07:00",
-              "classification": "Low",
-              "description": "Weather conditions will keep mosquito activity low.",
-              "value": 1,
-              "percentage": 0
-            },
-            {
-              "id": 18,
-              "name": "Dust & Dander",
-              "timestamp": "2021-09-04T07:00:00-07:00",
-              "classification": "Moderate",
-              "description": "Indoor dust and dander levels will be moderate.",
-              "value": 2,
-              "percentage": 80
-            },
-            {
-              "id": 19,
-              "name": "Snow Days",
-              "timestamp": "2021-09-04T07:00:00-07:00",
-              "classification": "Very Unlikely",
-              "description": "School is very unlikely to be closed today.",
-              "value": 1,
-              "percentage": 0
-            },
-            {
-              "id": 20,
-              "name": "Hunting",
-              "timestamp": "2021-09-04T07:00:00-07:00",
-              "classification": "Good",
-              "description": "Conditions will be good for hunting.",
-              "value": 3,
-              "percentage": 60
-            },
-            {
-              "id": 21,
-              "name": "Arthritis Pain",
-              "timestamp": "2021-09-04T07:00:00-07:00",
-              "classification": "Neutral",
-              "description": "The weather will not significantly impact the risk of arthritis pain, nor its severity or duration.",
-              "value": 2,
-              "percentage": 80
-            },
-            {
-              "id": 22,
-              "name": "Arthritis Pain",
-              "timestamp": "2021-09-04T07:00:00-07:00",
-              "classification": "Neutral",
-              "description": "The weather will not significantly impact the risk of arthritis pain, nor its severity or duration.",
-              "value": 2,
-              "percentage": 75
-            },
-            {
-              "id": 23,
-              "name": "Asthma",
-              "timestamp": "2021-09-04T07:00:00-07:00",
-              "classification": "Neutral",
-              "description": "The weather will not significantly impact the risk of asthma attacks, nor their severity or duration.",
-              "value": 2,
-              "percentage": 80
-            },
-            {
-              "id": 24,
-              "name": "Outdoor Barbecue",
-              "timestamp": "2021-09-04T07:00:00-07:00",
-              "classification": "Very Good",
-              "description": "Conditions will be very good for an outdoor barbecue.",
-              "value": 4,
-              "percentage": 79
-            },
-            {
-              "id": 25,
-              "name": "Common Cold",
-              "timestamp": "2021-09-04T07:00:00-07:00",
-              "classification": "Beneficial",
-              "description": "Weather conditions create a lowered risk of catching a cold, and will help to make colds less severe and of shorter duration.",
-              "value": 1,
-              "percentage": 100
-            },
-            {
-              "id": 26,
-              "name": "Flu",
-              "timestamp": "2021-09-04T07:00:00-07:00",
-              "classification": "Beneficial",
-              "description": "Weather conditions create a lowered risk of catching the flu, and will help to make a case of the flu less severe and of shorter duration.",
-              "value": 1,
-              "percentage": 100
-            },
-            {
-              "id": 27,
-              "name": "Migraine Headache",
-              "timestamp": "2021-09-04T07:00:00-07:00",
-              "classification": "Beneficial",
-              "description": "Weather conditions create a lowered risk of a migraine headache, and will help to make a headache less severe and of shorter duration.",
-              "value": 1,
-              "percentage": 100
-            },
-            {
-              "id": 28,
-              "name": "Lawn Mowing",
-              "timestamp": "2021-09-04T07:00:00-07:00",
-              "classification": "Very Good",
-              "description": "Conditions will be very good for lawn mowing.",
-              "value": 4,
-              "percentage": 87
-            },
-            {
-              "id": 29,
-              "name": "Outdoor Activity",
-              "timestamp": "2021-09-04T07:00:00-07:00",
-              "classification": "Very Good",
-              "description": "Conditions will be very good for outdoor activities.",
-              "value": 4,
-              "percentage": 81
-            },
-            {
-              "id": 30,
-              "name": "Sinus Headache",
-              "timestamp": "2021-09-04T07:00:00-07:00",
-              "classification": "Neutral",
-              "description": "The weather will not significantly impact the risk of a sinus headache, nor its severity or duration.",
-              "value": 2,
-              "percentage": 80
-            },
-            {
-              "id": 31,
-              "name": "Flying Travel Index",
-              "timestamp": "2021-09-04T07:00:00-07:00",
-              "classification": "Excellent",
-              "description": "Conditions are excellent for flying!",
-              "value": 5,
-              "percentage": 100
-            },
-            {
-              "id": 35,
-              "name": "Morning School Bus",
-              "timestamp": "2021-09-04T07:00:00-07:00",
-              "classification": "Very Good",
-              "description": "The weather will be very good at the school bus stop this morning.",
-              "value": 4,
-              "percentage": 80
-            },
-            {
-              "id": 36,
-              "name": "Home Energy Efficiency",
-              "timestamp": "2021-09-04T07:00:00-07:00",
-              "classification": "Poor",
-              "description": "Expect poor weather conditions for home energy efficiency.",
-              "value": 1,
-              "percentage": 6
-            },
-            {
-              "id": 37,
-              "name": "Fuel Economy",
-              "timestamp": "2021-09-04T07:00:00-07:00",
-              "classification": "Very Good",
-              "description": "Weather conditions will be very good for fuel economy.",
-              "value": 4,
-              "percentage": 88
-            },
-            {
-              "id": 38,
-              "name": "Composting",
-              "timestamp": "2021-09-04T07:00:00-07:00",
-              "classification": "Fair",
-              "description": "Expect only fair weather conditions for composting.",
-              "value": 2,
-              "percentage": 42
-            },
-            {
-              "id": 39,
-              "name": "Shopping",
-              "timestamp": "2021-09-04T07:00:00-07:00",
-              "classification": "Excellent",
-              "description": "This is a great day for shopping!",
-              "value": 5,
-              "percentage": 90
-            },
-            {
-              "id": 40,
-              "name": "Driving Travel Index",
-              "timestamp": "2021-09-04T07:00:00-07:00",
-              "classification": "Very Good",
-              "description": "Conditions are very good for driving.",
-              "value": 4,
-              "percentage": 80
-            },
-            {
-              "id": 41,
-              "name": "Thirst",
-              "timestamp": "2021-09-04T07:00:00-07:00",
-              "classification": "High",
-              "description": "The weather is favorable for a high level of dehydration. Plan activities accordingly and be sure to drink plenty of fluids.",
-              "value": 3,
-              "percentage": 50
-            },
-            {
-              "id": 42,
-              "name": "Hair Frizz",
-              "timestamp": "2021-09-04T07:00:00-07:00",
-              "classification": "Advisory",
-              "description": "Some frizz is possible, especially for people with naturally curly or wavy hair.",
-              "value": 3,
-              "percentage": 48
-            },
-            {
-              "id": 43,
-              "name": "Dog Walking Comfort",
-              "timestamp": "2021-09-04T07:00:00-07:00",
-              "classification": "Very Good",
-              "description": "Conditions will be very good for walking your dog.",
-              "value": 4,
-              "percentage": 87
-            },
-            {
-              "id": 44,
-              "name": "COPD",
-              "timestamp": "2021-09-04T07:00:00-07:00",
-              "classification": "Beneficial",
-              "description": "The risk of a pulmonary attack due to weather conditions is low.",
-              "value": 1,
-              "percentage": 80
-            }
-          ]
-        }
       }
     },
     "responses": {
@@ -4311,28 +2198,6 @@
           }
         }
       },
-      "409-Invalid-Weather-Parameters": {
-        "description": "Conflict",
-        "content": {
-          "application/json": {
-            "schema": {
-              "$ref": "../models/Error-Response.v1.yaml"
-            },
-            "examples": {
-              "Response": {
-                "value": {
-                  "error": {
-                    "message": "Invalid parameter combination",
-                    "console": "Parameters coordinates and address are mutually exclusive. Specify only one.",
-                    "code": 409
-                  },
-                  "logging_hash": "..."
-                }
-              }
-            }
-          }
-        }
-      },
       "200-List-Sites": {
         "description": "OK",
         "content": {
@@ -4448,21 +2313,6 @@
             "examples": {
               "Response": {
                 "$ref": "#/components/examples/Geocode-Search"
-              }
-            }
-          }
-        }
-      },
-      "200-Weather-Indices": {
-        "description": "Ok",
-        "content": {
-          "application/json": {
-            "schema": {
-              "$ref": "#/components/schemas/Weather-Indices"
-            },
-            "examples": {
-              "Response": {
-                "$ref": "#/components/examples/Weather-Indices-List"
               }
             }
           }
