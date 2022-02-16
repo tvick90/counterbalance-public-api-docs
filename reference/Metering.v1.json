@@ -48,6 +48,67 @@
           }
         ]
       }
+    },
+    "/v1/metering/group": {
+      "get": {
+        "summary": "List Meter Groups",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "operationId": "list-groups",
+        "tags": [
+          "Meter Group"
+        ],
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ]
+      },
+      "post": {
+        "summary": "Create Meter Group",
+        "operationId": "create-group",
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        },
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ],
+        "tags": [
+          "Meter Group"
+        ]
+      }
+    },
+    "/v1/metering/node/{nodeId}": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/nodeId"
+        }
+      ],
+      "get": {
+        "summary": "Get Meter Node",
+        "tags": [
+          "Node"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "operationId": "get-meter-node",
+        "description": "",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ]
+      }
     }
   },
   "components": {
@@ -63,6 +124,30 @@
         "x-tags": [
           "Node"
         ]
+      },
+      "Meter-Group-Object": {
+        "title": "Meter Group Object",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          }
+        },
+        "x-tags": [
+          "Meter Group"
+        ]
+      },
+      "Medium-Object": {
+        "title": "Medium Object",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          }
+        },
+        "x-tags": [
+          "Medium"
+        ]
       }
     },
     "securitySchemes": {
@@ -70,6 +155,150 @@
         "type": "http",
         "scheme": "bearer",
         "description": ""
+      }
+    },
+    "parameters": {
+      "nodeId": {
+        "name": "nodeId",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "description": "A valid meter UUID"
+      },
+      "groupId": {
+        "name": "groupIdId",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "description": "A valid meter group UUID"
+      },
+      "mediumId": {
+        "name": "mediumId",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "description": "A valid meter medium UUID"
+      }
+    },
+    "requestBodies": {
+      "Create-Meter-Node": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      },
+      "Update-Meter-Node": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      },
+      "Create-Meter-Group": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      },
+      "Update-Meter-Group": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      }
+    },
+    "responses": {
+      "200-Get-Meter-Node": {
+        "description": "Example response",
+        "content": {
+          "application/json": {
+            "schema": {
+              "properties": {
+                "id": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "200-List-Meter-Nodes": {
+        "description": "Example response",
+        "content": {
+          "application/json": {
+            "schema": {
+              "properties": {
+                "id": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "404-Meter-Node-Not-Found": {
+        "description": "Not Found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../models/Error-Response.v1.yaml"
+            },
+            "examples": {
+              "Response": {
+                "value": {
+                  "error": {
+                    "message": "Meter node ... cannot be found",
+                    "console": "...",
+                    "code": 404
+                  },
+                  "logging_hash": "..."
+                }
+              }
+            }
+          }
+        }
+      },
+      "404-Meter-Group-Not-Found": {
+        "description": "Not Found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../models/Error-Response.v1.yaml"
+            },
+            "examples": {
+              "Response": {
+                "value": {
+                  "error": {
+                    "message": "Meter group ID ... cannot be found",
+                    "console": "...",
+                    "code": 404
+                  },
+                  "logging_hash": "..."
+                }
+              }
+            }
+          }
+        }
       }
     }
   },
@@ -81,7 +310,7 @@
       "name": "Medium"
     },
     {
-      "name": "Meter Groups"
+      "name": "Meter Group"
     },
     {
       "name": "Node"
