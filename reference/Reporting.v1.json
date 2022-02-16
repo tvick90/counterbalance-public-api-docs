@@ -869,13 +869,13 @@
       "name": "Report"
     },
     {
+      "name": "Trend Plot"
+    },
+    {
       "name": "Report Group"
     },
     {
       "name": "Report Schedule"
-    },
-    {
-      "name": "Trend Plot"
     }
   ]
 }
