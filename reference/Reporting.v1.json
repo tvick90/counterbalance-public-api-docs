@@ -47,7 +47,10 @@
           {
             "Bearer": []
           }
-        ]
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/Create-Report"
+        }
       }
     },
     "/v1/reporting/report/{reportId}": {
@@ -88,7 +91,10 @@
           {
             "Bearer": []
           }
-        ]
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/Update-Report"
+        }
       },
       "delete": {
         "summary": "Delete Report",
@@ -114,7 +120,7 @@
         "summary": "List Trend Plots",
         "responses": {
           "200": {
-            "$ref": "#/components/responses/200-Plot-Listing"
+            "$ref": "#/components/responses/200-List-Plots"
           }
         },
         "operationId": "list-plots",
@@ -169,12 +175,12 @@
         "operationId": "create-plot",
         "responses": {
           "201": {
-            "$ref": "#/components/responses/200-Plot-Object"
+            "$ref": "#/components/responses/200-Get-Plot"
           }
         },
         "description": "Create a trend plot object\n\n**Required Permissions:** `*`,`reporting:*`,`reporting:plot:*`,`reporting:plot:create`",
         "requestBody": {
-          "$ref": "#/components/requestBodies/Create-Plot-Object"
+          "$ref": "#/components/requestBodies/Create-Plot"
         },
         "security": [
           {
@@ -215,7 +221,7 @@
         "summary": "Get Trend Plot",
         "responses": {
           "200": {
-            "$ref": "#/components/responses/200-Plot-Object"
+            "$ref": "#/components/responses/200-Get-Plot"
           },
           "404": {
             "$ref": "#/components/responses/404-Plot-Not-Found"
@@ -237,7 +243,7 @@
         "operationId": "update-plot",
         "responses": {
           "200": {
-            "$ref": "#/components/responses/200-Plot-Object"
+            "$ref": "#/components/responses/200-Get-Plot"
           },
           "404": {
             "$ref": "#/components/responses/404-Plot-Not-Found"
@@ -257,7 +263,7 @@
           }
         ],
         "requestBody": {
-          "$ref": "#/components/requestBodies/Update-Plot-Object"
+          "$ref": "#/components/requestBodies/Update-Plot"
         },
         "security": [
           {
@@ -295,7 +301,7 @@
         "summary": "List Report Groups",
         "responses": {
           "200": {
-            "description": "OK"
+            "$ref": "#/components/responses/200-List-Report-Groups"
           }
         },
         "operationId": "list-groups",
@@ -314,7 +320,7 @@
         "operationId": "create-group",
         "responses": {
           "201": {
-            "description": "Created"
+            "$ref": "#/components/responses/200-Get-Report-Group"
           }
         },
         "security": [
@@ -324,7 +330,10 @@
         ],
         "tags": [
           "Report Group"
-        ]
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/Create-Report-Group"
+        }
       },
       "parameters": []
     },
@@ -348,7 +357,7 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "$ref": "#/components/responses/200-Get-Report-Group"
           }
         },
         "operationId": "get-group",
@@ -363,7 +372,7 @@
         "operationId": "update-group",
         "responses": {
           "200": {
-            "description": "OK"
+            "$ref": "#/components/responses/200-Get-Report-Group"
           }
         },
         "security": [
@@ -373,7 +382,10 @@
         ],
         "tags": [
           "Report Group"
-        ]
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/Create-Report-Group"
+        }
       },
       "delete": {
         "summary": "Delete Report Group",
@@ -399,7 +411,7 @@
         "summary": "List Report Schedules",
         "responses": {
           "200": {
-            "description": "OK"
+            "$ref": "#/components/responses/200-List-Report-Schedules"
           }
         },
         "operationId": "list-report-schedules",
@@ -418,7 +430,7 @@
         "operationId": "create-report-schedule",
         "responses": {
           "201": {
-            "description": "Created"
+            "$ref": "#/components/responses/200-Get-Report-Schedule"
           }
         },
         "security": [
@@ -429,7 +441,10 @@
         "tags": [
           "Report Schedule"
         ],
-        "description": ""
+        "description": "",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/Create-Report-Schedule"
+        }
       }
     },
     "/v1/reporting/schedule/{scheduleId}": {
@@ -442,7 +457,7 @@
         "summary": "Get Report Schedule",
         "responses": {
           "200": {
-            "description": "OK"
+            "$ref": "#/components/responses/200-Get-Report-Schedule"
           }
         },
         "operationId": "get-report-schedule",
@@ -461,7 +476,7 @@
         "operationId": "update-report-schedule",
         "responses": {
           "200": {
-            "description": "OK"
+            "$ref": "#/components/responses/200-Get-Report-Schedule"
           }
         },
         "security": [
@@ -472,7 +487,10 @@
         "description": "",
         "tags": [
           "Report Schedule"
-        ]
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/Update-Report-Schedule"
+        }
       },
       "delete": {
         "summary": "Delete Report Schedule",
@@ -588,6 +606,18 @@
         "x-tags": [
           "Report Group"
         ]
+      },
+      "Report-Object": {
+        "title": "Report Object",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          }
+        },
+        "x-tags": [
+          "Report"
+        ]
       }
     },
     "securitySchemes": {
@@ -639,7 +669,7 @@
       }
     },
     "responses": {
-      "200-Plot-Object": {
+      "200-Get-Plot": {
         "description": "Ok",
         "content": {
           "application/json": {
@@ -663,7 +693,7 @@
           }
         }
       },
-      "200-Plot-Listing": {
+      "200-List-Plots": {
         "description": "Ok",
         "content": {
           "application/json": {
@@ -715,6 +745,104 @@
                     "code": 404
                   },
                   "logging_hash": "..."
+                }
+              }
+            }
+          }
+        }
+      },
+      "200-Get-Report": {
+        "description": "Example response",
+        "content": {
+          "application/json": {
+            "schema": {
+              "properties": {
+                "id": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "200-List-Reports": {
+        "description": "Example response",
+        "content": {
+          "application/json": {
+            "schema": {
+              "properties": {
+                "id": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "404-Report-Not-Found": {
+        "description": "Example response",
+        "content": {
+          "application/json": {
+            "schema": {
+              "properties": {
+                "id": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "200-Get-Report-Group": {
+        "description": "Example response",
+        "content": {
+          "application/json": {
+            "schema": {
+              "properties": {
+                "id": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "200-List-Report-Groups": {
+        "description": "Example response",
+        "content": {
+          "application/json": {
+            "schema": {
+              "properties": {
+                "id": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "200-Get-Report-Schedule": {
+        "description": "Example response",
+        "content": {
+          "application/json": {
+            "schema": {
+              "properties": {
+                "id": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "200-List-Report-Schedules": {
+        "description": "Example response",
+        "content": {
+          "application/json": {
+            "schema": {
+              "properties": {
+                "id": {
+                  "type": "string"
                 }
               }
             }
@@ -772,7 +900,7 @@
       }
     },
     "requestBodies": {
-      "Create-Plot-Object": {
+      "Create-Plot": {
         "content": {
           "application/json": {
             "schema": {
@@ -822,7 +950,7 @@
         },
         "description": "Create-Plot-Object Request Body Description field"
       },
-      "Update-Plot-Object": {
+      "Update-Plot": {
         "content": {
           "application/json": {
             "schema": {
@@ -861,6 +989,60 @@
           }
         },
         "description": ""
+      },
+      "Create-Report": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      },
+      "Update-Report": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      },
+      "Create-Report-Group": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      },
+      "Update-Report-Group": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      },
+      "Create-Report-Schedule": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      },
+      "Update-Report-Schedule": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
       }
     }
   },
