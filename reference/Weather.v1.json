@@ -1791,7 +1791,10 @@
             }
           }
         },
-        "title": "Weather Indices"
+        "title": "Weather Indices",
+        "x-tags": [
+          "Current Conditions"
+        ]
       }
     },
     "securitySchemes": {
@@ -1847,16 +1850,16 @@
   },
   "tags": [
     {
-      "name": "Air Quality"
-    },
-    {
-      "name": "Alerts"
-    },
-    {
       "name": "Current Conditions"
     },
     {
       "name": "Forecast"
+    },
+    {
+      "name": "Air Quality"
+    },
+    {
+      "name": "Alerts"
     },
     {
       "name": "History"
