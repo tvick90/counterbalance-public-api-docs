@@ -656,13 +656,16 @@
         }
       },
       "Invoice-Object": {
-        "title": "Invoice-Object",
+        "title": "Invoice Object",
         "type": "object",
         "properties": {
           "id": {
             "type": "string"
           }
-        }
+        },
+        "x-tags": [
+          "Invoice"
+        ]
       },
       "Subscription-Item-Object": {
         "description": "",
@@ -1050,5 +1053,19 @@
         }
       }
     }
-  }
+  },
+  "tags": [
+    {
+      "name": "Billing Account"
+    },
+    {
+      "name": "Subscription"
+    },
+    {
+      "name": "Invoice"
+    },
+    {
+      "name": "Payment Source"
+    }
+  ]
 }

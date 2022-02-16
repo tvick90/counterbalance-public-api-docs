@@ -1005,7 +1005,7 @@
         },
         "title": "Tenant Deletion PIN Request Body",
         "x-tags": [
-          "Tenant Operations"
+          "Operations"
         ]
       },
       "Tenant-Quota-Item-Object": {
@@ -1551,19 +1551,16 @@
   },
   "tags": [
     {
-      "name": "Account Management"
+      "name": "Account"
     },
     {
-      "name": "Tenant Account"
+      "name": "Operations"
     },
     {
-      "name": "Tenant Operations"
+      "name": "Preferences"
     },
     {
-      "name": "Tenant Preferences"
-    },
-    {
-      "name": "Tenant Quota"
+      "name": "Quota"
     }
   ]
 }

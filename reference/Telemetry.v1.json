@@ -2020,7 +2020,10 @@
   },
   "tags": [
     {
-      "name": "Collector"
+      "name": "Point"
+    },
+    {
+      "name": "Schedule"
     },
     {
       "name": "Command Object"
@@ -2029,10 +2032,7 @@
       "name": "Notification Class"
     },
     {
-      "name": "Point"
-    },
-    {
-      "name": "Schedule"
+      "name": "Collector"
     }
   ]
 }

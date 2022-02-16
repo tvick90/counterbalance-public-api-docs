@@ -184,7 +184,7 @@
   },
   "tags": [
     {
-      "name": "Connectivity & Telemetry"
+      "name": "Fault Detection"
     },
     {
       "name": "Environment Health"
@@ -193,7 +193,7 @@
       "name": "Equipment Insights"
     },
     {
-      "name": "Fault Detection"
+      "name": "Connectivity & Telemetry"
     }
   ]
 }

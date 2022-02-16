@@ -304,16 +304,16 @@
   },
   "tags": [
     {
-      "name": "Consumption"
+      "name": "Node"
     },
     {
-      "name": "Medium"
+      "name": "Consumption"
     },
     {
       "name": "Meter Group"
     },
     {
-      "name": "Node"
+      "name": "Medium"
     }
   ]
 }
