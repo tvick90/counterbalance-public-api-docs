@@ -2,8 +2,8 @@
   "openapi": "3.0.0",
   "info": {
     "title": "Tenant",
-    "version": "1.2.4",
-    "description": "The Tenant API provides endpoints for tenant account management, including:\n* Creating new tenant accounts\n* Updating or deleting a tenant profile\n* Viewing platform object quotas and licensed features\n* Managing global platform preferences\n\n### What is a Tenant\nA __Tenant Account__, or simply _**Tenant**_, is the top-level platform account object for an organization or company. A tenant account contains all the other platform objects, maintains global object quotas, dictates feature availability, and allows platform customization through global account preferences. \n\nAll other platform objects (users, sites, gateways, controllers, points, etc) belong to one and only one tenant account. \n\n### Creating & Activating a Tenant Account\nNew tenant accounts are created via the **Create Tenant Account** endpoint. \n\n> **Note:** An email address can only be associated with a single tenant account\n\n### Activating an Issued Account\nAn **Issued Account** is a tenant account created by Counterbalance on behalf of a new user. An issued account must be activated before it can be used. \n\n### Object Limits & Quotas\nLorem ipsum\n\n",
+    "version": "1.2.8",
+    "description": "The Tenant API provides endpoints for tenant account management, including:\n* Creating new tenant accounts\n* Updating or deleting a tenant profile\n* Viewing platform object quotas and licensed features\n* Managing global platform preferences\n\n## What is a Tenant\nA **Tenant Account** is the top-level platform account object for a single organization or company. \n\nAll other platform objects are created as a descendant of a single Tenant Account and each object belongs to one and only one tenant account. \n\n## Creating & Activating a Tenant Account\nNew tenant accounts are created via the **Create Tenant Account** endpoint. Once an account is created, the user will receive a confirmation code at the email they provided during account creation.\n\nThis code must be used to activate the new account via the **Confirm Tenant Account** endpoint.\n\n> **Please Note** \n>\n> *An email address can only be associated with a single tenant account*\n\n\n## Quotas & Object Limits\nLorem ipsum\n\n",
     "termsOfService": "https://www.counterbalance.io/legal/api-terms",
     "contact": {
       "name": "Taylor Vick",
@@ -714,66 +714,71 @@
           "Account"
         ]
       },
-      "Tenant-Quota-Summary": {
+      "Tenant-Quota-Object": {
         "description": "",
         "type": "object",
         "x-examples": {},
+        "title": "Tenant Quota Object",
+        "x-internal": false,
+        "x-tags": [
+          "Quota"
+        ],
         "properties": {
           "usage": {
             "type": "object",
-            "required": [
-              "record_user",
-              "seat",
-              "user",
-              "site",
-              "gateway",
-              "controller",
-              "point",
-              "collector",
-              "equipment",
-              "meter"
-            ],
             "properties": {
-              "record_user": {
-                "type": "number"
-              },
-              "seat": {
-                "type": "number"
-              },
-              "user": {
-                "type": "number"
-              },
-              "site": {
-                "type": "number"
-              },
-              "gateway": {
+              "collector": {
                 "type": "number"
               },
               "controller": {
                 "type": "number"
               },
-              "point": {
-                "type": "number"
-              },
-              "collector": {
-                "type": "number"
-              },
               "equipment": {
                 "type": "number"
               },
+              "fdd_rule": {
+                "type": "number"
+              },
+              "gateway": {
+                "type": "number"
+              },
               "meter": {
+                "type": "number"
+              },
+              "point": {
+                "type": "number"
+              },
+              "record_user": {
+                "type": "number"
+              },
+              "report": {
+                "type": "number"
+              },
+              "report_schedule": {
+                "type": "number"
+              },
+              "reset": {
+                "type": "number"
+              },
+              "routine": {
+                "type": "number"
+              },
+              "seat": {
+                "type": "number"
+              },
+              "site": {
+                "type": "number"
+              },
+              "trigger": {
+                "type": "number"
+              },
+              "user": {
                 "type": "number"
               }
             }
           },
           "tenant": {
             "type": "object",
-            "required": [
-              "id",
-              "billing_id",
-              "tier",
-              "account_type"
-            ],
             "properties": {
               "id": {
                 "type": "string",
@@ -794,75 +799,65 @@
           },
           "quotas": {
             "type": "object",
-            "required": [
-              "collector",
-              "controller",
-              "equipment",
-              "gateway",
-              "meter",
-              "point",
-              "seat",
-              "site",
-              "user",
-              "record_user"
-            ],
             "properties": {
               "collector": {
-                "$ref": "#/components/schemas/Tenant-Quota-Item-Summary"
+                "$ref": "#/components/schemas/Tenant-Quota-Item-Object"
               },
               "controller": {
-                "$ref": "#/components/schemas/Tenant-Quota-Item-Summary"
+                "$ref": "#/components/schemas/Tenant-Quota-Item-Object"
               },
               "equipment": {
-                "$ref": "#/components/schemas/Tenant-Quota-Item-Summary"
+                "$ref": "#/components/schemas/Tenant-Quota-Item-Object"
+              },
+              "fdd_rule": {
+                "$ref": "#/components/schemas/Tenant-Quota-Item-Object"
               },
               "gateway": {
-                "$ref": "#/components/schemas/Tenant-Quota-Item-Summary"
+                "$ref": "#/components/schemas/Tenant-Quota-Item-Object"
               },
               "meter": {
-                "$ref": "#/components/schemas/Tenant-Quota-Item-Summary"
+                "$ref": "#/components/schemas/Tenant-Quota-Item-Object"
               },
               "point": {
-                "$ref": "#/components/schemas/Tenant-Quota-Item-Summary"
-              },
-              "seat": {
-                "$ref": "#/components/schemas/Tenant-Quota-Item-Summary"
-              },
-              "site": {
-                "$ref": "#/components/schemas/Tenant-Quota-Item-Summary"
-              },
-              "user": {
-                "$ref": "#/components/schemas/Tenant-Quota-Item-Summary"
+                "$ref": "#/components/schemas/Tenant-Quota-Item-Object"
               },
               "record_user": {
-                "$ref": "#/components/schemas/Tenant-Quota-Item-Summary"
+                "$ref": "#/components/schemas/Tenant-Quota-Item-Object"
+              },
+              "report": {
+                "$ref": "#/components/schemas/Tenant-Quota-Item-Object"
+              },
+              "report_schedule": {
+                "$ref": "#/components/schemas/Tenant-Quota-Item-Object"
+              },
+              "reset": {
+                "$ref": "#/components/schemas/Tenant-Quota-Item-Object"
+              },
+              "routine": {
+                "$ref": "#/components/schemas/Tenant-Quota-Item-Object"
+              },
+              "seat": {
+                "$ref": "#/components/schemas/Tenant-Quota-Item-Object"
+              },
+              "site": {
+                "$ref": "#/components/schemas/Tenant-Quota-Item-Object"
+              },
+              "trigger": {
+                "$ref": "#/components/schemas/Tenant-Quota-Item-Object"
+              },
+              "user": {
+                "$ref": "#/components/schemas/Tenant-Quota-Item-Object"
               }
             }
           },
           "composition": {
             "type": "object",
-            "required": [
-              "base",
-              "purchased_items"
-            ],
             "properties": {
               "base": {
                 "type": "object",
-                "required": [
-                  "included_quotas",
-                  "features"
-                ],
                 "properties": {
                   "included_quotas": {
                     "type": "object",
-                    "required": [
-                      "controller",
-                      "gateway",
-                      "meter",
-                      "point",
-                      "seat",
-                      "site"
-                    ],
                     "properties": {
                       "controller": {
                         "type": "number"
@@ -915,13 +910,7 @@
                     "quantity": {
                       "type": "number"
                     }
-                  },
-                  "required": [
-                    "id",
-                    "product",
-                    "plan",
-                    "quantity"
-                  ]
+                  }
                 }
               }
             }
@@ -932,19 +921,7 @@
               "type": "string"
             }
           }
-        },
-        "required": [
-          "usage",
-          "tenant",
-          "quotas",
-          "composition",
-          "features"
-        ],
-        "title": "Tenant Quota Object",
-        "x-internal": false,
-        "x-tags": [
-          "Quota"
-        ]
+        }
       },
       "Tenant-Preferences": {
         "description": "",
