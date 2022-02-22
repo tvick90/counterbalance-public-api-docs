@@ -1079,10 +1079,13 @@
             "type": "string"
           },
           "summary": {
-            "type": "string"
+            "type": "string",
+            "description": "Summary for the main conditions for the requested time period. Notice that summary can cover only part of the time period.",
+            "readOnly": true
           },
           "forecasts": {
             "type": "array",
+            "description": "Forecast data for each requested day.",
             "items": {
               "type": "object",
               "properties": {
@@ -1092,8 +1095,9 @@
                 },
                 "sources": {
                   "type": "array",
+                  "description": "Source(s) of the forecast data.",
                   "items": {
-                    "type": "object"
+                    "type": "string"
                   }
                 },
                 "air_quality": {
@@ -1186,13 +1190,16 @@
                   }
                 },
                 "hours_of_sun": {
-                  "type": "number"
+                  "type": "number",
+                  "description": "Hours of sun."
                 },
                 "temperature": {
                   "type": "object",
+                  "description": "Temperature values for the day.",
                   "properties": {
                     "minimum": {
                       "type": "object",
+                      "description": "Minimum temperature for the time period.",
                       "properties": {
                         "value": {
                           "type": "number"
@@ -1204,6 +1211,7 @@
                     },
                     "maximum": {
                       "type": "object",
+                      "description": "Maximum temperature for the time period",
                       "properties": {
                         "value": {
                           "type": "number"
@@ -1217,175 +1225,256 @@
                 },
                 "day": {
                   "type": "object",
+                  "description": "Day forecast detail",
                   "properties": {
                     "icon": {
-                      "type": "number"
+                      "type": "number",
+                      "description": "Numeric value representing an image"
                     },
                     "phrases": {
                       "type": "object",
                       "properties": {
-                        "long": {
-                          "type": "string"
-                        },
                         "short": {
-                          "type": "string"
+                          "type": "string",
+                          "description": "Phrase description of the forecast in specified language. ~30 characters"
+                        },
+                        "long": {
+                          "type": "string",
+                          "description": "Phrase description of the forecast in specified language. ~100 characters",
+                          "readOnly": true
                         }
                       }
                     },
                     "is_raining": {
-                      "type": "boolean"
+                      "type": "boolean",
+                      "description": "Indicates the presence or absence of precipitation. True indicates the presence of precipitation, false indicates the absence of precipitation.",
+                      "readOnly": true
                     },
                     "probabilities": {
                       "type": "object",
                       "properties": {
                         "precipitation": {
-                          "type": "number"
+                          "type": "number",
+                          "description": "Percent representing the probability of precipitation.",
+                          "readOnly": true
                         },
                         "thunderstorm": {
-                          "type": "number"
+                          "type": "number",
+                          "readOnly": true
                         },
                         "rain": {
-                          "type": "number"
+                          "type": "number",
+                          "description": "Percent representing the probability of rain. ",
+                          "readOnly": true
                         },
                         "snow": {
-                          "type": "number"
+                          "type": "number",
+                          "description": "Percent representing the probability of snow.",
+                          "readOnly": true
                         },
                         "ice": {
-                          "type": "number"
+                          "type": "number",
+                          "description": "Percent representing the probability of ice.",
+                          "readOnly": true
                         }
-                      }
+                      },
+                      "readOnly": true
                     },
                     "wind": {
                       "type": "object",
+                      "description": "Wind details being returned including speed and direction.",
                       "properties": {
                         "direction": {
                           "type": "object",
+                          "description": "Wind direction",
+                          "additionalProperties": false,
                           "properties": {
                             "degrees": {
-                              "type": "number"
+                              "type": "number",
+                              "description": "Wind direction in Azimuth degrees, starting at true North and continuing in clockwise direction. North is 0 degrees, east is 90 degrees, south is 180 degrees, west is 270 degrees. Possible values 0-359.",
+                              "readOnly": true
                             },
                             "localized": {
-                              "type": "string"
+                              "type": "string",
+                              "description": "Direction abbreviation in the specified language.",
+                              "readOnly": true
                             }
-                          }
+                          },
+                          "readOnly": true
                         },
                         "speed": {
                           "type": "object",
+                          "description": "Speed of the wind in specified unit.",
+                          "additionalProperties": false,
                           "properties": {
                             "value": {
-                              "type": "number"
+                              "type": "number",
+                              "readOnly": true
                             },
                             "unit": {
                               "type": "string"
                             }
-                          }
+                          },
+                          "readOnly": true
                         },
                         "gust": {
                           "type": "object",
+                          "description": "Wind gust. Wind gust is a sudden, brief increase in speed of the wind.",
+                          "additionalProperties": false,
                           "properties": {
                             "value": {
-                              "type": "number"
+                              "type": "number",
+                              "readOnly": true
                             },
                             "unit": {
                               "type": "string"
                             },
                             "direction": {
-                              "type": "string"
+                              "type": "string",
+                              "description": "Direction abbreviation in the specified language.",
+                              "readOnly": true
                             }
-                          }
+                          },
+                          "readOnly": true
                         }
-                      }
+                      },
+                      "readOnly": true
                     },
                     "cloud_cover": {
-                      "type": "number"
+                      "type": "number",
+                      "description": "Percent representing cloud cover.",
+                      "readOnly": true
                     }
                   }
                 },
                 "night": {
                   "type": "object",
+                  "description": "Night forecast detail",
                   "properties": {
                     "icon": {
-                      "type": "number"
+                      "type": "number",
+                      "description": "Numeric value representing an image"
                     },
                     "phrases": {
                       "type": "object",
                       "properties": {
                         "short": {
-                          "type": "string"
+                          "type": "string",
+                          "description": "Phrase description of the forecast in specified language. ~30 characters"
+                        },
+                        "long": {
+                          "type": "string",
+                          "description": "Phrase description of the forecast in specified language. ~100 characters",
+                          "readOnly": true
                         }
                       }
                     },
                     "is_raining": {
-                      "type": "boolean"
+                      "type": "boolean",
+                      "description": "Indicates the presence or absence of precipitation. True indicates the presence of precipitation, false indicates the absence of precipitation.",
+                      "readOnly": true
                     },
                     "probabilities": {
                       "type": "object",
                       "properties": {
                         "precipitation": {
-                          "type": "number"
+                          "type": "number",
+                          "description": "Percent representing the probability of precipitation.",
+                          "readOnly": true
                         },
                         "thunderstorm": {
-                          "type": "number"
+                          "type": "number",
+                          "readOnly": true
                         },
                         "rain": {
-                          "type": "number"
+                          "type": "number",
+                          "description": "Percent representing the probability of rain. ",
+                          "readOnly": true
                         },
                         "snow": {
-                          "type": "number"
+                          "type": "number",
+                          "description": "Percent representing the probability of snow.",
+                          "readOnly": true
                         },
                         "ice": {
-                          "type": "number"
+                          "type": "number",
+                          "description": "Percent representing the probability of ice.",
+                          "readOnly": true
                         }
-                      }
+                      },
+                      "readOnly": true
                     },
                     "wind": {
                       "type": "object",
+                      "description": "Wind details being returned including speed and direction.",
                       "properties": {
                         "direction": {
                           "type": "object",
+                          "description": "Wind direction",
+                          "additionalProperties": false,
                           "properties": {
                             "degrees": {
-                              "type": "number"
+                              "type": "number",
+                              "description": "Wind direction in Azimuth degrees, starting at true North and continuing in clockwise direction. North is 0 degrees, east is 90 degrees, south is 180 degrees, west is 270 degrees. Possible values 0-359.",
+                              "readOnly": true
                             },
                             "localized": {
-                              "type": "string"
+                              "type": "string",
+                              "description": "Direction abbreviation in the specified language.",
+                              "readOnly": true
                             }
-                          }
+                          },
+                          "readOnly": true
                         },
                         "speed": {
                           "type": "object",
+                          "description": "Speed of the wind in specified unit.",
+                          "additionalProperties": false,
                           "properties": {
                             "value": {
-                              "type": "number"
+                              "type": "number",
+                              "readOnly": true
                             },
                             "unit": {
                               "type": "string"
                             }
-                          }
+                          },
+                          "readOnly": true
                         },
                         "gust": {
                           "type": "object",
+                          "description": "Wind gust. Wind gust is a sudden, brief increase in speed of the wind.",
+                          "additionalProperties": false,
                           "properties": {
                             "value": {
-                              "type": "number"
+                              "type": "number",
+                              "readOnly": true
                             },
                             "unit": {
                               "type": "string"
                             },
                             "direction": {
-                              "type": "string"
+                              "type": "string",
+                              "description": "Direction abbreviation in the specified language.",
+                              "readOnly": true
                             }
-                          }
+                          },
+                          "readOnly": true
                         }
-                      }
+                      },
+                      "readOnly": true
                     },
                     "cloud_cover": {
-                      "type": "number"
+                      "type": "number",
+                      "description": "Percent representing cloud cover.",
+                      "readOnly": true
                     }
                   }
                 }
-              }
-            }
+              },
+              "readOnly": true
+            },
+            "readOnly": true
           }
         }
       },
@@ -2053,41 +2142,44 @@
         "properties": {
           "timestamp": {
             "type": "string",
-            "minLength": 1,
-            "description": "Date and time of the current observation displayed in ISO 8601 format. *For example, 2022-02-23T08:00:00+0000*"
+            "description": "Date and time of the current observation displayed in ISO 8601 format. *For example, 2022-02-23T08:00:00+0000*",
+            "readOnly": true
           },
           "description": {
             "type": "string",
-            "minLength": 1,
-            "description": "A textual explanation of this air quality result in the requested language."
+            "description": "A textual explanation of this air quality result in the requested language.",
+            "readOnly": true
           },
           "index": {
             "type": "object",
             "properties": {
               "local": {
                 "type": "number",
-                "description": "Air quality rating on a scale set by local regulating bodies. Scales can vary widely based on location. See [Wikipedia](https://en.wikipedia.org/wiki/Air_quality_index) for more information."
+                "description": "Air quality rating on a scale set by local regulating bodies. Scales can vary widely based on location. See [Wikipedia](https://en.wikipedia.org/wiki/Air_quality_index) for more information.",
+                "readOnly": true
               },
               "global": {
                 "type": "number",
-                "description": "Internationally normalized air quality rating on a scale from 0 to 300 and up, with higher numbers representing worse air quality."
+                "description": "Internationally normalized air quality rating on a scale from 0 to 300 and up, with higher numbers representing worse air quality.",
+                "readOnly": true
               }
-            }
+            },
+            "readOnly": true
           },
           "status": {
             "type": "string",
-            "minLength": 1,
-            "description": "One-word description of the air quality in the requested language. *For example, \"Excellent\"*."
+            "description": "One-word description of the air quality in the requested language. *For example, \"Excellent\"*.",
+            "readOnly": true
           },
           "status_color": {
             "type": "string",
-            "minLength": 1,
-            "description": "A unique color corresponding to the category of this air quality result."
+            "description": "A unique color corresponding to the category of this air quality result.",
+            "readOnly": true
           },
           "dominant_pollutant": {
             "type": "string",
-            "minLength": 1,
-            "description": "The pollutant with the highest concentration."
+            "description": "The pollutant with the highest concentration.",
+            "readOnly": true
           }
         }
       }
