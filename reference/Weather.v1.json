@@ -1837,7 +1837,7 @@
         "properties": {
           "count": {
             "type": "number",
-                        "readOnly": true
+            "readOnly": true
           },
           "effective_coordinates": {
             "type": "object",
@@ -1899,7 +1899,7 @@
                       "status": {
                         "type": "string",
                         "description": "The latest status of the alert in the current area.",
-                        "readOnly": true                      
+                        "readOnly": true
                       },
                       "span": {
                         "type": "object",
@@ -1907,12 +1907,12 @@
                           "start": {
                             "type": "number",
                             "description": "The start date and time of the alert in ISO 8601 format, for example, 2019-10-27T19:39:57-08:00. If the alert crosses multiple time zones the returned time in the response is the local time to the requested coordinate location.",
-                        "readOnly": true
+                            "readOnly": true
                           },
                           "end": {
                             "type": "number",
                             "description": "The end date and time of the alert in ISO 8601 format, for example, 2019-10-27T19:39:57-08:00. If the alert crosses multiple time zones the returned time in the response is the local time to the requested coordinate location.",
-                        "readOnly": true
+                            "readOnly": true
                           }
                         }
                       },
@@ -2091,12 +2091,12 @@
               "local": {
                 "type": "number",
                 "description": "Air quality rating on a scale set by local regulating bodies. Scales can vary widely based on location. See (Wikipedia)[https://en.wikipedia.org/wiki/Air_quality_index] for more information.",
-            "readOnly": true
+                "readOnly": true
               },
               "global": {
                 "type": "number",
                 "description": "Internationally normalized air quality rating on a scale from 0 to 300 and up, with higher numbers representing worse air quality.",
-            "readOnly": true
+                "readOnly": true
               }
             }
           },
@@ -2118,7 +2118,6 @@
           "pollutants": {
             "type": "array",
             "uniqueItems": true,
-            "readOnly": true,
             "description": "Information about individual pollutants.",
             "items": {
               "type": "object",
@@ -2126,25 +2125,25 @@
                 "type": {
                   "type": "string",
                   "description": "Type of pollutant. Please note that more may be added at any time.",
-            "readOnly": true
+                  "readOnly": true
                 },
                 "name": {
                   "type": "string",
                   "description": "The name of the pollutant in English.",
-            "readOnly": true
+                  "readOnly": true
                 },
                 "index": {
                   "type": "object",
                   "properties": {
                     "local": {
                       "type": "number",
-                      "description": "Air quality rating on a scale set by local regulating bodies. Scales can vary widely based on location. See (Wikipedia)[https://en.wikipedia.org/wiki/Air_quality_index] for more information.",
-            "readOnly": true
+                      "description": "Air quality rating on a scale set by local regulating bodies. Scales can vary widely based on location. See [Wikipedia](https://en.wikipedia.org/wiki/Air_quality_index) or more information.",
+                      "readOnly": true
                     },
                     "global": {
                       "type": "number",
                       "description": "Internationally normalized air quality rating on a scale from 0 to 300 and up, with higher numbers representing worse air quality.",
-            "readOnly": true
+                      "readOnly": true
                     }
                   }
                 },
@@ -2154,16 +2153,17 @@
                   "properties": {
                     "value": {
                       "type": "number",
-            "readOnly": true
+                      "readOnly": true
                     },
                     "unit": {
                       "type": "string",
-            "readOnly": true
+                      "readOnly": true
                     }
                   }
                 }
               }
-            }
+            },
+            "readOnly": true
           }
         }
       },
