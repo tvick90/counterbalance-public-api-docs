@@ -3,7 +3,7 @@
   "info": {
     "title": "Weather",
     "version": "1.0.0",
-    "description": ""
+    "description": "## Supported Languages\n\n| Code       | Name                                     |\n|------------|------------------------------------------|\n| ar         | Arabic                                   |\n| bg-BG      | Bulgarian                                |\n| bn-BD      | Bangla (Bangladesh)                      |\n| bn-IN      | Bangla (India)                           |\n| bs-BA      | Bosnian                                  |\n| ca-ES      | Catalan                                  |\n| cs-CZ      | Czech                                    |\n| da-DK      | Danish                                   |\n| de-DE      | German                                   |\n| el-GR      | Greek                                    |\n| en-AU      | English (Australia)                      |\n| en-GB      | English (Great Britain)                  |\n| en-NZ      | English (New Zealand)                    |\n| **en-US**  | **English (USA)** *Default*              |\n| es-419     | Spanish (Latin America)                  |\n| es-ES      | Spanish (Spain)                          |\n| es-MX      | Spanish (Mexico)                         |\n| et-EE      | Estonian                                 |\n| fi-FI      | Finnish                                  |\n| fil-PH     | Filipino                                 |\n| fr-CA      | French (Canada)                          |\n| fr-FR      | French (France)                          |\n| gu-IN      | Gujarati                                 |\n| he-IL      | Hebrew                                   |\n| hi-IN      | Hindi                                    |\n| hr-HR      | Croatian                                 |\n| hu-HU      | Hungarian                                |\n| id-ID      | Indonesian                               |\n| is-IS      | Icelandic                                |\n| it-IT      | Italian                                  |\n| ja-JP      | Japanese                                 |\n| kk-KZ      | Kazakh                                   |\n| kn-IN      | Kannada                                  |\n| ko-KR      | Korean                                   |\n| lt-LT      | Lithuanian                               |\n| lv-LV      | Latvian                                  |\n| mk-MK      | Macedonian                               |\n| mr-IN      | Marathi                                  |\n| ms-MY      | Malay                                    |\n| nb-NO      | Norwegian Bokmål                         |\n| nl-BE      | Dutch (Belgium)                          |\n| nl-NL      | Dutch (Netherlands)                      |\n| pa-IN      | Punjabi                                  |\n| pl-PL      | Polish                                   |\n| pt-BR      | Portuguese (Brazil)                      |\n| pt-PT      | Portuguese (Portugal)                    |\n| ro-RO      | Romanian                                 |\n| ru-RU      | Russian                                  |\n| sk-SK      | Slovak                                   |\n| sl-SI      | Slovenian                                |\n| sr-Cyrl-RS | Serbian (Cyrillic)                       |\n| sr-Latn-RS | Serbian (Latin)                          |\n| sv-SE      | Swedish                                  |\n| ta-IN      | Tamil                                    |\n| te-IN      | Telugu                                   |\n| th-TH      | Thai                                     |\n| tr-TR      | Turkish                                  |\n| uk-UA      | Ukrainian                                |\n| ur-PK      | Urdu                                     |\n| uz-Latn-UZ | Uzbek                                    |\n| vi-VN      | Vietnamese                               |\n| zh-HanS-CN | Chinese (Simplified, China)              |\n| zh-HanT-HK | Chinese (Traditional, Hong Kong SAR)     |\n| zh-HanT-TW | Chinese (Traditional, Taiwan)            |"
   },
   "servers": [
     {
@@ -886,7 +886,7 @@
         ]
       }
     },
-    "/v1/weather/airquality": {
+    "/v1/weather/air-quality/current": {
       "get": {
         "summary": "Get Air Quality Conditions",
         "tags": [
@@ -897,14 +897,139 @@
             "description": "OK"
           }
         },
-        "operationId": "get-airquality",
+        "operationId": "get-airquality-current",
         "security": [
           {
             "Bearer Token": []
           }
         ],
         "description": ""
-      }
+      },
+      "parameters": []
+    },
+    "/v1/weather/air-quality/forecast": {
+      "get": {
+        "summary": "Get Air Quality Conditions",
+        "tags": [
+          "Air Quality"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../models/Error-Response.v1.yaml"
+                },
+                "examples": {
+                  "No Parameters": {
+                    "value": {
+                      "error": {
+                        "message": "Invalid request",
+                        "console": "Specify either coordinates or an address ID",
+                        "code": 400
+                      },
+                      "logging_hash": null
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../models/Error-Response.v1.yaml"
+                },
+                "examples": {
+                  "Address Not Found": {
+                    "value": {
+                      "error": {
+                        "message": "Address not found",
+                        "console": "The address ID 8ac7d5dc-803d-40ac-bc37-16c0dbffe5d8 could not be found in the database",
+                        "code": 404
+                      },
+                      "logging_hash": null
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../models/Error-Response.v1.yaml"
+                },
+                "examples": {
+                  "Invalid Parameter Combination": {
+                    "value": {
+                      "error": {
+                        "message": "Invalid request",
+                        "console": "Parameters coordinates and address are mutually exclusive. Specify only one.",
+                        "code": 409
+                      },
+                      "logging_hash": null
+                    }
+                  },
+                  "Invalid Address Geocoding": {
+                    "value": {
+                      "error": {
+                        "message": "Invalid address geocoding",
+                        "console": "The address ID 8ac7d5dc-803d-40ac-bc37-16c0dbffe5d8 is not geocoded and we have no coordinates to check",
+                        "code": 409
+                      },
+                      "logging_hash": null
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-airquality-forecast",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ],
+        "description": ""
+      },
+      "parameters": [
+        {
+          "schema": {
+            "type": "string",
+            "default": "47.620506,-122.349277"
+          },
+          "in": "query",
+          "name": "coordinates",
+          "description": "Get air quality for the specified lat/lon position"
+        },
+        {
+          "schema": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "in": "query",
+          "name": "@address",
+          "description": "Get air quality for the specified address ID"
+        },
+        {
+          "schema": {
+            "type": "string"
+          },
+          "in": "query",
+          "name": "language",
+          "description": "Language in which search results should be returned. Should be one of supported IETF language tags, case insensitive."
+        }
+      ]
     }
   },
   "components": {
@@ -1795,6 +1920,15 @@
         "x-tags": [
           "Current Conditions"
         ]
+      },
+      "Air-Quality-Current": {
+        "title": "Air-Quality-Object",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          }
+        }
       }
     },
     "securitySchemes": {
