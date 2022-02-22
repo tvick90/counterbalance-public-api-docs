@@ -853,35 +853,42 @@
     "examples": {
       "Plot-Object": {
         "value": {
-          "id": ""
+          "id": "bc7c1276-c623-4bc6-99e5-d00f49e972d8",
+          "created": "2022-02-12T01:10:40+0000",
+          "last_modified": null,
+          "name": "Heating HW Loop - Last 24H",
+          "description": "Heating HW loop supply and return temperatures for the last 24 hours",
+          "@owner": "afc3dd4c-dd19-4013-b430-ebcc58202fd3",
+          "public": true,
+          "config": {}
         }
       },
       "Plot-Object-Listing": {
         "value": {
-          "description": "Example shared example",
-          "type": "object",
-          "properties": {
-            "id": {
-              "type": "string"
+          "count": 1,
+          "index": [
+            "bc7c1276-c623-4bc6-99e5-d00f49e972d8"
+          ],
+          "data": [
+            {
+              "id": "bc7c1276-c623-4bc6-99e5-d00f49e972d8",
+              "created": "2022-02-12T01:10:40+0000",
+              "last_modified": null,
+              "name": "Heating HW Loop - Last 24H",
+              "description": "Heating HW loop supply and return temperatures for the last 24 hours",
+              "@owner": "afc3dd4c-dd19-4013-b430-ebcc58202fd3",
+              "public": true,
+              "config": {}
             }
-          },
-          "required": [
-            "id"
           ]
         }
       },
       "Create-Plot-Object-Body": {
         "value": {
-          "description": "Example shared example",
-          "type": "object",
-          "properties": {
-            "id": {
-              "type": "string"
-            }
-          },
-          "required": [
-            "id"
-          ]
+          "name": "Heating HW Loop - Last 24H",
+          "description": "Heating HW loop supply and return temperatures for the last 24 hours",
+          "public": true,
+          "config": {}
         }
       },
       "Update-Plot-Object-Body": {
