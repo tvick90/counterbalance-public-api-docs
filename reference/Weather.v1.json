@@ -388,144 +388,7 @@
         "summary": "Get Current Weather Conditions",
         "responses": {
           "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Weather-Current-Conditions"
-                },
-                "examples": {
-                  "Response (Imperial Units)": {
-                    "value": {
-                      "effective_coordinates": {
-                        "latitude": "37.79513",
-                        "longitude": "-122.40299"
-                      },
-                      "units": "imperial",
-                      "timestamp": "2021-04-13T14:15:00+0000",
-                      "phrase": "Mostly cloudy",
-                      "icon": 6,
-                      "is_raining": false,
-                      "is_daytime": true,
-                      "temperature": {
-                        "value": 49,
-                        "unit": "F"
-                      },
-                      "apparent_temperature": {
-                        "value": 52,
-                        "unit": "F"
-                      },
-                      "wetbulb_temperature": {
-                        "value": 48,
-                        "unit": "F"
-                      },
-                      "windchill_temperature": {
-                        "value": 46,
-                        "unit": "F"
-                      },
-                      "relative_humidity": 90,
-                      "dewpoint": {
-                        "value": 46,
-                        "unit": "F"
-                      },
-                      "wind": {
-                        "direction": {
-                          "degrees": 248,
-                          "localized": "WSW"
-                        },
-                        "speed": {
-                          "value": 6,
-                          "unit": "mi/h"
-                        },
-                        "gust": {
-                          "value": 15,
-                          "unit": "mi/h"
-                        }
-                      },
-                      "visibility": {
-                        "value": 5,
-                        "unit": "mi",
-                        "obstructions": ""
-                      },
-                      "cloud_cover": 78,
-                      "ceiling": {
-                        "value": 5100,
-                        "unit": "ft"
-                      },
-                      "pressure": {
-                        "value": 29.87,
-                        "unit": "inHg",
-                        "direction": "Rising"
-                      }
-                    }
-                  },
-                  "Response (Metric Units)": {
-                    "value": {
-                      "effective_coordinates": {
-                        "latitude": "37.79513",
-                        "longitude": "-122.40299"
-                      },
-                      "units": "metric",
-                      "timestamp": "2021-04-13T14:15:00+0000",
-                      "phrase": "Mostly cloudy",
-                      "icon": 6,
-                      "is_raining": false,
-                      "is_daytime": true,
-                      "temperature": {
-                        "value": 9,
-                        "unit": "C"
-                      },
-                      "apparent_temperature": {
-                        "value": 11,
-                        "unit": "C"
-                      },
-                      "wetbulb_temperature": {
-                        "value": 8,
-                        "unit": "C"
-                      },
-                      "windchill_temperature": {
-                        "value": 7,
-                        "unit": "C"
-                      },
-                      "relative_humidity": 90,
-                      "dewpoint": {
-                        "value": 8,
-                        "unit": "C"
-                      },
-                      "wind": {
-                        "direction": {
-                          "degrees": 248,
-                          "localized": "WSW"
-                        },
-                        "speed": {
-                          "value": 10,
-                          "unit": "km/h"
-                        },
-                        "gust": {
-                          "value": 24,
-                          "unit": "km/h"
-                        }
-                      },
-                      "visibility": {
-                        "value": 8,
-                        "unit": "km",
-                        "obstructions": ""
-                      },
-                      "cloud_cover": 78,
-                      "ceiling": {
-                        "value": 1554,
-                        "unit": "m"
-                      },
-                      "pressure": {
-                        "value": 1011.5,
-                        "unit": "mb",
-                        "direction": "Rising"
-                      }
-                    }
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/200-Get-Current-Conditions"
           },
           "400": {
             "description": "Bad Request",
@@ -605,7 +468,7 @@
           }
         },
         "operationId": "get-current-conditions",
-        "description": "Retrieve detailed current weather conditions\n\n**Required Permissions:** `*`,`sites:*`,`sites:weather:*`,`sites:weather:currently`\n\n### Specifying the Location\nWeather conditions can be obtained for a specified set of coordinates or by specifying a geocoded address object ID. Either the `coordinates` or `@address` query parameters must be passed, but not both.\n\nIf the specified address ID has not been geocoded, an error will be returned.\n\n<!-- theme: warning-->\n> _Parameters `coordinates` and `@address` are mutually exclusive. Passing more than one will result in an error_\n\n### Units\nBy default, data is returned in Imperial units. To return data in Metric units, pass the `metric` query parameter and set it to _true_. \n\n### Language\nBy default, data is returned in English. To return data in another language, pass the `langugage` query parameter and set it to a valid IETF language code",
+        "description": "Retrieve detailed current weather conditions\n\n**Required Permissions:** `*`,`wx:*`,`wx:conditions:*`,`wx:conditions:read`\n\n### Specifying the Location\nWeather conditions can be obtained for a specified set of coordinates or by specifying a geocoded address object ID. Either the `coordinates` or `@address` query parameters must be passed, but not both. Passing more than one will result in an error \n\n<!-- theme: info-->\n> **Please Note:**\n> If the specified address ID has not been geocoded, an error will be returned.\n\n### Units\nBy default, data is returned in Imperial units. To return data in Metric units, pass the `metric` query parameter and set it to _true_. \n\n### Language\nBy default, data is returned in English. To return data in another language, pass the `langugage` query parameter and set it to a valid IETF language code",
         "parameters": [
           {
             "$ref": "#/components/parameters/@addressId"
@@ -754,7 +617,7 @@
           }
         },
         "operationId": "get-weather-alerts",
-        "description": "Retrieve current severe weather alerts and advisories\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:weather:*`,`sites:weather:alerts`\n* Licensed Feature: `weather_alerts`\n\n### Specifying the Location\nWeather alerts and advisories can be obtained for a specified set of coordinates or by specifying a geocoded address object ID. Either the `coordinates` or `@address` query parameters must be passed, but not both.\n\nIf the specified address ID has not been geocoded, an error will be returned.\n\n<!-- theme: warning-->\n> **Please Note:** The query parameters `coordinates` and `@address` are mutually exclusive. Passing more than one will result in an error\n### Language\nBy default, data is returned in English. To return data in another language, pass the `langugage` query parameter and set it to a valid IETF language code.\n\n<!-- theme: warning-->\n> _The API supports any valid IETF language code but alert data may not be available in the specified language_",
+        "description": "Retrieve current severe weather alerts and advisories\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:weather:*`,`sites:weather:alerts`\n* Licensed Feature: `weather_alerts`\n\n### Specifying the Location\nWeather alerts and advisories can be obtained for a specified set of coordinates or by specifying a geocoded address object ID. Either the `coordinates` or `@address` query parameters must be passed, but not both. Passing more than one will result in an error \n\n<!-- theme: info-->\n> **Please Note:**\n> If the specified address ID has not been geocoded, an error will be returned.\n\n### Language\nBy default, data is returned in English. To return data in another language, pass the `langugage` query parameter and set it to a valid IETF language code.\n\n<!-- theme: warning-->\n> _The API supports any valid IETF language code but alert data may not be available in the specified language_",
         "parameters": [
           {
             "$ref": "#/components/parameters/@addressId"
@@ -785,7 +648,7 @@
           }
         },
         "operationId": "get-weather-indices",
-        "description": "Get activity indices and recommendations based on current weather conditions\n\n**Required Permissions:** `*`,`wx:*`,`wx:conditions:*`,`wx:conditions:read`\n\n### Specifying the Location\nWeather indices can be obtained for a specified set of coordinates or by specifying a geocoded address object ID. Either the `coordinates` or `@address` query parameters must be passed, but not both.\n\nIf the specified address ID has not been geocoded, an error will be returned.\n\n<!-- theme: warning-->\n> **Please Note:** The query parameters `coordinates` and `@address` are mutually exclusive. Passing more than one will result in an error\n\n### Language\nBy default, data is returned in English. To return data in another language, pass the `langugage` query parameter and set it to a valid IETF language code",
+        "description": "Get activity indices and recommendations based on current weather conditions\n\n**Required Permissions:** `*`,`wx:*`,`wx:conditions:*`,`wx:conditions:read`\n\n### Specifying the Location\nWeather indices can be obtained for a specified set of coordinates or by specifying a geocoded address object ID. Either the `coordinates` or `@address` query parameters must be passed, but not both. Passing more than one will result in an error \n\n<!-- theme: info-->\n> **Please Note:**\n> If the specified address ID has not been geocoded, an error will be returned.\n\n### Language\nBy default, data is returned in English. To return data in another language, pass the `langugage` query parameter and set it to a valid IETF language code",
         "parameters": [
           {
             "$ref": "#/components/parameters/@addressId"
@@ -900,7 +763,7 @@
             "Bearer Token": []
           }
         ],
-        "description": "Get current air quality\n\n**Required Permissions:** `*`,`wx:*`,`wx:airquality:*`,`wx:airquality:read`\n\n### Specifying the Location\nAir quality data can be obtained for a specified set of coordinates or by specifying a geocoded address object ID. Either the `coordinates` or `@address` query parameters must be passed, but not both.\n\nIf the specified address ID has not been geocoded, an error will be returned.\n\n<!-- theme: warning-->\n> **Please Note:** The query parameters `coordinates` and `@address` are mutually exclusive. Passing more than one will result in an error\n\n### Language\nBy default, data is returned in English. To return data in another language, pass the `langugage` query parameter and set it to a valid IETF language code"
+        "description": "Get current air quality\n\n**Required Permissions:** `*`,`wx:*`,`wx:airquality:*`,`wx:airquality:read`\n\n### Specifying the Location\nAir quality data can be obtained for a specified set of coordinates or by specifying a geocoded address object ID. Either the `coordinates` or `@address` query parameters must be passed, but not both. Passing more than one will result in an error \n\n<!-- theme: info-->\n> **Please Note:**\n> If the specified address ID has not been geocoded, an error will be returned.\n\n### Language\nBy default, data is returned in English. To return data in another language, pass the `langugage` query parameter and set it to a valid IETF language code"
       },
       "parameters": [
         {
@@ -1007,7 +870,7 @@
             "Bearer Token": []
           }
         ],
-        "description": "Get forecasted daily air quality\n\n**Required Permissions:** `*`,`wx:*`,`wx:airquality:*`,`wx:airquality:read`\n\n### Specifying the Location\nAir quality data can be obtained for a specified set of coordinates or by specifying a geocoded address object ID. Either the `coordinates` or `@address` query parameters must be passed, but not both.\n\nIf the specified address ID has not been geocoded, an error will be returned.\n\n<!-- theme: warning-->\n> **Please Note:** The query parameters `coordinates` and `@address` are mutually exclusive. Passing more than one will result in an error\n\n### Language\nBy default, data is returned in English. To return data in another language, pass the `langugage` query parameter and set it to a valid IETF language code",
+        "description": "Get forecasted daily air quality\n\n**Required Permissions:** `*`,`wx:*`,`wx:airquality:*`,`wx:airquality:read`\n\n### Specifying the Location\nAir quality data can be obtained for a specified set of coordinates or by specifying a geocoded address object ID. Either the `coordinates` or `@address` query parameters must be passed, but not both. Passing more than one will result in an error \n\n<!-- theme: info-->\n> **Please Note:**\n> If the specified address ID has not been geocoded, an error will be returned.\n\n### Language\nBy default, data is returned in English. To return data in another language, pass the `langugage` query parameter and set it to a valid IETF language code",
         "parameters": [
           {
             "$ref": "#/components/parameters/@addressId"
@@ -2241,24 +2104,24 @@
         "content": {
           "application/json": {
             "schema": {
-              "properties": {
-                "id": {
-                  "type": "string"
-                }
-              }
+              "$ref": ""
             }
           }
         }
       },
       "200-Get-Current-Conditions": {
-        "description": "Example response",
+        "description": "Ok",
         "content": {
           "application/json": {
             "schema": {
-              "properties": {
-                "id": {
-                  "type": "string"
-                }
+              "$ref": "#/components/schemas/Weather-Current-Conditions"
+            },
+            "examples": {
+              "Response (Imperial Units)": {
+                "$ref": "#/components/examples/Response (Imperial Units)"
+              },
+              "Response (Metric Units)": {
+                "$ref": "#/components/examples/Response (Metric Units)"
               }
             }
           }
@@ -2272,6 +2135,48 @@
               "properties": {
                 "id": {
                   "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "200-Get-Current-AQ": {
+        "description": "Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Air-Quality-Current"
+            }
+          }
+        }
+      },
+      "200-Get-AQ-Forecast": {
+        "description": "Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "count": {
+                  "type": "string"
+                },
+                "effective_coordinates": {
+                  "type": "object",
+                  "properties": {
+                    "latitude": {
+                      "type": "number"
+                    },
+                    "longitude": {
+                      "type": "number"
+                    }
+                  }
+                },
+                "forecasts": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Air-Quality-Forecast-Object"
+                  }
                 }
               }
             }
@@ -2317,6 +2222,136 @@
         "in": "query",
         "name": "metric",
         "description": "Return the results with metric units instead of imperial units"
+      }
+    },
+    "examples": {
+      "Response (Imperial Units)": {
+        "value": {
+          "effective_coordinates": {
+            "latitude": "37.79513",
+            "longitude": "-122.40299"
+          },
+          "units": "imperial",
+          "timestamp": "2021-04-13T14:15:00+0000",
+          "phrase": "Mostly cloudy",
+          "icon": 6,
+          "is_raining": false,
+          "is_daytime": true,
+          "temperature": {
+            "value": 49,
+            "unit": "F"
+          },
+          "apparent_temperature": {
+            "value": 52,
+            "unit": "F"
+          },
+          "wetbulb_temperature": {
+            "value": 48,
+            "unit": "F"
+          },
+          "windchill_temperature": {
+            "value": 46,
+            "unit": "F"
+          },
+          "relative_humidity": 90,
+          "dewpoint": {
+            "value": 46,
+            "unit": "F"
+          },
+          "wind": {
+            "direction": {
+              "degrees": 248,
+              "localized": "WSW"
+            },
+            "speed": {
+              "value": 6,
+              "unit": "mi/h"
+            },
+            "gust": {
+              "value": 15,
+              "unit": "mi/h"
+            }
+          },
+          "visibility": {
+            "value": 5,
+            "unit": "mi",
+            "obstructions": ""
+          },
+          "cloud_cover": 78,
+          "ceiling": {
+            "value": 5100,
+            "unit": "ft"
+          },
+          "pressure": {
+            "value": 29.87,
+            "unit": "inHg",
+            "direction": "Rising"
+          }
+        }
+      },
+      "Response (Metric Units)": {
+        "value": {
+          "effective_coordinates": {
+            "latitude": "37.79513",
+            "longitude": "-122.40299"
+          },
+          "units": "metric",
+          "timestamp": "2021-04-13T14:15:00+0000",
+          "phrase": "Mostly cloudy",
+          "icon": 6,
+          "is_raining": false,
+          "is_daytime": true,
+          "temperature": {
+            "value": 9,
+            "unit": "C"
+          },
+          "apparent_temperature": {
+            "value": 11,
+            "unit": "C"
+          },
+          "wetbulb_temperature": {
+            "value": 8,
+            "unit": "C"
+          },
+          "windchill_temperature": {
+            "value": 7,
+            "unit": "C"
+          },
+          "relative_humidity": 90,
+          "dewpoint": {
+            "value": 8,
+            "unit": "C"
+          },
+          "wind": {
+            "direction": {
+              "degrees": 248,
+              "localized": "WSW"
+            },
+            "speed": {
+              "value": 10,
+              "unit": "km/h"
+            },
+            "gust": {
+              "value": 24,
+              "unit": "km/h"
+            }
+          },
+          "visibility": {
+            "value": 8,
+            "unit": "km",
+            "obstructions": ""
+          },
+          "cloud_cover": 78,
+          "ceiling": {
+            "value": 1554,
+            "unit": "m"
+          },
+          "pressure": {
+            "value": 1011.5,
+            "unit": "mb",
+            "direction": "Rising"
+          }
+        }
       }
     }
   },
