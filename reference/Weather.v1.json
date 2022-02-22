@@ -2090,7 +2090,7 @@
             "properties": {
               "local": {
                 "type": "number",
-                "description": "Air quality rating on a scale set by local regulating bodies. Scales can vary widely based on location. See (Wikipedia)[https://en.wikipedia.org/wiki/Air_quality_index] for more information.",
+                "description": "Air quality rating on a scale set by local regulating bodies. Scales can vary widely based on location. See [Wikipedia](https://en.wikipedia.org/wiki/Air_quality_index) for more information.",
                 "readOnly": true
               },
               "global": {
@@ -2137,7 +2137,7 @@
                   "properties": {
                     "local": {
                       "type": "number",
-                      "description": "Air quality rating on a scale set by local regulating bodies. Scales can vary widely based on location. See [Wikipedia](https://en.wikipedia.org/wiki/Air_quality_index) or more information.",
+                      "description": "Air quality rating on a scale set by local regulating bodies. Scales can vary widely based on location. See [Wikipedia](https://en.wikipedia.org/wiki/Air_quality_index) for more information.",
                       "readOnly": true
                     },
                     "global": {
@@ -2183,6 +2183,10 @@
             "dominant_pollutant": "Ozone"
           }
         },
+        "title": "Air Quality Forecast Object",
+        "x-tags": [
+          "Air Quality"
+        ],
         "properties": {
           "timestamp": {
             "type": "string",
@@ -2199,7 +2203,7 @@
             "properties": {
               "local": {
                 "type": "number",
-                "description": "Air quality rating on a scale set by local regulating bodies. Scales can vary widely based on location. See (Wikipedia)[https://en.wikipedia.org/wiki/Air_quality_index] for more information."
+                "description": "Air quality rating on a scale set by local regulating bodies. Scales can vary widely based on location. See [Wikipedia](https://en.wikipedia.org/wiki/Air_quality_index) for more information."
               },
               "global": {
                 "type": "number",
@@ -2222,11 +2226,7 @@
             "minLength": 1,
             "description": "The pollutant with the highest concentration."
           }
-        },
-        "title": "Air Quality Forecast Object",
-        "x-tags": [
-          "Air Quality"
-        ]
+        }
       }
     },
     "securitySchemes": {
