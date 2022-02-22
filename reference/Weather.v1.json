@@ -343,7 +343,7 @@
           }
         },
         "operationId": "get-weather-forecast",
-        "description": "Retrieve a detailed daily weather forecast\n\n **Required Permissions:** `*`,`sites:*`,`sites:weather:*`,`sites:weather:forecast`\n\n ### Specifying the Location\nWeather forecasts can be obtained for a specified set of coordinates or by specifying a geocoded address object ID. Either the `coordinates` or `@address` query parameters must be passed, but not both. Passing more than one will result in an error \n\n<!-- theme: info-->\n> **Please Note:**\n> If the specified address ID has not been geocoded, an error will be returned.\n\n### Units\nBy default, data is returned in Imperial units. To return data in Metric units, pass the `metric` query parameter and set it to _true_. \n\n### Language\nBy default, data is returned in English. To return data in another language, pass the `langugage` query parameter and set it to a valid IETF language code",
+        "description": "Retrieve a detailed daily weather forecast\n\n **Required Permissions:** `*`,`wx:*`,`wx:forecast:*`,`wx:forecast:read` \n\n ### Specifying the Location\nWeather forecasts can be obtained for a specified set of coordinates or by specifying a geocoded address object ID. Either the `coordinates` or `@address` query parameters must be passed, but not both. Passing more than one will result in an error \n\n<!-- theme: info-->\n> **Please Note:**\n> If the specified address ID has not been geocoded, an error will be returned.\n\n### Units\nBy default, data is returned in Imperial units. To return data in Metric units, pass the `metric` query parameter and set it to _true_. \n\n### Language\nBy default, data is returned in English. To return data in another language, pass the `langugage` query parameter and set it to a valid IETF language code",
         "parameters": [
           {
             "$ref": "#/components/parameters/@addressId"
@@ -754,7 +754,7 @@
           }
         },
         "operationId": "get-weather-alerts",
-        "description": "Retrieve current severe weather alerts and advisories\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:weather:*`,`sites:weather:alerts`\n* Licensed Feature: `weather_alerts`\n\n### Specifying the Location\nWeather alerts and advisories can be obtained for a specified set of coordinates or by specifying a geocoded address object ID. Either the `coordinates` or `address` query parameters must be passed, but not both.\n\nIf the specified address ID has not been geocoded, an error will be returned.\n\n<!-- theme: warning-->\n> _Parameters `coordinates` and `address` are mutually exclusive. Passing more than one will result in an error_\n\n### Language\nBy default, data is returned in English. To return data in another language, pass the `langugage` query parameter and set it to a valid IETF language code.\n\n<!-- theme: warning-->\n> _The API supports any valid IETF language code but alert data may not be available in the specified language_",
+        "description": "Retrieve current severe weather alerts and advisories\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:weather:*`,`sites:weather:alerts`\n* Licensed Feature: `weather_alerts`\n\n### Specifying the Location\nWeather alerts and advisories can be obtained for a specified set of coordinates or by specifying a geocoded address object ID. Either the `coordinates` or `@address` query parameters must be passed, but not both.\n\nIf the specified address ID has not been geocoded, an error will be returned.\n\n<!-- theme: warning-->\n> **Please Note:** The query parameters `coordinates` and `@address` are mutually exclusive. Passing more than one will result in an error\n### Language\nBy default, data is returned in English. To return data in another language, pass the `langugage` query parameter and set it to a valid IETF language code.\n\n<!-- theme: warning-->\n> _The API supports any valid IETF language code but alert data may not be available in the specified language_",
         "parameters": [
           {
             "$ref": "#/components/parameters/@addressId"
@@ -785,7 +785,7 @@
           }
         },
         "operationId": "get-weather-indices",
-        "description": "Get activity indices and recommendations based on current weather conditions\n\n**Required Permissions:** `*`,`sites:*`,`sites:weather:*`,`sites:weather:currently`\n\n### Specifying the Location\nWeather indices can be obtained for a specified set of coordinates or by specifying a geocoded address object ID. Either the `coordinates` or `@address` query parameters must be passed, but not both.\n\nIf the specified address ID has not been geocoded, an error will be returned.\n\n<!-- theme: warning-->\n> _Parameters `coordinates` and `@address` are mutually exclusive. Passing more than one will result in an error_\n\n### Language\nBy default, data is returned in English. To return data in another language, pass the `langugage` query parameter and set it to a valid IETF language code",
+        "description": "Get activity indices and recommendations based on current weather conditions\n\n**Required Permissions:** `*`,`wx:*`,`wx:conditions:*`,`wx:conditions:read`\n\n### Specifying the Location\nWeather indices can be obtained for a specified set of coordinates or by specifying a geocoded address object ID. Either the `coordinates` or `@address` query parameters must be passed, but not both.\n\nIf the specified address ID has not been geocoded, an error will be returned.\n\n<!-- theme: warning-->\n> **Please Note:** The query parameters `coordinates` and `@address` are mutually exclusive. Passing more than one will result in an error\n\n### Language\nBy default, data is returned in English. To return data in another language, pass the `langugage` query parameter and set it to a valid IETF language code",
         "parameters": [
           {
             "$ref": "#/components/parameters/@addressId"
@@ -900,7 +900,7 @@
             "Bearer Token": []
           }
         ],
-        "description": "Get current air quality\n\n**Required Permissions:** `*`,`wx:*`,`wx:airquality:*`,`wx:airquality:read`\n\n### Specifying the Location\nAir quality data can be obtained for a specified set of coordinates or by specifying a geocoded address object ID. Either the `coordinates` or `@address` query parameters must be passed, but not both.\n\nIf the specified address ID has not been geocoded, an error will be returned.\n\n<!-- theme: warning-->\n> _Parameters `coordinates` and `@address` are mutually exclusive. Passing more than one will result in an error_\n\n### Language\nBy default, data is returned in English. To return data in another language, pass the `langugage` query parameter and set it to a valid IETF language code"
+        "description": "Get current air quality\n\n**Required Permissions:** `*`,`wx:*`,`wx:airquality:*`,`wx:airquality:read`\n\n### Specifying the Location\nAir quality data can be obtained for a specified set of coordinates or by specifying a geocoded address object ID. Either the `coordinates` or `@address` query parameters must be passed, but not both.\n\nIf the specified address ID has not been geocoded, an error will be returned.\n\n<!-- theme: warning-->\n> **Please Note:** The query parameters `coordinates` and `@address` are mutually exclusive. Passing more than one will result in an error\n\n### Language\nBy default, data is returned in English. To return data in another language, pass the `langugage` query parameter and set it to a valid IETF language code"
       },
       "parameters": [
         {
@@ -1026,9 +1026,9 @@
                 1,
                 2,
                 3,
-                4, 
-                5, 
-                6, 
+                4,
+                5,
+                6,
                 7
               ]
             },
@@ -1594,6 +1594,9 @@
           }
         },
         "title": "Weather Current Conditions Object",
+        "x-tags": [
+          "Current Conditions"
+        ],
         "properties": {
           "effective_coordinates": {
             "type": "object",
@@ -1607,29 +1610,33 @@
             }
           },
           "units": {
-            "type": "string"
+            "type": "string",
+            "description": "Indicates whether `metric` or `imperial` units are used"
           },
           "timestamp": {
-            "type": "number"
+            "type": "string",
+            "description": "Date and time of the current observation displayed in ISO 8601 format. *For example, 2022-02-23T08:00:00+0000*"
           },
           "phrase": {
-            "type": "string"
+            "type": "string",
+            "description": "Phrase description of the current weather condition. Displayed in specified language."
           },
           "icon": {
-            "type": "number"
+            "type": "number",
+            "description": "Numeric value representing an image"
           },
           "is_raining": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Indicates the presence or absence of precipitation. `True` indicates the presence of precipitation, `false` indicates the absence of precipitation."
           },
           "is_daytime": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Indicates the time of the day. `True` indicates 'day',', `false` indicates 'night.",
+            "readOnly": true
           },
           "temperature": {
             "type": "object",
-            "required": [
-              "value",
-              "unit"
-            ],
+            "description": "Temperature being returned.",
             "properties": {
               "value": {
                 "type": "number"
@@ -1642,6 +1649,7 @@
           },
           "apparent_temperature": {
             "type": "object",
+            "description": "Perceived outdoor temperature caused by the combination of air temperature, relative humidity, and wind speed in specified unit.",
             "properties": {
               "value": {
                 "type": "number"
@@ -1653,6 +1661,7 @@
           },
           "wetbulb_temperature": {
             "type": "object",
+            "description": "The temperature to which air may be cooled by evaporating water into it at constant pressure until it reaches saturation.",
             "properties": {
               "value": {
                 "type": "number"
@@ -1664,6 +1673,7 @@
           },
           "windchill_temperature": {
             "type": "object",
+            "description": "Perceived air temperature on exposed skin due to wind.",
             "properties": {
               "value": {
                 "type": "number"
@@ -1674,10 +1684,12 @@
             }
           },
           "relative_humidity": {
-            "type": "number"
+            "type": "number",
+            "description": "Relative humidity is the amount of water vapor present in air expressed as a percentage of the amount needed for saturation at the same temperature."
           },
           "dewpoint": {
             "type": "object",
+            "description": "The dewpoint temperature in specified unit. The dewpoint temperature is the temperature that the air must be cooled to in order to reach saturation.",
             "properties": {
               "value": {
                 "type": "number"
@@ -1689,20 +1701,25 @@
           },
           "wind": {
             "type": "object",
+            "description": "Wind details being returned including speed and direction.",
             "properties": {
               "direction": {
                 "type": "object",
+                "description": "Wind direction",
                 "properties": {
                   "degrees": {
-                    "type": "number"
+                    "type": "number",
+                    "description": "Wind direction in Azimuth degrees, starting at true North and continuing in clockwise direction. North is 0 degrees, east is 90 degrees, south is 180 degrees, west is 270 degrees. Possible values 0-359."
                   },
                   "localized": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Direction abbreviation in the specified language."
                   }
                 }
               },
               "speed": {
                 "type": "object",
+                "description": "Speed of the wind in specified unit.",
                 "properties": {
                   "value": {
                     "type": "number"
@@ -1714,6 +1731,7 @@
               },
               "gust": {
                 "type": "object",
+                "description": "Wind gust. Wind gust is a sudden, brief increase in speed of the wind.",
                 "properties": {
                   "value": {
                     "type": "number"
@@ -1727,6 +1745,7 @@
           },
           "visibility": {
             "type": "object",
+            "description": "Visibility in specified unit. A measure of the distance at which an object or light can be clearly discerned.",
             "properties": {
               "value": {
                 "type": "number"
@@ -1740,10 +1759,12 @@
             }
           },
           "cloud_cover": {
-            "type": "number"
+            "type": "number",
+            "description": "Percent representing cloud cover."
           },
           "ceiling": {
             "type": "object",
+            "description": "Cloud ceiling in specified unit. The ceiling is a measurement of the height of the base of the lowest clouds.",
             "properties": {
               "value": {
                 "type": "number"
@@ -1755,6 +1776,7 @@
           },
           "pressure": {
             "type": "object",
+            "description": "Atmospheric pressure in specified unit.",
             "properties": {
               "value": {
                 "type": "number"
@@ -1763,14 +1785,18 @@
                 "type": "string"
               },
               "direction": {
-                "type": "string"
+                "type": "string",
+                "description": "Description of the pressure tendency in specified language. One of F=Falling, S=Steady, R=Rising.",
+                "enum": [
+                  "Falling",
+                  "Rising",
+                  "Steady"
+                ],
+                "readOnly": true
               }
             }
           }
-        },
-        "x-tags": [
-          "Current Conditions"
-        ]
+        }
       },
       "Weather-Alerts": {
         "description": "",
@@ -1810,7 +1836,8 @@
         ],
         "properties": {
           "count": {
-            "type": "number"
+            "type": "number",
+                        "readOnly": true
           },
           "effective_coordinates": {
             "type": "object",
@@ -1826,50 +1853,73 @@
           "data": {
             "type": "array",
             "uniqueItems": true,
-            "minItems": 1,
+            "readOnly": true,
+            "description": "An array of weather alert objects",
             "items": {
               "type": "object",
               "properties": {
                 "id": {
-                  "type": "number"
+                  "type": "number",
+                  "description": "A unique numerical identifier for a weather alert.",
+                  "readOnly": true
                 },
                 "category": {
-                  "type": "string"
+                  "type": "string",
+                  "description": "Category of the alert.",
+                  "readOnly": true
                 },
                 "description": {
-                  "type": "string"
+                  "type": "string",
+                  "description": "Description of the alert.",
+                  "readOnly": true
                 },
                 "source": {
-                  "type": "string"
+                  "type": "string",
+                  "description": "The provider of the alert information. By default the source is returned in English (en-US). The alerts are from official Government Meteorological Agencies and leading global weather alert providers.",
+                  "readOnly": true
                 },
                 "areas": {
                   "type": "array",
                   "uniqueItems": true,
+                  "readOnly": true,
+                  "description": "Information about the alert specific to the affected area(s).",
                   "items": {
                     "type": "object",
                     "properties": {
                       "name": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "\t\nThe name of an area which is affected by the alert. The location that was requested falls under the alert area.",
+                        "readOnly": true
                       },
                       "summary": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "Text summarizing the alert in the returned area.",
+                        "readOnly": true
                       },
                       "status": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The latest status of the alert in the current area.",
+                        "readOnly": true                      
                       },
                       "span": {
                         "type": "object",
                         "properties": {
                           "start": {
-                            "type": "number"
+                            "type": "number",
+                            "description": "The start date and time of the alert in ISO 8601 format, for example, 2019-10-27T19:39:57-08:00. If the alert crosses multiple time zones the returned time in the response is the local time to the requested coordinate location.",
+                        "readOnly": true
                           },
                           "end": {
-                            "type": "number"
+                            "type": "number",
+                            "description": "The end date and time of the alert in ISO 8601 format, for example, 2019-10-27T19:39:57-08:00. If the alert crosses multiple time zones the returned time in the response is the local time to the requested coordinate location.",
+                        "readOnly": true
                           }
                         }
                       },
                       "details": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "Full details associated with the alert. Returned if `details`=True. This field is always returned in the language(s) of choice by the issuing provider and Azure Maps only returns what is created by the provider. Please note, some countries/regions may offer their native language and English. Language parameter won’t apply to this field.",
+                        "readOnly": true
                       }
                     }
                   }
@@ -1908,7 +1958,9 @@
         ],
         "properties": {
           "count": {
-            "type": "integer"
+            "type": "integer",
+            "description": "The number of alerts returned",
+            "readOnly": true
           },
           "effective_coordinates": {
             "type": "object",
@@ -1924,38 +1976,48 @@
           "data": {
             "type": "array",
             "uniqueItems": true,
-            "minItems": 1,
             "items": {
               "type": "object",
+              "additionalProperties": false,
               "properties": {
                 "id": {
-                  "type": "integer"
+                  "type": "integer",
+                  "description": "Numeric ID used to identify the specific index. ",
+                  "readOnly": true
                 },
                 "name": {
                   "type": "string",
-                  "minLength": 1
+                  "description": "Name of the index, for example, \"Construction\", \"Outdoor Activity\", \"Flight Delays\".",
+                  "readOnly": true
                 },
                 "timestamp": {
                   "type": "string",
-                  "minLength": 1,
-                  "description": "Date and time of the current observation displayed in ISO 8601 format. *For example, 2022-02-23T08:00:00+0000*"
+                  "description": "Date and time of the current observation displayed in ISO 8601 format. *For example, 2022-02-23T08:00:00+0000*",
+                  "readOnly": true
                 },
                 "classification": {
                   "type": "string",
-                  "minLength": 1
+                  "description": "Textual description for `value` corresponding to the level that the index value falls under, for example \"Very Good\".",
+                  "readOnly": true
                 },
                 "description": {
                   "type": "string",
-                  "minLength": 1
+                  "description": "A textual explanation that can be used for display purposes to summarize the index value and category. For example, when the index value for Flight Delays is very good, the description will be \"Conditions are excellent for flying!\".",
+                  "readOnly": true
                 },
                 "value": {
-                  "type": "integer"
+                  "type": "integer",
+                  "description": "Level that the index value falls under, represented by an integer. This value can be 1 through 5.",
+                  "readOnly": true
                 },
                 "percentage": {
-                  "type": "integer"
+                  "type": "integer",
+                  "readOnly": true
                 }
-              }
-            }
+              },
+              "readOnly": true
+            },
+            "readOnly": true
           }
         }
       },
@@ -2004,82 +2066,85 @@
             "properties": {
               "latitude": {
                 "type": "string",
-                "minLength": 1,
                 "description": "The effective latitude of this request"
               },
               "longitude": {
                 "type": "string",
-                "minLength": 1,
                 "description": "The effective longitude of this request"
               }
             }
           },
           "timestamp": {
             "type": "string",
-            "minLength": 1,
-            "description": "Date and time of the current observation displayed in ISO 8601 format. *For example, 2022-02-23T08:00:00+0000*"
+            "description": "Date and time of the current observation displayed in ISO 8601 format. *For example, 2022-02-23T08:00:00+0000*",
+            "readOnly": true
           },
           "description": {
             "type": "string",
             "minLength": 1,
-            "description": "A textual explanation of this air quality result in the requested language."
+            "description": "A textual explanation of this air quality result in the requested language.",
+            "readOnly": true
           },
           "index": {
             "type": "object",
             "properties": {
               "local": {
                 "type": "number",
-                "description": "Air quality rating on a scale set by local regulating bodies. Scales can vary widely based on location. See (Wikipedia)[https://en.wikipedia.org/wiki/Air_quality_index] for more information."
+                "description": "Air quality rating on a scale set by local regulating bodies. Scales can vary widely based on location. See (Wikipedia)[https://en.wikipedia.org/wiki/Air_quality_index] for more information.",
+            "readOnly": true
               },
               "global": {
                 "type": "number",
-                "description": "Internationally normalized air quality rating on a scale from 0 to 300 and up, with higher numbers representing worse air quality."
+                "description": "Internationally normalized air quality rating on a scale from 0 to 300 and up, with higher numbers representing worse air quality.",
+            "readOnly": true
               }
             }
           },
           "status": {
             "type": "string",
-            "minLength": 1,
-            "description": "One-word description of the air quality in the requested language. For example, \"Excellent\"."
+            "description": "One-word description of the air quality in the requested language. For example, \"Excellent\".",
+            "readOnly": true
           },
           "status_color": {
             "type": "string",
-            "minLength": 1,
-            "description": "A unique color corresponding to the category of this air quality result."
+            "description": "A unique color corresponding to the category of this air quality result.",
+            "readOnly": true
           },
           "dominant_pollutant": {
             "type": "string",
-            "minLength": 1,
-            "description": "The pollutant with the highest concentration."
+            "description": "The pollutant with the highest concentration.",
+            "readOnly": true
           },
           "pollutants": {
             "type": "array",
             "uniqueItems": true,
-            "minItems": 1,
+            "readOnly": true,
             "description": "Information about individual pollutants.",
             "items": {
               "type": "object",
               "properties": {
                 "type": {
                   "type": "string",
-                  "minLength": 1,
-                  "description": "Type of pollutant. Please note that more may be added at any time."
+                  "description": "Type of pollutant. Please note that more may be added at any time.",
+            "readOnly": true
                 },
                 "name": {
                   "type": "string",
-                  "minLength": 1,
-                  "description": "The name of the pollutant in English."
+                  "description": "The name of the pollutant in English.",
+            "readOnly": true
                 },
                 "index": {
                   "type": "object",
                   "properties": {
                     "local": {
                       "type": "number",
-                      "description": "Air quality rating on a scale set by local regulating bodies. Scales can vary widely based on location. See (Wikipedia)[https://en.wikipedia.org/wiki/Air_quality_index] for more information."
+                      "description": "Air quality rating on a scale set by local regulating bodies. Scales can vary widely based on location. See (Wikipedia)[https://en.wikipedia.org/wiki/Air_quality_index] for more information.",
+            "readOnly": true
                     },
                     "global": {
                       "type": "number",
-                      "description": "Internationally normalized air quality rating on a scale from 0 to 300 and up, with higher numbers representing worse air quality."
+                      "description": "Internationally normalized air quality rating on a scale from 0 to 300 and up, with higher numbers representing worse air quality.",
+            "readOnly": true
                     }
                   }
                 },
@@ -2088,11 +2153,12 @@
                   "description": "An object containing the number of pollutant particles per volume of air.",
                   "properties": {
                     "value": {
-                      "type": "number"
+                      "type": "number",
+            "readOnly": true
                     },
                     "unit": {
                       "type": "string",
-                      "minLength": 1
+            "readOnly": true
                     }
                   }
                 }
