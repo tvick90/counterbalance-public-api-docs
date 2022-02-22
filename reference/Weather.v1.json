@@ -983,7 +983,7 @@
         "description": "Get current air quality\n\n**Required Permissions:** `*`,`wx:*`,`wx:airquality:*`,`wx:airquality:read`\n\n### Specifying the Location\nAir quality data can be obtained for a specified set of coordinates or by specifying a geocoded address object ID. Either the `coordinates` or `@address` query parameters must be passed, but not both.\n\nIf the specified address ID has not been geocoded, an error will be returned.\n\n<!-- theme: warning-->\n> _Parameters `coordinates` and `@address` are mutually exclusive. Passing more than one will result in an error_\n\n### Language\nBy default, data is returned in English. To return data in another language, pass the `langugage` query parameter and set it to a valid IETF language code"
       },
       "parameters": [
-              {
+        {
           "schema": {
             "type": "string",
             "default": "47.620506,-122.349277"
@@ -1009,7 +1009,7 @@
           "name": "language",
           "description": "Language in which search results should be returned. Should be one of supported IETF language tags, case insensitive."
         }
-            ]
+      ]
     },
     "/v1/weather/air-quality/forecast": {
       "get": {
@@ -1292,7 +1292,8 @@
               "type": "object",
               "properties": {
                 "date": {
-                  "type": "number"
+                  "type": "number",
+                  "description": "Date and time of the current observation displayed in ISO 8601 format. *For example, 2022-02-23T08:00:00+0000*"
                 },
                 "sources": {
                   "type": "array",
@@ -1969,6 +1970,10 @@
             ]
           }
         },
+        "title": "Weather Indices",
+        "x-tags": [
+          "Current Conditions"
+        ],
         "properties": {
           "count": {
             "type": "integer"
@@ -2000,7 +2005,8 @@
                 },
                 "timestamp": {
                   "type": "string",
-                  "minLength": 1
+                  "minLength": 1,
+                  "description": "Date and time of the current observation displayed in ISO 8601 format. *For example, 2022-02-23T08:00:00+0000*"
                 },
                 "classification": {
                   "type": "string",
@@ -2019,20 +2025,210 @@
               }
             }
           }
-        },
-        "title": "Weather Indices",
-        "x-tags": [
-          "Current Conditions"
-        ]
+        }
       },
       "Air-Quality-Current": {
-        "title": "Air-Quality-Object",
+        "description": "",
         "type": "object",
+        "x-examples": {
+          "example-1": {
+            "effective_coordinates": {
+              "latitude": "47.55355",
+              "longitude": "-122.04792"
+            },
+            "timestamp": "2022-02-22T21:00:00+0000",
+            "description": "The air quality is generally acceptable for most individuals. However, sensitive groups may experience minor to moderate symptoms from long-term exposure.",
+            "index": {
+              "local": 27.5,
+              "global": 30.9
+            },
+            "status": "Fair",
+            "status_color": "#FFC300",
+            "dominant_pollutant": "Ozone",
+            "pollutants": [
+              {
+                "type": "NO2",
+                "name": "Nitrogen Dioxide",
+                "index": {
+                  "local": 2.7,
+                  "global": 2.6
+                },
+                "concentration": {
+                  "value": 5,
+                  "unit": "µg/m³"
+                }
+              }
+            ]
+          }
+        },
+        "title": "Air Quality Object",
+        "x-tags": [
+          "Air Quality"
+        ],
         "properties": {
-          "id": {
-            "type": "string"
+          "effective_coordinates": {
+            "type": "object",
+            "description": "An array of coordinates",
+            "properties": {
+              "latitude": {
+                "type": "string",
+                "minLength": 1,
+                "description": "The effective latitude of this request"
+              },
+              "longitude": {
+                "type": "string",
+                "minLength": 1,
+                "description": "The effective longitude of this request"
+              }
+            }
+          },
+          "timestamp": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Date and time of the current observation displayed in ISO 8601 format. *For example, 2022-02-23T08:00:00+0000*"
+          },
+          "description": {
+            "type": "string",
+            "minLength": 1,
+            "description": "A textual explanation of this air quality result in the requested language."
+          },
+          "index": {
+            "type": "object",
+            "properties": {
+              "local": {
+                "type": "number",
+                "description": "Air quality rating on a scale set by local regulating bodies. Scales can vary widely based on location. See (Wikipedia)[https://en.wikipedia.org/wiki/Air_quality_index] for more information."
+              },
+              "global": {
+                "type": "number",
+                "description": "Internationally normalized air quality rating on a scale from 0 to 300 and up, with higher numbers representing worse air quality."
+              }
+            }
+          },
+          "status": {
+            "type": "string",
+            "minLength": 1,
+            "description": "One-word description of the air quality in the requested language. For example, \"Excellent\"."
+          },
+          "status_color": {
+            "type": "string",
+            "minLength": 1,
+            "description": "A unique color corresponding to the category of this air quality result."
+          },
+          "dominant_pollutant": {
+            "type": "string",
+            "minLength": 1,
+            "description": "The pollutant with the highest concentration."
+          },
+          "pollutants": {
+            "type": "array",
+            "uniqueItems": true,
+            "minItems": 1,
+            "description": "Information about individual pollutants.",
+            "items": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "Type of pollutant. Please note that more may be added at any time."
+                },
+                "name": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "The name of the pollutant in English."
+                },
+                "index": {
+                  "type": "object",
+                  "properties": {
+                    "local": {
+                      "type": "number",
+                      "description": "Air quality rating on a scale set by local regulating bodies. Scales can vary widely based on location. See (Wikipedia)[https://en.wikipedia.org/wiki/Air_quality_index] for more information."
+                    },
+                    "global": {
+                      "type": "number",
+                      "description": "Internationally normalized air quality rating on a scale from 0 to 300 and up, with higher numbers representing worse air quality."
+                    }
+                  }
+                },
+                "concentration": {
+                  "type": "object",
+                  "description": "An object containing the number of pollutant particles per volume of air.",
+                  "properties": {
+                    "value": {
+                      "type": "number"
+                    },
+                    "unit": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  }
+                }
+              }
+            }
           }
         }
+      },
+      "Air-Quality-Forecast-Object": {
+        "description": "",
+        "type": "object",
+        "x-examples": {
+          "example-1": {
+            "timestamp": "2022-02-23T08:00:00+0000",
+            "description": "The air quality is generally acceptable for most individuals. However, sensitive groups may experience minor to moderate symptoms from long-term exposure.",
+            "index": {
+              "local": 33.7,
+              "global": 35.7
+            },
+            "status": "Fair",
+            "status_color": "#FFC300",
+            "dominant_pollutant": "Ozone"
+          }
+        },
+        "properties": {
+          "timestamp": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Date and time of the current observation displayed in ISO 8601 format. *For example, 2022-02-23T08:00:00+0000*"
+          },
+          "description": {
+            "type": "string",
+            "minLength": 1,
+            "description": "A textual explanation of this air quality result in the requested language."
+          },
+          "index": {
+            "type": "object",
+            "properties": {
+              "local": {
+                "type": "number",
+                "description": "Air quality rating on a scale set by local regulating bodies. Scales can vary widely based on location. See (Wikipedia)[https://en.wikipedia.org/wiki/Air_quality_index] for more information."
+              },
+              "global": {
+                "type": "number",
+                "description": "Internationally normalized air quality rating on a scale from 0 to 300 and up, with higher numbers representing worse air quality."
+              }
+            }
+          },
+          "status": {
+            "type": "string",
+            "minLength": 1,
+            "description": "One-word description of the air quality in the requested language. *For example, \"Excellent\"*."
+          },
+          "status_color": {
+            "type": "string",
+            "minLength": 1,
+            "description": "A unique color corresponding to the category of this air quality result."
+          },
+          "dominant_pollutant": {
+            "type": "string",
+            "minLength": 1,
+            "description": "The pollutant with the highest concentration."
+          }
+        },
+        "title": "Air Quality Forecast Object",
+        "x-tags": [
+          "Air Quality"
+        ]
       }
     },
     "securitySchemes": {
