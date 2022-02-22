@@ -892,16 +892,10 @@
       },
       "Update-Plot-Object-Body": {
         "value": {
-          "description": "Example shared example",
-          "type": "object",
-          "properties": {
-            "id": {
-              "type": "string"
-            }
-          },
-          "required": [
-            "id"
-          ]
+          "name": "Heating HW Loop - Last 24H",
+          "description": "Heating HW loop supply and return temperatures for the last 24 hours",
+          "public": true,
+          "config": {}
         }
       }
     },
