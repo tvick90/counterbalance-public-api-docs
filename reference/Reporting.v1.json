@@ -519,6 +519,9 @@
         "type": "object",
         "description": "",
         "examples": [],
+        "x-tags": [
+          "Trend Plot"
+        ],
         "properties": {
           "id": {
             "type": "string",
@@ -569,18 +572,14 @@
           },
           "config": {
             "type": "object",
-            "description": "The plot object configuration data **(internal use only)**",
+            "description": "The proprietary plot object configuration data **(internal use only)**",
             "additionalProperties": false
           }
         },
         "required": [
           "id",
-          "@owner",
           "name",
           "config"
-        ],
-        "x-tags": [
-          "Trend Plot"
         ]
       },
       "Report-Schedule-Object": {
