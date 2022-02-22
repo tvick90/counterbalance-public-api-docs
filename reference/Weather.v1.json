@@ -406,7 +406,7 @@
         ]
       }
     },
-    "/v1/site/weather/conditions": {
+    "/v1/site/weather/current": {
       "get": {
         "summary": "Get Current Weather Conditions",
         "responses": {
@@ -674,7 +674,8 @@
         "tags": [
           "Current Conditions"
         ]
-      }
+      },
+      "parameters": []
     },
     "/v1/site/weather/alerts": {
       "get": {
@@ -895,6 +896,82 @@
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../models/Error-Response.v1.yaml"
+                },
+                "examples": {
+                  "No Parameters": {
+                    "value": {
+                      "error": {
+                        "message": "Invalid request",
+                        "console": "Specify either coordinates or an address ID",
+                        "code": 400
+                      },
+                      "logging_hash": null
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../models/Error-Response.v1.yaml"
+                },
+                "examples": {
+                  "Address Not Found": {
+                    "value": {
+                      "error": {
+                        "message": "Address not found",
+                        "console": "The address ID 8ac7d5dc-803d-40ac-bc37-16c0dbffe5d8 could not be found in the database",
+                        "code": 404
+                      },
+                      "logging_hash": null
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../models/Error-Response.v1.yaml"
+                },
+                "examples": {
+                  "Invalid Parameter Combination": {
+                    "value": {
+                      "error": {
+                        "message": "Invalid request",
+                        "console": "Parameters coordinates and address are mutually exclusive. Specify only one.",
+                        "code": 409
+                      },
+                      "logging_hash": null
+                    }
+                  },
+                  "Invalid Address Geocoding": {
+                    "value": {
+                      "error": {
+                        "message": "Invalid address geocoding",
+                        "console": "The address ID 8ac7d5dc-803d-40ac-bc37-16c0dbffe5d8 is not geocoded and we have no coordinates to check",
+                        "code": 409
+                      },
+                      "logging_hash": null
+                    }
+                  }
+                }
+              }
+            }
           }
         },
         "operationId": "get-airquality-current",
@@ -903,13 +980,40 @@
             "Bearer Token": []
           }
         ],
-        "description": ""
+        "description": "Get current air quality\n\n**Required Permissions:** `*`,`wx:*`,`wx:airquality:*`,`wx:airquality:read`\n\n### Specifying the Location\nAir quality data can be obtained for a specified set of coordinates or by specifying a geocoded address object ID. Either the `coordinates` or `@address` query parameters must be passed, but not both.\n\nIf the specified address ID has not been geocoded, an error will be returned.\n\n<!-- theme: warning-->\n> _Parameters `coordinates` and `@address` are mutually exclusive. Passing more than one will result in an error_\n\n### Language\nBy default, data is returned in English. To return data in another language, pass the `langugage` query parameter and set it to a valid IETF language code"
       },
-      "parameters": []
+      "parameters": [
+              {
+          "schema": {
+            "type": "string",
+            "default": "47.620506,-122.349277"
+          },
+          "in": "query",
+          "name": "coordinates",
+          "description": "Get weather alerts for the specified lat/lon position"
+        },
+        {
+          "schema": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "in": "query",
+          "name": "@address",
+          "description": "Get weather alerts for the specified address ID"
+        },
+        {
+          "schema": {
+            "type": "string"
+          },
+          "in": "query",
+          "name": "language",
+          "description": "Language in which search results should be returned. Should be one of supported IETF language tags, case insensitive."
+        }
+            ]
     },
     "/v1/weather/air-quality/forecast": {
       "get": {
-        "summary": "Get Air Quality Conditions",
+        "summary": "Get Air Quality Forecast",
         "tags": [
           "Air Quality"
         ],
@@ -1000,7 +1104,7 @@
             "Bearer Token": []
           }
         ],
-        "description": ""
+        "description": "Get forecasted daily air quality\n\n**Required Permissions:** `*`,`wx:*`,`wx:airquality:*`,`wx:airquality:read`\n\n### Specifying the Location\nAir quality data can be obtained for a specified set of coordinates or by specifying a geocoded address object ID. Either the `coordinates` or `@address` query parameters must be passed, but not both.\n\nIf the specified address ID has not been geocoded, an error will be returned.\n\n<!-- theme: warning-->\n> _Parameters `coordinates` and `@address` are mutually exclusive. Passing more than one will result in an error_\n\n### Language\nBy default, data is returned in English. To return data in another language, pass the `langugage` query parameter and set it to a valid IETF language code"
       },
       "parameters": [
         {
