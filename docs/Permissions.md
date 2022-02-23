@@ -4,13 +4,19 @@
 
 Roles are logical groupings of permission scopes that define what platform objects and operations a user is permitted to access.
 
+### Role Types
+| Type | Description |
+|:-|:-|
+| **System-Assigned Roles** |  |
+| **Position-Based Roles**  |  |
+
 ### Predefined Roles
 | Role ID | Name/Description | Permissions | 
 |:-|:-|:-|
 | **System-Assigned Roles** |
 | `rol_mAdN91g5jh41yrwO` | **Tenant Owner** <br> All-access permissions for tenant owner assigned when tenant account is created | `*`
 | `rol_BjYA2HwGRnfaFhuV` | **Console User** <br> Base permissions for console users assigned when account is created | `tenant:account:read` <br> `tenant:preferences:read` <br> `tenant:quota:read` <br> `user:permissions:read` <br> `user:roles:read` <br> `user:self:read`
-| **Position-Based Roles** <br> *Roles assigned based on a user's position within the organization*
+| **Position-Based Roles**
 | `rol_9t7sUEmXhoXG0JIn` |  **Automation Technician** <br> Permissions suitable for an automation/field/service technician | `infrastructure:*` <br> `sites:*` <br> `telemetry:*` 
 | `rol_CxegVC5SoEeAUa6E` |  **Building Engineer** <br> Permissions suitable for a building engineer | `tenant:account:read` <br> `tenant:preferences:read`
 | `rol_t0duC3p8gZbzhZ5a` |  **Energy Manager** <br> 	Permissions suitable for an energy manager | `tenant:account:read` <br> `tenant:preferences:read`
@@ -20,7 +26,7 @@ Roles are logical groupings of permission scopes that define what platform objec
 ### All Permision Scopes
 | **Permission Scope** | **Description** |
 |:-|:-|
-| **Absolute Wildcard** 
+| **Absolute Wildcard**
 | `*`                                  |	All access literally everything
 | **Automation Wildcard** 
 | `automation:*`                       |	All access to automation component
