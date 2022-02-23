@@ -5,6 +5,9 @@
 |:-|:-|
 | **Absolute Wildcard** 
 | `*`                                  |	All access literally everything
+
+| **Permission Scope** | **Description** |
+|:-|:-|
 | **Automation Wildcard** 
 | `automation:*`                       |	All access to automation component
 | **Automation Resets** 
@@ -31,6 +34,9 @@
 | `automation:trigger:read`            |	View existing triggers
 | `automation:trigger:update`          |	Update existing triggers
 | `automation:trigger:delete`          |	Delete existing triggers
+
+| **Permission Scope** | **Description** |
+|:-|:-|
 | **Billing Wildcard** 
 | `billing:*`                          |	All access to billing & subscriptions
 | **Billing Account** 
@@ -146,6 +152,32 @@
 | `sites:room:read`                    |	View existing room objects
 | `sites:room:update`                  |	Update existing room objects
 | `sites:room:delete`                  |	Delete existing room objects
+| **Telemetry Wildcard** 
+| `telemetry:*`                        |	All access to telemetry component
+| **Telemetry Wildcard** 
+| `telemetry:collector:*`              |	All access to datapoint collector objects
+| `telemetry:collector:create`         |	Create new datapoint collector objects
+| `telemetry:collector:list`           |	List existing datapoint collectorobjects <br> *__Deprecated__, use `*:read`*
+| `telemetry:collector:read`           |	View existing datapoint collector objects
+| `telemetry:collector:update`         |	Update existing datapoint collector objects
+| `telemetry:collector:delete`         |	Delete existing datapoint collector objects
+| `telemetry:collector:sample`         |	Sample existing datapoint collector object data
+| **Telemetry Wildcard** 
+| `telemetry:datapoint:*`              |	All access to controller point objects
+| `telemetry:datapoint:create`         |	Create new controller point objects
+| `telemetry:datapoint:list`           |	List existing controller point objects <br> *__Deprecated__, use `*:read`*
+| `telemetry:datapoint:read`           |	View existing controller point objects
+| `telemetry:datapoint:command`        |	Command/relinquish existing controller point objects
+| `telemetry:datapoint:update`         |	Update existing controller point objects
+| `telemetry:datapoint:delete`         |	Delete existing controller point objects
+| **Telemetry Wildcard** 
+| `telemetry:schedule:*`               |	All access to controller schedule objects
+| `telemetry:schedule:create`          |	Create new controller schedule objects
+| `telemetry:schedule:list`            |	List existing controller schedule objects <br> *__Deprecated__, use `*:read`*
+| `telemetry:schedule:read`            |	View existing controller schedule objects
+| `telemetry:schedule:command`         |	Command/relinquish existing controller schedule objects
+| `telemetry:schedule:update`          |	Update existing controller schedule objects
+| `telemetry:schedule:delete`          |	Delete existing controller schedule objects
 | **Tenant Wildcard** 
 | `tenant:*`                           | All access to tenant account management
 | **Tenant Account** 
