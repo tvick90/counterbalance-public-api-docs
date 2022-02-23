@@ -5,9 +5,6 @@
 |:-|:-|
 | **Absolute Wildcard** 
 | `*`                                  |	All access literally everything
-
-| **Permission Scope** | **Description** |
-|:-|:-|
 | **Automation Wildcard** 
 | `automation:*`                       |	All access to automation component
 | **Automation Resets** 
@@ -34,9 +31,6 @@
 | `automation:trigger:read`            |	View existing triggers
 | `automation:trigger:update`          |	Update existing triggers
 | `automation:trigger:delete`          |	Delete existing triggers
-
-| **Permission Scope** | **Description** |
-|:-|:-|
 | **Billing Wildcard** 
 | `billing:*`                          |	All access to billing & subscriptions
 | **Billing Account** 
