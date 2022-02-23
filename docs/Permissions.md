@@ -1,6 +1,21 @@
-# Permission Scopes
+# Permissions & Roles
 
+## Roles
 
+Roles are logical groupings of permission scopes that define what platform objects and operations a user is permitted to access.
+
+### Predefined Roles
+| Role ID | Name/Description | Permissions | 
+|:-|:-|:-|
+| **System-Assigned Roles** |
+| `rol_mAdN91g5jh41yrwO` | **Tenant Owner** <br> All-access permissions for tenant owner assigned when tenant account is created | `*`
+| `rol_BjYA2HwGRnfaFhuV` | **Console User** <br> Base permissions for console users assigned when account is created | `tenant:account:read` <br> `tenant:preferences:read` <br> `tenant:quota:read` <br> `user:permissions:read` <br> `user:roles:read` <br> `user:self:read`
+| **Automation Technician Roles** |
+| `...` |  **Level 1 - Basic Read Access** <br> Base permissions for console users assigned when account is created | `tenant:account:read` <br> `tenant:preferences:read`
+
+## Permissions
+
+### All Permision Scopes
 | **Permission Scope** | **Description** |
 |:-|:-|
 | **Absolute Wildcard** 
