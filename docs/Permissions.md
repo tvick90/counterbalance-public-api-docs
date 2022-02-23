@@ -10,8 +10,10 @@ Roles are logical groupings of permission scopes that define what platform objec
 | **System-Assigned Roles** |
 | `rol_mAdN91g5jh41yrwO` | **Tenant Owner** <br> All-access permissions for tenant owner assigned when tenant account is created | `*`
 | `rol_BjYA2HwGRnfaFhuV` | **Console User** <br> Base permissions for console users assigned when account is created | `tenant:account:read` <br> `tenant:preferences:read` <br> `tenant:quota:read` <br> `user:permissions:read` <br> `user:roles:read` <br> `user:self:read`
-| **Automation Technician Roles** |
-| `...` |  **Level 1 - Basic Read Access** <br> Base permissions for console users assigned when account is created | `tenant:account:read` <br> `tenant:preferences:read`
+| **Position-Based Roles** <br> *Roles assigned based on a user's position within the organization*
+| `rol_9t7sUEmXhoXG0JIn` |  **Automation Technician** <br> Permissions suitable for an automation/field/service technician | `infrastructure:*` <br> `sites:*` <br> `telemetry:*` 
+| `rol_CxegVC5SoEeAUa6E` |  **Building Engineer** <br> Permissions suitable for a building engineer | `tenant:account:read` <br> `tenant:preferences:read`
+| `rol_t0duC3p8gZbzhZ5a` |  **Energy Manager** <br> 	Permissions suitable for an energy manager | `tenant:account:read` <br> `tenant:preferences:read`
 
 ## Permissions
 
