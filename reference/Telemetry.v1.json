@@ -8,7 +8,7 @@
   "info": {
     "title": "Telemetry & Collectors",
     "version": "1.1.0",
-    "description": "Telemetry and logging allows the collection of data from gateways and on-site systems"
+    "description": "Telemetry and logging allows the collection of data from gateways and on-site systems\n\n### BACnet Priorities\n"
   },
   "servers": [
     {
@@ -651,6 +651,22 @@
           }
         ]
       }
+    },
+    "/v1/telemetry/release": {
+      "get": {
+        "summary": "List Scheduled Release Jobs",
+        "tags": [
+          "Scheduled Release"
+        ],
+        "responses": {},
+        "operationId": "list-releases",
+        "description": "Retrieve a list of scheduled release jobs\n\n**Required Permissions:** `*`,`telemetry:*`,`telemetry:datapoint:*`,`telemetry:datapoint:list`",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ]
+      }
     }
   },
   "components": {
@@ -1141,6 +1157,170 @@
         "x-tags": [
           "Schedule"
         ]
+      },
+      "Release-Job-Object": {
+        "title": "Scheduled Release Object",
+        "type": "object",
+        "x-tags": [
+          "Scheduled Release"
+        ],
+        "description": "",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The UUID of the release job",
+            "readOnly": true
+          },
+          "created": {
+            "type": "string",
+            "description": "Date and time the release job was created, displayed in ISO 8601 format",
+            "format": "date-time",
+            "example": "2022-02-23T08:00:00+0000",
+            "readOnly": true
+          },
+          "last_modified": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Date and time the release job was last modified, displayed in ISO 8601 format",
+            "example": "2022-02-23T08:00:00+0000",
+            "nullable": true,
+            "readOnly": true
+          },
+          "source": {
+            "type": "object",
+            "properties": {
+              "point": {
+                "type": "object",
+                "description": "Details about the source point",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "format": "uuid",
+                    "description": "The UUID of the source point that will be released",
+                    "readOnly": true
+                  },
+                  "object_type": {
+                    "type": "integer",
+                    "description": "The BACnet object type of the source point",
+                    "readOnly": true
+                  },
+                  "instance_id": {
+                    "type": "integer",
+                    "description": "The BACnet instance ID of the source point",
+                    "readOnly": true
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "The name of the",
+                    "readOnly": true
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "The description of the source point",
+                    "readOnly": true
+                  }
+                }
+              },
+              "controller": {
+                "type": "object",
+                "description": "Details about the source controller",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "format": "uuid",
+                    "description": "The UUID of the source controller",
+                    "readOnly": true
+                  },
+                  "device_id": {
+                    "type": "integer",
+                    "description": "The BACnet device ID of the source controller",
+                    "readOnly": true
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "The name of the source controller",
+                    "readOnly": true
+                  }
+                }
+              },
+              "gateway": {
+                "type": "object",
+                "description": "Details about the source gateway device ",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "format": "uuid",
+                    "description": "The UUID of the source gateway",
+                    "readOnly": true
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "The name of the source gateway",
+                    "readOnly": true
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "The description of the source gateway",
+                    "readOnly": true
+                  }
+                }
+              }
+            }
+          },
+          "@site": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The UUID of the source point's assigned site, if applicable",
+            "nullable": true,
+            "readOnly": true
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "pending",
+              "completed",
+              "error"
+            ],
+            "description": "The current status of the release job",
+            "readOnly": true
+          },
+          "release_timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2022-02-23T08:00:00+0000",
+            "description": "Date and time the release job will be executed, displayed in ISO 8601 format"
+          },
+          "priority_index": {
+            "type": "integer",
+            "maximum": 16,
+            "example": 8,
+            "enum": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13,
+              14,
+              15,
+              16
+            ],
+            "minimum": 1,
+            "exclusiveMaximum": false,
+            "description": "The BACnet priority of the source point that will be relinquished"
+          },
+          "": {
+            "type": "string"
+          }
+        }
       }
     },
     "parameters": {
@@ -1521,6 +1701,34 @@
             }
           }
         }
+      },
+      "200-Get-Release": {
+        "description": "Example response",
+        "content": {
+          "application/json": {
+            "schema": {
+              "properties": {
+                "id": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "200-Get-Release-Listing": {
+        "description": "Example response",
+        "content": {
+          "application/json": {
+            "schema": {
+              "properties": {
+                "id": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
       }
     },
     "examples": {
@@ -1855,6 +2063,34 @@
             "id"
           ]
         }
+      },
+      "Update-Release-Body": {
+        "value": {
+          "description": "Example shared example",
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "id"
+          ]
+        }
+      },
+      "Get-Release-Job": {
+        "value": {
+          "description": "Example shared example",
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "id"
+          ]
+        }
       }
     },
     "requestBodies": {
@@ -2015,15 +2251,21 @@
             }
           }
         }
+      },
+      "Update-Release": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
       }
     }
   },
   "tags": [
     {
-      "name": "Point"
-    },
-    {
-      "name": "Schedule"
+      "name": "Collector"
     },
     {
       "name": "Command Object"
@@ -2032,7 +2274,13 @@
       "name": "Notification Class"
     },
     {
-      "name": "Collector"
+      "name": "Point"
+    },
+    {
+      "name": "Schedule"
+    },
+    {
+      "name": "Scheduled Release"
     }
   ]
 }
