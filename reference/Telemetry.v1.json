@@ -462,7 +462,7 @@
         ]
       }
     },
-    "/v1/telemetry/datapoint/{pointId}/command": {
+    "/v1/telemetry/point/{pointId}/command": {
       "parameters": [
         {
           "$ref": "#/components/parameters/pointId"
@@ -521,7 +521,7 @@
             "$ref": "#/components/responses/404-Point-Not-Found"
           }
         },
-        "description": "Command or release a point\n\n**Required Permisions:** `*`,`telemetry:*`,`telemetry:datapoint:*`,`telemetry:datapoint:command`\n\n### Commandable Points\nThe table below defines the BACnet object types compatible with this endpoint. Support for enumerated values is planned for a future release.\n\n| Object Type | Description |\n|-----|---------------|\n| `1` | Analog Output |\n| `2` | Analog Value |\n| `4` | Binary Output |\n| `5` | Binary Value |\n\n### Supported Command Priorities\nAll sixteen BACnet command priorities are supported. \n\n### Command vs Relinquish\nThe `operation` body parameter accepts two values: `command` or `relinquish`\n\n#### Command a New Value\nTo command a data point to a new value, set `operation` to `command` in the request body and include the desired priority and new value. The new value will be added to the command priority array at the requested priority and any previous value at the same priority is overwritten. \n\n#### Relinqush a Set Value\nTo relinquish a command priority, set `operation` to `relinquish` in the request body and include the desired priority. The requested priority will be set to _null_ in the command priority array.",
+        "description": "Command or release a point\n\n**Required Permisions:** `*`,`telemetry:*`,`telemetry:datapoint:*`,`telemetry:datapoint:command`\n\n### Commandable Points\nThe table below defines the BACnet object types compatible with this endpoint. Support for enumerated values is planned for a future release.\n\n| Object Type | Description |\n|:-|:-|\n| `1` | Analog Output |\n| `2` | Analog Value |\n| `4` | Binary Output |\n| `5` | Binary Value |\n\n### Supported Command Priorities\nAll sixteen BACnet command priorities are supported. \n\n### Command vs Relinquish\nThe `operation` body parameter accepts two values: `command` or `relinquish`. These operations are described below.\n\n#### Command a New Value\nTo command a data point to a new value, set `operation` to `command` in the request body and include the desired priority and new value. The new value will be added to the command priority array at the requested priority and any previous value at the same priority is overwritten. \n\n#### Relinqush a Set Value\nTo relinquish a command priority, set `operation` to `relinquish` in the request body and include the desired priority. The requested priority will be set to _null_ in the command priority array.\n\n### Automatically Release a Command\nA user may opt to have a command be automatically released at a later date. This is useful for temporary setpoint adjustments or system testing and can contribute to improved overall system health. \n\nTo schedule an automatic release, include the `scheduled_release` configuration in the request body of the command. This will trigger the creation of a [Scheduled Release Job](https://docs.counterbalance.io/docs/core-api/b3A6NDIyNzg5MTU) for tracking the release request.",
         "security": [
           {
             "Bearer Token": []
@@ -2368,15 +2368,16 @@
               "properties": {
                 "operation": {
                   "type": "string",
-                  "minLength": 1,
-                  "description": "The desired operation, either command or relinquish",
+                  "description": "The desired operation, either `command` or `relinquish`",
                   "enum": [
                     "command",
                     "relinquish"
-                  ]
+                  ],
+                  "example": "command"
                 },
                 "value": {
-                  "type": "number"
+                  "type": "number",
+                  "description": "The integer or float value to set. Use `1` or `0` for binary point states"
                 },
                 "priority": {
                   "type": "number",
@@ -2384,7 +2385,52 @@
                   "format": "double",
                   "example": 8,
                   "minimum": 1,
-                  "maximum": 16
+                  "maximum": 16,
+                  "enum": [
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12,
+                    13,
+                    14,
+                    15,
+                    16
+                  ]
+                },
+                "scheduled_release": {
+                  "type": "object",
+                  "description": "Schedule an automatic release of the command. Only available if `operation` is set to `command`",
+                  "additionalProperties": false,
+                  "properties": {
+                    "release_timestamp": {
+                      "type": "string",
+                      "format": "date-time",
+                      "example": "2022-02-23T08:00:00+0000",
+                      "description": "Provide a date and time the release job will be executed, submitted in ISO 8601 format"
+                    },
+                    "email_updates": {
+                      "type": "boolean",
+                      "default": true,
+                      "description": "*Optional* Enable email alerts for this scheduled release"
+                    },
+                    "note": {
+                      "type": "string",
+                      "description": "*Optional* Provide a brief note or summary about the command",
+                      "maxLength": 300,
+                      "example": "Requested by Jennifer at OR control desk"
+                    }
+                  },
+                  "required": [
+                    "release_timestamp"
+                  ]
                 }
               },
               "required": [
