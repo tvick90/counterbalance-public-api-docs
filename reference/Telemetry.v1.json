@@ -1805,12 +1805,17 @@
               "properties": {
                 "status": {
                   "type": "boolean",
-                  "description": "Indicates the status of the request, produced by the gateway"
+                  "description": "Indicates the status of the request, produced by the gateway",
+                  "readOnly": true
+                },
+                "scheduled_release_id": {
+                  "type": "string",
+                  "format": "uuid",
+                  "description": "The UUID of the scheduled release job, if requested",
+                  "nullable": true,
+                  "readOnly": true
                 }
-              },
-              "required": [
-                "status"
-              ]
+              }
             },
             "examples": {
               "Response Success": {
