@@ -658,7 +658,11 @@
         "tags": [
           "Scheduled Release"
         ],
-        "responses": {},
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/200-Get-Release-Listing"
+          }
+        },
         "operationId": "list-releases",
         "description": "Retrieve a list of scheduled release jobs\n\n**Required Permissions:** `*`,`telemetry:*`,`telemetry:datapoint:*`,`telemetry:datapoint:read`",
         "security": [
@@ -700,6 +704,51 @@
         },
         "operationId": "get-release",
         "description": "Retrieve a scheduled release job\n\n**Required Permissions:** `*`,`telemetry:*`,`telemetry:datapoint:*`,`telemetry:datapoint:read`",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ]
+      },
+      "patch": {
+        "summary": "Update Scheduled Release Job",
+        "operationId": "update-release",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/200-Get-Release"
+          },
+          "404": {
+            "$ref": "#/components/responses/404-Release-Not-Found"
+          }
+        },
+        "description": "Update a scheduled release job\n\n**Required Permissions:** `*`,`telemetry:*`,`telemetry:datapoint:*`,`telemetry:datapoint:command`",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/Update-Release"
+        },
+        "tags": [
+          "Scheduled Release"
+        ]
+      },
+      "delete": {
+        "summary": "Delete Scheduled Release Job",
+        "operationId": "delete-release",
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "404": {
+            "$ref": "#/components/responses/404-Release-Not-Found"
+          }
+        },
+        "tags": [
+          "Scheduled Release"
+        ],
+        "description": "Delete a scheduled release job\n\n**Required Permissions:** `*`,`telemetry:*`,`telemetry:datapoint:*`,`telemetry:datapoint:command`",
         "security": [
           {
             "Bearer Token": []
@@ -1794,13 +1843,36 @@
         }
       },
       "200-Get-Release-Listing": {
-        "description": "Example response",
+        "description": "Ok",
         "content": {
           "application/json": {
             "schema": {
+              "type": "object",
               "properties": {
-                "id": {
-                  "type": "string"
+                "count": {
+                  "description": "The number of release jobs returned",
+                  "type": "integer",
+                  "readOnly": true
+                },
+                "index": {
+                  "type": "array",
+                  "description": "An array of release job UUIDs as they appear in the `data` array",
+                  "uniqueItems": true,
+                  "items": {
+                    "type": "string",
+                    "format": "uuid",
+                    "readOnly": true
+                  },
+                  "readOnly": true
+                },
+                "data": {
+                  "type": "array",
+                  "description": "An array of release jobs",
+                  "uniqueItems": true,
+                  "items": {
+                    "$ref": "#/components/schemas/Release-Job-Object"
+                  },
+                  "readOnly": true
                 }
               }
             }
@@ -2178,18 +2250,7 @@
         }
       },
       "Get-Release-Job": {
-        "value": {
-          "description": "Example shared example",
-          "type": "object",
-          "properties": {
-            "id": {
-              "type": "string"
-            }
-          },
-          "required": [
-            "id"
-          ]
-        }
+        "value": {}
       }
     },
     "requestBodies": {
@@ -2355,10 +2416,53 @@
         "content": {
           "application/json": {
             "schema": {
-              "type": "object"
+              "type": "object",
+              "properties": {
+                "priority": {
+                  "type": "integer",
+                  "description": "Change the BACnet priority the source point will be relinquished from",
+                  "enum": [
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10,
+                    11,
+                    12,
+                    13,
+                    14,
+                    15,
+                    16
+                  ],
+                  "example": 8,
+                  "minimum": 1,
+                  "maximum": 16
+                },
+                "release_timestamp": {
+                  "type": "string",
+                  "format": "date-time",
+                  "example": "2022-02-23T08:00:00+0000",
+                  "description": "Change the date and time the release job will be executed, submitted in ISO 8601 format"
+                },
+                "note": {
+                  "type": "string",
+                  "description": "Change the note or summary of the request",
+                  "maxLength": 300
+                },
+                "email_updates": {
+                  "type": "boolean",
+                  "description": "Change whether email updates are sent for this job. Set to `false` to disable email alerts."
+                }
+              }
             }
           }
-        }
+        },
+        "description": "These are the parameters of a scheduled release job that can be updated"
       }
     }
   },
