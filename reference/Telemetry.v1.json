@@ -660,7 +660,46 @@
         ],
         "responses": {},
         "operationId": "list-releases",
-        "description": "Retrieve a list of scheduled release jobs\n\n**Required Permissions:** `*`,`telemetry:*`,`telemetry:datapoint:*`,`telemetry:datapoint:list`",
+        "description": "Retrieve a list of scheduled release jobs\n\n**Required Permissions:** `*`,`telemetry:*`,`telemetry:datapoint:*`,`telemetry:datapoint:read`",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/@pointId"
+          },
+          {
+            "$ref": "#/components/parameters/@controllerId"
+          },
+          {
+            "$ref": "#/components/parameters/@gatewayId"
+          }
+        ]
+      }
+    },
+    "/v1/telemetry/release/{releaseId}": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/releaseId"
+        }
+      ],
+      "get": {
+        "summary": "Get Scheduled Release Job",
+        "tags": [
+          "Scheduled Release"
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/200-Get-Release"
+          },
+          "404": {
+            "$ref": "#/components/responses/404-Release-Not-Found"
+          }
+        },
+        "operationId": "get-release",
+        "description": "Retrieve a scheduled release job\n\n**Required Permissions:** `*`,`telemetry:*`,`telemetry:datapoint:*`,`telemetry:datapoint:read`",
         "security": [
           {
             "Bearer Token": []
@@ -1291,9 +1330,7 @@
             "example": "2022-02-23T08:00:00+0000",
             "description": "Date and time the release job will be executed, displayed in ISO 8601 format"
           },
-          "priority_index": {
-            "type": "integer",
-            "maximum": 16,
+          "priority": {
             "example": 8,
             "enum": [
               1,
@@ -1313,12 +1350,41 @@
               15,
               16
             ],
-            "minimum": 1,
-            "exclusiveMaximum": false,
-            "description": "The BACnet priority of the source point that will be relinquished"
+            "description": "The BACnet priority the source point will be relinquished from",
+            "type": "integer"
           },
-          "": {
-            "type": "string"
+          "owner": {
+            "type": "object",
+            "description": "Details about the user who created the request",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "The UUID of the user who created the request"
+              },
+              "name": {
+                "type": "string",
+                "description": "The name of the user who created the request"
+              },
+              "email": {
+                "type": "string",
+                "description": "The email address of the user who created the request"
+              },
+              "title": {
+                "type": "string",
+                "description": "The job title of the user who created the request"
+              }
+            }
+          },
+          "email_updates": {
+            "type": "boolean",
+            "default": true,
+            "description": "Indicates if email alerts are enabled. If `true`, alerts will be emailed to the owner when the job is accepted, completed, or has failed."
+          },
+          "note": {
+            "type": "string",
+            "maxLength": 300,
+            "example": "Requested by Jennifer at OR control desk",
+            "description": "A brief note or summary of the request"
           }
         }
       }
@@ -1412,6 +1478,16 @@
           "format": "uuid"
         },
         "description": "A valid schedule UUID"
+      },
+      "releaseId": {
+        "name": "releaseId",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "description": "A valid release job UUID"
       }
     },
     "securitySchemes": {
@@ -1703,14 +1779,15 @@
         }
       },
       "200-Get-Release": {
-        "description": "Example response",
+        "description": "Ok",
         "content": {
           "application/json": {
             "schema": {
-              "properties": {
-                "id": {
-                  "type": "string"
-                }
+              "$ref": "#/components/schemas/Release-Job-Object"
+            },
+            "examples": {
+              "Response": {
+                "$ref": "#/components/examples/Get-Release-Job"
               }
             }
           }
@@ -1724,6 +1801,28 @@
               "properties": {
                 "id": {
                   "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "404-Release-Not-Found": {
+        "description": "Not Found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../models/Error-Response.v1.yaml"
+            },
+            "examples": {
+              "Response": {
+                "value": {
+                  "error": {
+                    "message": "Release job ID ... could not be found",
+                    "console": "Sorry, we couldn't find that job",
+                    "code": 404
+                  },
+                  "logging_hash": "..."
                 }
               }
             }
