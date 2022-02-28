@@ -950,19 +950,31 @@
         "type": "object",
         "x-examples": {},
         "title": "Collector Object",
+        "x-tags": [
+          "Collector"
+        ],
         "properties": {
           "id": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "description": "The collector object UUID",
+            "readOnly": true
           },
           "created": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "description": "Date/time the collector object was created",
+            "readOnly": true
           },
           "expires": {
             "type": "string",
             "format": "date-time",
+            "description": "**Not in use**",
             "nullable": true
+          },
+          "enabled": {
+            "type": "boolean",
+            "description": "If `true`, the collector will collect data at the interval configured. If `false`, the collector will not collect new data."
           },
           "interval": {
             "enum": [
@@ -970,10 +982,13 @@
               600,
               900
             ],
-            "type": "integer"
+            "type": "integer",
+            "description": "The number of seconds between data samples"
           },
           "sample_count": {
-            "type": "integer"
+            "type": "integer",
+            "description": "The total number of samples that are stored in the cloud, since the collector was created ",
+            "readOnly": true
           },
           "source": {
             "type": "object",
@@ -987,18 +1002,25 @@
                     "nullable": true
                   },
                   "object_type": {
-                    "type": "integer"
+                    "type": "integer",
+                    "readOnly": true
                   },
                   "instance_id": {
-                    "type": "integer"
+                    "type": "integer",
+                    "readOnly": true
                   },
                   "name": {
-                    "type": "string"
+                    "type": "string",
+                    "readOnly": true
                   },
                   "description": {
-                    "type": "string"
+                    "type": "string",
+                    "readOnly": true
                   }
-                }
+                },
+                "required": [
+                  "id"
+                ]
               },
               "controller": {
                 "type": "object",
@@ -1006,15 +1028,19 @@
                   "id": {
                     "type": "string",
                     "format": "uuid",
-                    "nullable": true
+                    "nullable": true,
+                    "readOnly": true
                   },
                   "device_id": {
-                    "type": "integer"
+                    "type": "integer",
+                    "readOnly": true
                   },
                   "name": {
-                    "type": "string"
+                    "type": "string",
+                    "readOnly": true
                   }
-                }
+                },
+                "readOnly": true
               },
               "gateway": {
                 "type": "object",
@@ -1022,20 +1048,23 @@
                   "id": {
                     "type": "string",
                     "format": "uuid",
-                    "nullable": true
+                    "nullable": true,
+                    "readOnly": true
                   }
-                }
+                },
+                "readOnly": true
               }
             }
           },
           "@site": {
             "type": "string",
             "format": "uuid",
-            "nullable": true
+            "nullable": true,
+            "readOnly": true
           }
         },
-        "x-tags": [
-          "Collector"
+        "required": [
+          "id"
         ]
       },
       "Collector-Sample-Object": {
@@ -2204,6 +2233,7 @@
           "id": "7a3795f5-9ce4-49d5-a8ff-8d8bb96d6f38",
           "created": "2021-05-27T23:50:17+0000",
           "expires": null,
+          "enabled": true,
           "interval": 300,
           "sample_count": 19034,
           "source": {
@@ -2347,6 +2377,11 @@
                     3600
                   ],
                   "description": "The frequency in which to sample the point"
+                },
+                "enabled": {
+                  "type": "boolean",
+                  "default": true,
+                  "description": "Sets the status of the collector. Set to `false` to create the collector but disable data collection."
                 }
               },
               "required": [
