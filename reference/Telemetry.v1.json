@@ -389,6 +389,35 @@
         "tags": [
           "Collector"
         ]
+      },
+      "patch": {
+        "summary": "Update Collector",
+        "operationId": "update-collector",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/200-Get-Collector"
+          },
+          "404": {
+            "$ref": "#/components/responses/404-Collector-Not-Found"
+          }
+        },
+        "tags": [
+          "Collector"
+        ],
+        "description": "Update a point collector\n\n**Required Permissions:** `*`,`telemetry:*`,`telemetry:collector:*`,`telemetry:collector:update`",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Content-Type"
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/Update-Collector"
+        }
       }
     },
     "/v1/telemetry/collector/{collectorId}/sample": {
@@ -1542,7 +1571,6 @@
         "required": false,
         "schema": {
           "type": "string",
-          "default": "application/json",
           "example": "application/json"
         },
         "description": "application/json"
@@ -2549,6 +2577,24 @@
           }
         },
         "description": "These are the parameters of a scheduled release job that can be updated"
+      },
+      "Update-Collector": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "enabled": {
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "enabled"
+              ]
+            }
+          }
+        },
+        "description": ""
       }
     }
   },
