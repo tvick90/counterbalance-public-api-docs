@@ -2071,12 +2071,12 @@
                 "address": {
                   "type": "string",
                   "format": "ipv4",
-                  "description": "The IPv4 IP address for the interface. ***Note:** Required if `dhcp` set to `false`.",
+                  "description": "The IPv4 IP address for the interface. ***Note:** Required if `dhcp` set to `false`.*",
                   "example": "192.168.1.100"
                 },
                 "mask": {
                   "type": "string",
-                  "description": "The IPv4 subnet mask for the interface. ***Note:** Required if `dhcp` set to `false`.",
+                  "description": "The IPv4 subnet mask for the interface. ***Note:** Required if `dhcp` set to `false`.*",
                   "format": "ipv4",
                   "example": "255.255.255.0"
                 },
