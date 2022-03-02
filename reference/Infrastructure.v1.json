@@ -448,6 +448,42 @@
         }
       }
     },
+    "/v1/gateway/{gatewayId}/admin/hostname": {
+      "parameters": [
+        {
+          "name": "gatewayId",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid",
+            "example": "539fea81-d151-46e1-b1f6-36e3864ebeff"
+          },
+          "description": "A valid gateway UUID"
+        }
+      ],
+      "put": {
+        "summary": "Configure Gateway Hostname",
+        "operationId": "config-gateway-hostname",
+        "tags": [
+          "Gateway Administration"
+        ],
+        "description": "Configure a gateway hostname\n\n**Required Permissions:** `*`,`infrastructure:*`,`infrastructure:gateway:*`,`infrastructure:gateway:hostname`",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/Update-Gateway-Hostname"
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/v1/infrastructure/network": {
       "get": {
         "summary": "List Networks",
@@ -2089,6 +2125,27 @@
             }
           }
         }
+      },
+      "Update-Gateway-Hostname": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "hostname": {
+                  "type": "string",
+                  "format": "hostname",
+                  "example": "sea-bms-gtwy-01.peterbalance.com",
+                  "description": "The local or fully qualified hostname the gateway device will use on the network"
+                }
+              },
+              "required": [
+                "hostname"
+              ]
+            }
+          }
+        },
+        "description": ""
       }
     }
   },
