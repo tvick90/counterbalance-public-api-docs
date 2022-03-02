@@ -392,23 +392,23 @@
       ],
       "put": {
         "summary": "Start/Stop Gateway Service",
-        "operationId": "put-gateway-service",
+        "operationId": "toggle-gateway-service",
         "responses": {
           "200": {
-            "description": "OK"
+            "$ref": "#/components/responses/200-Command-Service"
           }
         },
         "tags": [
           "Gateway Administration"
         ],
-        "description": "",
+        "description": "Start and stop gateway services\n\n**Required Permissions:** `*`,`infrastructure:*`,`infrastructure:gateway:*`,`infrastructure:gateway:service`\n\n> ***Note:** This endpoint is intended for advanced troubleshooting and **should not be used** without advice from Counterbalance support. **Improper use of this endpoint may sever communication to the device and may require the gateway to be reset to factory defaults.***\n\n## Services Available\n\n| Service ID | Name | Description |\n|:-|:-|:-|\n| `bacnet` | **BACnet Middleware** | Toggles the BACnet middleware daemon for communicating with the BACnet network\n| `ssh` | **Secure Shell (SSH)** | Toggles SSH access to the device locally. By default, SSH is enabled.\n| `tunnel` | **Tunnel Middleware** | Toggles the secure tunnel service for remote device access <br>***Caution:** Stopping this service will sever remote access to the gateway from the cloud. This can be restarted using the local GUI of the gateway.*\n\n",
         "security": [
           {
             "Bearer Token": []
           }
         ],
         "requestBody": {
-          "$ref": "#/components/requestBodies/Put-Gateway-Service"
+          "$ref": "#/components/requestBodies/Cycle-Gateway-Service"
         }
       }
     },
@@ -431,13 +431,13 @@
         "operationId": "config-gateway-network",
         "responses": {
           "200": {
-            "description": "OK"
+            "$ref": "#/components/responses/200-Configure-Network"
           }
         },
         "tags": [
           "Gateway Administration"
         ],
-        "description": "Configure a gateway network interfce IP address, DNS servers, and DHCP\n\n## Specifying the Interface\nYou must specify which interface to update by setting the `interface` request body parameter to one of the values in the following table.\n\n| Interface | Description |\n|:-|:-|\n| **`eth0`** | Primary ethernet port\n\n## Supported Network Configurations\nThe gateway device currently supports one ethernet interface, `eth0`, and can be configured for dynamic addressing with DHCP, or a static IP address (recommended). \n\n### Configuring a Static IP Address\nTo configure an interface with a static IP address, set the `address`, `mask`, and `gateway` request body parameters, set the `dhcp` request body parameter to `false`, and provide at least one DNS server address.\n\n```json\n{\n  \"interface\": \"eth0\",\n  \"dhcp\": false,\n  \"address\": \"192.168.1.100\",\n  \"mask\": \"255.255.255.0\",\n  \"gateway\": \"192.168.1.254\",\n  \"dns\": [\n    \"1.1.1.1\"\n  ]\n}\n``` \n\n### Configuring DHCP\nTo configure the interface to use DHCP, set the `dhcp` request body parameter to `true`. You can provide up to four DNS servers with the `dns` paramater to overwrite the DNS servers provided from the DHCP server. In this mode, all other address parameters are ignored.\n\n```json\n{\n  \"interface\": \"eth0\",\n  \"dhcp\": true\n}\n```\n",
+        "description": "Configure a gateway network interfce IP address, DNS servers, and DHCP\n\n**Required Permissions:** `*`,`infrastructure:*`,`infrastructure:gateway:*`,`infrastructure:gateway:network`\n\n## Specifying the Interface\nYou must specify which interface to update by setting the `interface` request body parameter to one of the values in the following table.\n\n| Interface | Description |\n|:-|:-|\n| **`eth0`** | Primary ethernet port\n\n## Supported Network Configurations\nThe gateway device currently supports one ethernet interface, `eth0`, and can be configured for dynamic addressing with DHCP, or a static IP address (recommended). \n\n### Configuring a Static IP Address\nTo configure an interface with a static IP address, set the `address`, `mask`, and `gateway` request body parameters, set the `dhcp` request body parameter to `false`, and provide at least one DNS server address.\n\n```json\n{\n  \"interface\": \"eth0\",\n  \"dhcp\": false,\n  \"address\": \"192.168.1.100\",\n  \"mask\": \"255.255.255.0\",\n  \"gateway\": \"192.168.1.254\",\n  \"dns\": [\n    \"1.1.1.1\"\n  ]\n}\n``` \n\n### Configuring DHCP\nTo configure the interface to use DHCP, set the `dhcp` request body parameter to `true`. You can provide up to four DNS servers with the `dns` paramater to overwrite the DNS servers provided from the DHCP server. In this mode, all other address parameters are ignored.\n\n```json\n{\n  \"interface\": \"eth0\",\n  \"dhcp\": true\n}\n```\n",
         "security": [
           {
             "Bearer Token": []
@@ -1387,6 +1387,38 @@
             }
           }
         }
+      },
+      "200-Command-Service": {
+        "description": "Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "boolean",
+                  "description": "The result of the command. If `true`, command was successful. If `false`, command failed."
+                }
+              }
+            }
+          }
+        }
+      },
+      "200-Configure-Network": {
+        "description": "Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "boolean",
+                  "description": "The result of the network configuration. If `true`, the network configuration was applied successfully. If `false`, the configuration failed. "
+                }
+              }
+            }
+          }
+        }
       }
     },
     "parameters": {
@@ -1954,10 +1986,30 @@
             "schema": {
               "type": "object",
               "properties": {
-                "": {
-                  "type": "string"
+                "service": {
+                  "type": "string",
+                  "enum": [
+                    "ssh",
+                    "tunnel",
+                    "bacnet"
+                  ],
+                  "description": "The ID of the service to command"
+                },
+                "command": {
+                  "type": "string",
+                  "enum": [
+                    "start",
+                    "stop",
+                    "restart"
+                  ],
+                  "example": "restart",
+                  "description": "The command to execute"
                 }
-              }
+              },
+              "required": [
+                "service",
+                "command"
+              ]
             }
           }
         }
