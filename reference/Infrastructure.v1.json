@@ -376,10 +376,18 @@
         ]
       }
     },
-    "/v1/gateway/{gatewayId}/service": {
+    "/v1/gateway/{gatewayId}/admin/service": {
       "parameters": [
         {
-          "$ref": "#/components/parameters/gatewayId"
+          "name": "gatewayId",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid",
+            "example": "539fea81-d151-46e1-b1f6-36e3864ebeff"
+          },
+          "description": "A valid gateway UUID"
         }
       ],
       "put": {
@@ -401,6 +409,42 @@
         ],
         "requestBody": {
           "$ref": "#/components/requestBodies/Put-Gateway-Service"
+        }
+      }
+    },
+    "/v1/gateway/{gatewayId}/admin/network": {
+      "parameters": [
+        {
+          "name": "gatewayId",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid",
+            "example": "539fea81-d151-46e1-b1f6-36e3864ebeff"
+          },
+          "description": "A valid gateway UUID"
+        }
+      ],
+      "put": {
+        "summary": "Configure Gateway Network",
+        "operationId": "config-gateway-network",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "Gateway Administration"
+        ],
+        "description": "Configure a gateway network interfce IP address, DNS servers, and DHCP\n\n## Supported Network Configurations\nThe gateway device currently supports one ethernet interface, `eth0`, and can be configured for dynamic addressing with DHCP, or a static IP address (recommended). \n\n### Configuring a Static IP Address\nTo configure an interface with a static IP address, set the `address`, `mask`, and `gateway` request body parameters, set the `dhcp` request body parameter to `false`, and provide at least one DNS server address.\n\n```json\n{\n  \"interface\": \"eth0\",\n  \"dhcp\": false,\n  \"address\": \"192.168.1.100\",\n  \"mask\": \"255.255.255.0\",\n  \"gateway\": \"192.168.1.254\",\n  \"dns\": [\n    \"1.1.1.1\"\n  ]\n}\n``` \n\n### Configuring DHCP\nTo configure the interface to use DHCP, set the `dhcp` request body parameter to `true`. You can provide up to four DNS servers with the `dns` paramater to overwrite the DNS servers provided from the DHCP server. In this mode, all other address parameters are ignored.\n\n```json\n{\n  \"interface\": \"eth0\",\n  \"dhcp\": true\n}\n```\n",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/Update-Gateway-Network"
         }
       }
     },
@@ -1904,7 +1948,7 @@
           }
         }
       },
-      "Put-Gateway-Service": {
+      "Cycle-Gateway-Service": {
         "content": {
           "application/json": {
             "schema": {
@@ -1912,6 +1956,82 @@
               "properties": {
                 "": {
                   "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "Update-Gateway-Network": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "interface": {
+                  "type": "string",
+                  "enum": [
+                    "eth0"
+                  ],
+                  "description": "The target interface name to apply the configuration"
+                },
+                "dhcp": {
+                  "type": "boolean",
+                  "default": false,
+                  "description": "Toggles DHCP on the interface. If `true`, the supplied address, mask, gateway are ignored. You may supply DNS servers to override DHCP if desired. If `false` or omitted, the address, mask paramaters become required."
+                },
+                "address": {
+                  "type": "string",
+                  "format": "ipv4",
+                  "description": "The IPv4 IP address for the interface. ***Note:** Required if `dhcp` set to `false`.",
+                  "example": "192.168.1.100"
+                },
+                "mask": {
+                  "type": "string",
+                  "description": "The IPv4 subnet mask for the interface. ***Note:** Required if `dhcp` set to `false`.",
+                  "format": "ipv4",
+                  "example": "255.255.255.0"
+                },
+                "gateway": {
+                  "type": "string",
+                  "description": "The IPv4 gateway IP address for the interface. ***Note:** A Gateway IP address and DNS servers are required for internet connectivity.*",
+                  "format": "ipv4",
+                  "example": "192.168.1.254"
+                },
+                "dns": {
+                  "type": "array",
+                  "minItems": 1,
+                  "maxItems": 4,
+                  "uniqueItems": true,
+                  "description": "An array of up to four IPv4 DNS server addresses. ***Note:** At least one DNS server is required for internet connectivity on an interface.*",
+                  "items": {
+                    "type": "string",
+                    "format": "ipv4",
+                    "example": "1.1.1.1"
+                  }
+                }
+              },
+              "required": [
+                "interface"
+              ]
+            },
+            "examples": {
+              "Static IP Address": {
+                "value": {
+                  "interface": "eth0",
+                  "dhcp": false,
+                  "address": "192.168.1.100",
+                  "mask": "255.255.255.0",
+                  "gateway": "192.168.1.254",
+                  "dns": [
+                    "1.1.1.1"
+                  ]
+                }
+              },
+              "Dynamic Address with DHCP": {
+                "value": {
+                  "interface": "eth0",
+                  "dhcp": true
                 }
               }
             }
