@@ -16,6 +16,11 @@
     },
     {
       "type": "item",
+      "title": "Notifications",
+      "uri": "reference/Notifications.v1.json"
+    },
+    {
+      "type": "item",
       "title": "Subscription & Billing",
       "uri": "reference/Billing.v1.json"
     },

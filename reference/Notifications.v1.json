@@ -1,0 +1,210 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Notifications",
+    "version": "1.0.0",
+    "description": ""
+  },
+  "servers": [
+    {
+      "url": "https://api.counterbalance.io",
+      "description": "Production API"
+    }
+  ],
+  "paths": {
+    "/v1/notification/message": {
+      "get": {
+        "summary": "Get Notification Messages",
+        "tags": [
+          "Message"
+        ],
+        "responses": {},
+        "operationId": "get-v1-notifications-inbox",
+        "description": "Get the user's notification messages"
+      },
+      "parameters": []
+    },
+    "/v1/notification/message/statistics": {
+      "get": {
+        "summary": "Get Notification Message Statistics",
+        "tags": [
+          "Message"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "operationId": "get-v1-notifications-inbox",
+        "description": "Get the user's notification message statistics",
+        "parameters": [],
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ]
+      },
+      "parameters": []
+    },
+    "/v1/notification/message/{messageId}": {
+      "get": {
+        "summary": "Get Notification Messages",
+        "tags": [
+          "Message"
+        ],
+        "responses": {},
+        "operationId": "get-v1-notifications-inbox"
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/messageId"
+        }
+      ],
+      "put": {
+        "summary": "Set Message Status",
+        "operationId": "put-v1-notification-message-messageId",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/v1/notification/group": {
+      "get": {
+        "summary": "List Recipient Groups",
+        "tags": [
+          "Recipient Group"
+        ],
+        "responses": {},
+        "operationId": "get-v1-notification-group",
+        "description": ""
+      },
+      "post": {
+        "summary": "Create Recipient Group",
+        "operationId": "post-v1-notification-group",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "Recipient Group"
+        ]
+      }
+    },
+    "/v1/notification/group/{groupId}": {
+      "get": {
+        "summary": "Get Recipient Group",
+        "tags": [
+          "Recipient Group"
+        ],
+        "responses": {},
+        "operationId": "get-group",
+        "description": ""
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/groupId"
+        }
+      ],
+      "patch": {
+        "summary": "Update Recipient Group",
+        "operationId": "update-group",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ],
+        "tags": [
+          "Recipient Group"
+        ],
+        "description": ""
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Message-Object": {
+        "title": "Notification-Object",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          }
+        },
+        "x-tags": [
+          "Message"
+        ]
+      },
+      "Thread-Object": {
+        "title": "Thread-Object",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          }
+        },
+        "x-tags": [
+          "Thread"
+        ]
+      },
+      "Message-Statistics-Object": {
+        "title": "Message-Statistics-Object",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          }
+        },
+        "x-tags": [
+          "Message"
+        ]
+      }
+    },
+    "securitySchemes": {
+      "Bearer Token": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    },
+    "parameters": {
+      "messageId": {
+        "name": "messageId",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "description": "A valid message UUID"
+      },
+      "groupId": {
+        "name": "groupId",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "description": "A valid recipient group UUID"
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Message"
+    },
+    {
+      "name": "Recipient Group"
+    },
+    {
+      "name": "Thread"
+    }
+  ]
+}
