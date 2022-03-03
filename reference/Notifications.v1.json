@@ -19,7 +19,7 @@
           "Message"
         ],
         "responses": {},
-        "operationId": "get-v1-notifications-inbox",
+        "operationId": "get-messages",
         "description": "Get the user's notification messages"
       },
       "parameters": []
@@ -48,12 +48,13 @@
     },
     "/v1/notification/message/{messageId}": {
       "get": {
-        "summary": "Get Notification Messages",
+        "summary": "Get Notification Message",
         "tags": [
           "Message"
         ],
         "responses": {},
-        "operationId": "get-v1-notifications-inbox"
+        "operationId": "get-message",
+        "description": ""
       },
       "parameters": [
         {
@@ -62,12 +63,38 @@
       ],
       "put": {
         "summary": "Set Message Status",
-        "operationId": "put-v1-notification-message-messageId",
+        "operationId": "set-message-status",
         "responses": {
           "200": {
             "description": "OK"
           }
-        }
+        },
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ],
+        "tags": [
+          "Message"
+        ],
+        "description": ""
+      },
+      "delete": {
+        "summary": "",
+        "operationId": "delete-message",
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ],
+        "tags": [
+          "Message"
+        ]
       }
     },
     "/v1/notification/group": {
@@ -76,13 +103,22 @@
         "tags": [
           "Recipient Group"
         ],
-        "responses": {},
-        "operationId": "get-v1-notification-group",
-        "description": ""
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "operationId": "list-groups",
+        "description": "",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ]
       },
       "post": {
         "summary": "Create Recipient Group",
-        "operationId": "post-v1-notification-group",
+        "operationId": "create-group",
         "responses": {
           "200": {
             "description": "OK"
@@ -90,6 +126,11 @@
         },
         "tags": [
           "Recipient Group"
+        ],
+        "security": [
+          {
+            "Bearer Token": []
+          }
         ]
       }
     },
@@ -99,9 +140,18 @@
         "tags": [
           "Recipient Group"
         ],
-        "responses": {},
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
         "operationId": "get-group",
-        "description": ""
+        "description": "",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ]
       },
       "parameters": [
         {
@@ -124,7 +174,195 @@
         "tags": [
           "Recipient Group"
         ],
+        "description": "",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/notification/group/{groupId}/members": {
+      "get": {
+        "summary": "Get Recipient Group Members",
+        "tags": [
+          "Recipient Group"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "operationId": "get-group-members",
+        "description": "",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ]
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/groupId"
+        }
+      ],
+      "put": {
+        "summary": "Add Recipient Group Members",
+        "operationId": "add-group-members",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              }
+            }
+          }
+        },
+        "tags": [
+          "Recipient Group"
+        ]
+      }
+    },
+    "/v1/notification/group/{groupId}/members/{membershipId}": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/groupId"
+        },
+        {
+          "$ref": "#/components/parameters/membershipId"
+        }
+      ],
+      "patch": {
+        "summary": "Update Recipient Group Membership",
+        "operationId": "update-group-membership",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "Recipient Group"
+        ],
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ],
         "description": ""
+      },
+      "delete": {
+        "summary": "Delete Recipient Group Membership",
+        "operationId": "delete-group-membership",
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "description": "",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ],
+        "tags": [
+          "Recipient Group"
+        ]
+      }
+    },
+    "/v1/notification/thread": {
+      "get": {
+        "summary": "List Threads",
+        "tags": [
+          "Thread"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "operationId": "list-threads",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "subject"
+          }
+        ]
+      }
+    },
+    "/v1/notification/thread/{threadId}": {
+      "get": {
+        "summary": "Get Thread",
+        "tags": [
+          "Thread"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "operationId": "list-threads",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "subject"
+          }
+        ],
+        "description": ""
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/threadId"
+        }
+      ],
+      "put": {
+        "summary": "Acknowledge Thread",
+        "operationId": "ack-thread",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "description": "",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ],
+        "tags": [
+          "Thread"
+        ]
       }
     }
   },
@@ -157,14 +395,36 @@
       "Message-Statistics-Object": {
         "title": "Message-Statistics-Object",
         "type": "object",
-        "properties": {
-          "id": {
-            "type": "string"
-          }
-        },
         "x-tags": [
           "Message"
-        ]
+        ],
+        "properties": {
+          "counts": {
+            "type": "object",
+            "properties": {
+              "unseen": {
+                "type": "integer",
+                "readOnly": true
+              },
+              "unread": {
+                "type": "integer",
+                "readOnly": true
+              },
+              "read": {
+                "type": "integer",
+                "readOnly": true
+              },
+              "total": {
+                "type": "integer",
+                "readOnly": true
+              },
+              "deleted": {
+                "type": "integer",
+                "readOnly": true
+              }
+            }
+          }
+        }
       }
     },
     "securitySchemes": {
@@ -193,6 +453,24 @@
           "format": "uuid"
         },
         "description": "A valid recipient group UUID"
+      },
+      "threadId": {
+        "name": "threadId",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "description": "A valid thread UUID"
+      },
+      "membershipId": {
+        "name": "membershipId",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
       }
     }
   },
