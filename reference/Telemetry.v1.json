@@ -26,7 +26,7 @@
           }
         },
         "operationId": "list-points",
-        "description": "Retrieve a list of points\n\n**Required Permissions:** `*`,`telemetry:*`,`telemetry:datapoint:*`,`telemetry:datapoint:read`",
+        "description": "Retrieve a list of points\n\n**Required Permissions:** `*`,`telemetry:*`,`telemetry:datapoint:*`,`telemetry:datapoint:read`\n\n### Retrieving BACnet Data for Point Lists\nYou can retrieve a limited amount of online BACnet data for each point in a point listing by specifying a controller ID using the `@controller` query parameter, and setting the `bacnet` query parameter to `true`.",
         "security": [
           {
             "Bearer Token": []
@@ -41,6 +41,27 @@
           },
           {
             "$ref": "#/components/parameters/Content-Type"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "id",
+            "description": "Filter results by a comma-separated list of object UUIDs"
+          },
+          {
+            "schema": {
+              "type": "boolean",
+              "default": "false",
+              "enum": [
+                "true",
+                "false"
+              ]
+            },
+            "in": "query",
+            "name": "bacnet",
+            "description": "Used in conjunction with `@controller` parameter to retrieve BACnet data for the points returned"
           }
         ],
         "tags": [
@@ -106,7 +127,8 @@
             },
             "in": "query",
             "name": "online",
-            "description": "Fetch the latest BACnet data for the point"
+            "description": "Fetch the latest BACnet data for the point <br> ***Use of this parameter is deprecated as of V1.4.0** Use the `/bacnet` endpoint to retrieve BACnet data.*",
+            "deprecated": true
           },
           {
             "$ref": "#/components/parameters/Content-Type"
@@ -219,6 +241,47 @@
             "$ref": "#/components/parameters/Content-Type"
           }
         ],
+        "tags": [
+          "Point"
+        ]
+      }
+    },
+    "/v1/telemetry/point/{pointId}/bacnet": {
+      "parameters": [
+        {
+          "name": "pointId",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid",
+            "example": "168a3e32-996f-410a-a06c-c4cdc10fa362"
+          },
+          "description": "A valid point UUID"
+        }
+      ],
+      "get": {
+        "summary": "Get BACnet Point Details",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/200-Get-BACnet-Point"
+          },
+          "404": {
+            "$ref": "#/components/responses/404-Point-Not-Found"
+          }
+        },
+        "operationId": "get-point-bacnet",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Content-Type"
+          }
+        ],
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ],
+        "description": "Retrieve the BACnet details for a point\n\n**Required Permissions:** `*`,`telemetry:*`,`telemetry:datapoint:*`,`telemetry:datapoint:read`\n\n### Online BACnet Data\nEach BACnet object type will return a variable BACnet response body depending on the parameters present and supported by the target field controller. ",
         "tags": [
           "Point"
         ]
@@ -850,136 +913,6 @@
                 "type": "string"
               }
             }
-          },
-          "bacnet": {
-            "type": "object",
-            "properties": {
-              "object": {
-                "type": "object",
-                "properties": {
-                  "instance": {
-                    "type": "number"
-                  },
-                  "type": {
-                    "type": "number"
-                  },
-                  "name": {
-                    "type": "string"
-                  },
-                  "description": {
-                    "type": "string"
-                  }
-                }
-              },
-              "telemetry": {
-                "type": "object",
-                "properties": {
-                  "present_value": {
-                    "type": "number"
-                  },
-                  "reliability": {
-                    "type": "string"
-                  },
-                  "device_type": {
-                    "type": "string"
-                  },
-                  "event_state": {
-                    "type": "string"
-                  },
-                  "state_text": {
-                    "type": "array",
-                    "items": {
-                      "type": "object"
-                    }
-                  },
-                  "polarity": {
-                    "type": "string"
-                  },
-                  "feedback_value": {
-                    "type": "number"
-                  },
-                  "relinquish_default": {
-                    "type": "number"
-                  }
-                }
-              },
-              "status": {
-                "type": "object",
-                "properties": {
-                  "in_alarm": {
-                    "type": "boolean"
-                  },
-                  "fault": {
-                    "type": "boolean"
-                  },
-                  "out_of_service": {
-                    "type": "boolean"
-                  },
-                  "overridden": {
-                    "type": "boolean"
-                  }
-                }
-              },
-              "priority_array": {
-                "type": "array",
-                "items": {
-                  "type": "object"
-                }
-              },
-              "alarming": {
-                "type": "object",
-                "properties": {
-                  "enabled": {
-                    "type": "boolean"
-                  },
-                  "acked_transitions": {
-                    "type": "object",
-                    "properties": {
-                      "to_normal": {
-                        "type": "boolean"
-                      },
-                      "to_offnormal": {
-                        "type": "boolean"
-                      },
-                      "to_fault": {
-                        "type": "boolean"
-                      }
-                    }
-                  },
-                  "notify": {
-                    "type": "object",
-                    "properties": {
-                      "type": {
-                        "type": "string"
-                      },
-                      "notification_class": {
-                        "type": "number"
-                      }
-                    }
-                  },
-                  "time_delay": {
-                    "type": "number"
-                  }
-                }
-              },
-              "totalization": {
-                "type": "object",
-                "properties": {
-                  "enabled": {
-                    "type": "boolean"
-                  },
-                  "elapsed_active_time": {
-                    "type": "number"
-                  },
-                  "last_reset": {
-                    "type": "number"
-                  },
-                  "ealpsed_inactive_time": {
-                    "type": "number"
-                  }
-                }
-              }
-            }
           }
         },
         "x-tags": [
@@ -1535,6 +1468,197 @@
             "readOnly": true
           }
         }
+      },
+      "BACnet-Point-Object": {
+        "title": "BACnet-Point-Object",
+        "type": "object",
+        "description": "",
+        "properties": {
+          "object": {
+            "type": "object",
+            "description": "Details about the BACnet object",
+            "properties": {
+              "instance": {
+                "type": "number",
+                "description": "The BACnet object instance ID of the point"
+              },
+              "type": {
+                "type": "number",
+                "description": "The BACnet object type of the point ",
+                "example": 0,
+                "enum": [
+                  0,
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  13,
+                  14,
+                  19
+                ]
+              },
+              "name": {
+                "type": "string",
+                "description": "The BACnet object name of the point"
+              },
+              "description": {
+                "type": "string",
+                "description": "The BACnet object description of the point"
+              }
+            },
+            "required": [
+              "instance",
+              "type",
+              "name"
+            ]
+          },
+          "telemetry": {
+            "type": "object",
+            "description": "Details about the BACnet telemetry",
+            "properties": {
+              "present_value": {
+                "type": "number",
+                "description": "The unformatted present value of the point"
+              },
+              "reliability": {
+                "type": "string",
+                "description": "The BACnet reliability of the point",
+                "example": "no fault detected",
+                "enum": [
+                  "no fault detected",
+                  "unreliable other"
+                ],
+                "readOnly": true
+              },
+              "device_type": {
+                "type": "string",
+                "description": "The BACnet device or sensor type of the point",
+                "example": "10k Thermister",
+                "readOnly": true
+              },
+              "event_state": {
+                "type": "string",
+                "description": "The BACnet event state of the point",
+                "example": "normal",
+                "enum": [
+                  "normal",
+                  "fault",
+                  "offnormal"
+                ],
+                "readOnly": true
+              },
+              "state_text": {
+                "type": "array",
+                "description": "The BACnet state text array of the point",
+                "minItems": 2,
+                "items": {
+                  "type": "string",
+                  "readOnly": true
+                },
+                "readOnly": true
+              },
+              "polarity": {
+                "type": "string",
+                "description": "The polarity of the point",
+                "readOnly": true
+              },
+              "feedback_value": {
+                "type": "number",
+                "readOnly": true
+              },
+              "relinquish_default": {
+                "type": "number",
+                "description": "The relinquish default for the point",
+                "readOnly": true
+              },
+              "units": {
+                "type": "string",
+                "description": "The raw BACnet units for the point",
+                "readOnly": true
+              }
+            },
+            "required": [
+              "present_value"
+            ]
+          },
+          "status": {
+            "type": "object",
+            "properties": {
+              "in_alarm": {
+                "type": "boolean"
+              },
+              "fault": {
+                "type": "boolean"
+              },
+              "out_of_service": {
+                "type": "boolean"
+              },
+              "overridden": {
+                "type": "boolean"
+              }
+            }
+          },
+          "priority_array": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          },
+          "alarming": {
+            "type": "object",
+            "properties": {
+              "enabled": {
+                "type": "boolean"
+              },
+              "acked_transitions": {
+                "type": "object",
+                "properties": {
+                  "to_normal": {
+                    "type": "boolean"
+                  },
+                  "to_offnormal": {
+                    "type": "boolean"
+                  },
+                  "to_fault": {
+                    "type": "boolean"
+                  }
+                }
+              },
+              "notify": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string"
+                  },
+                  "notification_class": {
+                    "type": "number"
+                  }
+                }
+              },
+              "time_delay": {
+                "type": "number"
+              }
+            }
+          },
+          "totalization": {
+            "type": "object",
+            "properties": {
+              "enabled": {
+                "type": "boolean"
+              },
+              "elapsed_active_time": {
+                "type": "number"
+              },
+              "last_reset": {
+                "type": "number"
+              },
+              "ealpsed_inactive_time": {
+                "type": "number"
+              }
+            }
+          }
+        }
       }
     },
     "parameters": {
@@ -2001,6 +2125,17 @@
                 }
               }
             }
+          }
+        }
+      },
+      "200-Get-BACnet-Point": {
+        "description": "Example response",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/BACnet-Point-Object"
+            },
+            "examples": {}
           }
         }
       }
