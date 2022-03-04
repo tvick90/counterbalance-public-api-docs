@@ -708,6 +708,18 @@
           },
           {
             "$ref": "#/components/parameters/@gatewayId"
+          },
+          {
+            "$ref": "#/components/parameters/@siteId"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "in": "query",
+            "name": "@owner",
+            "description": "Filter results by their associated owner UUID"
           }
         ]
       }
@@ -1387,6 +1399,11 @@
                     "type": "string",
                     "description": "The name of the source controller",
                     "readOnly": true
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "The description of the source controller",
+                    "readOnly": true
                   }
                 }
               },
@@ -1408,6 +1425,11 @@
                   "description": {
                     "type": "string",
                     "description": "The description of the source gateway",
+                    "readOnly": true
+                  },
+                  "serial": {
+                    "type": "string",
+                    "description": "The serial number of the source gateway",
                     "readOnly": true
                   }
                 }
@@ -1469,8 +1491,22 @@
                 "description": "The UUID of the user who created the request"
               },
               "name": {
-                "type": "string",
-                "description": "The name of the user who created the request"
+                "description": "The name of the user who created the request",
+                "type": "object",
+                "properties": {
+                  "given": {
+                    "type": "string",
+                    "description": "The user's given (first) name"
+                  },
+                  "family": {
+                    "type": "string",
+                    "description": "The user's family (last) name"
+                  },
+                  "full": {
+                    "type": "string",
+                    "description": "The user's full name"
+                  }
+                }
               },
               "email": {
                 "type": "string",
@@ -2532,31 +2568,6 @@
             "schema": {
               "type": "object",
               "properties": {
-                "priority": {
-                  "type": "integer",
-                  "description": "Change the BACnet priority the source point will be relinquished from",
-                  "enum": [
-                    1,
-                    2,
-                    3,
-                    4,
-                    5,
-                    6,
-                    7,
-                    8,
-                    9,
-                    10,
-                    11,
-                    12,
-                    13,
-                    14,
-                    15,
-                    16
-                  ],
-                  "example": 8,
-                  "minimum": 1,
-                  "maximum": 16
-                },
                 "release_timestamp": {
                   "type": "string",
                   "format": "date-time",
