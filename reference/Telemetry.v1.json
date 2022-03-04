@@ -1528,6 +1528,11 @@
             "maxLength": 300,
             "example": "Requested by Jennifer at OR control desk",
             "description": "A brief note or summary of the request"
+          },
+          "overdue": {
+            "type": "boolean",
+            "description": "Indicates if the release job is overdue. Overdue means the release timestamp has been reached and the job is still pending.",
+            "readOnly": true
           }
         }
       }
