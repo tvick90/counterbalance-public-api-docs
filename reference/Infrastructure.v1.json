@@ -657,74 +657,6 @@
           "description": {
             "type": "string",
             "description": "A brief description of the gateway"
-          },
-          "vitals": {
-            "type": "object",
-            "properties": {
-              "firmware": {
-                "type": "string",
-                "example": "V1.2.2",
-                "description": "The firmware revision running on the gateway device",
-                "readOnly": true
-              },
-              "hostname": {
-                "type": "string",
-                "description": "The hostname of the gateway device",
-                "format": "hostname"
-              },
-              "uptime": {
-                "type": "string",
-                "description": "The uptime of the gateway device",
-                "readOnly": true
-              },
-              "services": {
-                "type": "object",
-                "additionalProperties": false,
-                "description": "Details about the services running on the gateway device",
-                "properties": {
-                  "running": {
-                    "type": "number",
-                    "description": "The number of services running",
-                    "readOnly": true
-                  },
-                  "status": {
-                    "type": "object",
-                    "description": "The status of key gateway services",
-                    "properties": {
-                      "web_server": {
-                        "type": "boolean",
-                        "readOnly": true
-                      },
-                      "cache": {
-                        "type": "boolean",
-                        "readOnly": true
-                      },
-                      "ssh": {
-                        "type": "boolean",
-                        "readOnly": true
-                      },
-                      "bacnet": {
-                        "type": "boolean"
-                      },
-                      "tunnel": {
-                        "type": "boolean"
-                      }
-                    },
-                    "readOnly": true
-                  }
-                },
-                "readOnly": true
-              },
-              "network": {
-                "type": "object",
-                "description": "An object describing the gateway's physical network interfaces",
-                "properties": {
-                  "eth0": {
-                    "$ref": "#/components/schemas/Gateway-Network-Interface"
-                  }
-                }
-              }
-            }
           }
         }
       },
@@ -1099,6 +1031,15 @@
           "Gateway"
         ],
         "properties": {
+          "dhcp": {
+            "type": "boolean"
+          },
+          "mac": {
+            "type": "string",
+            "example": "2C:54:91:88:C9:E3",
+            "description": "The physical MAC address of the interface",
+            "readOnly": true
+          },
           "address": {
             "type": "string"
           },
@@ -1125,12 +1066,175 @@
               "type": "string",
               "format": "ipv4"
             }
-          },
-          "mac": {
+          }
+        }
+      },
+      "Gateway-Status-Object": {
+        "title": "Gateway-Status-Object",
+        "type": "object",
+        "properties": {
+          "hostname": {
             "type": "string",
-            "example": "2C:54:91:88:C9:E3",
-            "description": "The physical MAC address of the interface",
+            "description": "The hostname of the gateway device",
+            "format": "hostname"
+          },
+          "serial": {
+            "type": "string",
+            "description": "The serial number of the gateway device",
+            "format": "hostname"
+          },
+          "registration": {
+            "type": "object",
+            "properties": {
+              "tenant": {
+                "type": "string",
+                "description": "The registered tenant ID",
+                "format": "uuid",
+                "readOnly": true
+              },
+              "timestamp": {
+                "type": "string",
+                "format": "date-time",
+                "description": "The timestamp of device registration in ISO8601 format",
+                "readOnly": true
+              }
+            }
+          },
+          "uptime": {
+            "type": "string",
+            "description": "The uptime of the gateway device",
             "readOnly": true
+          },
+          "services": {
+            "type": "object",
+            "additionalProperties": false,
+            "description": "Details about the services running on the gateway device",
+            "properties": {
+              "running": {
+                "type": "number",
+                "description": "The number of services running",
+                "readOnly": true
+              },
+              "status": {
+                "type": "object",
+                "description": "The status of key gateway services",
+                "properties": {
+                  "web_server": {
+                    "type": "boolean",
+                    "readOnly": true
+                  },
+                  "cache": {
+                    "type": "boolean",
+                    "readOnly": true
+                  },
+                  "ssh": {
+                    "type": "boolean",
+                    "readOnly": true
+                  },
+                  "bacnet": {
+                    "type": "boolean"
+                  },
+                  "tunnel": {
+                    "type": "boolean"
+                  }
+                },
+                "readOnly": true
+              }
+            },
+            "readOnly": true
+          },
+          "network": {
+            "type": "object",
+            "description": "An object describing the gateway's physical network interfaces",
+            "properties": {
+              "eth0": {
+                "$ref": "#/components/schemas/Gateway-Network-Interface"
+              }
+            }
+          },
+          "config": {
+            "type": "object",
+            "description": "Details about the gateway configuration",
+            "properties": {
+              "hosts": {
+                "type": "object",
+                "properties": {
+                  "api": {
+                    "type": "string"
+                  },
+                  "data": {
+                    "type": "string"
+                  }
+                }
+              },
+              "cache": {
+                "type": "object",
+                "properties": {
+                  "aging": {
+                    "type": "object",
+                    "properties": {
+                      "max_object_age": {
+                        "type": "number"
+                      },
+                      "max_controller_age": {
+                        "type": "number"
+                      },
+                      "max_objectlist_age": {
+                        "type": "number"
+                      },
+                      "max_controllerlist_age": {
+                        "type": "number"
+                      }
+                    }
+                  }
+                }
+              },
+              "network_scanning": {
+                "type": "object",
+                "properties": {
+                  "limits": {
+                    "type": "object",
+                    "properties": {
+                      "controllers": {
+                        "type": "integer"
+                      },
+                      "collectors": {
+                        "type": "integer"
+                      }
+                    }
+                  },
+                  "bounce": {
+                    "type": "object",
+                    "properties": {
+                      "group": {
+                        "type": "integer"
+                      },
+                      "collector": {
+                        "type": "integer"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "firmware": {
+            "type": "object",
+            "description": "Details about the gateway firmware",
+            "properties": {
+              "revision": {
+                "type": "string",
+                "description": "The firmware revision string"
+              },
+              "release": {
+                "type": "string",
+                "description": "The release revision of the gateway firmware"
+              },
+              "architecture": {
+                "type": "string",
+                "description": "The architecture of the gateway firmware"
+              }
+            }
           }
         }
       }
