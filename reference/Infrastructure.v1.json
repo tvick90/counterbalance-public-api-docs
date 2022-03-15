@@ -412,7 +412,7 @@
         }
       }
     },
-    "/v1/gateway/{gatewayId}/admin/network": {
+    "/v1/gateway/{gatewayId}/admin/ethernet": {
       "parameters": [
         {
           "name": "gatewayId",
