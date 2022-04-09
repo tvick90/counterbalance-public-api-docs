@@ -1377,7 +1377,10 @@
         "value": {
           "name": "Minneapolis Office",
           "year_built": "1927",
-          "description": "Minneapolis branch office"
+          "description": "Minneapolis branch office",
+          "category": 7,
+          "type": 1,
+          "sub_type": 0
         }
       },
       "Site-Object": {
@@ -2001,10 +2004,21 @@
                 },
                 "year_built": {
                   "type": "string"
+                },
+                "category": {
+                  "type": "integer"
+                },
+                "type": {
+                  "type": "integer"
+                },
+                "sub_type": {
+                  "type": "integer"
                 }
               },
               "required": [
-                "name"
+                "name",
+                "category",
+                "type"
               ]
             },
             "examples": {
@@ -2277,6 +2291,15 @@
                 },
                 "year_built": {
                   "type": "string"
+                },
+                "category": {
+                  "type": "integer"
+                },
+                "type": {
+                  "type": "integer"
+                },
+                "sub_type": {
+                  "type": "integer"
                 }
               }
             },
