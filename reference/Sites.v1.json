@@ -70,7 +70,7 @@
             "$ref": "#/components/responses/200-Get-Site"
           }
         },
-        "description": "Create a new site object\n\n**Required Permissions:** `*`,`sites:*`,`sites:site:*`,`sites:site:create`\n\n> **Heads Up** This endpoint is subject to `site` quota availabilty",
+        "description": "Create a new site object\n\n**Required Permissions:** `*`,`sites:*`,`sites:site:*`,`sites:site:create`\n\n> **Heads Up** This endpoint is subject to `site` quota availabilty\n\n### Defining Building Category & Type\nNew sites must be defined with a building `category` and `type`. In some cases, a type will have additional sub-types, in which case, the `sub_type` paramater must also be provided. \n\nCategory, type, and sub_type are all defined using an index ID. The various indexes and their values can be found in [this support article](https://counterbalance.zendesk.com/hc/en-us/articles/5405264196499).",
         "security": [
           {
             "Bearer Token": []
