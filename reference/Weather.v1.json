@@ -12,7 +12,7 @@
     }
   ],
   "paths": {
-    "/v1/site/weather/forecast": {
+    "/v1/weather/forecast": {
       "get": {
         "summary": "Get Forecast",
         "responses": {
@@ -126,9 +126,10 @@
         "tags": [
           "Forecast"
         ]
-      }
+      },
+      "parameters": []
     },
-    "/v1/site/weather/current": {
+    "/v1/weather/current": {
       "get": {
         "summary": "Get Current Weather Conditions",
         "responses": {
@@ -239,7 +240,7 @@
       },
       "parameters": []
     },
-    "/v1/site/weather/alerts": {
+    "/v1/weather/alerts": {
       "get": {
         "summary": "Get Alerts",
         "responses": {
@@ -382,9 +383,10 @@
         "tags": [
           "Alerts"
         ]
-      }
+      },
+      "parameters": []
     },
-    "/v1/site/weather/indices": {
+    "/v1/weather/indices": {
       "get": {
         "summary": "Get Activity Indices",
         "responses": {
@@ -413,7 +415,8 @@
         "tags": [
           "Current Conditions"
         ]
-      }
+      },
+      "parameters": []
     },
     "/v1/weather/air-quality/current": {
       "get": {
