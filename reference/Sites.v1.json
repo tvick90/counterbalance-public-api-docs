@@ -818,29 +818,46 @@
         "description": "",
         "type": "object",
         "title": "Site Object",
+        "x-tags": [
+          "Site"
+        ],
         "properties": {
           "id": {
-            "type": "string"
+            "type": "string",
+            "description": "The site object UUID",
+            "readOnly": true
           },
           "created": {
-            "type": "string"
+            "type": "string",
+            "format": "date-time",
+            "description": "The timestamp the site object was created",
+            "readOnly": true
           },
           "last_modified": {
             "type": "string",
-            "nullable": true
+            "format": "date-time",
+            "description": "The timestamp the site object was last modified",
+            "nullable": true,
+            "readOnly": true
           },
           "code": {
-            "type": "string"
+            "type": "string",
+            "description": "A unique site code or abbreviation",
+            "maxLength": 32
           },
           "name": {
-            "type": "string"
+            "type": "string",
+            "description": "The name of the site object",
+            "maxLength": 120
           },
           "description": {
-            "type": "string"
+            "type": "string",
+            "maxLength": 300
           },
           "@address": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "nullable": true
           },
           "attributes": {
             "type": "object",
@@ -849,23 +866,78 @@
                 "type": "string"
               },
               "floor_count": {
-                "type": "integer"
+                "type": "integer",
+                "readOnly": true
               },
               "room_count": {
-                "type": "integer"
+                "type": "integer",
+                "readOnly": true
               },
               "gross_floor_area": {
                 "type": "integer"
               },
               "net_room_area": {
-                "type": "integer"
+                "type": "integer",
+                "readOnly": true
+              },
+              "classification": {
+                "type": "object",
+                "properties": {
+                  "category": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "number"
+                      },
+                      "name": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "type": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "integer"
+                      },
+                      "name": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "sub_type": {
+                    "type": "object",
+                    "nullable": true,
+                    "properties": {
+                      "id": {
+                        "type": "integer"
+                      },
+                      "name": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              },
+              "occupancy": {
+                "type": "object",
+                "properties": {
+                  "default": {
+                    "type": "string"
+                  },
+                  "limits": {
+                    "type": "array",
+                    "description": "If set, room objects must be one of the occupancies in the given array",
+                    "nullable": true,
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                }
               }
             }
           }
-        },
-        "x-tags": [
-          "Site"
-        ]
+        }
       },
       "Address-Object": {
         "description": "",
