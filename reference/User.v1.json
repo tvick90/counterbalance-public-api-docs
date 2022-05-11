@@ -2239,6 +2239,9 @@
         "title": "Group Object",
         "type": "object",
         "description": "",
+        "x-tags": [
+          "Groups"
+        ],
         "properties": {
           "id": {
             "type": "string",
@@ -2268,11 +2271,6 @@
             "maxLength": 300,
             "description": "A brief description of the group object"
           },
-          "public": {
-            "type": "boolean",
-            "default": true,
-            "description": "If `true`, the group is visible to all users. If `false`, the group is only visible to the owner and its members."
-          },
           "member_count": {
             "type": "integer",
             "description": "The number of member users in the group",
@@ -2281,9 +2279,6 @@
         },
         "required": [
           "name"
-        ],
-        "x-tags": [
-          "Groups"
         ]
       }
     },
