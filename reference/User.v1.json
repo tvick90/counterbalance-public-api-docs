@@ -1552,6 +1552,55 @@
         "description": "<!-- theme: info -->\n> _Coming soon_"
       }
     },
+    "/v1/user/group/{groupId}": {
+      "get": {
+        "summary": "Get User Group",
+        "tags": [
+          "Groups"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "operationId": "get-user-group",
+        "description": "<!-- theme: info -->\n> _Coming soon_",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ]
+      },
+      "post": {
+        "summary": "Create User Group",
+        "operationId": "create-user-group",
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        },
+        "tags": [
+          "Groups"
+        ],
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ],
+        "description": "<!-- theme: info -->\n> _Coming soon_"
+      },
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "groupId",
+          "in": "path",
+          "required": true,
+          "description": "A valid group UUID"
+        }
+      ]
+    },
     "/v1/user/{userId}/block": {
       "parameters": [
         {
@@ -2185,6 +2234,57 @@
             "system_only": true
           }
         }
+      },
+      "Group-Object": {
+        "title": "Group Object",
+        "type": "object",
+        "description": "",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The group object UUID",
+            "readOnly": true
+          },
+          "created": {
+            "type": "string",
+            "description": "The timestamp the group object was created",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "last_modified": {
+            "type": "string",
+            "description": "The timestamp the group object was last modified",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "name": {
+            "type": "string",
+            "maxLength": 120,
+            "description": "The name of the group object"
+          },
+          "description": {
+            "type": "string",
+            "maxLength": 300,
+            "description": "A brief description of the group object"
+          },
+          "public": {
+            "type": "boolean",
+            "default": true,
+            "description": "If `true`, the group is visible to all users. If `false`, the group is only visible to the owner and its members."
+          },
+          "member_count": {
+            "type": "integer",
+            "description": "The number of member users in the group",
+            "readOnly": true
+          }
+        },
+        "required": [
+          "name"
+        ],
+        "x-tags": [
+          "Groups"
+        ]
       }
     },
     "securitySchemes": {
