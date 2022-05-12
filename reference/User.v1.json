@@ -1514,90 +1514,6 @@
         }
       }
     },
-    "/v1/user/group": {
-      "get": {
-        "summary": "List User Groups",
-        "tags": [
-          "Groups"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        },
-        "operationId": "get-user-group",
-        "description": "<!-- theme: info -->\n> _Coming soon_",
-        "security": [
-          {
-            "Bearer Token": []
-          }
-        ]
-      },
-      "post": {
-        "summary": "Create User Group",
-        "operationId": "create-user-group",
-        "responses": {
-          "201": {
-            "description": "Created"
-          }
-        },
-        "tags": [
-          "Groups"
-        ],
-        "security": [
-          {
-            "Bearer Token": []
-          }
-        ],
-        "description": "<!-- theme: info -->\n> _Coming soon_"
-      }
-    },
-    "/v1/user/group/{groupId}": {
-      "get": {
-        "summary": "Get User Group",
-        "tags": [
-          "Groups"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        },
-        "operationId": "get-user-group",
-        "description": "<!-- theme: info -->\n> _Coming soon_",
-        "security": [
-          {
-            "Bearer Token": []
-          }
-        ]
-      },
-      "parameters": [
-        {
-          "$ref": "#/components/parameters/groupId"
-        }
-      ],
-      "patch": {
-        "summary": "Update Group",
-        "operationId": "update-group",
-        "responses": {
-          "200": {
-            "$ref": "#/components/responses/200-Get-Group"
-          }
-        },
-        "tags": [
-          "Groups"
-        ],
-        "description": "",
-        "security": [
-          {
-            "Bearer Token": []
-          }
-        ],
-        "requestBody": {
-          "$ref": "#/components/requestBodies/Update-Group"
-        }
-      }
-    },
     "/v1/user/{userId}/block": {
       "parameters": [
         {
@@ -1633,6 +1549,146 @@
         "description": "### Synopsis\nUnblock the specified user account and allow them to login\n\n<!-- theme: info -->\n> _Coming soon_",
         "tags": [
           "Security"
+        ]
+      }
+    },
+    "/v1/group": {
+      "get": {
+        "summary": "List Groups",
+        "tags": [
+          "Groups"
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/200-List-Groups"
+          }
+        },
+        "operationId": "list-groups",
+        "description": "List groups\n\n**Required Permissions:** `*`,`user:*`,`user:group:*`,`user:group:read`\n\n### Filtering Results\nA combination of one or more query parameters may be used to filter returned data. Query parameters are stacked such that using multiple parameters will result in a narrower data set.\n\nWildcard searches are permitted on the `name` and `description` query parameters. Wildcard searches are case insensitive and all data is forced to lowercase for matching purposes. See usage examples below.\n\n<!--\ntitle: \"Group Name Wildcard Search\"\nlineNumbers: false\n-->\n```text\nhttps://api.counterbalance.io/v1/group?name=*engineer*\n```",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "id",
+            "description": "A list of comma-separated group IDs to return"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "name",
+            "description": "Filter results by group name. Accepts * wildcard searches."
+          },
+          {
+            "schema": {
+              "type": "string",
+              "example": "*engineers*"
+            },
+            "in": "query",
+            "name": "description",
+            "description": "Filter results by group descrption. Accepts * wildcard searches."
+          }
+        ]
+      },
+      "post": {
+        "summary": "Create Group",
+        "operationId": "create-group",
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/200-Get-Group"
+          }
+        },
+        "tags": [
+          "Groups"
+        ],
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ],
+        "description": "Create a new group\n\n**Required Permissions:** `*`,`user:*`,`user:group:*`,`user:group:create`",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/Create-Group"
+        }
+      },
+      "parameters": []
+    },
+    "/v1/group/{groupId}": {
+      "get": {
+        "summary": "Get Group",
+        "tags": [
+          "Groups"
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/200-Get-Group"
+          }
+        },
+        "operationId": "get-group",
+        "description": "Retreieve a group\n\n**Required Permissions:** `*`,`user:*`,`user:group:*`,`user:group:read`",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ]
+      },
+      "parameters": [
+        {
+          "name": "groupId",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "description": "A valid group UUID"
+        }
+      ],
+      "patch": {
+        "summary": "Update Group",
+        "operationId": "update-group",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/200-Get-Group"
+          }
+        },
+        "tags": [
+          "Groups"
+        ],
+        "description": "Update a group\n\n**Required Permissions:** `*`,`user:*`,`user:group:*`,`user:group:update`",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/Update-Group"
+        }
+      },
+      "delete": {
+        "summary": "Delete Group",
+        "operationId": "delete-group",
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "tags": [
+          "Groups"
+        ],
+        "description": "Delete a group\n\n**Required Permissions:** `*`,`user:*`,`user:group:*`,`user:group:delete`",
+        "security": [
+          {
+            "Bearer Token": []
+          }
         ]
       }
     }
@@ -2313,6 +2369,39 @@
             }
           }
         }
+      },
+      "200-List-Groups": {
+        "description": "Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "description": "The number of group objects returned"
+                },
+                "index": {
+                  "type": "array",
+                  "uniqueItems": true,
+                  "description": "The group IDs returned",
+                  "items": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "readOnly": true
+                },
+                "data": {
+                  "type": "array",
+                  "description": "An array of group objects",
+                  "items": {
+                    "$ref": "#/components/schemas/Group-Object"
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     },
     "parameters": {
@@ -2342,7 +2431,22 @@
         "content": {
           "application/json": {
             "schema": {
-              "type": "object"
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "The desired name of the group object",
+                  "maxLength": 120
+                },
+                "description": {
+                  "type": "string",
+                  "description": "A brief description of the group object",
+                  "maxLength": 300
+                }
+              },
+              "required": [
+                "name"
+              ]
             }
           }
         }
@@ -2351,7 +2455,27 @@
         "content": {
           "application/json": {
             "schema": {
-              "type": "object"
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "maxLength": 120,
+                  "description": "The desired name of the group object"
+                },
+                "description": {
+                  "type": "string",
+                  "maxLength": 300,
+                  "description": "The desired description of the group object"
+                }
+              }
+            },
+            "examples": {
+              "Example": {
+                "value": {
+                  "name": "All Engineers",
+                  "description": "All engineering users"
+                }
+              }
             }
           }
         }
