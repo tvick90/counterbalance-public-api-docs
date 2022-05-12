@@ -1571,24 +1571,6 @@
           }
         ]
       },
-      "post": {
-        "summary": "Create User Group",
-        "operationId": "create-user-group",
-        "responses": {
-          "201": {
-            "description": "Created"
-          }
-        },
-        "tags": [
-          "Groups"
-        ],
-        "security": [
-          {
-            "Bearer Token": []
-          }
-        ],
-        "description": "<!-- theme: info -->\n> _Coming soon_"
-      },
       "parameters": [
         {
           "schema": {
@@ -2313,16 +2295,12 @@
     "examples": {
       "Group-Object": {
         "value": {
-          "description": "Example shared example",
-          "type": "object",
-          "properties": {
-            "id": {
-              "type": "string"
-            }
-          },
-          "required": [
-            "id"
-          ]
+          "id": "58a8fbbc-c443-4b03-9d25-a0c89200060c",
+          "created": "2022-05-11T23:34:11+0000",
+          "last_modified": null,
+          "name": "All Building Engineers",
+          "description": "All building engineers in all facilities",
+          "member_count": 5
         }
       }
     },
