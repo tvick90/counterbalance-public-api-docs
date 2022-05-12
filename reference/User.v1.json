@@ -1599,7 +1599,28 @@
           "required": true,
           "description": "A valid group UUID"
         }
-      ]
+      ],
+      "patch": {
+        "summary": "Update Group",
+        "operationId": "update-group",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/200-Get-Group"
+          }
+        },
+        "tags": [
+          "Groups"
+        ],
+        "description": "",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/Update-Group"
+        }
+      }
     },
     "/v1/user/{userId}/block": {
       "parameters": [
@@ -2289,7 +2310,81 @@
         "description": ""
       }
     },
-    "examples": {}
+    "examples": {
+      "Group-Object": {
+        "value": {
+          "description": "Example shared example",
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "id"
+          ]
+        }
+      }
+    },
+    "responses": {
+      "200-Get-Group": {
+        "description": "Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Group-Object"
+            },
+            "examples": {
+              "Response": {
+                "$ref": "#/components/examples/Group-Object"
+              }
+            }
+          }
+        }
+      }
+    },
+    "parameters": {
+      "groupId": {
+        "name": "groupId",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "description": "A valid group UUID"
+      },
+      "userId": {
+        "name": "userId",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "description": "A valid user account UUID"
+      }
+    },
+    "requestBodies": {
+      "Create-Group": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      },
+      "Update-Group": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      }
+    }
   },
   "tags": [
     {
