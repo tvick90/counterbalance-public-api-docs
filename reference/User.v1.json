@@ -1691,6 +1691,73 @@
           }
         ]
       }
+    },
+    "/v1/group/{groupId}/members": {
+      "get": {
+        "summary": "Get Group Members",
+        "tags": [
+          "Groups"
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/200-Get-Group"
+          }
+        },
+        "operationId": "get-group",
+        "description": "Retreieve a group's members\n\n**Required Permissions:** `*`,`user:*`,`user:group:*`,`user:group:read`",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ]
+      },
+      "parameters": [
+        {
+          "name": "groupId",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "description": "A valid group UUID"
+        }
+      ],
+      "delete": {
+        "summary": "Remove Group Members",
+        "operationId": "delete-group",
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "tags": [
+          "Groups"
+        ],
+        "description": "Delete a group\n\n**Required Permissions:** `*`,`user:*`,`user:group:*`,`user:group:delete`",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ]
+      },
+      "put": {
+        "summary": "Add Group Members",
+        "operationId": "put-v1-group-groupId-members",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "Groups"
+        ],
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ]
+      }
     }
   },
   "components": {
@@ -2333,6 +2400,40 @@
         "required": [
           "name"
         ]
+      },
+      "Group-Member-Object": {
+        "description": "",
+        "type": "object",
+        "x-examples": {},
+        "properties": {
+          "@user": {
+            "type": "string",
+            "format": "uuid",
+            "readOnly": true
+          },
+          "created": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "last_modified": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true,
+            "readOnly": true
+          },
+          "permission": {
+            "type": "string",
+            "enum": [
+              "read",
+              "edit"
+            ]
+          }
+        },
+        "title": "Group Member",
+        "x-tags": [
+          "Groups"
+        ]
       }
     },
     "securitySchemes": {
@@ -2475,6 +2576,41 @@
                   "name": "All Engineers",
                   "description": "All engineering users"
                 }
+              }
+            }
+          }
+        }
+      },
+      "Add-Group-Members": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "array",
+              "description": "",
+              "minItems": 1,
+              "uniqueItems": true,
+              "x-examples": {
+                "example-1": [
+                  [
+                    "ee876c8d-f404-4e13-84b6-ee22ec304322",
+                    true
+                  ]
+                ]
+              },
+              "items": {
+                "type": "array",
+                "items": {}
+              }
+            },
+            "examples": {
+              "example-1": {
+                "value": [
+                  {
+                    "0": [
+                      {}
+                    ]
+                  }
+                ]
               }
             }
           }
