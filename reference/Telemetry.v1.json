@@ -554,6 +554,39 @@
         ]
       }
     },
+    "/v1/telemetry/collector/{collectorId}/stats": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/collectorId"
+        }
+      ],
+      "get": {
+        "summary": "Get Collector Sample Statistics",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/200-Get-Collector-Sample-Stats"
+          },
+          "404": {
+            "$ref": "#/components/responses/404-Collector-Not-Found"
+          }
+        },
+        "operationId": "get-collector-stats",
+        "description": "Retrieve sample statistics for a collector\n\n**Required Permissions:** `*`,`telemetry:*`,`telemetry:collector:*`,`telemetry:collector:read`\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Content-Type"
+          }
+        ],
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ],
+        "tags": [
+          "Collector"
+        ]
+      }
+    },
     "/v1/telemetry/point/{pointId}/command": {
       "parameters": [
         {
@@ -1658,6 +1691,24 @@
               }
             }
           }
+        },
+        "x-tags": [
+          "Point"
+        ]
+      },
+      "Collector-Stats-Object": {
+        "title": "Collector-Stats-Object",
+        "type": "object",
+        "x-tags": [
+          "Collector"
+        ],
+        "description": "",
+        "properties": {
+          "sample_count": {
+            "type": "integer",
+            "format": "int64",
+            "readOnly": true
+          }
         }
       }
     },
@@ -2138,6 +2189,21 @@
             "examples": {}
           }
         }
+      },
+      "200-Get-Collector-Sample-Stats": {
+        "description": "Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Collector-Stats-Object"
+            },
+            "examples": {
+              "Response": {
+                "$ref": "#/components/examples/Get-Collector-Stats"
+              }
+            }
+          }
+        }
       }
     },
     "examples": {
@@ -2490,6 +2556,11 @@
       },
       "Get-Release-Job": {
         "value": {}
+      },
+      "Get-Collector-Stats": {
+        "value": {
+          "sample_count": 145250
+        }
       }
     },
     "requestBodies": {
