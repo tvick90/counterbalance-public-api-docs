@@ -82,25 +82,7 @@
         },
         "operationId": "get-gateway",
         "description": "Retrieve a gateway device by ID\n\n**Required Permissions:** `*`,`infrastructure:*`,`infrastructure:gateway:*`,`infrastructure:gateway:read`",
-        "parameters": [
-          {
-            "schema": {
-              "type": "boolean"
-            },
-            "in": "query",
-            "name": "online",
-            "description": "Query the gateway for vitals and statistics"
-          },
-          {
-            "schema": {
-              "type": "boolean"
-            },
-            "in": "query",
-            "name": "check_vitals",
-            "description": "Same as `online`",
-            "deprecated": true
-          }
-        ],
+        "parameters": [],
         "security": [
           {
             "Bearer Token": []
@@ -178,6 +160,35 @@
             "in": "query",
             "name": "force",
             "description": "Force the delete of a gateway that is offline"
+          }
+        ],
+        "tags": [
+          "Gateway"
+        ]
+      }
+    },
+    "/v1/infrastructure/gateway/{gatewayId}/status": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/gatewayId"
+        }
+      ],
+      "get": {
+        "summary": "Get Gateway Status",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/200-Get-Gateway-Status"
+          },
+          "404": {
+            "$ref": "#/components/responses/404-Gateway-Not-Found"
+          }
+        },
+        "operationId": "get-gateway",
+        "description": "Retrieve a gateway device status details\n\n**Required Permissions:** `*`,`infrastructure:*`,`infrastructure:gateway:*`,`infrastructure:gateway:read`",
+        "parameters": [],
+        "security": [
+          {
+            "Bearer Token": []
           }
         ],
         "tags": [
@@ -395,7 +406,7 @@
         "operationId": "toggle-gateway-service",
         "responses": {
           "200": {
-            "$ref": "#/components/responses/200-Command-Service"
+            "$ref": "#/components/responses/200-Gateway-Generic-Operation"
           }
         },
         "tags": [
@@ -431,7 +442,7 @@
         "operationId": "config-gateway-network",
         "responses": {
           "200": {
-            "$ref": "#/components/responses/200-Configure-Network"
+            "$ref": "#/components/responses/200-Gateway-Generic-Operation"
           }
         },
         "tags": [
@@ -479,7 +490,7 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "$ref": "#/components/responses/200-Gateway-Generic-Operation"
           }
         }
       }
@@ -512,7 +523,7 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "$ref": "#/components/responses/200-Gateway-Generic-Operation"
           },
           "": {
             "$ref": "#/components/responses/200-Configure-Network"
@@ -1236,7 +1247,10 @@
               }
             }
           }
-        }
+        },
+        "x-tags": [
+          "Gateway"
+        ]
       }
     },
     "securitySchemes": {
@@ -1256,9 +1270,6 @@
             "examples": {
               "Response": {
                 "$ref": "#/components/examples/Get-Gateway"
-              },
-              "Response w/ Vitals": {
-                "$ref": "#/components/examples/Get-Gateway-Online"
               }
             }
           }
@@ -1602,7 +1613,7 @@
           }
         }
       },
-      "200-Command-Service": {
+      "200-Gateway-Generic-Operation": {
         "description": "Ok",
         "content": {
           "application/json": {
@@ -1614,21 +1625,25 @@
                   "description": "The result of the command. If `true`, command was successful. If `false`, command failed."
                 }
               }
+            },
+            "examples": {
+              "Response": {
+                "$ref": "#/components/examples/Generic-Gateway-Operation"
+              }
             }
           }
         }
       },
-      "200-Configure-Network": {
+      "200-Get-Gateway-Status": {
         "description": "Ok",
         "content": {
           "application/json": {
             "schema": {
-              "type": "object",
-              "properties": {
-                "status": {
-                  "type": "boolean",
-                  "description": "The result of the network configuration. If `true`, the network configuration was applied successfully. If `false`, the configuration failed. "
-                }
+              "$ref": "#/components/schemas/Gateway-Status-Object"
+            },
+            "examples": {
+              "Response": {
+                "$ref": "#/components/examples/Get-Gateway-Details-Online"
               }
             }
           }
@@ -1711,38 +1726,57 @@
           "vitals": null
         }
       },
-      "Get-Gateway-Online": {
+      "Get-Gateway-Status": {
         "value": {
-          "id": "539fea81-d151-46e1-b1f6-36e3864ebeff",
+          "hostname": "ussea-bms-gw01",
           "serial": "dca6327364b3",
-          "name": "Primary Gateway",
-          "description": "",
-          "is_registered": true,
-          "vitals": {
-            "serial": "dca6327364b3",
-            "firmware": "0.2.0",
-            "hostname": "ussea-bms-gw01",
-            "uptime": "2 days",
-            "services": {
-              "running": 145,
-              "status": {
-                "web_server": true,
-                "cache": true,
-                "ssh": true,
-                "bacnet": true,
-                "tunnel": true
+          "registration": {
+            "tenant": "7d5a9e81-0902-4137-b71e-40ea913b5bfa",
+            "timestamp": null
+          },
+          "uptime": "29 days",
+          "services": {
+            "running": 150,
+            "status": {
+              "web_server": true,
+              "cache": true,
+              "ssh": true,
+              "bacnet": true,
+              "tunnel": true
+            }
+          },
+          "config": {
+            "hosts": {
+              "api": "https://funnel.counterbalance.io",
+              "data": "https://funnel.counterbalance.io"
+            },
+            "cache": {
+              "aging": {
+                "max_object_age": 5,
+                "max_controller_age": 30,
+                "max_objectlist_age": 10,
+                "max_controllerlist_age": 0
               }
             },
-            "network": {
-              "address": "192.168.5.100",
-              "subnet": "255.255.255.0",
-              "gateway": "192.168.5.1",
-              "cidr": "192.168.5.100/24",
-              "dns": [
-                "1.1.1.1",
-                "1.0.0.1"
-              ]
+            "network_scanning": {
+              "limits": {
+                "controllers": 5,
+                "collectors": 5
+              },
+              "bounce": {
+                "group": 0,
+                "collector": 1
+              }
             }
+          },
+          "firmware": {
+            "revision": "0.2.0",
+            "street_date": "2022-03-20T07:00:00+0000",
+            "installation_timestamp": "2022-03-05T02:34:45+0000",
+            "release": "5.8.0-1032-raspi",
+            "architecture": "aarch64",
+            "update_available": false,
+            "last_update_check": "2022-03-05T02:34:45+0000"
           }
         }
       },
@@ -1888,33 +1922,6 @@
           "bacnet": null
         }
       },
-      "Get-Gateway-Details-Online": {
-        "value": {
-          "id": "539fea81-d151-46e1-b1f6-36e3864ebeff",
-          "created": "2021-02-21T17:49:36+0000",
-          "last_modified": null,
-          "serial": "dca6327364b3",
-          "name": "Gateway SEA-BMS",
-          "description": "Main gateway",
-          "location": "Seattle Office MDF, Rack #2",
-          "is_registered": true,
-          "vitals": {
-            "serial": "dca6327364b3",
-            "hostname": "ussea-bms-gw01",
-            "uptime": "52 days",
-            "services": {
-              "running": 147,
-              "status": {
-                "web_server": true,
-                "cache": true,
-                "ssh": true,
-                "bacnet": true,
-                "tunnel": true
-              }
-            }
-          }
-        }
-      },
       "Create-Controller-Body": {
         "value": {
           "name": "USSEA-HVAC-BMSNODE01",
@@ -2047,9 +2054,25 @@
       },
       "Get-Network": {
         "value": {
-          "id": "",
-          "name": "",
-          "created": ""
+          "eth0": {
+            "dhcp": false,
+            "mac": "dc:a6:32:73:64:b3",
+            "speed": 1000,
+            "duplex": "full",
+            "address": "10.12.32.239",
+            "mask": "255.255.255.0",
+            "gateway": "10.12.32.254",
+            "dns": [
+              "1.1.1.1",
+              "8.8.8.8"
+            ],
+            "cidr": 24
+          }
+        }
+      },
+      "Generic-Gateway-Operation": {
+        "value": {
+          "status": true
         }
       }
     },
