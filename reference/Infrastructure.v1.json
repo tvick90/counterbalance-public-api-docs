@@ -390,15 +390,7 @@
     "/v1/gateway/{gatewayId}/admin/service": {
       "parameters": [
         {
-          "name": "gatewayId",
-          "in": "path",
-          "required": true,
-          "schema": {
-            "type": "string",
-            "format": "uuid",
-            "example": "539fea81-d151-46e1-b1f6-36e3864ebeff"
-          },
-          "description": "A valid gateway UUID"
+          "$ref": "#/components/parameters/gatewayId"
         }
       ],
       "put": {
@@ -412,7 +404,7 @@
         "tags": [
           "Gateway Administration"
         ],
-        "description": "Start and stop gateway services\n\n**Required Permissions:** `*`,`infrastructure:*`,`infrastructure:gateway:*`,`infrastructure:gateway:service`\n\n > **Note:** *This endpoint is intended for advanced troubleshooting and **should not be used** without advice from Counterbalance support.*\n <!-- theme: danger -->\n > **Warning:** *Improper use of this endpoint may sever communication to the device and may require the gateway to be reset to factory defaults.*\n\n## Services Available\n\n| Service ID | Name | Description |\n|:-|:-|:-|\n| `bacnet` | **BACnet Middleware** | Toggles the BACnet middleware daemon for communicating with the BACnet network\n| `ssh` | **Secure Shell (SSH)** | Toggles SSH access to the device locally. By default, SSH is enabled.\n| `tunnel` | **Tunnel Middleware** | Toggles the secure tunnel service for remote device access <br>***Caution:** Stopping this service will sever remote access to the gateway from the cloud. This can be restarted using the local GUI of the gateway.*\n\n",
+        "description": "Start and stop gateway services\n\n**Required Permissions:** `*`,`infrastructure:*`,`infrastructure:gateway:*`,`infrastructure:gateway:service`\n\n > **Note:** *This endpoint is intended for advanced troubleshooting and **should not be used** without advice from Counterbalance support.*\n <!-- theme: danger -->\n > **Warning:** *Improper use of this endpoint may sever communication to the device and may require the gateway to be reset to factory defaults.*\n\n## Services Available\n\n| Service ID | Name | Description |\n|:-|:-|:-|\n| `bacnet` | **BACnet Middleware** | Toggles the BACnet middleware daemon for communicating with the BACnet network\n| `ssh` | **Secure Shell (SSH)** | Toggles SSH access to the device locally. By default, SSH is enabled.\n| `tunnel` | **Tunnel Middleware** | Toggles the secure tunnel service for remote device access <br>***Caution:** Stopping this service will sever remote access to the gateway from the cloud. This can be restarted using the local GUI of the gateway.*\n\n <!-- theme: danger -->\n > **Warning:** *Improper use of this endpoint may sever communication to the device and may require the gateway to be reset to factory defaults.*\n",
         "security": [
           {
             "Bearer Token": []
@@ -426,15 +418,7 @@
     "/v1/gateway/{gatewayId}/admin/ethernet": {
       "parameters": [
         {
-          "name": "gatewayId",
-          "in": "path",
-          "required": true,
-          "schema": {
-            "type": "string",
-            "format": "uuid",
-            "example": "539fea81-d151-46e1-b1f6-36e3864ebeff"
-          },
-          "description": "A valid gateway UUID"
+          "$ref": "#/components/parameters/gatewayId"
         }
       ],
       "put": {
@@ -462,15 +446,7 @@
     "/v1/gateway/{gatewayId}/admin/hostname": {
       "parameters": [
         {
-          "name": "gatewayId",
-          "in": "path",
-          "required": true,
-          "schema": {
-            "type": "string",
-            "format": "uuid",
-            "example": "539fea81-d151-46e1-b1f6-36e3864ebeff"
-          },
-          "description": "A valid gateway UUID"
+          "$ref": "#/components/parameters/gatewayId"
         }
       ],
       "put": {
@@ -498,15 +474,7 @@
     "/v1/gateway/{gatewayId}/admin/restart": {
       "parameters": [
         {
-          "name": "gatewayId",
-          "in": "path",
-          "required": true,
-          "schema": {
-            "type": "string",
-            "format": "uuid",
-            "example": "539fea81-d151-46e1-b1f6-36e3864ebeff"
-          },
-          "description": "A valid gateway UUID"
+          "$ref": "#/components/parameters/gatewayId"
         }
       ],
       "put": {
