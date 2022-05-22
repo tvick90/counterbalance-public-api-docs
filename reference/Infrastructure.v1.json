@@ -18,7 +18,7 @@
     }
   ],
   "paths": {
-    "/v1/infrastructure/gateway": {
+    "/v1/gateway": {
       "get": {
         "summary": "List Gateways",
         "responses": {
@@ -62,12 +62,21 @@
         "tags": [
           "Gateway"
         ]
-      }
+      },
+      "parameters": []
     },
-    "/v1/infrastructure/gateway/{gatewayId}": {
+    "/v1/gateway/{gatewayId}": {
       "parameters": [
         {
-          "$ref": "#/components/parameters/gatewayId"
+          "name": "gatewayId",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid",
+            "example": "539fea81-d151-46e1-b1f6-36e3864ebeff"
+          },
+          "description": "A valid gateway UUID"
         }
       ],
       "get": {
@@ -167,10 +176,18 @@
         ]
       }
     },
-    "/v1/infrastructure/gateway/{gatewayId}/status": {
+    "/v1/gateway/{gatewayId}/status": {
       "parameters": [
         {
-          "$ref": "#/components/parameters/gatewayId"
+          "name": "gatewayId",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid",
+            "example": "539fea81-d151-46e1-b1f6-36e3864ebeff"
+          },
+          "description": "A valid gateway UUID"
         }
       ],
       "get": {
@@ -196,10 +213,18 @@
         ]
       }
     },
-    "/v1/infrastructure/gateway/{gatewayId}/devices": {
+    "/v1/gateway/{gatewayId}/devices": {
       "parameters": [
         {
-          "$ref": "#/components/parameters/gatewayId"
+          "name": "gatewayId",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid",
+            "example": "539fea81-d151-46e1-b1f6-36e3864ebeff"
+          },
+          "description": "A valid gateway UUID"
         }
       ],
       "get": {
@@ -224,7 +249,7 @@
         ]
       }
     },
-    "/v1/infrastructure/controller": {
+    "/v1/controller": {
       "get": {
         "summary": "List Controllers",
         "responses": {
@@ -271,12 +296,20 @@
         "requestBody": {
           "$ref": "#/components/requestBodies/Create-Controller"
         }
-      }
+      },
+      "parameters": []
     },
-    "/v1/infrastructure/controller/{controllerId}": {
+    "/v1/controller/{controllerId}": {
       "parameters": [
         {
-          "$ref": "#/components/parameters/controllerId"
+          "name": "controllerId",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "description": "A valid controller UUID"
         }
       ],
       "get": {
@@ -359,10 +392,18 @@
         ]
       }
     },
-    "/v1/infrastructure/gateway/{gatewayId}/whois": {
+    "/v1/gateway/{gatewayId}/whois": {
       "parameters": [
         {
-          "$ref": "#/components/parameters/gatewayId"
+          "name": "gatewayId",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid",
+            "example": "539fea81-d151-46e1-b1f6-36e3864ebeff"
+          },
+          "description": "A valid gateway UUID"
         }
       ],
       "post": {
@@ -499,7 +540,7 @@
         }
       }
     },
-    "/v1/infrastructure/network": {
+    "/v1/network": {
       "get": {
         "summary": "List Networks",
         "tags": [
@@ -533,12 +574,20 @@
             "Bearer Token": []
           }
         ]
-      }
+      },
+      "parameters": []
     },
-    "/v1/infrastructure/network/{networkId}": {
+    "/v1/network/{networkId}": {
       "parameters": [
         {
-          "$ref": "#/components/parameters/networkId"
+          "name": "networkId",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "description": "A valid network UUID"
         }
       ],
       "get": {
