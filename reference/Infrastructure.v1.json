@@ -2,8 +2,8 @@
   "openapi": "3.0.0",
   "info": {
     "title": "Infrastructure",
-    "version": "1.2.7",
-    "description": "The Infrastructure API provides endpoints for gateway and field controller management, including:\n* Activating & managing site gateways\n* Creating & managing DDC field controllers\n\n## Managing Site Gateways\nA site gateway is a physical device placed on the BAS network and provides the connection to the Counterbalance cloud. A site gateway must first be purchased and activated with a tenant account before it will be accessible in the console and this process is outlined in the Register Gateway endpoint.\n\nAdditional support and documentation is available on the [Gateway Support Page](https://counterbalance.zendesk.com/hc/en-us/categories/1500000245141-BAS-Cloud-Gateway)\n\n## Managing Controllers\nControllers are added and managed by their unique BACnet device instance ID. Every device associated with a gateway must be assigned a unique device ID.\n\nIf the automation system contains one or more controllers with the same device IDs, they must be connected to Counterbalance by seperate gateway devices. \n\n## Quotas and Licensing\nConnectivity management is a paid feature. Gateways and controllers are subject to quota availability for your particular subscription plan. \n\nIf insufficient quota or licensing or quot exists, a `403 Forbidden` error will be thrown.",
+    "version": "1.2.9",
+    "description": "The Infrastructure API provides endpoints for gateway and device management, including:\n* Activating & managing site gateways\n* Creating & managing BACnet devices\n\n## Managing Site Gateways\nA site gateway is a physical device placed on the BAS network and provides the connection to the Counterbalance cloud. A site gateway must first be purchased and activated with a tenant account before it will be accessible in the console. This process is outlined in the Register Gateway endpoint.\n\nAdditional support and documentation is available on the [Gateway Support Page](https://counterbalance.zendesk.com/hc/en-us/categories/1500000245141-BAS-Cloud-Gateway)\n\n## Managing BACnet Devices\nBACnet devices are added and managed by their unique BACnet device instance ID. Every device associated with a gateway must be assigned a unique device ID.\n\nIf the automation system contains one or more devices with the same instance IDs, they must be connected to Counterbalance by seperate gateway devices. \n\n## Quotas and Licensing\nConnectivity management is a metered feature. Gateways and controllers are subject to quota availability for your particular subscription plan. \n\nIf insufficient quota or licensing exists, a `403 Forbidden` error will be thrown.",
     "contact": {
       "name": "Counterbalance Support",
       "url": "https://www.counterbalance.com/support",
@@ -249,149 +249,6 @@
         ]
       }
     },
-    "/v1/controller": {
-      "get": {
-        "summary": "List Controllers",
-        "responses": {
-          "200": {
-            "$ref": "#/components/responses/200-Get-Controller-Listing"
-          }
-        },
-        "operationId": "get-controller-list",
-        "description": "Retrieve a list of controllers\n\n**Required Permissions:** `*`,`infrastructure:*`,`infrastructure:controller:*`,`infrastructure:controller:list`",
-        "security": [
-          {
-            "Bearer Token": []
-          }
-        ],
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/@gateway"
-          },
-          {
-            "$ref": "#/components/parameters/@site"
-          }
-        ],
-        "tags": [
-          "Controller"
-        ]
-      },
-      "post": {
-        "summary": "Register Controller",
-        "operationId": "create-controller",
-        "responses": {
-          "201": {
-            "$ref": "#/components/responses/200-Get-Controller"
-          }
-        },
-        "description": "Register a new BACnet controller\n\n**Required Permissions:** `*`,`infrastructure:*`,`infrastructure:controller:*`,`infrastructure:controller:register`\n\n### Compatible BACnet Field Controllers\nMost BACnet automation devices are compatible with Counterbalance. The complete list of compatible devices is available in the support portal.\n\n* [Compatible BACnet Devices](https://counterbalance.zendesk.com/hc/en-us/articles/360063269913)",
-        "security": [
-          {
-            "Bearer Token": []
-          }
-        ],
-        "tags": [
-          "Controller"
-        ],
-        "requestBody": {
-          "$ref": "#/components/requestBodies/Create-Controller"
-        }
-      },
-      "parameters": []
-    },
-    "/v1/controller/{controllerId}": {
-      "parameters": [
-        {
-          "name": "controllerId",
-          "in": "path",
-          "required": true,
-          "schema": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "description": "A valid controller UUID"
-        }
-      ],
-      "get": {
-        "summary": "Get Controller",
-        "responses": {
-          "200": {
-            "$ref": "#/components/responses/200-Get-Controller"
-          },
-          "404": {
-            "$ref": "#/components/responses/404-Controller-Not-Found"
-          }
-        },
-        "operationId": "get-controller",
-        "description": "Retrieve a controller\n\n**Required Permissions:** `*`,`infrastructure:*`,`infrastructure:controller:*`,`infrastructure:controller:read`",
-        "security": [
-          {
-            "Bearer Token": []
-          }
-        ],
-        "parameters": [
-          {
-            "schema": {
-              "type": "boolean",
-              "default": "false"
-            },
-            "in": "query",
-            "name": "bacnet",
-            "description": "Include online and BACnet data"
-          }
-        ],
-        "tags": [
-          "Controller"
-        ]
-      },
-      "patch": {
-        "summary": "Update Controller",
-        "operationId": "update-controller",
-        "responses": {
-          "200": {
-            "$ref": "#/components/responses/200-Get-Controller"
-          },
-          "404": {
-            "$ref": "#/components/responses/404-Controller-Not-Found"
-          }
-        },
-        "description": "Update a field controller\n\n**Required Permissions:** `*`,`infrastructure:*`,`infrastructure:controller:*`,`infrastructure:controller:update`",
-        "requestBody": {
-          "$ref": "#/components/requestBodies/Update-Controller"
-        },
-        "security": [
-          {
-            "Bearer Token": []
-          }
-        ],
-        "tags": [
-          "Controller"
-        ]
-      },
-      "delete": {
-        "summary": "Delete Field Controller",
-        "operationId": "delete-controller",
-        "responses": {
-          "204": {
-            "description": "No Content",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "null"
-                }
-              }
-            }
-          },
-          "404": {
-            "$ref": "#/components/responses/404-Controller-Not-Found"
-          }
-        },
-        "description": "### Synopsis\nDelete a controller\n\n**Required Permissions:** `*`,`infrastructure:*`,`infrastructure:controller:*`,`infrastructure:controller:delete`\n\n<!-- theme: danger -->\n> **Danger!** Deleting a field controller will also remove its associated telemetry (points, schedules, etc) and all associated meters and collectors",
-        "tags": [
-          "Controller"
-        ]
-      }
-    },
     "/v1/gateway/{gatewayId}/whois": {
       "parameters": [
         {
@@ -538,6 +395,149 @@
             "$ref": "#/components/responses/200-Configure-Network"
           }
         }
+      }
+    },
+    "/v1/controller": {
+      "get": {
+        "summary": "List Controllers",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/200-Get-Controller-Listing"
+          }
+        },
+        "operationId": "get-controller-list",
+        "description": "Retrieve a list of controllers\n\n**Required Permissions:** `*`,`infrastructure:*`,`infrastructure:controller:*`,`infrastructure:controller:list`",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/@gateway"
+          },
+          {
+            "$ref": "#/components/parameters/@site"
+          }
+        ],
+        "tags": [
+          "Controller"
+        ]
+      },
+      "post": {
+        "summary": "Register Controller",
+        "operationId": "create-controller",
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/200-Get-Controller"
+          }
+        },
+        "description": "Register a new BACnet controller\n\n**Required Permissions:** `*`,`infrastructure:*`,`infrastructure:controller:*`,`infrastructure:controller:register`\n\n### Compatible BACnet Field Controllers\nMost BACnet automation devices are compatible with Counterbalance. The complete list of compatible devices is available in the support portal.\n\n* [Compatible BACnet Devices](https://counterbalance.zendesk.com/hc/en-us/articles/360063269913)",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ],
+        "tags": [
+          "Controller"
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/Create-Controller"
+        }
+      },
+      "parameters": []
+    },
+    "/v1/controller/{controllerId}": {
+      "parameters": [
+        {
+          "name": "controllerId",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "description": "A valid controller UUID"
+        }
+      ],
+      "get": {
+        "summary": "Get Controller",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/200-Get-Controller"
+          },
+          "404": {
+            "$ref": "#/components/responses/404-Controller-Not-Found"
+          }
+        },
+        "operationId": "get-controller",
+        "description": "Retrieve a controller\n\n**Required Permissions:** `*`,`infrastructure:*`,`infrastructure:controller:*`,`infrastructure:controller:read`",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "boolean",
+              "default": "false"
+            },
+            "in": "query",
+            "name": "bacnet",
+            "description": "Include online and BACnet data"
+          }
+        ],
+        "tags": [
+          "Controller"
+        ]
+      },
+      "patch": {
+        "summary": "Update Controller",
+        "operationId": "update-controller",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/200-Get-Controller"
+          },
+          "404": {
+            "$ref": "#/components/responses/404-Controller-Not-Found"
+          }
+        },
+        "description": "Update a field controller\n\n**Required Permissions:** `*`,`infrastructure:*`,`infrastructure:controller:*`,`infrastructure:controller:update`",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/Update-Controller"
+        },
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ],
+        "tags": [
+          "Controller"
+        ]
+      },
+      "delete": {
+        "summary": "Delete Field Controller",
+        "operationId": "delete-controller",
+        "responses": {
+          "204": {
+            "description": "No Content",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "null"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/404-Controller-Not-Found"
+          }
+        },
+        "description": "### Synopsis\nDelete a controller\n\n**Required Permissions:** `*`,`infrastructure:*`,`infrastructure:controller:*`,`infrastructure:controller:delete`\n\n<!-- theme: danger -->\n> **Danger!** Deleting a field controller will also remove its associated telemetry (points, schedules, etc) and all associated meters and collectors",
+        "tags": [
+          "Controller"
+        ]
       }
     },
     "/v1/network": {
