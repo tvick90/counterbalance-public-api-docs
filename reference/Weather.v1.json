@@ -1944,7 +1944,7 @@
         "content": {
           "application/json": {
             "schema": {
-              "$ref": ""
+              "$ref": "#/components/schemas/Weather-Forecast-Object"
             }
           }
         }
@@ -1972,11 +1972,7 @@
         "content": {
           "application/json": {
             "schema": {
-              "properties": {
-                "id": {
-                  "type": "string"
-                }
-              }
+              "$ref": "#/components/schemas/Weather-Indices"
             }
           }
         }
