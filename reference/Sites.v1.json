@@ -2430,15 +2430,6 @@
                 "year_built": {
                   "type": "string"
                 },
-                "category": {
-                  "type": "integer"
-                },
-                "type": {
-                  "type": "integer"
-                },
-                "sub_type": {
-                  "type": "integer"
-                },
                 "default_occupancy": {
                   "type": "string",
                   "enum": [
