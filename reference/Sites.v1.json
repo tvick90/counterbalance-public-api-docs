@@ -1379,55 +1379,41 @@
                 "gross_floor_area": 18000,
                 "net_room_area": 17850,
                 "net_room_volume": 0
+              },
+              "occupancy": {
+                "default": "E",
+                "allowed": [
+                  "E",
+                  "A-1",
+                  "A-2"
+                ]
+              },
+              "classification": {
+                "category": {
+                  "id": 1,
+                  "name": "Education"
+                },
+                "type": {
+                  "id": 2,
+                  "name": "K-12 School"
+                },
+                "sub_type": {
+                  "id": 1,
+                  "name": "High School"
+                }
               }
             },
             {
               "id": "723a9c16-1790-4386-b17b-54bc9ed6d901",
-              "created": "2021-02-05T15:11:48+0000",
-              "code": "SFO",
-              "name": "San Francisco Office",
-              "description": "",
-              "address": "6517a08a-ab53-4c23-b4c1-d685d8e25a1c",
-              "attributes": {
-                "year_built": "2005",
-                "floor_count": 0,
-                "room_count": 0,
-                "gross_floor_area": 0,
-                "net_room_area": 0,
-                "net_room_volume": 0
-              }
+              "...": null
             },
             {
               "id": "82478e3a-a212-41bf-9e2b-7522a1504a6b",
-              "created": "2021-02-05T03:00:27+0000",
-              "code": "SEA",
-              "name": "Seattle Office",
-              "description": "",
-              "address": "032183ea-087d-43a6-94e8-5688ef909771",
-              "attributes": {
-                "year_built": "1945",
-                "floor_count": 27,
-                "room_count": 241,
-                "gross_floor_area": 570000,
-                "net_room_area": 570000,
-                "net_room_volume": 0
-              }
+              "...": null
             },
             {
               "id": "c1b5593a-6f59-46fa-ae38-15e4c4262ffa",
-              "created": "2021-02-06T05:51:29+0000",
-              "code": "AUS",
-              "name": "Austin Office",
-              "description": "",
-              "address": "8aac0478-7b6f-448f-952b-dd710a94ee7a",
-              "attributes": {
-                "year_built": "1997",
-                "floor_count": 2,
-                "room_count": 36,
-                "gross_floor_area": 18560,
-                "net_room_area": 18000,
-                "net_room_volume": 0
-              }
+              "...": null
             }
           ]
         }
@@ -1461,8 +1447,26 @@
             "net_room_volume": 0
           },
           "occupancy": {
-            "default": "B",
-            "allowed": []
+            "default": "E",
+            "allowed": [
+              "E",
+              "A-1",
+              "A-2"
+            ]
+          },
+          "classification": {
+            "category": {
+              "id": 1,
+              "name": "Education"
+            },
+            "type": {
+              "id": 2,
+              "name": "K-12 School"
+            },
+            "sub_type": {
+              "id": 1,
+              "name": "High School"
+            }
           }
         }
       },
