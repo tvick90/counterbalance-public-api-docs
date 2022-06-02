@@ -859,6 +859,120 @@
             "format": "uuid",
             "nullable": true
           },
+          "classification": {
+            "type": "object",
+            "properties": {
+              "category": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "number"
+                  },
+                  "name": {
+                    "type": "string"
+                  }
+                }
+              },
+              "type": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "integer"
+                  },
+                  "name": {
+                    "type": "string"
+                  }
+                }
+              },
+              "sub_type": {
+                "type": "object",
+                "nullable": true,
+                "properties": {
+                  "id": {
+                    "type": "integer"
+                  },
+                  "name": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "occupancy": {
+            "type": "object",
+            "properties": {
+              "default": {
+                "type": "string",
+                "enum": [
+                  "A-1",
+                  "A-2",
+                  "A-3",
+                  "A-4",
+                  "A-5",
+                  "B",
+                  "E",
+                  "F-1",
+                  "F-2",
+                  "H-1",
+                  "H-2",
+                  "H-3",
+                  "H-4",
+                  "H-5",
+                  "I-1",
+                  "I-2",
+                  "I-3",
+                  "I-4",
+                  "M",
+                  "R-1",
+                  "R-2",
+                  "R-3",
+                  "R-3.1",
+                  "R-4",
+                  "S-1",
+                  "S-2",
+                  "U"
+                ]
+              },
+              "allowed": {
+                "type": "array",
+                "description": "If set, room objects must be one of the occupancies in the given array",
+                "items": {
+                  "type": "string",
+                  "minLength": 0,
+                  "maxLength": 27
+                },
+                "enum": [
+                  "A-1",
+                  "A-2",
+                  "A-3",
+                  "A-4",
+                  "A-5",
+                  "B",
+                  "E",
+                  "F-1",
+                  "F-2",
+                  "H-1",
+                  "H-2",
+                  "H-3",
+                  "H-4",
+                  "H-5",
+                  "I-1",
+                  "I-2",
+                  "I-3",
+                  "I-4",
+                  "M",
+                  "R-1",
+                  "R-2",
+                  "R-3",
+                  "R-3.1",
+                  "R-4",
+                  "S-1",
+                  "S-2",
+                  "U"
+                ]
+              }
+            }
+          },
           "attributes": {
             "type": "object",
             "properties": {
@@ -879,61 +993,6 @@
               "net_room_area": {
                 "type": "integer",
                 "readOnly": true
-              },
-              "classification": {
-                "type": "object",
-                "properties": {
-                  "category": {
-                    "type": "object",
-                    "properties": {
-                      "id": {
-                        "type": "number"
-                      },
-                      "name": {
-                        "type": "string"
-                      }
-                    }
-                  },
-                  "type": {
-                    "type": "object",
-                    "properties": {
-                      "id": {
-                        "type": "integer"
-                      },
-                      "name": {
-                        "type": "string"
-                      }
-                    }
-                  },
-                  "sub_type": {
-                    "type": "object",
-                    "nullable": true,
-                    "properties": {
-                      "id": {
-                        "type": "integer"
-                      },
-                      "name": {
-                        "type": "string"
-                      }
-                    }
-                  }
-                }
-              },
-              "occupancy": {
-                "type": "object",
-                "properties": {
-                  "default": {
-                    "type": "string"
-                  },
-                  "limits": {
-                    "type": "array",
-                    "description": "If set, room objects must be one of the occupancies in the given array",
-                    "nullable": true,
-                    "items": {
-                      "type": "string"
-                    }
-                  }
-                }
               }
             }
           }
@@ -1400,6 +1459,10 @@
             "gross_floor_area": 0,
             "net_room_area": 0,
             "net_room_volume": 0
+          },
+          "occupancy": {
+            "default": "B",
+            "allowed": []
           }
         }
       },
@@ -2013,6 +2076,77 @@
                 },
                 "sub_type": {
                   "type": "integer"
+                },
+                "default_occupancy": {
+                  "type": "string",
+                  "enum": [
+                    "A-1",
+                    "A-2",
+                    "A-3",
+                    "A-4",
+                    "A-5",
+                    "B",
+                    "E",
+                    "F-1",
+                    "F-2",
+                    "H-1",
+                    "H-2",
+                    "H-3",
+                    "H-4",
+                    "H-5",
+                    "I-1",
+                    "I-2",
+                    "I-3",
+                    "I-4",
+                    "M",
+                    "R-1",
+                    "R-2",
+                    "R-3",
+                    "R-3.1",
+                    "R-4",
+                    "S-1",
+                    "S-2",
+                    "U"
+                  ],
+                  "description": "The desired default occupancy for rooms added to this site"
+                },
+                "allowed_occupancy": {
+                  "type": "array",
+                  "enum": [
+                    "A-1",
+                    "A-2",
+                    "A-3",
+                    "A-4",
+                    "A-5",
+                    "B",
+                    "E",
+                    "F-1",
+                    "F-2",
+                    "H-1",
+                    "H-2",
+                    "H-3",
+                    "H-4",
+                    "H-5",
+                    "I-1",
+                    "I-2",
+                    "I-3",
+                    "I-4",
+                    "M",
+                    "R-1",
+                    "R-2",
+                    "R-3",
+                    "R-3.1",
+                    "R-4",
+                    "S-1",
+                    "S-2",
+                    "U"
+                  ],
+                  "description": "New rooms will be limited to the occupancies provided",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 27
+                  }
                 }
               },
               "required": [
@@ -2300,6 +2434,77 @@
                 },
                 "sub_type": {
                   "type": "integer"
+                },
+                "default_occupancy": {
+                  "type": "string",
+                  "enum": [
+                    "A-1",
+                    "A-2",
+                    "A-3",
+                    "A-4",
+                    "A-5",
+                    "B",
+                    "E",
+                    "F-1",
+                    "F-2",
+                    "H-1",
+                    "H-2",
+                    "H-3",
+                    "H-4",
+                    "H-5",
+                    "I-1",
+                    "I-2",
+                    "I-3",
+                    "I-4",
+                    "M",
+                    "R-1",
+                    "R-2",
+                    "R-3",
+                    "R-3.1",
+                    "R-4",
+                    "S-1",
+                    "S-2",
+                    "U"
+                  ],
+                  "description": "The desired default occupancy for rooms added to this site"
+                },
+                "allowed_occupancy": {
+                  "type": "array",
+                  "enum": [
+                    "A-1",
+                    "A-2",
+                    "A-3",
+                    "A-4",
+                    "A-5",
+                    "B",
+                    "E",
+                    "F-1",
+                    "F-2",
+                    "H-1",
+                    "H-2",
+                    "H-3",
+                    "H-4",
+                    "H-5",
+                    "I-1",
+                    "I-2",
+                    "I-3",
+                    "I-4",
+                    "M",
+                    "R-1",
+                    "R-2",
+                    "R-3",
+                    "R-3.1",
+                    "R-4",
+                    "S-1",
+                    "S-2",
+                    "U"
+                  ],
+                  "description": "New rooms will be limited to the occupancies provided",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 27
+                  }
                 }
               }
             },
