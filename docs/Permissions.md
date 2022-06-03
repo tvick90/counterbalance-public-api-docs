@@ -27,7 +27,7 @@ Roles are logical groupings of permission scopes that define what platform objec
 | **Permission Scope** | **Description** |
 |:-|:-|
 | **Absolute Wildcard**
-| `*`                                  |	All access literally everything
+| `*`                                  |	All access to literally everything
 | **Automation Wildcard** 
 | `automation:*`                       |	All access to automation component
 | **Automation Resets** 
@@ -79,13 +79,13 @@ Roles are logical groupings of permission scopes that define what platform objec
 | `billing:subscription:delete`        |	Delete existing subscriptions
 | **Equipment Wildcard** 
 | `equipment:*`                        |	All access to equipment component
-| **Equipment Node Object** 
+| **Equipment Node** 
 | `equipment:node:*`                   |	All access to equipment nodes
 | `equipment:node:read`                |	View existing equipment nodes
 | `equipment:node:create`              |	Create new equipment nodes
 | `equipment:node:update`              |	Update existing equipment nodes
 | `equipment:node:delete`              |	Delete existing equipment nodes
-| **Equipment Object Telemetry** 
+| **Equipment Node Telemetry** 
 | `equipment:telemetry:*`              |	All access to equipment telemetry relationships
 | `equipment:telemetry:create`         |	Create new equipment telemetry relationships
 | `equipment:telemetry:read`           |	View existing equipment telemetry relationships
@@ -93,7 +93,7 @@ Roles are logical groupings of permission scopes that define what platform objec
 | `equipment:telemetry:delete`         |	Delete existing equipment telemetry relationships
 | **Infrastructure Wildcard** 
 | `infrastructure:*`                   |	All access to connectivity component
-| **Infrastructure Wildcard** 
+| **Gateway Device** 
 | `infrastructure:gateway:*`           |	All access to gateway devices
 | `infrastructure:gateway:register`    |	Register new gateway devices
 | `infrastructure:gateway:list`        |	List existing gateway devices <br> *__Deprecated__, use `*:read`*
@@ -101,7 +101,7 @@ Roles are logical groupings of permission scopes that define what platform objec
 | `infrastructure:gateway:manage`      |	Administer existing gateway devices
 | `infrastructure:gateway:update`      |	Update existing gateway devices
 | `infrastructure:gateway:delete`      |	Delete existing gateway devices
-| **Infrastructure Wildcard** 
+| **BACnet Device** 
 | `infrastructure:controller:*`        |	All access to controller devices
 | `infrastructure:controller:register` |	Register new controller devices
 | `infrastructure:controller:list`     |	List existing controller devices <br> *__Deprecated__, use `*:read`*
@@ -171,7 +171,7 @@ Roles are logical groupings of permission scopes that define what platform objec
 | `sites:room:delete`                  |	Delete existing room objects
 | **Telemetry Wildcard** 
 | `telemetry:*`                        |	All access to telemetry component
-| **Telemetry Wildcard** 
+| **Collector** 
 | `telemetry:collector:*`              |	All access to datapoint collector objects
 | `telemetry:collector:create`         |	Create new datapoint collector objects
 | `telemetry:collector:list`           |	List existing datapoint collectorobjects <br> *__Deprecated__, use `*:read`*
@@ -179,7 +179,7 @@ Roles are logical groupings of permission scopes that define what platform objec
 | `telemetry:collector:update`         |	Update existing datapoint collector objects
 | `telemetry:collector:delete`         |	Delete existing datapoint collector objects
 | `telemetry:collector:sample`         |	Sample existing datapoint collector object data
-| **Telemetry Wildcard** 
+| **BACnet Point** 
 | `telemetry:datapoint:*`              |	All access to controller point objects
 | `telemetry:datapoint:create`         |	Create new controller point objects
 | `telemetry:datapoint:list`           |	List existing controller point objects <br> *__Deprecated__, use `*:read`*
@@ -187,7 +187,7 @@ Roles are logical groupings of permission scopes that define what platform objec
 | `telemetry:datapoint:command`        |	Command/relinquish existing controller point objects
 | `telemetry:datapoint:update`         |	Update existing controller point objects
 | `telemetry:datapoint:delete`         |	Delete existing controller point objects
-| **Telemetry Wildcard** 
+| **BACnet Schedule** 
 | `telemetry:schedule:*`               |	All access to controller schedule objects
 | `telemetry:schedule:create`          |	Create new controller schedule objects
 | `telemetry:schedule:list`            |	List existing controller schedule objects <br> *__Deprecated__, use `*:read`*
