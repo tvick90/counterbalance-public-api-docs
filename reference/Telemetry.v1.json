@@ -2579,19 +2579,19 @@
                 "object_type": {
                   "type": "number",
                   "enum": [
-                    "0",
-                    "1",
-                    "2",
-                    "3",
-                    "4",
-                    "5",
-                    "14",
-                    "17",
-                    "19"
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    14,
+                    17,
+                    19
                   ],
                   "format": "double"
                 },
-                "instance": {
+                "instance_id": {
                   "type": "string"
                 },
                 "@site": {
@@ -2610,7 +2610,7 @@
               "required": [
                 "name",
                 "object_type",
-                "instance",
+                "instance_id",
                 "controller"
               ]
             },
