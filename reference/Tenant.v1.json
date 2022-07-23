@@ -1074,8 +1074,8 @@
             }
           },
           "addresses": {
-            "mailing": "f3643601-d122-47c5-893c-1f108c07d840",
-            "billing": null
+            "@mailing": "f3643601-d122-47c5-893c-1f108c07d840",
+            "@billing": null
           },
           "milestones": {
             "account_created": {
