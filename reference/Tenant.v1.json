@@ -742,6 +742,9 @@
               "gateway": {
                 "type": "number"
               },
+              "kiosk": {
+                "type": "number"
+              },
               "meter": {
                 "type": "number"
               },
@@ -749,12 +752,6 @@
                 "type": "number"
               },
               "record_user": {
-                "type": "number"
-              },
-              "report": {
-                "type": "number"
-              },
-              "report_schedule": {
                 "type": "number"
               },
               "reset": {
@@ -815,6 +812,9 @@
               "gateway": {
                 "$ref": "#/components/schemas/Tenant-Quota-Item-Object"
               },
+              "kiosk": {
+                "$ref": "#/components/schemas/Tenant-Quota-Item-Object"
+              },
               "meter": {
                 "$ref": "#/components/schemas/Tenant-Quota-Item-Object"
               },
@@ -822,9 +822,6 @@
                 "$ref": "#/components/schemas/Tenant-Quota-Item-Object"
               },
               "record_user": {
-                "$ref": "#/components/schemas/Tenant-Quota-Item-Object"
-              },
-              "report": {
                 "$ref": "#/components/schemas/Tenant-Quota-Item-Object"
               },
               "report_schedule": {
@@ -1126,16 +1123,21 @@
       "Tenant-Quota-Summary": {
         "value": {
           "usage": {
-            "record_user": 4,
-            "seat": 8,
-            "user": 1,
-            "site": 9,
-            "gateway": 2,
-            "controller": 4,
-            "point": 57,
-            "collector": 1,
-            "equipment": 27,
-            "meter": 0
+            "record_user": 1,
+            "seat": 9,
+            "user": 0,
+            "site": 17,
+            "gateway": 1,
+            "controller": 3,
+            "point": 43,
+            "collector": 17,
+            "equipment": 55,
+            "routine": 0,
+            "reset": 0,
+            "trigger": 0,
+            "fdd_rule": 0,
+            "meter": 0,
+            "kiosk": 0
           },
           "tenant": {
             "id": "7d5a9e81-0902-4137-b71e-40ea913b5bfa",
@@ -1145,10 +1147,66 @@
           },
           "quotas": {
             "collector": {
+              "usage": 17,
+              "quota": {
+                "included": 200,
+                "purchased": 25,
+                "total": 225
+              },
+              "remaining": 208,
+              "status": {
+                "can_add_more": true,
+                "is_exceeded": false,
+                "is_met": false
+              }
+            },
+            "controller": {
+              "usage": 3,
+              "quota": {
+                "included": 100,
+                "purchased": 20,
+                "total": 120
+              },
+              "remaining": 117,
+              "status": {
+                "can_add_more": true,
+                "is_exceeded": false,
+                "is_met": false
+              }
+            },
+            "equipment": {
+              "usage": 55,
+              "quota": {
+                "included": 50,
+                "purchased": 0,
+                "total": 50
+              },
+              "remaining": 0,
+              "status": {
+                "can_add_more": false,
+                "is_exceeded": true,
+                "is_met": true
+              }
+            },
+            "fdd_rule": {
+              "usage": 0,
+              "quota": {
+                "included": 150,
+                "purchased": 0,
+                "total": 150
+              },
+              "remaining": 150,
+              "status": {
+                "can_add_more": true,
+                "is_exceeded": false,
+                "is_met": false
+              }
+            },
+            "gateway": {
               "usage": 1,
               "quota": {
-                "included": 0,
-                "purchased": 25,
+                "included": 25,
+                "purchased": 0,
                 "total": 25
               },
               "remaining": 24,
@@ -1158,56 +1216,28 @@
                 "is_met": false
               }
             },
-            "controller": {
-              "usage": 4,
+            "kiosk": {
+              "usage": 0,
               "quota": {
-                "included": 2,
-                "purchased": 8,
+                "included": 10,
+                "purchased": 0,
                 "total": 10
               },
-              "remaining": 6,
+              "remaining": 10,
               "status": {
                 "can_add_more": true,
                 "is_exceeded": false,
                 "is_met": false
-              }
-            },
-            "equipment": {
-              "usage": 27,
-              "quota": {
-                "included": 0,
-                "purchased": 50,
-                "total": 50
-              },
-              "remaining": 23,
-              "status": {
-                "can_add_more": true,
-                "is_exceeded": false,
-                "is_met": false
-              }
-            },
-            "gateway": {
-              "usage": 2,
-              "quota": {
-                "included": 1,
-                "purchased": 0,
-                "total": 1
-              },
-              "remaining": 0,
-              "status": {
-                "can_add_more": false,
-                "is_exceeded": true,
-                "is_met": true
               }
             },
             "meter": {
               "usage": 0,
               "quota": {
-                "included": 5,
+                "included": 100,
                 "purchased": 0,
-                "total": 5
+                "total": 100
               },
-              "remaining": 5,
+              "remaining": 100,
               "status": {
                 "can_add_more": true,
                 "is_exceeded": false,
@@ -1215,55 +1245,13 @@
               }
             },
             "point": {
-              "usage": 57,
+              "usage": 43,
               "quota": {
-                "included": 20,
+                "included": 500,
                 "purchased": 550,
-                "total": 570
+                "total": 1050
               },
-              "remaining": 513,
-              "status": {
-                "can_add_more": true,
-                "is_exceeded": false,
-                "is_met": false
-              }
-            },
-            "seat": {
-              "usage": 8,
-              "quota": {
-                "included": 1,
-                "purchased": 10,
-                "total": 11
-              },
-              "remaining": 3,
-              "status": {
-                "can_add_more": true,
-                "is_exceeded": false,
-                "is_met": false
-              }
-            },
-            "site": {
-              "usage": 9,
-              "quota": {
-                "included": 1,
-                "purchased": 10,
-                "total": 11
-              },
-              "remaining": 2,
-              "status": {
-                "can_add_more": true,
-                "is_exceeded": false,
-                "is_met": false
-              }
-            },
-            "user": {
-              "usage": 1,
-              "quota": {
-                "included": 0,
-                "purchased": 5,
-                "total": 5
-              },
-              "remaining": 4,
+              "remaining": 1007,
               "status": {
                 "can_add_more": true,
                 "is_exceeded": false,
@@ -1271,7 +1259,7 @@
               }
             },
             "record_user": {
-              "usage": 4,
+              "usage": 1,
               "quota": {
                 "included": 0,
                 "purchased": 0,
@@ -1283,28 +1271,137 @@
                 "is_exceeded": true,
                 "is_met": true
               }
+            },
+            "reset": {
+              "usage": 0,
+              "quota": {
+                "included": 50,
+                "purchased": 0,
+                "total": 50
+              },
+              "remaining": 50,
+              "status": {
+                "can_add_more": true,
+                "is_exceeded": false,
+                "is_met": false
+              }
+            },
+            "routine": {
+              "usage": 0,
+              "quota": {
+                "included": 50,
+                "purchased": 0,
+                "total": 50
+              },
+              "remaining": 50,
+              "status": {
+                "can_add_more": true,
+                "is_exceeded": false,
+                "is_met": false
+              }
+            },
+            "seat": {
+              "usage": 9,
+              "quota": {
+                "included": 25,
+                "purchased": 12,
+                "total": 37
+              },
+              "remaining": 28,
+              "status": {
+                "can_add_more": true,
+                "is_exceeded": false,
+                "is_met": false
+              }
+            },
+            "site": {
+              "usage": 17,
+              "quota": {
+                "included": 10,
+                "purchased": 10,
+                "total": 20
+              },
+              "remaining": 3,
+              "status": {
+                "can_add_more": true,
+                "is_exceeded": false,
+                "is_met": false
+              }
+            },
+            "trigger": {
+              "usage": 0,
+              "quota": {
+                "included": 10,
+                "purchased": 0,
+                "total": 10
+              },
+              "remaining": 10,
+              "status": {
+                "can_add_more": true,
+                "is_exceeded": false,
+                "is_met": false
+              }
+            },
+            "user": {
+              "usage": 0,
+              "quota": {
+                "included": 10,
+                "purchased": 0,
+                "total": 10
+              },
+              "remaining": 10,
+              "status": {
+                "can_add_more": true,
+                "is_exceeded": false,
+                "is_met": false
+              }
             }
           },
           "composition": {
             "base": {
               "included_quotas": {
-                "controller": 2,
-                "gateway": 1,
-                "meter": 5,
-                "point": 20,
-                "seat": 1,
-                "site": 1,
-                "record_user": null
+                "collector": 200,
+                "controller": 100,
+                "equipment": 50,
+                "fdd_rule": 150,
+                "gateway": 25,
+                "kiosk": 10,
+                "meter": 100,
+                "point": 500,
+                "record_user": null,
+                "reset": 50,
+                "routine": 50,
+                "seat": 25,
+                "site": 10,
+                "trigger": 10,
+                "user": 10
               },
               "features": [
                 "browser",
-                "favorites",
-                "metering",
-                "sites_base",
-                "user_management"
+                "commander",
+                "components",
+                "dynamic_plotter",
+                "report_viewer",
+                "scheduler",
+                "sched_releases",
+                "sched_reports",
+                "trend_viewer",
+                "weather"
               ]
             },
             "purchased_items": [
+              {
+                "id": "si_K5p1H0XbUF2OF0",
+                "product": "prod_JrQ5bpNpFpJMIH",
+                "plan": "price_1JDhFhJ5K0z3IHPXQmXXDlZJ",
+                "quantity": 12
+              },
+              {
+                "id": "si_K5UfB0QxmjmyMb",
+                "product": "prod_Jonb7n6NgZwJPs",
+                "plan": "price_1JBASEJ5K0z3IHPX1fIfVOTj",
+                "quantity": 2
+              },
               {
                 "id": "si_HZ3bajOlRzV6Yz",
                 "product": "prod_HZ369tGn3VJSVa",
@@ -1357,20 +1454,15 @@
           },
           "features": [
             "browser",
-            "favorites",
-            "metering",
-            "sites_base",
-            "user_management",
-            "user_groups",
-            "user_management",
-            "sites_base",
-            "sites_base",
-            "sites_forecasts",
-            "sites_weather",
-            "sites_weather_alerts",
-            "user_groups",
-            "user_management",
-            "sites_equipment"
+            "commander",
+            "components",
+            "dynamic_plotter",
+            "report_viewer",
+            "scheduler",
+            "sched_releases",
+            "sched_reports",
+            "trend_viewer",
+            "weather"
           ]
         }
       },
