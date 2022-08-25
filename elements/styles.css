@@ -1,0 +1,27 @@
+:root {
+    --font-prose: -apple-system, BlinkMacSystemFont, "nimbus-sans", sans-serif;
+    --font-ui: -apple-system, BlinkMacSystemFont, "nimbus-sans", sans-serif;
+    --font-mono: "Jetbrains Mono", monospace;
+    --color-canvas-50: #fafafa;
+    --color-canvas-100: #F2F2F2;
+    --color-canvas-200: #E8E8E8;
+    --color-canvas-300: #DEDEDE;
+    --color-canvas-400: #CCCCCC;
+    --color-canvas-500: #B3B3B3;
+}
+
+.sl-font-prose {
+    font-family: var(--font-prose);
+    font-family: 'neuzeit-grotesk';
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.api-container {
+    flex: 1 0 0;
+    overflow: hidden;
+}
