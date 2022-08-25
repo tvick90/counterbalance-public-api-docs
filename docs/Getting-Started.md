@@ -31,7 +31,7 @@ When submitting non-binary data via a `POST`, `PUT`, or `PATCH` endpoint, the da
 POST https://api.counterbalance.io/v1/foo HTTP/1.1
 Content-Type: application/json
 ```
-```json
+```
 {
   "bar": "baz"
 }
