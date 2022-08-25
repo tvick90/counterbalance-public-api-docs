@@ -633,9 +633,6 @@
     "/site/utilities/geocode": {
       "get": {
         "summary": "Retrieve Geocoding by Query",
-        "tags": [
-          "Utilities"
-        ],
         "responses": {
           "200": {
             "$ref": "#/components/responses/200-Geocode-Search"
@@ -658,15 +655,15 @@
           {
             "Bearer Token": []
           }
+        ],
+        "tags": [
+          "Site"
         ]
       }
     },
     "/site/utilities/timezone": {
       "get": {
         "summary": "Retrieve Timezone Details",
-        "tags": [
-          "Utilities"
-        ],
         "responses": {
           "200": {
             "$ref": "#/components/responses/200-Get-Timezone-Object"
@@ -762,6 +759,9 @@
           {
             "Bearer Token": []
           }
+        ],
+        "tags": [
+          "Site"
         ]
       }
     },
@@ -883,7 +883,7 @@
           }
         ],
         "tags": [
-          "Account"
+          "Tenant"
         ]
       },
       "patch": {
@@ -939,7 +939,7 @@
           }
         ],
         "tags": [
-          "Account"
+          "Tenant"
         ]
       },
       "delete": {
@@ -952,7 +952,7 @@
         },
         "description": "Delete the tenant account of the authenticated user\n\nThe following prerequisites are required for this endpoint:\n* An active tenant account\n* Permissions _(at least one):_ `*`,`tenant:*`,`tenant:account:*`,`tenant:account:delete`\n\n### Immediate Account Termination",
         "tags": [
-          "Account"
+          "Tenant"
         ]
       }
     },
