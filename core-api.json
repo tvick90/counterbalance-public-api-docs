@@ -956,37 +956,6 @@
         ]
       }
     },
-    "/tenant/quota": {
-      "get": {
-        "summary": "RetrieveTenant Quota Summary",
-        "responses": {
-          "200": {
-            "$ref": "#/components/responses/200-Tenant-Quota-Summary"
-          }
-        },
-        "operationId": "get-tenant-quota",
-        "description": "Retrieve a list of authorized platform features and a summary of metered tenant objects and their usage for the authenticated user's tenant account\n\n__Required Permissions:__ `*`,`tenant:*`,`tenant:quota:*`,`tenant:quota:read`\n\n> **Please Note:** This endpoint will return all the features and quotas for the tenant account, regardless of the authenticated user's ability to use or access them",
-        "security": [
-          {
-            "Bearer Token": []
-          }
-        ],
-        "parameters": [
-          {
-            "schema": {
-              "type": "boolean",
-              "default": "false"
-            },
-            "in": "query",
-            "name": "features_only",
-            "description": "Only return the authorized features, excludes quota summary and usage details"
-          }
-        ],
-        "tags": [
-          "Quota"
-        ]
-      }
-    },
     "/tenant/confirm": {
       "post": {
         "summary": "Confirm Tenant Account",
@@ -1049,6 +1018,33 @@
             }
           }
         },
+        "tags": [
+          "Tenant"
+        ]
+      }
+    },
+    "/tenant/deletion-pin": {
+      "post": {
+        "summary": "Set Deletion PIN",
+        "operationId": "post-v1-tenant-deletion-pin",
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Tenant-Deletion-PIN"
+                }
+              }
+            }
+          }
+        },
+        "description": "Set a deletion PIN that allows Counterbalance Support to permanently delete a tenant account",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ],
         "tags": [
           "Tenant"
         ]
@@ -1157,32 +1153,702 @@
         ]
       }
     },
-    "/tenant/deletion-pin": {
-      "post": {
-        "summary": "Set Deletion PIN",
-        "operationId": "post-v1-tenant-deletion-pin",
+    "/tenant/quota": {
+      "get": {
+        "summary": "RetrieveTenant Quota Summary",
         "responses": {
-          "201": {
-            "description": "Created",
+          "200": {
+            "$ref": "#/components/responses/200-Tenant-Quota-Summary"
+          }
+        },
+        "operationId": "get-tenant-quota",
+        "description": "Retrieve a list of authorized platform features and a summary of metered tenant objects and their usage for the authenticated user's tenant account\n\n__Required Permissions:__ `*`,`tenant:*`,`tenant:quota:*`,`tenant:quota:read`\n\n> **Please Note:** This endpoint will return all the features and quotas for the tenant account, regardless of the authenticated user's ability to use or access them",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "boolean",
+              "default": "false"
+            },
+            "in": "query",
+            "name": "features_only",
+            "description": "Only return the authorized features, excludes quota summary and usage details"
+          }
+        ],
+        "tags": [
+          "Quota"
+        ]
+      }
+    },
+    "/weather/air-quality/current": {
+      "get": {
+        "summary": "Get Air Quality Conditions",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Tenant-Deletion-PIN"
+                  "$ref": "#/components/schemas/Error"
+                },
+                "examples": {
+                  "No Parameters": {
+                    "value": {
+                      "error": {
+                        "message": "Invalid request",
+                        "console": "Specify either coordinates or an address ID",
+                        "code": 400
+                      },
+                      "logging_hash": null
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "examples": {
+                  "Address Not Found": {
+                    "value": {
+                      "error": {
+                        "message": "Address not found",
+                        "console": "The address ID 8ac7d5dc-803d-40ac-bc37-16c0dbffe5d8 could not be found in the database",
+                        "code": 404
+                      },
+                      "logging_hash": null
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "examples": {
+                  "Invalid Parameter Combination": {
+                    "value": {
+                      "error": {
+                        "message": "Invalid request",
+                        "console": "Parameters coordinates and address are mutually exclusive. Specify only one.",
+                        "code": 409
+                      },
+                      "logging_hash": null
+                    }
+                  },
+                  "Invalid Address Geocoding": {
+                    "value": {
+                      "error": {
+                        "message": "Invalid address geocoding",
+                        "console": "The address ID 8ac7d5dc-803d-40ac-bc37-16c0dbffe5d8 is not geocoded and we have no coordinates to check",
+                        "code": 409
+                      },
+                      "logging_hash": null
+                    }
+                  }
                 }
               }
             }
           }
         },
-        "description": "Set a deletion PIN that allows Counterbalance Support to permanently delete a tenant account",
+        "operationId": "get-airquality-current",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ],
+        "description": "Get current air quality\n\n**Required Permissions:** `*`,`wx:*`,`wx:airquality:*`,`wx:airquality:read`\n\n### Specifying the Location\nAir quality data can be obtained for a specified set of coordinates or by specifying a geocoded address object ID. Either the `coordinates` or `@address` query parameters must be passed, but not both. Passing more than one will result in an error \n\n<!-- theme: info-->\n> **Please Note:**\n> If the specified address ID has not been geocoded, an error will be returned.\n\n### Language\nBy default, data is returned in English. To return data in another language, pass the `langugage` query parameter and set it to a valid IETF language code",
+        "tags": [
+          "Weather"
+        ]
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/@addressId"
+        },
+        {
+          "$ref": "#/components/parameters/coordinates"
+        },
+        {
+          "$ref": "#/components/parameters/language"
+        }
+      ]
+    },
+    "/weather/air-quality/forecast": {
+      "get": {
+        "summary": "Get Air Quality Forecast",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/200-Get-AQ-Forecast"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "examples": {
+                  "No Parameters": {
+                    "value": {
+                      "error": {
+                        "message": "Invalid request",
+                        "console": "Specify either coordinates or an address ID",
+                        "code": 400
+                      },
+                      "logging_hash": null
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "examples": {
+                  "Address Not Found": {
+                    "value": {
+                      "error": {
+                        "message": "Address not found",
+                        "console": "The address ID 8ac7d5dc-803d-40ac-bc37-16c0dbffe5d8 could not be found in the database",
+                        "code": 404
+                      },
+                      "logging_hash": null
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "examples": {
+                  "Invalid Parameter Combination": {
+                    "value": {
+                      "error": {
+                        "message": "Invalid request",
+                        "console": "Parameters coordinates and address are mutually exclusive. Specify only one.",
+                        "code": 409
+                      },
+                      "logging_hash": null
+                    }
+                  },
+                  "Invalid Address Geocoding": {
+                    "value": {
+                      "error": {
+                        "message": "Invalid address geocoding",
+                        "console": "The address ID 8ac7d5dc-803d-40ac-bc37-16c0dbffe5d8 is not geocoded and we have no coordinates to check",
+                        "code": 409
+                      },
+                      "logging_hash": null
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-airquality-forecast",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ],
+        "description": "Get forecasted daily air quality\n\n**Required Permissions:** `*`,`wx:*`,`wx:airquality:*`,`wx:airquality:read`\n\n### Specifying the Location\nAir quality data can be obtained for a specified set of coordinates or by specifying a geocoded address object ID. Either the `coordinates` or `@address` query parameters must be passed, but not both. Passing more than one will result in an error \n\n<!-- theme: info-->\n> **Please Note:**\n> If the specified address ID has not been geocoded, an error will be returned.\n\n### Language\nBy default, data is returned in English. To return data in another language, pass the `langugage` query parameter and set it to a valid IETF language code",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/@addressId"
+          },
+          {
+            "$ref": "#/components/parameters/coordinates"
+          },
+          {
+            "$ref": "#/components/parameters/language"
+          },
+          {
+            "schema": {
+              "type": "integer",
+              "default": 5,
+              "enum": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7
+              ]
+            },
+            "in": "query",
+            "name": "duration",
+            "description": "The number of forecast outlook days to return"
+          }
+        ],
+        "tags": [
+          "Weather"
+        ]
+      },
+      "parameters": [
+        {
+          "schema": {
+            "type": "string",
+            "default": "47.620506,-122.349277"
+          },
+          "in": "query",
+          "name": "coordinates",
+          "description": "Get air quality for the specified lat/lon position"
+        },
+        {
+          "schema": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "in": "query",
+          "name": "@address",
+          "description": "Get air quality for the specified address ID"
+        },
+        {
+          "schema": {
+            "type": "string"
+          },
+          "in": "query",
+          "name": "language",
+          "description": "Language in which search results should be returned. Should be one of supported IETF language tags, case insensitive."
+        }
+      ]
+    },
+    "/weather/alerts": {
+      "get": {
+        "summary": "Get Severe Weather Alerts",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Weather-Alerts"
+                },
+                "examples": {
+                  "Response": {
+                    "value": {
+                      "count": 1,
+                      "effective_coordinates": {
+                        "latitude": 47.8877148,
+                        "longitude": -124.6237354
+                      },
+                      "data": [
+                        {
+                          "id": 2203972,
+                          "category": "FLOOD",
+                          "description": "High Surf Advisory",
+                          "source": "U.S. National Weather Service",
+                          "areas": [
+                            {
+                              "name": "North Coast",
+                              "summary": "High Surf Advisory in effect from 10:00 PM PST until Wednesday, 10:00 PM PST.  Source: U.S. National Weather Service",
+                              "status": "New",
+                              "span": {
+                                "start": "2021-04-13T14:00:00+0000",
+                                "end": "2021-04-13T14:00:00+0000"
+                              },
+                              "details": "...HIGH SURF ADVISORY IN EFFECT FROM 10 PM THIS EVENING TO 10 PM\nPST WEDNESDAY...\n\n* WHAT...Large breaking waves of 18 to 21 feet expected in the\n  surf zone.\n\n* WHERE...North Coast and Central Coast.\n\n* WHEN...From 10 PM this evening to 10 PM PST Wednesday.\n\n* IMPACTS...Dangerous conditions along the coast and in the surf\n  zone. Localized beach erosion may also occur due to large waves.\n\nPRECAUTIONARY/PREPAREDNESS ACTIONS...\n\nLarge waves may break and run up beaches farther than usual. Keep\nyour distance from the coastline and never turn your back on the\nocean.\n\nInexperienced swimmers should remain out of the water due to\ndangerous surf conditions.\n\n&&"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "examples": {
+                  "No Parameters": {
+                    "value": {
+                      "error": {
+                        "message": "Invalid request",
+                        "console": "Specify either coordinates or an address ID",
+                        "code": 400
+                      },
+                      "logging_hash": null
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "examples": {
+                  "Address Not Found": {
+                    "value": {
+                      "error": {
+                        "message": "Address not found",
+                        "console": "The address ID 8ac7d5dc-803d-40ac-bc37-16c0dbffe5d8 could not be found in the database",
+                        "code": 404
+                      },
+                      "logging_hash": null
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "examples": {
+                  "Invalid Parameter Combination": {
+                    "value": {
+                      "error": {
+                        "message": "Invalid request",
+                        "console": "Parameters coordinates and address are mutually exclusive. Specify only one.",
+                        "code": 409
+                      },
+                      "logging_hash": null
+                    }
+                  },
+                  "Invalid Address Geocoding": {
+                    "value": {
+                      "error": {
+                        "message": "Invalid address geocoding",
+                        "console": "The address ID 8ac7d5dc-803d-40ac-bc37-16c0dbffe5d8 is not geocoded and we have no coordinates to check",
+                        "code": 409
+                      },
+                      "logging_hash": null
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-weather-alerts",
+        "description": "Retrieve current severe weather alerts and advisories\n\n### Prerequisites\nThe following prerequisites are required for this endpoint:\n\n* An active tenant account\n* Permissions _(at least one):_ `*`,`sites:*`,`sites:weather:*`,`sites:weather:alerts`\n* Licensed Feature: `weather_alerts`\n\n### Specifying the Location\nWeather alerts and advisories can be obtained for a specified set of coordinates or by specifying a geocoded address object ID. Either the `coordinates` or `@address` query parameters must be passed, but not both. Passing more than one will result in an error \n\n<!-- theme: info-->\n> **Please Note:**\n> If the specified address ID has not been geocoded, an error will be returned.\n\n### Language\nBy default, data is returned in English. To return data in another language, pass the `langugage` query parameter and set it to a valid IETF language code.\n\n<!-- theme: warning-->\n> _The API supports any valid IETF language code but alert data may not be available in the specified language_",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/@addressId"
+          },
+          {
+            "$ref": "#/components/parameters/coordinates"
+          },
+          {
+            "$ref": "#/components/parameters/language"
+          }
+        ],
         "security": [
           {
             "Bearer Token": []
           }
         ],
         "tags": [
-          "Tenant"
+          "Weather"
         ]
-      }
+      },
+      "parameters": []
+    },
+    "/weather/current": {
+      "get": {
+        "summary": "Get Current Weather Conditions",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/200-Get-Current-Conditions"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "examples": {
+                  "No Parameters": {
+                    "value": {
+                      "error": {
+                        "message": "Invalid request",
+                        "console": "Specify either coordinates or an address ID",
+                        "code": 400
+                      },
+                      "logging_hash": null
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "examples": {
+                  "Address Not Found": {
+                    "value": {
+                      "error": {
+                        "message": "Address not found",
+                        "console": "The address ID 8ac7d5dc-803d-40ac-bc37-16c0dbffe5d8 could not be found in the database",
+                        "code": 404
+                      },
+                      "logging_hash": null
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "examples": {
+                  "Invalid Parameter Combination": {
+                    "value": {
+                      "error": {
+                        "message": "Invalid request",
+                        "console": "Parameters coordinates and address are mutually exclusive. Specify only one.",
+                        "code": 409
+                      },
+                      "logging_hash": null
+                    }
+                  },
+                  "Invalid Address Geocoding": {
+                    "value": {
+                      "error": {
+                        "message": "Invalid address geocoding",
+                        "console": "The address ID 8ac7d5dc-803d-40ac-bc37-16c0dbffe5d8 is not geocoded and we have no coordinates to check",
+                        "code": 409
+                      },
+                      "logging_hash": null
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-current-conditions",
+        "description": "Retrieve detailed current weather conditions\n\n**Required Permissions:** `*`,`wx:*`,`wx:conditions:*`,`wx:conditions:read`\n\n### Specifying the Location\nWeather conditions can be obtained for a specified set of coordinates or by specifying a geocoded address object ID. Either the `coordinates` or `@address` query parameters must be passed, but not both. Passing more than one will result in an error \n\n<!-- theme: info-->\n> **Please Note:**\n> If the specified address ID has not been geocoded, an error will be returned.\n\n### Units\nBy default, data is returned in Imperial units. To return data in Metric units, pass the `metric` query parameter and set it to _true_. \n\n### Language\nBy default, data is returned in English. To return data in another language, pass the `langugage` query parameter and set it to a valid IETF language code",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/@addressId"
+          },
+          {
+            "$ref": "#/components/parameters/coordinates"
+          },
+          {
+            "$ref": "#/components/parameters/language"
+          },
+          {
+            "$ref": "#/components/parameters/metric"
+          }
+        ],
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ],
+        "tags": [
+          "Weather"
+        ]
+      },
+      "parameters": []
+    },
+    "/weather/forecast": {
+      "get": {
+        "summary": "Get Forecast",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/200-Get-Daily-Forecast"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "examples": {
+                  "Too Many Parameters": {
+                    "value": {
+                      "error": {
+                        "message": "Invalid request",
+                        "console": "Specify either coordinates or an address ID, but not both",
+                        "code": 400
+                      },
+                      "logging_hash": null
+                    }
+                  },
+                  "Not Enough Parameters": {
+                    "value": {
+                      "error": {
+                        "message": "Invalid request",
+                        "console": "Specify either coordinates or an address ID",
+                        "code": 400
+                      },
+                      "logging_hash": null
+                    }
+                  },
+                  "Invalid Duration": {
+                    "value": {
+                      "error": {
+                        "message": "9 is not a valid duration",
+                        "console": "Invalid duration value. Allowed value(s): 1, 5, 10, or 15",
+                        "code": 400
+                      },
+                      "logging_hash": null
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/404-Address-Not-Found"
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "examples": {
+                  "Invalid Address Geocoding": {
+                    "value": {
+                      "error": {
+                        "message": "Invalid address geocoding",
+                        "console": "The address ID 8ac7d5dc-803d-40ac-bc37-16c0dbffe5d8 is not geocoded and we have no coordinates to check",
+                        "code": 409
+                      },
+                      "logging_hash": null
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-weather-forecast",
+        "description": "Retrieve a detailed daily weather forecast\n\n **Required Permissions:** `*`,`wx:*`,`wx:forecast:*`,`wx:forecast:read` \n\n ### Specifying the Location\nWeather forecasts can be obtained for a specified set of coordinates or by specifying a geocoded address object ID. Either the `coordinates` or `@address` query parameters must be passed, but not both. Passing more than one will result in an error \n\n<!-- theme: info-->\n> **Please Note:**\n> If the specified address ID has not been geocoded, an error will be returned.\n\n### Units\nBy default, data is returned in Imperial units. To return data in Metric units, pass the `metric` query parameter and set it to _true_. \n\n### Language\nBy default, data is returned in English. To return data in another language, pass the `langugage` query parameter and set it to a valid IETF language code",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/@addressId"
+          },
+          {
+            "$ref": "#/components/parameters/coordinates"
+          },
+          {
+            "$ref": "#/components/parameters/language"
+          },
+          {
+            "$ref": "#/components/parameters/metric"
+          },
+          {
+            "schema": {
+              "type": "integer",
+              "default": 5,
+              "enum": [
+                1,
+                5,
+                10,
+                15
+              ]
+            },
+            "in": "query",
+            "name": "duration",
+            "description": "The number of forecast outlook days to return"
+          }
+        ],
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ],
+        "tags": [
+          "Weather"
+        ]
+      },
+      "parameters": []
+    },
+    "/weather/indices": {
+      "get": {
+        "summary": "Get Activity Indices",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/200-Get-Activity-Indices"
+          }
+        },
+        "operationId": "get-weather-indices",
+        "description": "Get activity indices and recommendations based on current weather conditions\n\n**Required Permissions:** `*`,`wx:*`,`wx:conditions:*`,`wx:conditions:read`\n\n### Specifying the Location\nWeather indices can be obtained for a specified set of coordinates or by specifying a geocoded address object ID. Either the `coordinates` or `@address` query parameters must be passed, but not both. Passing more than one will result in an error \n\n<!-- theme: info-->\n> **Please Note:**\n> If the specified address ID has not been geocoded, an error will be returned.\n\n### Language\nBy default, data is returned in English. To return data in another language, pass the `langugage` query parameter and set it to a valid IETF language code",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/@addressId"
+          },
+          {
+            "$ref": "#/components/parameters/coordinates"
+          },
+          {
+            "$ref": "#/components/parameters/language"
+          }
+        ],
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ],
+        "tags": [
+          "Weather"
+        ]
+      },
+      "parameters": []
     }
   },
   "components": {
@@ -1708,6 +2374,86 @@
             "description": "Application/json"
           }
         }
+      },
+      "200-Get-Daily-Forecast": {
+        "description": "Example response",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Weather-Forecast"
+            }
+          }
+        }
+      },
+      "200-Get-Current-Conditions": {
+        "description": "Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Weather-Current-Conditions"
+            },
+            "examples": {
+              "Response (Imperial Units)": {
+                "$ref": "#/components/examples/Response (Imperial Units)"
+              },
+              "Response (Metric Units)": {
+                "$ref": "#/components/examples/Response (Metric Units)"
+              }
+            }
+          }
+        }
+      },
+      "200-Get-Activity-Indices": {
+        "description": "Example response",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Weather-Indices"
+            }
+          }
+        }
+      },
+      "200-Get-Current-AQ": {
+        "description": "Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Air-Quality-Current"
+            }
+          }
+        }
+      },
+      "200-Get-AQ-Forecast": {
+        "description": "Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "count": {
+                  "type": "string"
+                },
+                "effective_coordinates": {
+                  "type": "object",
+                  "properties": {
+                    "latitude": {
+                      "type": "number"
+                    },
+                    "longitude": {
+                      "type": "number"
+                    }
+                  }
+                },
+                "forecasts": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Air-Quality-Forecast"
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     },
     "schemas": {
@@ -1792,6 +2538,216 @@
         "x-tags": [
           "Address"
         ]
+      },
+      "Air-Quality-Current": {
+        "description": "",
+        "type": "object",
+        "x-examples": {
+          "example-1": {
+            "effective_coordinates": {
+              "latitude": "47.55355",
+              "longitude": "-122.04792"
+            },
+            "timestamp": "2022-02-22T21:00:00+0000",
+            "description": "The air quality is generally acceptable for most individuals. However, sensitive groups may experience minor to moderate symptoms from long-term exposure.",
+            "index": {
+              "local": 27.5,
+              "global": 30.9
+            },
+            "status": "Fair",
+            "status_color": "#FFC300",
+            "dominant_pollutant": "Ozone",
+            "pollutants": [
+              {
+                "type": "NO2",
+                "name": "Nitrogen Dioxide",
+                "index": {
+                  "local": 2.7,
+                  "global": 2.6
+                },
+                "concentration": {
+                  "value": 5,
+                  "unit": "µg/m³"
+                }
+              }
+            ]
+          }
+        },
+        "title": "Air Quality Object",
+        "x-tags": [
+          "Air Quality"
+        ],
+        "properties": {
+          "effective_coordinates": {
+            "type": "object",
+            "description": "An array of coordinates",
+            "properties": {
+              "latitude": {
+                "type": "string",
+                "description": "The effective latitude of this request"
+              },
+              "longitude": {
+                "type": "string",
+                "description": "The effective longitude of this request"
+              }
+            }
+          },
+          "timestamp": {
+            "type": "string",
+            "description": "Date and time of the current observation displayed in ISO 8601 format. *For example, 2022-02-23T08:00:00+0000*",
+            "readOnly": true
+          },
+          "description": {
+            "type": "string",
+            "minLength": 1,
+            "description": "A textual explanation of this air quality result in the requested language.",
+            "readOnly": true
+          },
+          "index": {
+            "type": "object",
+            "properties": {
+              "local": {
+                "type": "number",
+                "description": "Air quality rating on a scale set by local regulating bodies. Scales can vary widely based on location. See [Wikipedia](https://en.wikipedia.org/wiki/Air_quality_index) for more information.",
+                "readOnly": true
+              },
+              "global": {
+                "type": "number",
+                "description": "Internationally normalized air quality rating on a scale from 0 to 300 and up, with higher numbers representing worse air quality.",
+                "readOnly": true
+              }
+            }
+          },
+          "status": {
+            "type": "string",
+            "description": "One-word description of the air quality in the requested language. For example, \"Excellent\".",
+            "readOnly": true
+          },
+          "status_color": {
+            "type": "string",
+            "description": "A unique color corresponding to the category of this air quality result.",
+            "readOnly": true
+          },
+          "dominant_pollutant": {
+            "type": "string",
+            "description": "The pollutant with the highest concentration.",
+            "readOnly": true
+          },
+          "pollutants": {
+            "type": "array",
+            "uniqueItems": true,
+            "description": "Information about individual pollutants.",
+            "items": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "description": "Type of pollutant. Please note that more may be added at any time.",
+                  "readOnly": true
+                },
+                "name": {
+                  "type": "string",
+                  "description": "The name of the pollutant in English.",
+                  "readOnly": true
+                },
+                "index": {
+                  "type": "object",
+                  "properties": {
+                    "local": {
+                      "type": "number",
+                      "description": "Air quality rating on a scale set by local regulating bodies. Scales can vary widely based on location. See [Wikipedia](https://en.wikipedia.org/wiki/Air_quality_index) for more information.",
+                      "readOnly": true
+                    },
+                    "global": {
+                      "type": "number",
+                      "description": "Internationally normalized air quality rating on a scale from 0 to 300 and up, with higher numbers representing worse air quality.",
+                      "readOnly": true
+                    }
+                  }
+                },
+                "concentration": {
+                  "type": "object",
+                  "description": "An object containing the number of pollutant particles per volume of air.",
+                  "properties": {
+                    "value": {
+                      "type": "number",
+                      "readOnly": true
+                    },
+                    "unit": {
+                      "type": "string",
+                      "readOnly": true
+                    }
+                  }
+                }
+              }
+            },
+            "readOnly": true
+          }
+        }
+      },
+      "Air-Quality-Forecast": {
+        "description": "",
+        "type": "object",
+        "x-examples": {
+          "example-1": {
+            "timestamp": "2022-02-23T08:00:00+0000",
+            "description": "The air quality is generally acceptable for most individuals. However, sensitive groups may experience minor to moderate symptoms from long-term exposure.",
+            "index": {
+              "local": 33.7,
+              "global": 35.7
+            },
+            "status": "Fair",
+            "status_color": "#FFC300",
+            "dominant_pollutant": "Ozone"
+          }
+        },
+        "title": "Air Quality Forecast Object",
+        "x-tags": [
+          "Air Quality"
+        ],
+        "properties": {
+          "timestamp": {
+            "type": "string",
+            "description": "Date and time of the current observation displayed in ISO 8601 format. *For example, 2022-02-23T08:00:00+0000*",
+            "readOnly": true
+          },
+          "description": {
+            "type": "string",
+            "description": "A textual explanation of this air quality result in the requested language.",
+            "readOnly": true
+          },
+          "index": {
+            "type": "object",
+            "properties": {
+              "local": {
+                "type": "number",
+                "description": "Air quality rating on a scale set by local regulating bodies. Scales can vary widely based on location. See [Wikipedia](https://en.wikipedia.org/wiki/Air_quality_index) for more information.",
+                "readOnly": true
+              },
+              "global": {
+                "type": "number",
+                "description": "Internationally normalized air quality rating on a scale from 0 to 300 and up, with higher numbers representing worse air quality.",
+                "readOnly": true
+              }
+            },
+            "readOnly": true
+          },
+          "status": {
+            "type": "string",
+            "description": "One-word description of the air quality in the requested language. *For example, \"Excellent\"*.",
+            "readOnly": true
+          },
+          "status_color": {
+            "type": "string",
+            "description": "A unique color corresponding to the category of this air quality result.",
+            "readOnly": true
+          },
+          "dominant_pollutant": {
+            "type": "string",
+            "description": "The pollutant with the highest concentration.",
+            "readOnly": true
+          }
+        }
       },
       "Floor": {
         "description": "",
@@ -1916,6 +2872,252 @@
         "x-tags": [
           "Utilities"
         ]
+      },
+      "Room": {
+        "description": "",
+        "type": "object",
+        "title": "Room",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1,
+            "format": "uuid",
+            "readOnly": true
+          },
+          "created": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "last_modified": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true,
+            "readOnly": true
+          },
+          "@site": {
+            "type": "string",
+            "format": "uuid",
+            "readOnly": true
+          },
+          "@floor": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "number": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "attributes": {
+            "type": "object",
+            "properties": {
+              "occupancy": {
+                "type": "string"
+              },
+              "area": {
+                "type": "number"
+              },
+              "ceiling_height": {
+                "type": "number"
+              },
+              "volume": {
+                "type": "integer"
+              }
+            }
+          }
+        },
+        "x-tags": [
+          "Room"
+        ]
+      },
+      "Site": {
+        "description": "",
+        "type": "object",
+        "title": "Site",
+        "x-tags": [
+          "Site"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The site object UUID",
+            "readOnly": true
+          },
+          "created": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The timestamp the site object was created",
+            "readOnly": true
+          },
+          "last_modified": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The timestamp the site object was last modified",
+            "nullable": true,
+            "readOnly": true
+          },
+          "code": {
+            "type": "string",
+            "description": "A unique site code or abbreviation",
+            "maxLength": 32
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the site object",
+            "maxLength": 120
+          },
+          "description": {
+            "type": "string",
+            "maxLength": 300
+          },
+          "@address": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "classification": {
+            "type": "object",
+            "properties": {
+              "category": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "number"
+                  },
+                  "name": {
+                    "type": "string"
+                  }
+                }
+              },
+              "type": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "integer"
+                  },
+                  "name": {
+                    "type": "string"
+                  }
+                }
+              },
+              "sub_type": {
+                "type": "object",
+                "nullable": true,
+                "properties": {
+                  "id": {
+                    "type": "integer"
+                  },
+                  "name": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "occupancy": {
+            "type": "object",
+            "properties": {
+              "default": {
+                "type": "string",
+                "enum": [
+                  "A-1",
+                  "A-2",
+                  "A-3",
+                  "A-4",
+                  "A-5",
+                  "B",
+                  "E",
+                  "F-1",
+                  "F-2",
+                  "H-1",
+                  "H-2",
+                  "H-3",
+                  "H-4",
+                  "H-5",
+                  "I-1",
+                  "I-2",
+                  "I-3",
+                  "I-4",
+                  "M",
+                  "R-1",
+                  "R-2",
+                  "R-3",
+                  "R-3.1",
+                  "R-4",
+                  "S-1",
+                  "S-2",
+                  "U"
+                ]
+              },
+              "allowed": {
+                "type": "array",
+                "description": "If set, room objects must be one of the occupancies in the given array",
+                "items": {
+                  "type": "string",
+                  "minLength": 0,
+                  "maxLength": 27
+                },
+                "enum": [
+                  "A-1",
+                  "A-2",
+                  "A-3",
+                  "A-4",
+                  "A-5",
+                  "B",
+                  "E",
+                  "F-1",
+                  "F-2",
+                  "H-1",
+                  "H-2",
+                  "H-3",
+                  "H-4",
+                  "H-5",
+                  "I-1",
+                  "I-2",
+                  "I-3",
+                  "I-4",
+                  "M",
+                  "R-1",
+                  "R-2",
+                  "R-3",
+                  "R-3.1",
+                  "R-4",
+                  "S-1",
+                  "S-2",
+                  "U"
+                ]
+              }
+            }
+          },
+          "attributes": {
+            "type": "object",
+            "properties": {
+              "year_built": {
+                "type": "string"
+              },
+              "floor_count": {
+                "type": "integer",
+                "readOnly": true
+              },
+              "room_count": {
+                "type": "integer",
+                "readOnly": true
+              },
+              "gross_floor_area": {
+                "type": "integer"
+              },
+              "net_room_area": {
+                "type": "integer",
+                "readOnly": true
+              }
+            }
+          }
+        }
       },
       "Tenant-Account": {
         "description": "",
@@ -2192,7 +3394,7 @@
           "Account"
         ]
       },
-      "Tenant-Quota-Object": {
+      "Tenant-Quota": {
         "description": "",
         "type": "object",
         "x-examples": {},
@@ -2276,52 +3478,52 @@
             "type": "object",
             "properties": {
               "collector": {
-                "$ref": "#/components/schemas/Tenant-Quota-Item-Object"
+                "$ref": "#/components/schemas/Tenant-Quota-Item"
               },
               "controller": {
-                "$ref": "#/components/schemas/Tenant-Quota-Item-Object"
+                "$ref": "#/components/schemas/Tenant-Quota-Item"
               },
               "equipment": {
-                "$ref": "#/components/schemas/Tenant-Quota-Item-Object"
+                "$ref": "#/components/schemas/Tenant-Quota-Item"
               },
               "fdd_rule": {
-                "$ref": "#/components/schemas/Tenant-Quota-Item-Object"
+                "$ref": "#/components/schemas/Tenant-Quota-Item"
               },
               "gateway": {
-                "$ref": "#/components/schemas/Tenant-Quota-Item-Object"
+                "$ref": "#/components/schemas/Tenant-Quota-Item"
               },
               "kiosk": {
-                "$ref": "#/components/schemas/Tenant-Quota-Item-Object"
+                "$ref": "#/components/schemas/Tenant-Quota-Item"
               },
               "meter": {
-                "$ref": "#/components/schemas/Tenant-Quota-Item-Object"
+                "$ref": "#/components/schemas/Tenant-Quota-Item"
               },
               "point": {
-                "$ref": "#/components/schemas/Tenant-Quota-Item-Object"
+                "$ref": "#/components/schemas/Tenant-Quota-Item"
               },
               "record_user": {
-                "$ref": "#/components/schemas/Tenant-Quota-Item-Object"
+                "$ref": "#/components/schemas/Tenant-Quota-Item"
               },
               "report_schedule": {
-                "$ref": "#/components/schemas/Tenant-Quota-Item-Object"
+                "$ref": "#/components/schemas/Tenant-Quota-Item"
               },
               "reset": {
-                "$ref": "#/components/schemas/Tenant-Quota-Item-Object"
+                "$ref": "#/components/schemas/Tenant-Quota-Item"
               },
               "routine": {
-                "$ref": "#/components/schemas/Tenant-Quota-Item-Object"
+                "$ref": "#/components/schemas/Tenant-Quota-Item"
               },
               "seat": {
-                "$ref": "#/components/schemas/Tenant-Quota-Item-Object"
+                "$ref": "#/components/schemas/Tenant-Quota-Item"
               },
               "site": {
-                "$ref": "#/components/schemas/Tenant-Quota-Item-Object"
+                "$ref": "#/components/schemas/Tenant-Quota-Item"
               },
               "trigger": {
-                "$ref": "#/components/schemas/Tenant-Quota-Item-Object"
+                "$ref": "#/components/schemas/Tenant-Quota-Item"
               },
               "user": {
-                "$ref": "#/components/schemas/Tenant-Quota-Item-Object"
+                "$ref": "#/components/schemas/Tenant-Quota-Item"
               }
             }
           },
@@ -2460,7 +3662,7 @@
           "Operations"
         ]
       },
-      "Tenant-Quota-Item-Object": {
+      "Tenant-Quota-Item": {
         "description": "",
         "type": "object",
         "title": "Quota Item Object",
@@ -2510,252 +3712,6 @@
         },
         "x-tags": [
           "Quota"
-        ]
-      },
-      "Site": {
-        "description": "",
-        "type": "object",
-        "title": "Site",
-        "x-tags": [
-          "Site"
-        ],
-        "properties": {
-          "id": {
-            "type": "string",
-            "description": "The site object UUID",
-            "readOnly": true
-          },
-          "created": {
-            "type": "string",
-            "format": "date-time",
-            "description": "The timestamp the site object was created",
-            "readOnly": true
-          },
-          "last_modified": {
-            "type": "string",
-            "format": "date-time",
-            "description": "The timestamp the site object was last modified",
-            "nullable": true,
-            "readOnly": true
-          },
-          "code": {
-            "type": "string",
-            "description": "A unique site code or abbreviation",
-            "maxLength": 32
-          },
-          "name": {
-            "type": "string",
-            "description": "The name of the site object",
-            "maxLength": 120
-          },
-          "description": {
-            "type": "string",
-            "maxLength": 300
-          },
-          "@address": {
-            "type": "string",
-            "format": "uuid",
-            "nullable": true
-          },
-          "classification": {
-            "type": "object",
-            "properties": {
-              "category": {
-                "type": "object",
-                "properties": {
-                  "id": {
-                    "type": "number"
-                  },
-                  "name": {
-                    "type": "string"
-                  }
-                }
-              },
-              "type": {
-                "type": "object",
-                "properties": {
-                  "id": {
-                    "type": "integer"
-                  },
-                  "name": {
-                    "type": "string"
-                  }
-                }
-              },
-              "sub_type": {
-                "type": "object",
-                "nullable": true,
-                "properties": {
-                  "id": {
-                    "type": "integer"
-                  },
-                  "name": {
-                    "type": "string"
-                  }
-                }
-              }
-            }
-          },
-          "occupancy": {
-            "type": "object",
-            "properties": {
-              "default": {
-                "type": "string",
-                "enum": [
-                  "A-1",
-                  "A-2",
-                  "A-3",
-                  "A-4",
-                  "A-5",
-                  "B",
-                  "E",
-                  "F-1",
-                  "F-2",
-                  "H-1",
-                  "H-2",
-                  "H-3",
-                  "H-4",
-                  "H-5",
-                  "I-1",
-                  "I-2",
-                  "I-3",
-                  "I-4",
-                  "M",
-                  "R-1",
-                  "R-2",
-                  "R-3",
-                  "R-3.1",
-                  "R-4",
-                  "S-1",
-                  "S-2",
-                  "U"
-                ]
-              },
-              "allowed": {
-                "type": "array",
-                "description": "If set, room objects must be one of the occupancies in the given array",
-                "items": {
-                  "type": "string",
-                  "minLength": 0,
-                  "maxLength": 27
-                },
-                "enum": [
-                  "A-1",
-                  "A-2",
-                  "A-3",
-                  "A-4",
-                  "A-5",
-                  "B",
-                  "E",
-                  "F-1",
-                  "F-2",
-                  "H-1",
-                  "H-2",
-                  "H-3",
-                  "H-4",
-                  "H-5",
-                  "I-1",
-                  "I-2",
-                  "I-3",
-                  "I-4",
-                  "M",
-                  "R-1",
-                  "R-2",
-                  "R-3",
-                  "R-3.1",
-                  "R-4",
-                  "S-1",
-                  "S-2",
-                  "U"
-                ]
-              }
-            }
-          },
-          "attributes": {
-            "type": "object",
-            "properties": {
-              "year_built": {
-                "type": "string"
-              },
-              "floor_count": {
-                "type": "integer",
-                "readOnly": true
-              },
-              "room_count": {
-                "type": "integer",
-                "readOnly": true
-              },
-              "gross_floor_area": {
-                "type": "integer"
-              },
-              "net_room_area": {
-                "type": "integer",
-                "readOnly": true
-              }
-            }
-          }
-        }
-      },
-      "Room": {
-        "description": "",
-        "type": "object",
-        "title": "Room",
-        "properties": {
-          "id": {
-            "type": "string",
-            "minLength": 1,
-            "format": "uuid",
-            "readOnly": true
-          },
-          "created": {
-            "type": "string",
-            "format": "date-time",
-            "readOnly": true
-          },
-          "last_modified": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true,
-            "readOnly": true
-          },
-          "@site": {
-            "type": "string",
-            "format": "uuid",
-            "readOnly": true
-          },
-          "@floor": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "number": {
-            "type": "string"
-          },
-          "name": {
-            "type": "string"
-          },
-          "description": {
-            "type": "string"
-          },
-          "attributes": {
-            "type": "object",
-            "properties": {
-              "occupancy": {
-                "type": "string"
-              },
-              "area": {
-                "type": "number"
-              },
-              "ceiling_height": {
-                "type": "number"
-              },
-              "volume": {
-                "type": "integer"
-              }
-            }
-          }
-        },
-        "x-tags": [
-          "Room"
         ]
       },
       "Time-Zone": {
@@ -2810,9 +3766,1087 @@
         "x-tags": [
           "Utilities"
         ]
+      },
+      "Weather-Alerts": {
+        "description": "",
+        "type": "object",
+        "title": "Weather Alert Listing",
+        "x-examples": {
+          "Example": {
+            "count": 1,
+            "effective_coordinates": {
+              "latitude": 47.8877148,
+              "longitude": -124.6237354
+            },
+            "data": [
+              {
+                "id": 2203972,
+                "category": "FLOOD",
+                "description": "High Surf Advisory",
+                "source": "U.S. National Weather Service",
+                "areas": [
+                  {
+                    "name": "North Coast",
+                    "summary": "High Surf Advisory in effect from 10:00 PM PST until Wednesday, 10:00 PM PST.  Source: U.S. National Weather Service",
+                    "status": "New",
+                    "span": {
+                      "start": 1606284000,
+                      "end": 1606370400
+                    },
+                    "details": "...HIGH SURF ADVISORY IN EFFECT FROM 10 PM THIS EVENING TO 10 PM\nPST WEDNESDAY...\n\n* WHAT...Large breaking waves of 18 to 21 feet expected in the\n  surf zone.\n\n* WHERE...North Coast and Central Coast.\n\n* WHEN...From 10 PM this evening to 10 PM PST Wednesday.\n\n* IMPACTS...Dangerous conditions along the coast and in the surf\n  zone. Localized beach erosion may also occur due to large waves.\n\nPRECAUTIONARY/PREPAREDNESS ACTIONS...\n\nLarge waves may break and run up beaches farther than usual. Keep\nyour distance from the coastline and never turn your back on the\nocean.\n\nInexperienced swimmers should remain out of the water due to\ndangerous surf conditions.\n\n&&"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "x-tags": [
+          "Alerts"
+        ],
+        "properties": {
+          "count": {
+            "type": "number",
+            "readOnly": true
+          },
+          "effective_coordinates": {
+            "type": "object",
+            "properties": {
+              "latitude": {
+                "type": "number"
+              },
+              "longitude": {
+                "type": "number"
+              }
+            }
+          },
+          "data": {
+            "type": "array",
+            "uniqueItems": true,
+            "readOnly": true,
+            "description": "An array of weather alert objects",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "number",
+                  "description": "A unique numerical identifier for a weather alert.",
+                  "readOnly": true
+                },
+                "category": {
+                  "type": "string",
+                  "description": "Category of the alert.",
+                  "readOnly": true
+                },
+                "description": {
+                  "type": "string",
+                  "description": "Description of the alert.",
+                  "readOnly": true
+                },
+                "source": {
+                  "type": "string",
+                  "description": "The provider of the alert information. By default the source is returned in English (en-US). The alerts are from official Government Meteorological Agencies and leading global weather alert providers.",
+                  "readOnly": true
+                },
+                "areas": {
+                  "type": "array",
+                  "uniqueItems": true,
+                  "readOnly": true,
+                  "description": "Information about the alert specific to the affected area(s).",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "description": "\t\nThe name of an area which is affected by the alert. The location that was requested falls under the alert area.",
+                        "readOnly": true
+                      },
+                      "summary": {
+                        "type": "string",
+                        "description": "Text summarizing the alert in the returned area.",
+                        "readOnly": true
+                      },
+                      "status": {
+                        "type": "string",
+                        "description": "The latest status of the alert in the current area.",
+                        "readOnly": true
+                      },
+                      "span": {
+                        "type": "object",
+                        "properties": {
+                          "start": {
+                            "type": "number",
+                            "description": "The start date and time of the alert in ISO 8601 format, for example, 2019-10-27T19:39:57-08:00. If the alert crosses multiple time zones the returned time in the response is the local time to the requested coordinate location.",
+                            "readOnly": true
+                          },
+                          "end": {
+                            "type": "number",
+                            "description": "The end date and time of the alert in ISO 8601 format, for example, 2019-10-27T19:39:57-08:00. If the alert crosses multiple time zones the returned time in the response is the local time to the requested coordinate location.",
+                            "readOnly": true
+                          }
+                        }
+                      },
+                      "details": {
+                        "type": "string",
+                        "description": "Full details associated with the alert. Returned if `details`=True. This field is always returned in the language(s) of choice by the issuing provider and Azure Maps only returns what is created by the provider. Please note, some countries/regions may offer their native language and English. Language parameter won’t apply to this field.",
+                        "readOnly": true
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "Weather-Current-Conditions": {
+        "description": "",
+        "type": "object",
+        "x-examples": {
+          "Example": {
+            "effective_coordinates": {
+              "latitude": "44.98588",
+              "longitude": "-93.28069"
+            },
+            "units": "imperial",
+            "timestamp": 1606150620,
+            "phrase": "Mostly sunny",
+            "icon": 2,
+            "is_raining": false,
+            "is_daytime": true,
+            "temperature": {
+              "value": 30,
+              "unit": "F"
+            },
+            "apparent_temperature": {
+              "value": 30,
+              "unit": "F"
+            },
+            "wetbulb_temperature": {
+              "value": 28,
+              "unit": "F"
+            },
+            "windchill_temperature": {
+              "value": 27,
+              "unit": "F"
+            },
+            "relative_humidity": 71,
+            "dewpoint": {
+              "value": 22,
+              "unit": "F"
+            },
+            "wind": {
+              "direction": {
+                "degrees": 113,
+                "localized": "ESE"
+              },
+              "speed": {
+                "value": 3,
+                "unit": "mi/h"
+              },
+              "gust": {
+                "value": 6,
+                "unit": "mi/h"
+              }
+            },
+            "visibility": {
+              "value": 10,
+              "unit": "mi",
+              "obstructions": ""
+            },
+            "cloud_cover": 14,
+            "ceiling": {
+              "value": 40000,
+              "unit": "ft"
+            },
+            "pressure": {
+              "value": 30.37,
+              "unit": "inHg",
+              "direction": "Steady"
+            }
+          }
+        },
+        "title": "Weather Current Conditions Object",
+        "x-tags": [
+          "Current Conditions"
+        ],
+        "properties": {
+          "effective_coordinates": {
+            "type": "object",
+            "properties": {
+              "latitude": {
+                "type": "string"
+              },
+              "longitude": {
+                "type": "string"
+              }
+            }
+          },
+          "units": {
+            "type": "string",
+            "description": "Indicates whether `metric` or `imperial` units are used"
+          },
+          "timestamp": {
+            "type": "string",
+            "description": "Date and time of the current observation displayed in ISO 8601 format. *For example, 2022-02-23T08:00:00+0000*"
+          },
+          "phrase": {
+            "type": "string",
+            "description": "Phrase description of the current weather condition. Displayed in specified language."
+          },
+          "icon": {
+            "type": "number",
+            "description": "Numeric value representing an image"
+          },
+          "is_raining": {
+            "type": "boolean",
+            "description": "Indicates the presence or absence of precipitation. `True` indicates the presence of precipitation, `false` indicates the absence of precipitation."
+          },
+          "is_daytime": {
+            "type": "boolean",
+            "description": "Indicates the time of the day. `True` indicates 'day',', `false` indicates 'night.",
+            "readOnly": true
+          },
+          "temperature": {
+            "type": "object",
+            "description": "Temperature being returned.",
+            "properties": {
+              "value": {
+                "type": "number"
+              },
+              "unit": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "apparent_temperature": {
+            "type": "object",
+            "description": "Perceived outdoor temperature caused by the combination of air temperature, relative humidity, and wind speed in specified unit.",
+            "properties": {
+              "value": {
+                "type": "number"
+              },
+              "unit": {
+                "type": "string"
+              }
+            }
+          },
+          "wetbulb_temperature": {
+            "type": "object",
+            "description": "The temperature to which air may be cooled by evaporating water into it at constant pressure until it reaches saturation.",
+            "properties": {
+              "value": {
+                "type": "number"
+              },
+              "unit": {
+                "type": "string"
+              }
+            }
+          },
+          "windchill_temperature": {
+            "type": "object",
+            "description": "Perceived air temperature on exposed skin due to wind.",
+            "properties": {
+              "value": {
+                "type": "number"
+              },
+              "unit": {
+                "type": "string"
+              }
+            }
+          },
+          "relative_humidity": {
+            "type": "number",
+            "description": "Relative humidity is the amount of water vapor present in air expressed as a percentage of the amount needed for saturation at the same temperature."
+          },
+          "dewpoint": {
+            "type": "object",
+            "description": "The dewpoint temperature in specified unit. The dewpoint temperature is the temperature that the air must be cooled to in order to reach saturation.",
+            "properties": {
+              "value": {
+                "type": "number"
+              },
+              "unit": {
+                "type": "string"
+              }
+            }
+          },
+          "wind": {
+            "type": "object",
+            "description": "Wind details being returned including speed and direction.",
+            "properties": {
+              "direction": {
+                "type": "object",
+                "description": "Wind direction",
+                "properties": {
+                  "degrees": {
+                    "type": "number",
+                    "description": "Wind direction in Azimuth degrees, starting at true North and continuing in clockwise direction. North is 0 degrees, east is 90 degrees, south is 180 degrees, west is 270 degrees. Possible values 0-359."
+                  },
+                  "localized": {
+                    "type": "string",
+                    "description": "Direction abbreviation in the specified language."
+                  }
+                }
+              },
+              "speed": {
+                "type": "object",
+                "description": "Speed of the wind in specified unit.",
+                "properties": {
+                  "value": {
+                    "type": "number"
+                  },
+                  "unit": {
+                    "type": "string"
+                  }
+                }
+              },
+              "gust": {
+                "type": "object",
+                "description": "Wind gust. Wind gust is a sudden, brief increase in speed of the wind.",
+                "properties": {
+                  "value": {
+                    "type": "number"
+                  },
+                  "unit": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "visibility": {
+            "type": "object",
+            "description": "Visibility in specified unit. A measure of the distance at which an object or light can be clearly discerned.",
+            "properties": {
+              "value": {
+                "type": "number"
+              },
+              "unit": {
+                "type": "string"
+              },
+              "obstructions": {
+                "type": "string"
+              }
+            }
+          },
+          "cloud_cover": {
+            "type": "number",
+            "description": "Percent representing cloud cover."
+          },
+          "ceiling": {
+            "type": "object",
+            "description": "Cloud ceiling in specified unit. The ceiling is a measurement of the height of the base of the lowest clouds.",
+            "properties": {
+              "value": {
+                "type": "number"
+              },
+              "unit": {
+                "type": "string"
+              }
+            }
+          },
+          "pressure": {
+            "type": "object",
+            "description": "Atmospheric pressure in specified unit.",
+            "properties": {
+              "value": {
+                "type": "number"
+              },
+              "unit": {
+                "type": "string"
+              },
+              "direction": {
+                "type": "string",
+                "description": "Description of the pressure tendency in specified language. One of F=Falling, S=Steady, R=Rising.",
+                "enum": [
+                  "Falling",
+                  "Rising",
+                  "Steady"
+                ],
+                "readOnly": true
+              }
+            }
+          }
+        }
+      },
+      "Weather-Forecast": {
+        "description": "",
+        "type": "object",
+        "x-examples": {
+          "Example": {
+            "effective_coordinates": {
+              "latitude": "44.98588",
+              "longitude": "-93.28069"
+            },
+            "units": "imperial",
+            "summary": "Snow between late tonight and tomorrow morning will accumulate 1-2 inches before changing to rain",
+            "forecasts": [
+              {
+                "date": 1606136400,
+                "sources": [
+                  "AccuWeather"
+                ],
+                "air_quality": {
+                  "airquality": {
+                    "value": 75,
+                    "rating": "Moderate",
+                    "rating_value": 2
+                  },
+                  "grass": {
+                    "value": 0,
+                    "rating": "Low",
+                    "rating_value": 1
+                  },
+                  "mold": {
+                    "value": 0,
+                    "rating": "Low",
+                    "rating_value": 1
+                  },
+                  "ragweed": {
+                    "value": 0,
+                    "rating": "Low",
+                    "rating_value": 1
+                  },
+                  "tree": {
+                    "value": 0,
+                    "rating": "Low",
+                    "rating_value": 1
+                  },
+                  "uvindex": {
+                    "value": 2,
+                    "rating": "Low",
+                    "rating_value": 1
+                  }
+                },
+                "hours_of_sun": 7,
+                "temperature": {
+                  "minimum": {
+                    "value": 30,
+                    "unit": "F"
+                  },
+                  "maximum": {
+                    "value": 38,
+                    "unit": "F"
+                  }
+                },
+                "day": {
+                  "icon": 3,
+                  "phrases": {
+                    "long": "Times of clouds and sun",
+                    "short": "Times of clouds and sun"
+                  },
+                  "is_raining": false,
+                  "probabilities": {
+                    "precipitation": 4,
+                    "thunderstorm": 0,
+                    "rain": 3,
+                    "snow": 1,
+                    "ice": 0
+                  },
+                  "wind": {
+                    "direction": {
+                      "degrees": 122,
+                      "localized": "ESE"
+                    },
+                    "speed": {
+                      "value": 4,
+                      "unit": "mi/h"
+                    },
+                    "gust": {
+                      "value": 10,
+                      "unit": "mi/h",
+                      "direction": "SE"
+                    }
+                  },
+                  "cloud_cover": 29
+                },
+                "night": {
+                  "icon": 22,
+                  "phrases": {
+                    "long": "Plenty of clouds with a coating to an inch of snow late",
+                    "short": "Overcast with snow late"
+                  },
+                  "is_raining": true,
+                  "probabilities": {
+                    "precipitation": 75,
+                    "thunderstorm": 0,
+                    "rain": 10,
+                    "snow": 75,
+                    "ice": 3
+                  },
+                  "wind": {
+                    "direction": {
+                      "degrees": 139,
+                      "localized": "SE"
+                    },
+                    "speed": {
+                      "value": 9,
+                      "unit": "mi/h"
+                    },
+                    "gust": {
+                      "value": 13,
+                      "unit": "mi/h",
+                      "direction": "SE"
+                    }
+                  },
+                  "cloud_cover": 97
+                }
+              }
+            ]
+          }
+        },
+        "title": "Weather Forecast Object",
+        "x-tags": [
+          "Forecast"
+        ],
+        "properties": {
+          "effective_coordinates": {
+            "type": "object",
+            "properties": {
+              "latitude": {
+                "type": "string"
+              },
+              "longitude": {
+                "type": "string"
+              }
+            }
+          },
+          "units": {
+            "type": "string"
+          },
+          "summary": {
+            "type": "string",
+            "description": "Summary for the main conditions for the requested time period. Notice that summary can cover only part of the time period.",
+            "readOnly": true
+          },
+          "forecasts": {
+            "type": "array",
+            "description": "Forecast data for each requested day.",
+            "items": {
+              "type": "object",
+              "properties": {
+                "date": {
+                  "type": "number",
+                  "description": "Date and time of the current observation displayed in ISO 8601 format. *For example, 2022-02-23T08:00:00+0000*"
+                },
+                "sources": {
+                  "type": "array",
+                  "description": "Source(s) of the forecast data.",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "air_quality": {
+                  "type": "object",
+                  "properties": {
+                    "airquality": {
+                      "type": "object",
+                      "properties": {
+                        "value": {
+                          "type": "number"
+                        },
+                        "rating": {
+                          "type": "string"
+                        },
+                        "rating_value": {
+                          "type": "number"
+                        }
+                      }
+                    },
+                    "grass": {
+                      "type": "object",
+                      "properties": {
+                        "value": {
+                          "type": "number"
+                        },
+                        "rating": {
+                          "type": "string"
+                        },
+                        "rating_value": {
+                          "type": "number"
+                        }
+                      }
+                    },
+                    "mold": {
+                      "type": "object",
+                      "properties": {
+                        "value": {
+                          "type": "number"
+                        },
+                        "rating": {
+                          "type": "string"
+                        },
+                        "rating_value": {
+                          "type": "number"
+                        }
+                      }
+                    },
+                    "ragweed": {
+                      "type": "object",
+                      "properties": {
+                        "value": {
+                          "type": "number"
+                        },
+                        "rating": {
+                          "type": "string"
+                        },
+                        "rating_value": {
+                          "type": "number"
+                        }
+                      }
+                    },
+                    "tree": {
+                      "type": "object",
+                      "properties": {
+                        "value": {
+                          "type": "number"
+                        },
+                        "rating": {
+                          "type": "string"
+                        },
+                        "rating_value": {
+                          "type": "number"
+                        }
+                      }
+                    },
+                    "uvindex": {
+                      "type": "object",
+                      "properties": {
+                        "value": {
+                          "type": "number"
+                        },
+                        "rating": {
+                          "type": "string"
+                        },
+                        "rating_value": {
+                          "type": "number"
+                        }
+                      }
+                    }
+                  }
+                },
+                "hours_of_sun": {
+                  "type": "number",
+                  "description": "Hours of sun."
+                },
+                "temperature": {
+                  "type": "object",
+                  "description": "Temperature values for the day.",
+                  "properties": {
+                    "minimum": {
+                      "type": "object",
+                      "description": "Minimum temperature for the time period.",
+                      "properties": {
+                        "value": {
+                          "type": "number"
+                        },
+                        "unit": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "maximum": {
+                      "type": "object",
+                      "description": "Maximum temperature for the time period",
+                      "properties": {
+                        "value": {
+                          "type": "number"
+                        },
+                        "unit": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "day": {
+                  "type": "object",
+                  "description": "Day forecast detail",
+                  "properties": {
+                    "icon": {
+                      "type": "number",
+                      "description": "Numeric value representing an image"
+                    },
+                    "phrases": {
+                      "type": "object",
+                      "properties": {
+                        "short": {
+                          "type": "string",
+                          "description": "Phrase description of the forecast in specified language. ~30 characters"
+                        },
+                        "long": {
+                          "type": "string",
+                          "description": "Phrase description of the forecast in specified language. ~100 characters",
+                          "readOnly": true
+                        }
+                      }
+                    },
+                    "is_raining": {
+                      "type": "boolean",
+                      "description": "Indicates the presence or absence of precipitation. True indicates the presence of precipitation, false indicates the absence of precipitation.",
+                      "readOnly": true
+                    },
+                    "probabilities": {
+                      "type": "object",
+                      "properties": {
+                        "precipitation": {
+                          "type": "number",
+                          "description": "Percent representing the probability of precipitation.",
+                          "readOnly": true
+                        },
+                        "thunderstorm": {
+                          "type": "number",
+                          "readOnly": true
+                        },
+                        "rain": {
+                          "type": "number",
+                          "description": "Percent representing the probability of rain. ",
+                          "readOnly": true
+                        },
+                        "snow": {
+                          "type": "number",
+                          "description": "Percent representing the probability of snow.",
+                          "readOnly": true
+                        },
+                        "ice": {
+                          "type": "number",
+                          "description": "Percent representing the probability of ice.",
+                          "readOnly": true
+                        }
+                      },
+                      "readOnly": true
+                    },
+                    "wind": {
+                      "type": "object",
+                      "description": "Wind details being returned including speed and direction.",
+                      "properties": {
+                        "direction": {
+                          "type": "object",
+                          "description": "Wind direction",
+                          "additionalProperties": false,
+                          "properties": {
+                            "degrees": {
+                              "type": "number",
+                              "description": "Wind direction in Azimuth degrees, starting at true North and continuing in clockwise direction. North is 0 degrees, east is 90 degrees, south is 180 degrees, west is 270 degrees. Possible values 0-359.",
+                              "readOnly": true
+                            },
+                            "localized": {
+                              "type": "string",
+                              "description": "Direction abbreviation in the specified language.",
+                              "readOnly": true
+                            }
+                          },
+                          "readOnly": true
+                        },
+                        "speed": {
+                          "type": "object",
+                          "description": "Speed of the wind in specified unit.",
+                          "additionalProperties": false,
+                          "properties": {
+                            "value": {
+                              "type": "number",
+                              "readOnly": true
+                            },
+                            "unit": {
+                              "type": "string"
+                            }
+                          },
+                          "readOnly": true
+                        },
+                        "gust": {
+                          "type": "object",
+                          "description": "Wind gust. Wind gust is a sudden, brief increase in speed of the wind.",
+                          "additionalProperties": false,
+                          "properties": {
+                            "value": {
+                              "type": "number",
+                              "readOnly": true
+                            },
+                            "unit": {
+                              "type": "string"
+                            },
+                            "direction": {
+                              "type": "string",
+                              "description": "Direction abbreviation in the specified language.",
+                              "readOnly": true
+                            }
+                          },
+                          "readOnly": true
+                        }
+                      },
+                      "readOnly": true
+                    },
+                    "cloud_cover": {
+                      "type": "number",
+                      "description": "Percent representing cloud cover.",
+                      "readOnly": true
+                    }
+                  }
+                },
+                "night": {
+                  "type": "object",
+                  "description": "Night forecast detail",
+                  "properties": {
+                    "icon": {
+                      "type": "number",
+                      "description": "Numeric value representing an image"
+                    },
+                    "phrases": {
+                      "type": "object",
+                      "properties": {
+                        "short": {
+                          "type": "string",
+                          "description": "Phrase description of the forecast in specified language. ~30 characters"
+                        },
+                        "long": {
+                          "type": "string",
+                          "description": "Phrase description of the forecast in specified language. ~100 characters",
+                          "readOnly": true
+                        }
+                      }
+                    },
+                    "is_raining": {
+                      "type": "boolean",
+                      "description": "Indicates the presence or absence of precipitation. True indicates the presence of precipitation, false indicates the absence of precipitation.",
+                      "readOnly": true
+                    },
+                    "probabilities": {
+                      "type": "object",
+                      "properties": {
+                        "precipitation": {
+                          "type": "number",
+                          "description": "Percent representing the probability of precipitation.",
+                          "readOnly": true
+                        },
+                        "thunderstorm": {
+                          "type": "number",
+                          "readOnly": true
+                        },
+                        "rain": {
+                          "type": "number",
+                          "description": "Percent representing the probability of rain. ",
+                          "readOnly": true
+                        },
+                        "snow": {
+                          "type": "number",
+                          "description": "Percent representing the probability of snow.",
+                          "readOnly": true
+                        },
+                        "ice": {
+                          "type": "number",
+                          "description": "Percent representing the probability of ice.",
+                          "readOnly": true
+                        }
+                      },
+                      "readOnly": true
+                    },
+                    "wind": {
+                      "type": "object",
+                      "description": "Wind details being returned including speed and direction.",
+                      "properties": {
+                        "direction": {
+                          "type": "object",
+                          "description": "Wind direction",
+                          "additionalProperties": false,
+                          "properties": {
+                            "degrees": {
+                              "type": "number",
+                              "description": "Wind direction in Azimuth degrees, starting at true North and continuing in clockwise direction. North is 0 degrees, east is 90 degrees, south is 180 degrees, west is 270 degrees. Possible values 0-359.",
+                              "readOnly": true
+                            },
+                            "localized": {
+                              "type": "string",
+                              "description": "Direction abbreviation in the specified language.",
+                              "readOnly": true
+                            }
+                          },
+                          "readOnly": true
+                        },
+                        "speed": {
+                          "type": "object",
+                          "description": "Speed of the wind in specified unit.",
+                          "additionalProperties": false,
+                          "properties": {
+                            "value": {
+                              "type": "number",
+                              "readOnly": true
+                            },
+                            "unit": {
+                              "type": "string"
+                            }
+                          },
+                          "readOnly": true
+                        },
+                        "gust": {
+                          "type": "object",
+                          "description": "Wind gust. Wind gust is a sudden, brief increase in speed of the wind.",
+                          "additionalProperties": false,
+                          "properties": {
+                            "value": {
+                              "type": "number",
+                              "readOnly": true
+                            },
+                            "unit": {
+                              "type": "string"
+                            },
+                            "direction": {
+                              "type": "string",
+                              "description": "Direction abbreviation in the specified language.",
+                              "readOnly": true
+                            }
+                          },
+                          "readOnly": true
+                        }
+                      },
+                      "readOnly": true
+                    },
+                    "cloud_cover": {
+                      "type": "number",
+                      "description": "Percent representing cloud cover.",
+                      "readOnly": true
+                    }
+                  }
+                }
+              },
+              "readOnly": true
+            },
+            "readOnly": true
+          }
+        }
+      },
+      "Weather-Indices": {
+        "description": "",
+        "type": "object",
+        "x-examples": {
+          "example-1": {
+            "count": 43,
+            "effective_coordinates": {
+              "latitude": 37.79513,
+              "longitude": -122.40299
+            },
+            "data": [
+              {
+                "id": 1,
+                "name": "Running",
+                "timestamp": "2021-09-04T07:00:00-07:00",
+                "classification": "Very Good",
+                "description": "Conditions are very good for running outdoors.",
+                "value": 4,
+                "percentage": 89
+              }
+            ]
+          }
+        },
+        "title": "Weather Indices",
+        "x-tags": [
+          "Current Conditions"
+        ],
+        "properties": {
+          "count": {
+            "type": "integer",
+            "description": "The number of alerts returned",
+            "readOnly": true
+          },
+          "effective_coordinates": {
+            "type": "object",
+            "properties": {
+              "latitude": {
+                "type": "number"
+              },
+              "longitude": {
+                "type": "number"
+              }
+            }
+          },
+          "data": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "description": "Numeric ID used to identify the specific index. ",
+                  "readOnly": true
+                },
+                "name": {
+                  "type": "string",
+                  "description": "Name of the index, for example, \"Construction\", \"Outdoor Activity\", \"Flight Delays\".",
+                  "readOnly": true
+                },
+                "timestamp": {
+                  "type": "string",
+                  "description": "Date and time of the current observation displayed in ISO 8601 format. *For example, 2022-02-23T08:00:00+0000*",
+                  "readOnly": true
+                },
+                "classification": {
+                  "type": "string",
+                  "description": "Textual description for `value` corresponding to the level that the index value falls under, for example \"Very Good\".",
+                  "readOnly": true
+                },
+                "description": {
+                  "type": "string",
+                  "description": "A textual explanation that can be used for display purposes to summarize the index value and category. For example, when the index value for Flight Delays is very good, the description will be \"Conditions are excellent for flying!\".",
+                  "readOnly": true
+                },
+                "value": {
+                  "type": "integer",
+                  "description": "Level that the index value falls under, represented by an integer. This value can be 1 through 5.",
+                  "readOnly": true
+                },
+                "percentage": {
+                  "type": "integer",
+                  "readOnly": true
+                }
+              },
+              "readOnly": true
+            },
+            "readOnly": true
+          }
+        }
       }
     },
     "parameters": {
+      "@addressId": {
+        "name": "@address",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "string"
+        },
+        "description": "Get data at the coordinates of the specified address ID"
+      },
+      "coordinates": {
+        "name": "coordinates",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "string",
+          "example": "47.620506,-122.349277"
+        },
+        "description": "Get data at the specified lat/lon position"
+      },
+      "language": {
+        "name": "language",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "string",
+          "default": "en-us"
+        },
+        "description": "Language in which search results should be returned. Should be one of supported IETF language tags, case insensitive."
+      },
+      "metric": {
+        "schema": {
+          "type": "boolean",
+          "default": "false"
+        },
+        "in": "query",
+        "name": "metric",
+        "description": "Return the results with metric units instead of imperial units"
+      },
       "siteId": {
         "name": "siteId",
         "in": "path",
@@ -3638,6 +5672,134 @@
             "disabled_applications": []
           }
         }
+      },
+      "Response (Imperial Units)": {
+        "value": {
+          "effective_coordinates": {
+            "latitude": "37.79513",
+            "longitude": "-122.40299"
+          },
+          "units": "imperial",
+          "timestamp": "2021-04-13T14:15:00+0000",
+          "phrase": "Mostly cloudy",
+          "icon": 6,
+          "is_raining": false,
+          "is_daytime": true,
+          "temperature": {
+            "value": 49,
+            "unit": "F"
+          },
+          "apparent_temperature": {
+            "value": 52,
+            "unit": "F"
+          },
+          "wetbulb_temperature": {
+            "value": 48,
+            "unit": "F"
+          },
+          "windchill_temperature": {
+            "value": 46,
+            "unit": "F"
+          },
+          "relative_humidity": 90,
+          "dewpoint": {
+            "value": 46,
+            "unit": "F"
+          },
+          "wind": {
+            "direction": {
+              "degrees": 248,
+              "localized": "WSW"
+            },
+            "speed": {
+              "value": 6,
+              "unit": "mi/h"
+            },
+            "gust": {
+              "value": 15,
+              "unit": "mi/h"
+            }
+          },
+          "visibility": {
+            "value": 5,
+            "unit": "mi",
+            "obstructions": ""
+          },
+          "cloud_cover": 78,
+          "ceiling": {
+            "value": 5100,
+            "unit": "ft"
+          },
+          "pressure": {
+            "value": 29.87,
+            "unit": "inHg",
+            "direction": "Rising"
+          }
+        }
+      },
+      "Response (Metric Units)": {
+        "value": {
+          "effective_coordinates": {
+            "latitude": "37.79513",
+            "longitude": "-122.40299"
+          },
+          "units": "metric",
+          "timestamp": "2021-04-13T14:15:00+0000",
+          "phrase": "Mostly cloudy",
+          "icon": 6,
+          "is_raining": false,
+          "is_daytime": true,
+          "temperature": {
+            "value": 9,
+            "unit": "C"
+          },
+          "apparent_temperature": {
+            "value": 11,
+            "unit": "C"
+          },
+          "wetbulb_temperature": {
+            "value": 8,
+            "unit": "C"
+          },
+          "windchill_temperature": {
+            "value": 7,
+            "unit": "C"
+          },
+          "relative_humidity": 90,
+          "dewpoint": {
+            "value": 8,
+            "unit": "C"
+          },
+          "wind": {
+            "direction": {
+              "degrees": 248,
+              "localized": "WSW"
+            },
+            "speed": {
+              "value": 10,
+              "unit": "km/h"
+            },
+            "gust": {
+              "value": 24,
+              "unit": "km/h"
+            }
+          },
+          "visibility": {
+            "value": 8,
+            "unit": "km",
+            "obstructions": ""
+          },
+          "cloud_cover": 78,
+          "ceiling": {
+            "value": 1554,
+            "unit": "m"
+          },
+          "pressure": {
+            "value": 1011.5,
+            "unit": "mb",
+            "direction": "Rising"
+          }
+        }
       }
     },
     "requestBodies": {
@@ -4295,6 +6457,9 @@
     },
     {
       "name": "Trend Plot"
+    },
+    {
+      "name": "Weather"
     }
   ]
 }
