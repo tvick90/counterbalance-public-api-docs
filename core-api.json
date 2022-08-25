@@ -19,13 +19,13 @@
   "paths": {
     "/tenant": {
       "get": {
-        "summary": "Get Tenant Account",
+        "summary": "Retrieve Tenant Account",
         "tags": [
           "Tenant Account"
         ],
         "responses": {
           "200": {
-            "$ref": "#/components/responses/Get-Tenant-Account"
+            "$ref": "#/components/responses/Retrieve-Tenant-Account"
           }
         },
         "operationId": "get-tenant",
@@ -43,24 +43,85 @@
             "description": "OK"
           }
         },
-        "description": "Update a tenant account"
+        "description": "Update a tenant account",
+        "tags": [
+          "Tenant Account"
+        ]
       }
+    },
+    "/controller": {
+      "get": {
+        "summary": "Retrieve Controller",
+        "tags": [
+          "Controller"
+        ],
+        "responses": {},
+        "operationId": "get-controller"
+      },
+      "post": {
+        "summary": "Register Controller",
+        "operationId": "register-controller",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "description": "",
+        "tags": [
+          "Controller"
+        ]
+      }
+    },
+    "/site/{siteId}": {
+      "get": {
+        "summary": "Retrieve a Site",
+        "tags": [
+          "Site"
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Retrieve-Site"
+          }
+        },
+        "operationId": "get-site",
+        "parameters": [],
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ]
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/siteId"
+        }
+      ]
     }
   },
   "components": {
     "securitySchemes": {
-      "Bearer-Token": {
+      "Bearer Token": {
         "type": "http",
         "scheme": "bearer"
       }
     },
     "responses": {
-      "Get-Tenant-Account": {
+      "Retrieve-Tenant-Account": {
         "description": "Example response",
         "content": {
           "application/json": {
             "schema": {
               "$ref": "#/components/schemas/Tenant-Account"
+            }
+          }
+        }
+      },
+      "Retrieve-Site": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Site"
             }
           }
         }
@@ -339,9 +400,228 @@
           }
         },
         "x-tags": [
-          "Account"
+          "Tenant Account"
         ]
+      },
+      "Site": {
+        "description": "",
+        "type": "object",
+        "title": "Site Object",
+        "x-tags": [
+          "Site"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The site object UUID",
+            "readOnly": true
+          },
+          "created": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The timestamp the site object was created",
+            "readOnly": true
+          },
+          "last_modified": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The timestamp the site object was last modified",
+            "nullable": true,
+            "readOnly": true
+          },
+          "code": {
+            "type": "string",
+            "description": "A unique site code or abbreviation",
+            "maxLength": 32
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the site object",
+            "maxLength": 120
+          },
+          "description": {
+            "type": "string",
+            "maxLength": 300
+          },
+          "@address": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "classification": {
+            "type": "object",
+            "properties": {
+              "category": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "number"
+                  },
+                  "name": {
+                    "type": "string"
+                  }
+                }
+              },
+              "type": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "integer"
+                  },
+                  "name": {
+                    "type": "string"
+                  }
+                }
+              },
+              "sub_type": {
+                "type": "object",
+                "nullable": true,
+                "properties": {
+                  "id": {
+                    "type": "integer"
+                  },
+                  "name": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "occupancy": {
+            "type": "object",
+            "properties": {
+              "default": {
+                "type": "string",
+                "enum": [
+                  "A-1",
+                  "A-2",
+                  "A-3",
+                  "A-4",
+                  "A-5",
+                  "B",
+                  "E",
+                  "F-1",
+                  "F-2",
+                  "H-1",
+                  "H-2",
+                  "H-3",
+                  "H-4",
+                  "H-5",
+                  "I-1",
+                  "I-2",
+                  "I-3",
+                  "I-4",
+                  "M",
+                  "R-1",
+                  "R-2",
+                  "R-3",
+                  "R-3.1",
+                  "R-4",
+                  "S-1",
+                  "S-2",
+                  "U"
+                ]
+              },
+              "allowed": {
+                "type": "array",
+                "description": "If set, room objects must be one of the occupancies in the given array",
+                "items": {
+                  "type": "string",
+                  "minLength": 0,
+                  "maxLength": 27
+                },
+                "enum": [
+                  "A-1",
+                  "A-2",
+                  "A-3",
+                  "A-4",
+                  "A-5",
+                  "B",
+                  "E",
+                  "F-1",
+                  "F-2",
+                  "H-1",
+                  "H-2",
+                  "H-3",
+                  "H-4",
+                  "H-5",
+                  "I-1",
+                  "I-2",
+                  "I-3",
+                  "I-4",
+                  "M",
+                  "R-1",
+                  "R-2",
+                  "R-3",
+                  "R-3.1",
+                  "R-4",
+                  "S-1",
+                  "S-2",
+                  "U"
+                ]
+              }
+            }
+          },
+          "attributes": {
+            "type": "object",
+            "properties": {
+              "year_built": {
+                "type": "string"
+              },
+              "floor_count": {
+                "type": "integer",
+                "readOnly": true
+              },
+              "room_count": {
+                "type": "integer",
+                "readOnly": true
+              },
+              "gross_floor_area": {
+                "type": "integer"
+              },
+              "net_room_area": {
+                "type": "integer",
+                "readOnly": true
+              }
+            }
+          }
+        }
+      }
+    },
+    "parameters": {
+      "siteId": {
+        "name": "siteId",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "description": "A valid site object UUID"
       }
     }
-  }
+  },
+  "tags": [
+    {
+      "name": "Controller"
+    },
+    {
+      "name": "Floor"
+    },
+    {
+      "name": "Gateway"
+    },
+    {
+      "name": "Room"
+    },
+    {
+      "name": "Site"
+    },
+    {
+      "name": "Tenant Account"
+    },
+    {
+      "name": "Trend Plot"
+    }
+  ]
 }
