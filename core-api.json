@@ -49,7 +49,7 @@
   },
   "components": {
     "securitySchemes": {
-      "Bearer Token": {
+      "Bearer-Token": {
         "type": "http",
         "scheme": "bearer"
       }
