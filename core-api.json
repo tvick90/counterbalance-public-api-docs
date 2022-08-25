@@ -2219,6 +2219,235 @@
                 ]
             }
         },
+        "/reset": {
+            "get": {
+              "summary": "List Resets",
+              "tags": [
+                "Setpoint Reset"
+              ],
+              "responses": {},
+              "operationId": "list-resets",
+              "security": [
+                {
+                  "Bearer Token": []
+                }
+              ],
+              "parameters": [
+                {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "in": "query",
+                  "name": "id",
+                  "description": "Filter results with a comma-separated list of reset IDs"
+                },
+                {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "in": "query",
+                  "name": "name",
+                  "description": "Filter results by reset object name. Accepts * wildcard searches."
+                },
+                {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "in": "query",
+                  "name": "description",
+                  "description": "Filter results by reset object description. Accepts * wildcard searches."
+                }
+              ]
+            },
+            "post": {
+              "summary": "Create Reset",
+              "operationId": "create-reset",
+              "responses": {
+                "200": {
+                  "description": "OK"
+                }
+              },
+              "description": "",
+              "tags": [
+                "Setpoint Reset"
+              ],
+              "security": [
+                {
+                  "Bearer Token": []
+                }
+              ]
+            }
+          },
+          "/reset/{resetId}": {
+            "parameters": [
+              {
+                "$ref": "#/components/parameters/resetId"
+              }
+            ],
+            "get": {
+              "summary": "Get Reset",
+              "tags": [
+                "Setpoint Reset"
+              ],
+              "responses": {},
+              "operationId": "get-reset",
+              "parameters": [],
+              "security": [
+                {
+                  "Bearer Token": []
+                }
+              ]
+            },
+            "patch": {
+              "summary": "Update Reset",
+              "operationId": "update-reset",
+              "responses": {
+                "200": {
+                  "description": "OK"
+                }
+              },
+              "description": "",
+              "security": [
+                {
+                  "Bearer Token": []
+                }
+              ],
+              "tags": [
+                "Setpoint Reset"
+              ]
+            },
+            "delete": {
+              "summary": "Delete Reset",
+              "operationId": "delete-reset",
+              "responses": {
+                "204": {
+                  "description": "No Content"
+                }
+              },
+              "description": "",
+              "security": [
+                {
+                  "Bearer Token": []
+                }
+              ],
+              "tags": [
+                "Setpoint Reset"
+              ]
+            }
+          },
+          "/routine": {
+            "get": {
+              "summary": "List Routines",
+              "tags": [
+                "Routine"
+              ],
+              "responses": {},
+              "operationId": "list-routines",
+              "security": [
+                {
+                  "Bearer Token": []
+                }
+              ],
+              "parameters": [
+                {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "in": "query",
+                  "name": "id",
+                  "description": "Filter results with a comma-separated list of routine IDs"
+                },
+                {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "in": "query",
+                  "name": "name",
+                  "description": "Filter results by routine object name. Accepts * wildcard searches."
+                },
+                {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "in": "query",
+                  "name": "description",
+                  "description": "Filter results by routine object description. Accepts * wildcard searches."
+                }
+              ]
+            },
+            "post": {
+              "summary": "Create Routine",
+              "operationId": "create-routine",
+              "responses": {
+                "200": {
+                  "description": "OK"
+                }
+              },
+              "security": [
+                {
+                  "Bearer Token": []
+                }
+              ],
+              "tags": [
+                "Routine"
+              ]
+            }
+          },
+          "/routine/{routineId}": {
+            "parameters": [
+              {
+                "$ref": "#/components/parameters/routineId"
+              }
+            ],
+            "get": {
+              "summary": "Get Routine",
+              "tags": [
+                "Routine"
+              ],
+              "responses": {},
+              "operationId": "get-routine",
+              "security": [
+                {
+                  "Bearer Token": []
+                }
+              ]
+            },
+            "patch": {
+              "summary": "Update Routine",
+              "operationId": "update-routine",
+              "responses": {
+                "200": {
+                  "description": "OK"
+                }
+              },
+              "tags": [
+                "Routine"
+              ],
+              "security": [
+                {
+                  "Bearer Token": []
+                }
+              ]
+            },
+            "delete": {
+              "summary": "Delete Routine",
+              "operationId": "delete-routine",
+              "responses": {
+                "204": {
+                  "description": "No Content"
+                }
+              },
+              "tags": [
+                "Routine"
+              ],
+              "security": [
+                {
+                  "Bearer Token": []
+                }
+              ],
+              "description": ""
+            }
+          },
         "/schedule": {
             "get": {
                 "summary": "List Schedules",
@@ -3475,6 +3704,121 @@
                 ]
             }
         },
+        "/trigger": {
+            "get": {
+              "summary": "List Triggers",
+              "tags": [
+                "Trigger"
+              ],
+              "responses": {
+                "200": {
+                  "description": "OK"
+                }
+              },
+              "operationId": "list-triggers",
+              "description": "",
+              "security": [
+                {
+                  "Bearer Token": []
+                }
+              ],
+              "parameters": [
+                {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "in": "query",
+                  "name": "id",
+                  "description": "Filter results with a comma-separated list of trigger IDs"
+                },
+                {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "in": "query",
+                  "name": "name",
+                  "description": "Filter results by trigger object name. Accepts * wildcard searches."
+                },
+                {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "in": "query",
+                  "name": "description",
+                  "description": "Filter results by trigger object description. Accepts * wildcard searches."
+                }
+              ]
+            },
+            "post": {
+              "summary": "Create Trigger",
+              "operationId": "create-trigger",
+              "responses": {
+                "200": {
+                  "description": "OK"
+                }
+              },
+              "tags": [
+                "Trigger"
+              ],
+              "description": ""
+            }
+          },
+          "/trigger/{triggerId}": {
+            "parameters": [
+              {
+                "$ref": "#/components/parameters/triggerId"
+              }
+            ],
+            "get": {
+              "summary": "Get Trigger",
+              "tags": [
+                "Trigger"
+              ],
+              "responses": {},
+              "operationId": "get-trigger",
+              "description": "",
+              "security": [
+                {
+                  "Bearer Token": []
+                }
+              ]
+            },
+            "patch": {
+              "summary": "Update Trigger",
+              "operationId": "update-trigger",
+              "responses": {
+                "200": {
+                  "description": "OK"
+                }
+              },
+              "tags": [
+                "Trigger"
+              ],
+              "security": [
+                {
+                  "Bearer Token": []
+                }
+              ]
+            },
+            "delete": {
+              "summary": "Delete Trigger",
+              "operationId": "delete-trigger",
+              "responses": {
+                "204": {
+                  "description": "No Content"
+                }
+              },
+              "tags": [
+                "Trigger"
+              ],
+              "description": "",
+              "security": [
+                {
+                  "Bearer Token": []
+                }
+              ]
+            }
+          },
         "/user": {
             "get": {
               "summary": "List Users",
@@ -9002,6 +9346,31 @@
                     "Room"
                 ]
             },
+      "Routine": {
+        "title": "Routine",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          }
+        },
+        "x-tags": [
+          "Routine"
+        ]
+      },
+      "Setpoint-Reset": {
+        "title": "Setpoint Reset",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          }
+        },
+        "x-tags": [
+          "Setpoint Reset"
+        ],
+        "description": ""
+      },
             "Schedule": {
                 "title": "Schedule Object",
                 "type": "object",
@@ -9914,6 +10283,20 @@
                     "config"
                 ]
             },
+            
+      "Trigger": {
+        "title": "Trigger",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          }
+        },
+        "x-tags": [
+          "Trigger"
+        ],
+        "description": ""
+      },
             "User": {
                 "description": "",
                 "type": "object",
@@ -11608,6 +11991,36 @@
             }
         },
         "parameters": {
+            "resetId": {
+                "name": "resetId",
+                "in": "path",
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                "description": "A valid reset UUID"
+              },
+              "routineId": {
+                "name": "routineId",
+                "in": "path",
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                "description": "A valid routine UUID"
+              },
+              "triggerId": {
+                "name": "triggerId",
+                "in": "path",
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                "description": "A valid trigger UUID"
+              },
             "userGroupId": {
                 "name": "userGroupId",
                 "in": "path",
@@ -15001,7 +15414,13 @@
             "name": "Room"
         },
         {
+            "name": "Routine"
+        },
+        {
             "name": "Scheduled Release"
+        },
+        {
+            "name": "Setpoint Reset"
         },
         {
             "name": "Site"
@@ -15014,6 +15433,9 @@
         },
         {
             "name": "Trend Plot"
+        },
+        {
+            "name": "Trigger"
         },
         {
             "name": "User"
