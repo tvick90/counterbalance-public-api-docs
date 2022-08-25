@@ -2285,7 +2285,7 @@
               }
             ],
             "get": {
-              "summary": "Get Reset",
+              "summary": "Retrieve Reset",
               "tags": [
                 "Setpoint Reset"
               ],
@@ -2400,7 +2400,7 @@
               }
             ],
             "get": {
-              "summary": "Get Routine",
+              "summary": "Retrieve Routine",
               "tags": [
                 "Routine"
               ],
@@ -3770,7 +3770,7 @@
               }
             ],
             "get": {
-              "summary": "Get Trigger",
+              "summary": "Retrieve Trigger",
               "tags": [
                 "Trigger"
               ],
