@@ -1,0 +1,49 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "Core API",
+    "version": "1.0",
+    "description": "",
+    "termsOfService": "https://www.counterbalance.io/legal/api-terms",
+    "contact": {
+      "name": "Counterbalance Support",
+      "email": "support@counterbalance.io"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://api.counterbalance.io/v1",
+      "description": "Production API"
+    }
+  ],
+  "paths": {
+    "/tenant": {
+      "get": {
+        "summary": "Get Tenant Account",
+        "tags": [
+          "Tenant Account"
+        ],
+        "responses": {},
+        "operationId": "get-tenant"
+      },
+      "patch": {
+        "summary": "Update Tenant Account",
+        "operationId": "update-tenant",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "description": "Update a tenant account"
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "Bearer Token": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  }
+}
