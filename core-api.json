@@ -81,7 +81,7 @@
         }
       ],
       "get": {
-        "summary": "Get Controller",
+        "summary": "Retrieve Controller",
         "responses": {
           "200": {
             "$ref": "#/components/responses/200-Get-Controller"
@@ -222,7 +222,7 @@
         }
       ],
       "get": {
-        "summary": "Get Gateway",
+        "summary": "Retrieve Gateway",
         "responses": {
           "200": {
             "$ref": "#/components/responses/200-Get-Gateway"
@@ -333,7 +333,7 @@
         }
       ],
       "get": {
-        "summary": "Get Gateway Status",
+        "summary": "Retrieve Gateway Status",
         "responses": {
           "200": {
             "$ref": "#/components/responses/200-Get-Gateway-Status"
@@ -590,7 +590,7 @@
         }
       ],
       "get": {
-        "summary": "Get Network",
+        "summary": "Retrieve Network",
         "tags": [
           "Network"
         ],
@@ -692,7 +692,7 @@
         }
       ],
       "get": {
-        "summary": "Get Report",
+        "summary": "Retrieve Report",
         "tags": [
           "Report"
         ],
@@ -850,7 +850,7 @@
         }
       ],
       "get": {
-        "summary": "Get Trend Plot",
+        "summary": "Retrieve Trend Plot",
         "responses": {
           "200": {
             "$ref": "#/components/responses/200-Get-Plot"
@@ -983,7 +983,7 @@
         }
       ],
       "get": {
-        "summary": "Get Report Group",
+        "summary": "Retrieve Report Group",
         "tags": [
           "Report Group"
         ],
@@ -1086,7 +1086,7 @@
         }
       ],
       "get": {
-        "summary": "Get Report Schedule",
+        "summary": "Retrieve Report Schedule",
         "responses": {
           "200": {
             "$ref": "#/components/responses/200-Get-Report-Schedule"
@@ -1846,7 +1846,7 @@
             },
             "in": "query",
             "name": "coordinates",
-            "description": "Get the timezone for the specified coordinates"
+            "description": "Retrieve the timezone for the specified coordinates"
           },
           {
             "schema": {
@@ -1855,7 +1855,7 @@
             },
             "in": "query",
             "name": "@address",
-            "description": "Get the timezone for the specified address ID"
+            "description": "Retrieve the timezone for the specified address ID"
           }
         ],
         "security": [
@@ -2289,7 +2289,7 @@
     },
     "/weather/air-quality/current": {
       "get": {
-        "summary": "Get Air Quality Conditions",
+        "summary": "Retrieve Air Quality Conditions",
         "responses": {
           "200": {
             "description": "OK"
@@ -2377,7 +2377,7 @@
             "Bearer Token": []
           }
         ],
-        "description": "Get current air quality\n\n**Required Permissions:** `*`,`wx:*`,`wx:airquality:*`,`wx:airquality:read`\n\n### Specifying the Location\nAir quality data can be obtained for a specified set of coordinates or by specifying a geocoded address object ID. Either the `coordinates` or `@address` query parameters must be passed, but not both. Passing more than one will result in an error \n\n<!-- theme: info-->\n> **Please Note:**\n> If the specified address ID has not been geocoded, an error will be returned.\n\n### Language\nBy default, data is returned in English. To return data in another language, pass the `langugage` query parameter and set it to a valid IETF language code",
+        "description": "Retrieve current air quality\n\n**Required Permissions:** `*`,`wx:*`,`wx:airquality:*`,`wx:airquality:read`\n\n### Specifying the Location\nAir quality data can be obtained for a specified set of coordinates or by specifying a geocoded address object ID. Either the `coordinates` or `@address` query parameters must be passed, but not both. Passing more than one will result in an error \n\n<!-- theme: info-->\n> **Please Note:**\n> If the specified address ID has not been geocoded, an error will be returned.\n\n### Language\nBy default, data is returned in English. To return data in another language, pass the `langugage` query parameter and set it to a valid IETF language code",
         "tags": [
           "Weather"
         ]
@@ -2396,7 +2396,7 @@
     },
     "/weather/air-quality/forecast": {
       "get": {
-        "summary": "Get Air Quality Forecast",
+        "summary": "Retrieve Air Quality Forecast",
         "responses": {
           "200": {
             "$ref": "#/components/responses/200-Get-AQ-Forecast"
@@ -2484,7 +2484,7 @@
             "Bearer Token": []
           }
         ],
-        "description": "Get forecasted daily air quality\n\n**Required Permissions:** `*`,`wx:*`,`wx:airquality:*`,`wx:airquality:read`\n\n### Specifying the Location\nAir quality data can be obtained for a specified set of coordinates or by specifying a geocoded address object ID. Either the `coordinates` or `@address` query parameters must be passed, but not both. Passing more than one will result in an error \n\n<!-- theme: info-->\n> **Please Note:**\n> If the specified address ID has not been geocoded, an error will be returned.\n\n### Language\nBy default, data is returned in English. To return data in another language, pass the `langugage` query parameter and set it to a valid IETF language code",
+        "description": "Retrieve forecasted daily air quality\n\n**Required Permissions:** `*`,`wx:*`,`wx:airquality:*`,`wx:airquality:read`\n\n### Specifying the Location\nAir quality data can be obtained for a specified set of coordinates or by specifying a geocoded address object ID. Either the `coordinates` or `@address` query parameters must be passed, but not both. Passing more than one will result in an error \n\n<!-- theme: info-->\n> **Please Note:**\n> If the specified address ID has not been geocoded, an error will be returned.\n\n### Language\nBy default, data is returned in English. To return data in another language, pass the `langugage` query parameter and set it to a valid IETF language code",
         "parameters": [
           {
             "$ref": "#/components/parameters/@addressId"
@@ -2526,7 +2526,7 @@
           },
           "in": "query",
           "name": "coordinates",
-          "description": "Get air quality for the specified lat/lon position"
+          "description": "Retrieve air quality for the specified lat/lon position"
         },
         {
           "schema": {
@@ -2535,7 +2535,7 @@
           },
           "in": "query",
           "name": "@address",
-          "description": "Get air quality for the specified address ID"
+          "description": "Retrieve air quality for the specified address ID"
         },
         {
           "schema": {
@@ -2549,7 +2549,7 @@
     },
     "/weather/alerts": {
       "get": {
-        "summary": "Get Severe Weather Alerts",
+        "summary": "Retrieve Severe Weather Alerts",
         "responses": {
           "200": {
             "description": "OK",
@@ -2695,7 +2695,7 @@
     },
     "/weather/current": {
       "get": {
-        "summary": "Get Current Weather Conditions",
+        "summary": "Retrieve Current Weather Conditions",
         "responses": {
           "200": {
             "$ref": "#/components/responses/200-Get-Current-Conditions"
@@ -2806,7 +2806,7 @@
     },
     "/weather/forecast": {
       "get": {
-        "summary": "Get Forecast",
+        "summary": "Retrieve Forecast",
         "responses": {
           "200": {
             "$ref": "#/components/responses/200-Get-Daily-Forecast"
@@ -2923,14 +2923,14 @@
     },
     "/weather/indices": {
       "get": {
-        "summary": "Get Activity Indices",
+        "summary": "Retrieve Activity Indices",
         "responses": {
           "200": {
             "$ref": "#/components/responses/200-Get-Activity-Indices"
           }
         },
         "operationId": "get-weather-indices",
-        "description": "Get activity indices and recommendations based on current weather conditions\n\n**Required Permissions:** `*`,`wx:*`,`wx:conditions:*`,`wx:conditions:read`\n\n### Specifying the Location\nWeather indices can be obtained for a specified set of coordinates or by specifying a geocoded address object ID. Either the `coordinates` or `@address` query parameters must be passed, but not both. Passing more than one will result in an error \n\n<!-- theme: info-->\n> **Please Note:**\n> If the specified address ID has not been geocoded, an error will be returned.\n\n### Language\nBy default, data is returned in English. To return data in another language, pass the `langugage` query parameter and set it to a valid IETF language code",
+        "description": "Retrieve activity indices and recommendations based on current weather conditions\n\n**Required Permissions:** `*`,`wx:*`,`wx:conditions:*`,`wx:conditions:read`\n\n### Specifying the Location\nWeather indices can be obtained for a specified set of coordinates or by specifying a geocoded address object ID. Either the `coordinates` or `@address` query parameters must be passed, but not both. Passing more than one will result in an error \n\n<!-- theme: info-->\n> **Please Note:**\n> If the specified address ID has not been geocoded, an error will be returned.\n\n### Language\nBy default, data is returned in English. To return data in another language, pass the `langugage` query parameter and set it to a valid IETF language code",
         "parameters": [
           {
             "$ref": "#/components/parameters/@addressId"
@@ -7313,7 +7313,7 @@
         "schema": {
           "type": "string"
         },
-        "description": "Get data at the coordinates of the specified address ID"
+        "description": "Retrieve data at the coordinates of the specified address ID"
       },
       "coordinates": {
         "name": "coordinates",
@@ -7323,7 +7323,7 @@
           "type": "string",
           "example": "47.620506,-122.349277"
         },
-        "description": "Get data at the specified lat/lon position"
+        "description": "Retrieve data at the specified lat/lon position"
       },
       "language": {
         "name": "language",
