@@ -205,7 +205,7 @@
                 ]
             }
         },
-        "/v1/site/address/{addressId}": {
+        "/site/address/{addressId}": {
             "parameters": [
                 {
                     "$ref": "#/components/parameters/addressId"
@@ -286,7 +286,7 @@
                 ]
             }
         },
-        "/v1/site/address/{addressId}/operation": {
+        "/site/address/{addressId}/operation": {
             "parameters": [
                 {
                     "schema": {
@@ -348,7 +348,7 @@
                 ]
             }
         },
-        "/v1/site/floor": {
+        "/site/floor": {
             "get": {
                 "summary": "List Floors",
                 "responses": {
@@ -398,7 +398,7 @@
             },
             "parameters": []
         },
-        "/v1/site/floor/{floorId}": {
+        "/site/floor/{floorId}": {
             "parameters": [
                 {
                     "$ref": "#/components/parameters/floorId"
@@ -476,7 +476,7 @@
                 ]
             }
         },
-        "/v1/site/room": {
+        "/site/room": {
             "get": {
                 "summary": "List Rooms",
                 "operationId": "list-rooms",
@@ -539,7 +539,7 @@
                 }
             }
         },
-        "/v1/site/room/{roomId}": {
+        "/site/room/{roomId}": {
             "parameters": [
                 {
                     "$ref": "#/components/parameters/roomId"
@@ -630,7 +630,7 @@
                 ]
             }
         },
-        "/v1/site/utilities/geocode": {
+        "/site/utilities/geocode": {
             "get": {
                 "summary": "Get Geocoding by Query",
                 "tags": [
@@ -661,7 +661,7 @@
                 ]
             }
         },
-        "/v1/site/utilities/timezone": {
+        "/site/utilities/timezone": {
             "get": {
                 "summary": "Get Timezone Details",
                 "tags": [
