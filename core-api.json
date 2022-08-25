@@ -3,7 +3,7 @@
   "info": {
     "title": "Counterbalance API",
     "version": "1.0",
-    "description": "Welcome to the Counterbalance API! ",
+    "description": "Welcome to the Counterbalance API! \n\n# Welcome!",
     "termsOfService": "https://www.counterbalance.io/legal/api-terms",
     "contact": {
       "name": "Counterbalance Support",
