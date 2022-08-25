@@ -342,7 +342,7 @@
             "$ref": "#/components/responses/404-Gateway-Not-Found"
           }
         },
-        "operationId": "get-gateway",
+        "operationId": "get-gateway-status",
         "description": "Retrieve a gateway device status details\n\n**Required Permissions:** `*`,`infrastructure:*`,`infrastructure:gateway:*`,`infrastructure:gateway:read`",
         "parameters": [],
         "security": [
