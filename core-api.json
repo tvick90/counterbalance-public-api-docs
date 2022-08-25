@@ -17,6 +17,306 @@
     }
   ],
   "paths": {
+  "/collector": {
+    "get": {
+      "summary": "List Collectors",
+      "responses": {
+        "200": {
+          "$ref": "#/components/responses/200-Get-Collector-Listing"
+        }
+      },
+      "operationId": "list-collectors",
+      "description": "Retrieve a list of point collectors\n\n**Required Permissions:** `*`,`telemetry:*`,`telemetry:collector:*`,`telemetry:collector:read`",
+      "security": [
+        {
+          "Bearer Token": []
+        }
+      ],
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/Content-Type"
+        },
+        {
+          "$ref": "#/components/parameters/@controllerId"
+        },
+        {
+          "$ref": "#/components/parameters/@gatewayId"
+        },
+        {
+          "$ref": "#/components/parameters/@siteId"
+        },
+        {
+          "$ref": "#/components/parameters/@pointId"
+        }
+      ],
+      "tags": [
+        "Collector"
+      ],
+      "requestBody": {
+        "$ref": "#/components/requestBodies/Create-Collector"
+      }
+    },
+    "post": {
+      "summary": "Create Collector",
+      "operationId": "create-collector",
+      "responses": {
+        "201": {
+          "$ref": "#/components/responses/201-Create-Collector"
+        },
+        "404": {
+          "$ref": "#/components/responses/404-Point-Not-Found"
+        }
+      },
+      "description": "Create a point collector\n\n**Required Permissions:** `*`,`telemetry:*`,`telemetry:collector:*`,`telemetry:collector:create`",
+      "security": [
+        {
+          "Bearer Token": []
+        }
+      ],
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/Content-Type"
+        }
+      ],
+      "requestBody": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "@point": {
+                  "type": "string",
+                  "format": "uuid",
+                  "description": "The UUID of the point to be collected"
+                },
+                "interval": {
+                  "type": "number",
+                  "format": "double",
+                  "default": 300,
+                  "enum": [
+                    300,
+                    900,
+                    1800,
+                    3600
+                  ],
+                  "description": "The frequency in which to sample the point"
+                }
+              },
+              "required": [
+                "@point"
+              ]
+            },
+            "examples": {
+              "Example": {
+                "value": {
+                  "@point": "52aa66de-e553-4383-9e16-52bfcd0efb0f",
+                  "interval": 300
+                }
+              }
+            }
+          }
+        },
+        "description": ""
+      },
+      "tags": [
+        "Collector"
+      ]
+    },
+    "parameters": []
+  },
+  "/collector/{collectorId}": {
+    "parameters": [
+      {
+        "$ref": "#/components/parameters/collectorId"
+      }
+    ],
+    "get": {
+      "summary": "Retrieve Collector",
+      "responses": {
+        "200": {
+          "$ref": "#/components/responses/200-Get-Collector"
+        },
+        "404": {
+          "$ref": "#/components/responses/404-Collector-Not-Found"
+        }
+      },
+      "operationId": "get-collector",
+      "description": "Retreieve a point collector\n\n**Required Permissions:** `*`,`telemetry:*`,`telemetry:collector:*`,`telemetry:collector:read`",
+      "security": [
+        {
+          "Bearer Token": []
+        }
+      ],
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/Content-Type"
+        }
+      ],
+      "tags": [
+        "Collector"
+      ]
+    },
+    "delete": {
+      "summary": "Delete Collector",
+      "operationId": "delete-collector",
+      "responses": {
+        "204": {
+          "description": "No Content",
+          "content": {
+            "application/json": {
+              "schema": {
+                "nullable": true
+              },
+              "examples": {}
+            }
+          }
+        }
+      },
+      "description": "Delete a point collector\n\n**Required Permissions:** `*`,`telemetry:*`,`telemetry:collector:*`,`telemetry:collector:delete`",
+      "parameters": [],
+      "security": [
+        {
+          "Bearer Token": []
+        }
+      ],
+      "tags": [
+        "Collector"
+      ]
+    },
+    "patch": {
+      "summary": "Update Collector",
+      "operationId": "update-collector",
+      "responses": {
+        "200": {
+          "$ref": "#/components/responses/200-Get-Collector"
+        },
+        "404": {
+          "$ref": "#/components/responses/404-Collector-Not-Found"
+        }
+      },
+      "tags": [
+        "Collector"
+      ],
+      "description": "Update a point collector\n\n**Required Permissions:** `*`,`telemetry:*`,`telemetry:collector:*`,`telemetry:collector:update`",
+      "security": [
+        {
+          "Bearer Token": []
+        }
+      ],
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/Content-Type"
+        }
+      ],
+      "requestBody": {
+        "$ref": "#/components/requestBodies/Update-Collector"
+      }
+    }
+  },
+  "/collector/{collectorId}/sample": {
+    "parameters": [
+      {
+        "$ref": "#/components/parameters/collectorId"
+      }
+    ],
+    "get": {
+      "summary": "Sample Collector Data",
+      "responses": {
+        "200": {
+          "$ref": "#/components/responses/200-Get-Collector-Samples"
+        },
+        "404": {
+          "$ref": "#/components/responses/404-Collector-Not-Found"
+        }
+      },
+      "operationId": "get-collector-samples",
+      "description": "Retrieve data samples for the specified collector \n\n**Required Permissions:** `*`,`telemetry:*`,`telemetry:collector:*`,`telemetry:collector:sample`\n\n### Adjusting the Sample Window\nBy default, if no query parameters are specified, the last 12 hours of sample data is returned. \n\nThe starting point and ending point of the sample window can be adjust with query parameters in two ways. \n\n#### Using a Fixed Date Range\nTo retrieve sample data for a fixed period of time (between two dates), pass both the `start` and `end` parameters as the unix timestamps for the desired dates.\n\nFor example, for sample data between 8AM on March 1st, 2021 to 8PM on March 5th, 2021, convert these dates and times to their corresponding UNIX timestamps and pass them in the corresponding parameter.\n\n```\nHTTP/1.1 https://api.counterbalance.io/.../sample?start=1614700800&end=1615005120\n```\n\n#### Using a Relative Date Range\n\nTo retrieve sample data for a relative period of time _(last 7 days, last 2 hours, etc)_, the `duration` parameter is used to dynamically set the window start or end point.\n\nWhen `duration` is passed, the `start` and `end` parameters become mutually exclusive. The relative range can only be set by specifying one or the other (or neither). If neither `start` nor `end` are passed, the starting point is set relative to the current date and time.\n\nIf `end` is specified, the relative start is calculated and samples _up to_ the specified end date are returned.\n\nIf `start` is specified, the relative end is calculated and samples _since_ the specified start date are returned\n\nFor example, for sample data for the 24 hours ending at 8AM on March 1st, 2021, convert the end date and time to a UNIX timestamp and specify the desired duration.\n\n```\nHTTP/1.1 https://api.counterbalance.io/.../sample?start=1614700800\n```\n\n#### Using Start Only\nTo retrieve sample data for a relative period of time _(last 7 days, last 2 hours, etc)_, the `duration` parameter is used to dynamically set a window start or end point.\n\nWhen `duration` is passwed, the `start` and `end` parameters become mutually exclusive and the relative range can only be set by specifying one or the other (or neither).\n\nThe `end` paramater is optional. The current date and time will be used if no end is explicitly set.\n\nFor example, for sample data for the 24 hours ending at 8AM on March 1st, 2021, convert the end date and time to a UNIX timestamp and specify the desired duration.\n\n```\nHTTP/1.1 https://api.counterbalance.io/.../sample?start=1614700800\n```\n",
+      "parameters": [
+        {
+          "schema": {
+            "type": "number"
+          },
+          "in": "query",
+          "name": "start",
+          "description": "Specify the timestamp for the historic point in time where a sample window begins (left side of the X-axis)"
+        },
+        {
+          "schema": {
+            "type": "number",
+            "default": "now"
+          },
+          "in": "query",
+          "name": "end",
+          "description": "Specify the timestamp where a sample window ends (right side of the X-axis)"
+        },
+        {
+          "schema": {
+            "type": "integer"
+          },
+          "in": "query",
+          "name": "duration",
+          "description": "The length of a relative sample window in seconds"
+        },
+        {
+          "$ref": "#/components/parameters/Content-Type"
+        },
+        {
+          "schema": {
+            "type": "array",
+            "enum": [
+              "data",
+              "health",
+              "statistics"
+            ]
+          },
+          "in": "query",
+          "name": "include",
+          "description": "Specify which sample components to return with the response"
+        }
+      ],
+      "security": [
+        {
+          "Bearer Token": []
+        }
+      ],
+      "tags": [
+        "Collector"
+      ]
+    }
+  },
+  "/collector/{collectorId}/stats": {
+    "parameters": [
+      {
+        "$ref": "#/components/parameters/collectorId"
+      }
+    ],
+    "get": {
+      "summary": "Retrieve Collector Sample Statistics",
+      "responses": {
+        "200": {
+          "$ref": "#/components/responses/200-Get-Collector-Sample-Stats"
+        },
+        "404": {
+          "$ref": "#/components/responses/404-Collector-Not-Found"
+        }
+      },
+      "operationId": "get-collector-stats",
+      "description": "Retrieve sample statistics for a collector\n\n**Required Permissions:** `*`,`telemetry:*`,`telemetry:collector:*`,`telemetry:collector:read`\n",
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/Content-Type"
+        }
+      ],
+      "security": [
+        {
+          "Bearer Token": []
+        }
+      ],
+      "tags": [
+        "Collector"
+      ]
+    }
+  },
     "/controller": {
       "get": {
         "summary": "List Controllers",
@@ -644,6 +944,354 @@
         "description": ""
       }
     },
+    "/point": {
+        "get": {
+          "summary": "List Points",
+          "responses": {
+            "200": {
+              "$ref": "#/components/responses/200-Get-Point-Listing"
+            }
+          },
+          "operationId": "list-points",
+          "description": "Retrieve a list of points\n\n**Required Permissions:** `*`,`telemetry:*`,`telemetry:datapoint:*`,`telemetry:datapoint:read`\n\n### Retrieving BACnet Data for Point Lists\nYou can retrieve a limited amount of online BACnet data for each point in a point listing by specifying a controller ID using the `@controller` query parameter, and setting the `bacnet` query parameter to `true`.",
+          "security": [
+            {
+              "Bearer Token": []
+            }
+          ],
+          "parameters": [
+            {
+              "$ref": "#/components/parameters/@siteId"
+            },
+            {
+              "$ref": "#/components/parameters/@controllerId"
+            },
+            {
+              "$ref": "#/components/parameters/Content-Type"
+            },
+            {
+              "schema": {
+                "type": "string"
+              },
+              "in": "query",
+              "name": "id",
+              "description": "Filter results by a comma-separated list of object UUIDs"
+            },
+            {
+              "schema": {
+                "type": "boolean",
+                "default": "false",
+                "enum": [
+                  "true",
+                  "false"
+                ]
+              },
+              "in": "query",
+              "name": "bacnet",
+              "description": "Used in conjunction with `@controller` parameter to retrieve BACnet data for the points returned"
+            }
+          ],
+          "tags": [
+            "Point"
+          ]
+        },
+        "post": {
+          "summary": "Create Point",
+          "operationId": "create-point",
+          "responses": {
+            "200": {
+              "$ref": "#/components/responses/200-Get-Point-Offline"
+            },
+            "400": {
+              "$ref": "#/components/responses/400-Invalid-Scope"
+            },
+            "404": {
+              "$ref": "#/components/responses/404-Controller-Not-Found"
+            }
+          },
+          "description": "Create a new point definition\n\n**Required Permissions:** `*`,`telemetry:*`,`telemetry:datapoint:*`,`telemetry:datapoint:create`",
+          "security": [
+            {
+              "Bearer Token": []
+            }
+          ],
+          "parameters": [
+            {
+              "$ref": "#/components/parameters/Content-Type"
+            }
+          ],
+          "requestBody": {
+            "$ref": "#/components/requestBodies/Create-Point"
+          },
+          "tags": [
+            "Point"
+          ]
+        },
+        "parameters": []
+      },
+      "/point/{pointId}": {
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/pointId"
+          }
+        ],
+        "get": {
+          "summary": "Retrieve Point",
+          "responses": {
+            "200": {
+              "$ref": "#/components/responses/200-Get-Point"
+            },
+            "404": {
+              "$ref": "#/components/responses/404-Point-Not-Found"
+            }
+          },
+          "operationId": "get-point",
+          "parameters": [
+            {
+              "schema": {
+                "type": "boolean",
+                "default": "false"
+              },
+              "in": "query",
+              "name": "online",
+              "description": "Fetch the latest BACnet data for the point <br> ***Use of this parameter is deprecated as of V1.4.0** Use the `/bacnet` endpoint to retrieve BACnet data.*",
+              "deprecated": true
+            },
+            {
+              "$ref": "#/components/parameters/Content-Type"
+            }
+          ],
+          "security": [
+            {
+              "Bearer Token": []
+            }
+          ],
+          "description": "Retrieve a point\n\n**Required Permissions:** `*`,`telemetry:*`,`telemetry:datapoint:*`,`telemetry:datapoint:read`\n\n### Online BACnet Data\nEach BACnet object type will return a variable BACnet response body depending on the parameters present and supported by the target field controller. \n\nSeveral response examples are provided to illustrate the variety of parameters available.",
+          "tags": [
+            "Point"
+          ]
+        },
+        "delete": {
+          "summary": "Delete Point",
+          "operationId": "delete-point",
+          "responses": {
+            "204": {
+              "description": "No Content",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "null"
+                  },
+                  "examples": {}
+                }
+              }
+            },
+            "404": {
+              "$ref": "#/components/responses/404-Point-Not-Found"
+            }
+          },
+          "description": "Delete a point\n\n**Required Permissions** `*`,`telemetry:*`,`telemetry:datapoint:*`,`telemetry:datapoint:delete`",
+          "security": [
+            {
+              "Bearer Token": []
+            }
+          ],
+          "tags": [
+            "Point"
+          ]
+        },
+        "patch": {
+          "summary": "Update Point",
+          "operationId": "update-point",
+          "responses": {
+            "200": {
+              "$ref": "#/components/responses/200-Get-Point"
+            },
+            "404": {
+              "$ref": "#/components/responses/404-Point-Not-Found"
+            }
+          },
+          "description": "Update a point\n\n**Required Permissions:** `*`,`telemetry:*`,`telemetry:datapoint:*`,`telemetry:datapoint:update`\n\n<!-- theme: info -->\n> **Heads Up** This endpoint will only update the Counterbalance definition of a defined point. This will not update the BACnet definition on the device. \n> \n> _Future endpoints are planned to permit online BACnet updates._",
+          "security": [
+            {
+              "Bearer Token": []
+            }
+          ],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "The name of the point"
+                    },
+                    "description": {
+                      "type": "string",
+                      "description": "A brief description of the point"
+                    },
+                    "resolution": {
+                      "type": "string",
+                      "description": "The display and collection resolution for analog points (decimal places)"
+                    },
+                    "@site": {
+                      "type": "string",
+                      "format": "uuid",
+                      "description": "A valid site UUID to assign the point to"
+                    },
+                    "instance_id": {
+                      "type": "number",
+                      "description": "The BACnet object instance ID"
+                    },
+                    "units": {
+                      "type": "string",
+                      "description": "A valid BACnet units ID"
+                    }
+                  }
+                },
+                "examples": {
+                  "Example": {
+                    "value": {
+                      "name": "SEA.RMT",
+                      "description": "ROOM TEMP",
+                      "site": "82478e3a-a212-41bf-9e2b-7522a1504a6b"
+                    }
+                  }
+                }
+              }
+            },
+            "description": ""
+          },
+          "parameters": [
+            {
+              "$ref": "#/components/parameters/Content-Type"
+            }
+          ],
+          "tags": [
+            "Point"
+          ]
+        }
+      },
+      "/point/{pointId}/bacnet": {
+        "parameters": [
+          {
+            "name": "pointId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "example": "168a3e32-996f-410a-a06c-c4cdc10fa362"
+            },
+            "description": "A valid point UUID"
+          }
+        ],
+        "get": {
+          "summary": "Retrieve BACnet Point Details",
+          "responses": {
+            "200": {
+              "$ref": "#/components/responses/200-Get-BACnet-Point"
+            },
+            "404": {
+              "$ref": "#/components/responses/404-Point-Not-Found"
+            }
+          },
+          "operationId": "get-point-bacnet",
+          "parameters": [
+            {
+              "$ref": "#/components/parameters/Content-Type"
+            }
+          ],
+          "security": [
+            {
+              "Bearer Token": []
+            }
+          ],
+          "description": "Retrieve the BACnet details for a point\n\n**Required Permissions:** `*`,`telemetry:*`,`telemetry:datapoint:*`,`telemetry:datapoint:read`\n\n### Online BACnet Data\nEach BACnet object type will return a variable BACnet response body depending on the parameters present and supported by the target field controller. ",
+          "tags": [
+            "Point"
+          ]
+        }
+      },
+      "/point/{pointId}/command": {
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/pointId"
+          }
+        ],
+        "put": {
+          "summary": "Command Point",
+          "operationId": "command-point",
+          "responses": {
+            "200": {
+              "$ref": "#/components/responses/200-Command-Point"
+            },
+            "400": {
+              "description": "Bad Request",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Error"
+                  },
+                  "examples": {
+                    "Invalid Parameters": {
+                      "value": {
+                        "error": {
+                          "message": "One or more required parameters are missing",
+                          "console": "Check the request body and try again",
+                          "code": 400
+                        },
+                        "logging_hash": "..."
+                      }
+                    },
+                    "Invalid Operation": {
+                      "value": {
+                        "error": {
+                          "message": "Invalid operation requested",
+                          "console": "Only command and relinquish are supported",
+                          "code": 400
+                        },
+                        "logging_hash": "..."
+                      }
+                    },
+                    "Point Not Commandable": {
+                      "value": {
+                        "error": {
+                          "message": "Datapoint not commandable",
+                          "console": "This datapoint is not commandable",
+                          "code": 400
+                        },
+                        "logging_hash": "..."
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "404": {
+              "$ref": "#/components/responses/404-Point-Not-Found"
+            }
+          },
+          "description": "Command or release a point\n\n**Required Permisions:** `*`,`telemetry:*`,`telemetry:datapoint:*`,`telemetry:datapoint:command`\n\n### Commandable Points\nThe table below defines the BACnet object types compatible with this endpoint. Support for enumerated values is planned for a future release.\n\n| Object Type | Description |\n|:-|:-|\n| `1` | Analog Output |\n| `2` | Analog Value |\n| `4` | Binary Output |\n| `5` | Binary Value |\n\n### Supported Command Priorities\nAll sixteen BACnet command priorities are supported. \n\n### Command vs Relinquish\nThe `operation` body parameter accepts two values: `command` or `relinquish`. These operations are described below.\n\n#### Command a New Value\nTo command a data point to a new value, set `operation` to `command` in the request body and include the desired priority and new value. The new value will be added to the command priority array at the requested priority and any previous value at the same priority is overwritten. \n\n#### Relinqush a Set Value\nTo relinquish a command priority, set `operation` to `relinquish` in the request body and include the desired priority. The requested priority will be set to _null_ in the command priority array.\n\n### Automatically Release a Command\nA user may opt to have a command be automatically released at a later date. This is useful for temporary setpoint adjustments or system testing and can contribute to improved overall system health. \n\nTo schedule an automatic release, include the `scheduled_release` configuration in the request body of the command. This will trigger the creation of a [Scheduled Release Job](https://docs.counterbalance.io/docs/core-api/b3A6NDIyNzg5MTU) for tracking the release request.",
+          "security": [
+            {
+              "Bearer Token": []
+            }
+          ],
+          "parameters": [
+            {
+              "$ref": "#/components/parameters/Content-Type"
+            }
+          ],
+          "tags": [
+            "Point"
+          ],
+          "requestBody": {
+            "$ref": "#/components/requestBodies/Command-Point"
+          }
+        }
+      },
     "/reporting/report": {
       "get": {
         "summary": "List Reports",
@@ -1140,6 +1788,234 @@
         "description": "",
         "tags": [
           "Report Schedule"
+        ]
+      }
+    },
+    "/release": {
+      "get": {
+        "summary": "List Scheduled Release Jobs",
+        "tags": [
+          "Scheduled Release"
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/200-Get-Release-Listing"
+          }
+        },
+        "operationId": "list-releases",
+        "description": "Retrieve a list of scheduled release jobs\n\n**Required Permissions:** `*`,`telemetry:*`,`telemetry:datapoint:*`,`telemetry:datapoint:read`",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/@pointId"
+          },
+          {
+            "$ref": "#/components/parameters/@controllerId"
+          },
+          {
+            "$ref": "#/components/parameters/@gatewayId"
+          },
+          {
+            "$ref": "#/components/parameters/@siteId"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "in": "query",
+            "name": "@owner",
+            "description": "Filter results by their associated owner UUID"
+          }
+        ]
+      }
+    },
+    "/release/{releaseId}": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/releaseId"
+        }
+      ],
+      "get": {
+        "summary": "Retrieve Scheduled Release Job",
+        "tags": [
+          "Scheduled Release"
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/200-Get-Release"
+          },
+          "404": {
+            "$ref": "#/components/responses/404-Release-Not-Found"
+          }
+        },
+        "operationId": "get-release",
+        "description": "Retrieve a scheduled release job\n\n**Required Permissions:** `*`,`telemetry:*`,`telemetry:datapoint:*`,`telemetry:datapoint:read`",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ]
+      },
+      "patch": {
+        "summary": "Update Scheduled Release Job",
+        "operationId": "update-release",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/200-Get-Release"
+          },
+          "404": {
+            "$ref": "#/components/responses/404-Release-Not-Found"
+          }
+        },
+        "description": "Update a scheduled release job\n\n**Required Permissions:** `*`,`telemetry:*`,`telemetry:datapoint:*`,`telemetry:datapoint:command`",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/Update-Release"
+        },
+        "tags": [
+          "Scheduled Release"
+        ]
+      },
+      "delete": {
+        "summary": "Delete Scheduled Release Job",
+        "operationId": "delete-release",
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "404": {
+            "$ref": "#/components/responses/404-Release-Not-Found"
+          }
+        },
+        "tags": [
+          "Scheduled Release"
+        ],
+        "description": "Delete a scheduled release job\n\n**Required Permissions:** `*`,`telemetry:*`,`telemetry:datapoint:*`,`telemetry:datapoint:command`",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ]
+      }
+    },
+    "/schedule": {
+      "get": {
+        "summary": "List Schedules",
+        "tags": [
+          "Schedule"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "operationId": "list-schedules",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ]
+      },
+      "post": {
+        "summary": "Create Schedule",
+        "operationId": "create-schedule",
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        },
+        "tags": [
+          "Schedule"
+        ],
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ]
+      }
+    },
+    "/schedule/{scheduleId}": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/scheduleId"
+        }
+      ],
+      "get": {
+        "summary": "Retrieve Schedule",
+        "tags": [
+          "Schedule"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "operationId": "get-schedule",
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ]
+      },
+      "patch": {
+        "summary": "Update Schedule",
+        "operationId": "update-schedule",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "Schedule"
+        ],
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ]
+      },
+      "delete": {
+        "summary": "Delete Schedule",
+        "operationId": "delete-schedule",
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "tags": [
+          "Schedule"
+        ],
+        "security": [
+          {
+            "Bearer Token": []
+          }
+        ]
+      },
+      "put": {
+        "summary": "Update Schedule Object",
+        "operationId": "update-schedule-object",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "Schedule"
+        ],
+        "description": "",
+        "security": [
+          {
+            "Bearer Token": []
+          }
         ]
       }
     },
@@ -2962,6 +3838,369 @@
       }
     },
     "responses": {
+        "400-Invalid-Scope": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "examples": {
+                  "Response": {
+                    "value": {
+                      "error": {
+                        "message": "Invalid object type",
+                        "console": "The object type specified is invalid",
+                        "code": 400
+                      },
+                      "logging_hash": "..."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "200-Get-Collector-Samples": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Collector-Sample"
+                },
+                "examples": {
+                  "Response": {
+                    "$ref": "#/components/examples/Get-Collector-Samples"
+                  }
+                }
+              }
+            }
+          },
+          "404-Collector-Not-Found": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "examples": {
+                  "Response": {
+                    "value": {
+                      "error": {
+                        "message": "Collector not found",
+                        "console": "Please check the collector ID and try your request again",
+                        "code": 404
+                      },
+                      "logging_hash": "..."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400-Non-Commandable-Point": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "examples": {
+                  "Response": {
+                    "value": {
+                      "error": {
+                        "message": "Datapoint not commandable",
+                        "console": "string",
+                        "code": 0
+                      },
+                      "logging_hash": null
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404-Point-Not-Found": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "examples": {
+                  "Response": {
+                    "value": {
+                      "error": {
+                        "message": "Point not found",
+                        "console": "Please check the point ID and try your request again",
+                        "code": 404
+                      },
+                      "logging_hash": "..."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "200-Get-Point-Offline": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Point"
+                },
+                "examples": {
+                  "Analog Input Point": {
+                    "$ref": "#/components/examples/Get-Analog-Input-Point"
+                  }
+                }
+              }
+            }
+          },
+          "200-Get-Point": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Point"
+                },
+                "examples": {
+                  "Analog Input": {
+                    "$ref": "#/components/examples/Get-Analog-Input-Point"
+                  },
+                  "Analog Input Online": {
+                    "$ref": "#/components/examples/Get-Analog-Input-Point-Online"
+                  },
+                  "Binary Output Online": {
+                    "$ref": "#/components/examples/Get-Binary-Output-Point-Online"
+                  }
+                }
+              }
+            }
+          },
+          "200-Get-Collector": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Collector"
+                },
+                "examples": {
+                  "Response": {
+                    "$ref": "#/components/examples/Get-Collector-Details"
+                  }
+                }
+              }
+            },
+            "headers": {
+              "Content-Type": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "application/json"
+              }
+            }
+          },
+          "200-Get-Collector-Listing": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "count": {
+                      "type": "integer",
+                      "readOnly": true
+                    },
+                    "index": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Collector"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "Response": {
+                    "$ref": "#/components/examples/Get-Collector-Details"
+                  }
+                }
+              }
+            }
+          },
+          "200-Get-Point-Listing": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "count": {
+                      "type": "integer"
+                    },
+                    "index": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Point"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "Response": {
+                    "$ref": "#/components/examples/Get-Point-List"
+                  }
+                }
+              }
+            }
+          },
+          "200-Command-Point": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "boolean",
+                      "description": "Indicates the status of the request, produced by the gateway",
+                      "readOnly": true
+                    },
+                    "scheduled_release_id": {
+                      "type": "string",
+                      "format": "uuid",
+                      "description": "The UUID of the scheduled release job, if requested",
+                      "nullable": true,
+                      "readOnly": true
+                    }
+                  }
+                },
+                "examples": {
+                  "Response Success": {
+                    "value": {
+                      "status": true
+                    }
+                  },
+                  "Response Fail": {
+                    "value": {
+                      "status": false
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "200-Get-Release": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Release-Job"
+                },
+                "examples": {
+                  "Response": {
+                    "$ref": "#/components/examples/Get-Release-Job"
+                  }
+                }
+              }
+            }
+          },
+          "200-Get-Release-Listing": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "count": {
+                      "description": "The number of release jobs returned",
+                      "type": "integer",
+                      "readOnly": true
+                    },
+                    "index": {
+                      "type": "array",
+                      "description": "An array of release job UUIDs as they appear in the `data` array",
+                      "uniqueItems": true,
+                      "items": {
+                        "type": "string",
+                        "format": "uuid",
+                        "readOnly": true
+                      },
+                      "readOnly": true
+                    },
+                    "data": {
+                      "type": "array",
+                      "description": "An array of release jobs",
+                      "uniqueItems": true,
+                      "items": {
+                        "$ref": "#/components/schemas/Release-Job"
+                      },
+                      "readOnly": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404-Release-Not-Found": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "examples": {
+                  "Response": {
+                    "value": {
+                      "error": {
+                        "message": "Release job ID ... could not be found",
+                        "console": "Sorry, we couldn't find that job",
+                        "code": 404
+                      },
+                      "logging_hash": "..."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "200-Get-BACnet-Point": {
+            "description": "Example response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BACnet-Point"
+                },
+                "examples": {}
+              }
+            }
+          },
+          "200-Get-Collector-Sample-Stats": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Collector-Stats"
+                },
+                "examples": {
+                  "Response": {
+                    "$ref": "#/components/examples/Get-Collector-Stats"
+                  }
+                }
+              }
+            }
+          },
       "200-Get-Plot": {
         "description": "Ok",
         "content": {
@@ -4421,6 +5660,533 @@
           }
         }
       },
+      "BACnet-Point": {
+        "title": "BACnet-Point-Object",
+        "type": "object",
+        "description": "",
+        "properties": {
+          "object": {
+            "type": "object",
+            "description": "Details about the BACnet object",
+            "properties": {
+              "instance": {
+                "type": "number",
+                "description": "The BACnet object instance ID of the point"
+              },
+              "type": {
+                "type": "number",
+                "description": "The BACnet object type of the point ",
+                "example": 0,
+                "enum": [
+                  0,
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  13,
+                  14,
+                  19
+                ]
+              },
+              "name": {
+                "type": "string",
+                "description": "The BACnet object name of the point"
+              },
+              "description": {
+                "type": "string",
+                "description": "The BACnet object description of the point"
+              }
+            },
+            "required": [
+              "instance",
+              "type",
+              "name"
+            ]
+          },
+          "telemetry": {
+            "type": "object",
+            "description": "Details about the BACnet telemetry",
+            "properties": {
+              "present_value": {
+                "type": "number",
+                "description": "The unformatted present value of the point"
+              },
+              "reliability": {
+                "type": "string",
+                "description": "The BACnet reliability of the point",
+                "example": "no fault detected",
+                "enum": [
+                  "no fault detected",
+                  "unreliable other"
+                ],
+                "readOnly": true
+              },
+              "device_type": {
+                "type": "string",
+                "description": "The BACnet device or sensor type of the point",
+                "example": "10k Thermister",
+                "readOnly": true
+              },
+              "event_state": {
+                "type": "string",
+                "description": "The BACnet event state of the point",
+                "example": "normal",
+                "enum": [
+                  "normal",
+                  "fault",
+                  "offnormal"
+                ],
+                "readOnly": true
+              },
+              "state_text": {
+                "type": "array",
+                "description": "The BACnet state text array of the point",
+                "minItems": 2,
+                "items": {
+                  "type": "string",
+                  "readOnly": true
+                },
+                "readOnly": true
+              },
+              "polarity": {
+                "type": "string",
+                "description": "The polarity of the point",
+                "readOnly": true
+              },
+              "feedback_value": {
+                "type": "number",
+                "readOnly": true
+              },
+              "relinquish_default": {
+                "type": "number",
+                "description": "The relinquish default for the point",
+                "readOnly": true
+              },
+              "units": {
+                "type": "string",
+                "description": "The raw BACnet units for the point",
+                "readOnly": true
+              }
+            },
+            "required": [
+              "present_value"
+            ]
+          },
+          "status": {
+            "type": "object",
+            "properties": {
+              "in_alarm": {
+                "type": "boolean"
+              },
+              "fault": {
+                "type": "boolean"
+              },
+              "out_of_service": {
+                "type": "boolean"
+              },
+              "overridden": {
+                "type": "boolean"
+              }
+            }
+          },
+          "priority_array": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          },
+          "alarming": {
+            "type": "object",
+            "properties": {
+              "enabled": {
+                "type": "boolean"
+              },
+              "acked_transitions": {
+                "type": "object",
+                "properties": {
+                  "to_normal": {
+                    "type": "boolean"
+                  },
+                  "to_offnormal": {
+                    "type": "boolean"
+                  },
+                  "to_fault": {
+                    "type": "boolean"
+                  }
+                }
+              },
+              "notify": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string"
+                  },
+                  "notification_class": {
+                    "type": "number"
+                  }
+                }
+              },
+              "time_delay": {
+                "type": "number"
+              }
+            }
+          },
+          "totalization": {
+            "type": "object",
+            "properties": {
+              "enabled": {
+                "type": "boolean"
+              },
+              "elapsed_active_time": {
+                "type": "number"
+              },
+              "last_reset": {
+                "type": "number"
+              },
+              "ealpsed_inactive_time": {
+                "type": "number"
+              }
+            }
+          }
+        },
+        "x-tags": [
+          "Point"
+        ]
+      },
+      "Collector": {
+        "description": "",
+        "type": "object",
+        "x-examples": {},
+        "title": "Collector Object",
+        "x-tags": [
+          "Collector"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The collector object UUID",
+            "readOnly": true
+          },
+          "created": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Date/time the collector object was created",
+            "readOnly": true
+          },
+          "expires": {
+            "type": "string",
+            "format": "date-time",
+            "description": "**Not in use**",
+            "nullable": true
+          },
+          "enabled": {
+            "type": "boolean",
+            "description": "If `true`, the collector will collect data at the interval configured. If `false`, the collector will not collect new data."
+          },
+          "interval": {
+            "enum": [
+              300,
+              600,
+              900
+            ],
+            "type": "integer",
+            "description": "The number of seconds between data samples"
+          },
+          "sample_count": {
+            "type": "integer",
+            "description": "The total number of samples that are stored in the cloud, since the collector was created ",
+            "readOnly": true
+          },
+          "source": {
+            "type": "object",
+            "properties": {
+              "point": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "format": "uuid",
+                    "nullable": true
+                  },
+                  "object_type": {
+                    "type": "integer",
+                    "readOnly": true
+                  },
+                  "instance_id": {
+                    "type": "integer",
+                    "readOnly": true
+                  },
+                  "name": {
+                    "type": "string",
+                    "readOnly": true
+                  },
+                  "description": {
+                    "type": "string",
+                    "readOnly": true
+                  }
+                },
+                "required": [
+                  "id"
+                ]
+              },
+              "controller": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "format": "uuid",
+                    "nullable": true,
+                    "readOnly": true
+                  },
+                  "device_id": {
+                    "type": "integer",
+                    "readOnly": true
+                  },
+                  "name": {
+                    "type": "string",
+                    "readOnly": true
+                  }
+                },
+                "readOnly": true
+              },
+              "gateway": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "format": "uuid",
+                    "nullable": true,
+                    "readOnly": true
+                  }
+                },
+                "readOnly": true
+              }
+            }
+          },
+          "@site": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true,
+            "readOnly": true
+          }
+        },
+        "required": [
+          "id"
+        ]
+      },
+      "Collector-Sample": {
+        "description": "",
+        "type": "object",
+        "x-examples": {
+          "Response": {
+            "$ref": "#/components/examples/Get-Collector-Samples"
+          }
+        },
+        "properties": {
+          "count": {
+            "type": "number"
+          },
+          "range": {
+            "type": "object",
+            "properties": {
+              "start": {
+                "type": "number"
+              },
+              "end": {
+                "type": "number"
+              }
+            }
+          },
+          "integrity": {
+            "type": "object",
+            "properties": {
+              "sample_duration": {
+                "type": "number"
+              },
+              "expected_samples": {
+                "type": "number"
+              },
+              "missing_samples": {
+                "type": "number"
+              },
+              "quality": {
+                "type": "number"
+              }
+            }
+          },
+          "data": {
+            "type": "array",
+            "uniqueItems": true,
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "timestamp": {
+                  "type": "number"
+                },
+                "value": {
+                  "type": "number"
+                },
+                "feedback_value": {},
+                "state_text": {},
+                "event_state": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "priority_array": {},
+                "status_flags": {
+                  "type": "object",
+                  "properties": {
+                    "fault": {
+                      "type": "boolean"
+                    },
+                    "in_alarm": {
+                      "type": "boolean"
+                    },
+                    "overridden": {
+                      "type": "boolean"
+                    },
+                    "out_of_service": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "statistics": {
+            "type": "object",
+            "properties": {
+              "min": {
+                "type": "number"
+              },
+              "max": {
+                "type": "number"
+              },
+              "mean": {
+                "type": "number"
+              }
+            }
+          },
+          "health": {
+            "type": "object",
+            "properties": {
+              "event_state_distribution": {
+                "type": "object",
+                "properties": {
+                  "normal": {
+                    "type": "object",
+                    "properties": {
+                      "sample_count": {
+                        "type": "number"
+                      },
+                      "percent_total": {
+                        "type": "number"
+                      }
+                    }
+                  },
+                  "offnormal": {
+                    "type": "object",
+                    "properties": {
+                      "sample_count": {
+                        "type": "number"
+                      },
+                      "percent_total": {
+                        "type": "number"
+                      }
+                    }
+                  },
+                  "fault": {
+                    "type": "object",
+                    "properties": {
+                      "sample_count": {
+                        "type": "number"
+                      },
+                      "percent_total": {
+                        "type": "number"
+                      }
+                    }
+                  }
+                }
+              },
+              "status_distribution": {
+                "type": "object",
+                "properties": {
+                  "fault": {
+                    "type": "object",
+                    "properties": {
+                      "sample_count": {
+                        "type": "number"
+                      },
+                      "percent_total": {
+                        "type": "number"
+                      }
+                    }
+                  },
+                  "in_alarm": {
+                    "type": "object",
+                    "properties": {
+                      "sample_count": {
+                        "type": "number"
+                      },
+                      "percent_total": {
+                        "type": "number"
+                      }
+                    }
+                  },
+                  "overridden": {
+                    "type": "object",
+                    "properties": {
+                      "sample_count": {
+                        "type": "number"
+                      },
+                      "percent_total": {
+                        "type": "number"
+                      }
+                    }
+                  },
+                  "out_of_service": {
+                    "type": "object",
+                    "properties": {
+                      "sample_count": {
+                        "type": "number"
+                      },
+                      "percent_total": {
+                        "type": "number"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "title": "Collector Sample Object",
+        "x-tags": [
+          "Collector"
+        ]
+      },
+      "Collector-Stats": {
+        "title": "Collector-Stats-Object",
+        "type": "object",
+        "x-tags": [
+          "Collector"
+        ],
+        "description": "",
+        "properties": {
+          "sample_count": {
+            "type": "integer",
+            "format": "int64",
+            "readOnly": true
+          }
+        }
+      },
       "Controller": {
         "description": "",
         "type": "object",
@@ -5166,6 +6932,282 @@
           "Network"
         ]
       },
+      "Point": {
+          "description": "",
+          "type": "object",
+          "title": "Point Object",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "@controller": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "created": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "name": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "instance_id": {
+              "type": "number"
+            },
+            "object_type": {
+              "type": "number"
+            },
+            "collector_count": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 16
+            },
+            "@site": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "units": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "raw": {
+                  "type": "string"
+                },
+                "short": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "x-tags": [
+            "Point"
+          ]
+        },
+        "Release-Job": {
+          "title": "Scheduled Release Object",
+          "type": "object",
+          "x-tags": [
+            "Scheduled Release"
+          ],
+          "description": "",
+          "properties": {
+            "id": {
+              "type": "string",
+              "format": "uuid",
+              "description": "The UUID of the release job",
+              "readOnly": true
+            },
+            "created": {
+              "type": "string",
+              "description": "Date and time the release job was created, displayed in ISO 8601 format",
+              "format": "date-time",
+              "example": "2022-02-23T08:00:00+0000",
+              "readOnly": true
+            },
+            "last_modified": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Date and time the release job was last modified, displayed in ISO 8601 format",
+              "example": "2022-02-23T08:00:00+0000",
+              "nullable": true,
+              "readOnly": true
+            },
+            "source": {
+              "type": "object",
+              "properties": {
+                "point": {
+                  "type": "object",
+                  "description": "Details about the source point",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "format": "uuid",
+                      "description": "The UUID of the source point that will be released",
+                      "readOnly": true
+                    },
+                    "object_type": {
+                      "type": "integer",
+                      "description": "The BACnet object type of the source point",
+                      "readOnly": true
+                    },
+                    "instance_id": {
+                      "type": "integer",
+                      "description": "The BACnet instance ID of the source point",
+                      "readOnly": true
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "The name of the",
+                      "readOnly": true
+                    },
+                    "description": {
+                      "type": "string",
+                      "description": "The description of the source point",
+                      "readOnly": true
+                    }
+                  }
+                },
+                "controller": {
+                  "type": "object",
+                  "description": "Details about the source controller",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "format": "uuid",
+                      "description": "The UUID of the source controller",
+                      "readOnly": true
+                    },
+                    "device_id": {
+                      "type": "integer",
+                      "description": "The BACnet device ID of the source controller",
+                      "readOnly": true
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "The name of the source controller",
+                      "readOnly": true
+                    },
+                    "description": {
+                      "type": "string",
+                      "description": "The description of the source controller",
+                      "readOnly": true
+                    }
+                  }
+                },
+                "gateway": {
+                  "type": "object",
+                  "description": "Details about the source gateway device ",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "format": "uuid",
+                      "description": "The UUID of the source gateway",
+                      "readOnly": true
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "The name of the source gateway",
+                      "readOnly": true
+                    },
+                    "description": {
+                      "type": "string",
+                      "description": "The description of the source gateway",
+                      "readOnly": true
+                    },
+                    "serial": {
+                      "type": "string",
+                      "description": "The serial number of the source gateway",
+                      "readOnly": true
+                    }
+                  }
+                }
+              }
+            },
+            "@site": {
+              "type": "string",
+              "format": "uuid",
+              "description": "The UUID of the source point's assigned site, if applicable",
+              "nullable": true,
+              "readOnly": true
+            },
+            "status": {
+              "type": "string",
+              "enum": [
+                "pending",
+                "completed",
+                "error"
+              ],
+              "description": "The current status of the release job",
+              "readOnly": true
+            },
+            "release_timestamp": {
+              "type": "string",
+              "format": "date-time",
+              "example": "2022-02-23T08:00:00+0000",
+              "description": "Date and time the release job will be executed, displayed in ISO 8601 format"
+            },
+            "priority": {
+              "example": 8,
+              "enum": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15,
+                16
+              ],
+              "description": "The BACnet priority the source point will be relinquished from",
+              "type": "integer"
+            },
+            "owner": {
+              "type": "object",
+              "description": "Details about the user who created the request",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "description": "The UUID of the user who created the request"
+                },
+                "name": {
+                  "description": "The name of the user who created the request",
+                  "type": "object",
+                  "properties": {
+                    "given": {
+                      "type": "string",
+                      "description": "The user's given (first) name"
+                    },
+                    "family": {
+                      "type": "string",
+                      "description": "The user's family (last) name"
+                    },
+                    "full": {
+                      "type": "string",
+                      "description": "The user's full name"
+                    }
+                  }
+                },
+                "email": {
+                  "type": "string",
+                  "description": "The email address of the user who created the request"
+                },
+                "title": {
+                  "type": "string",
+                  "description": "The job title of the user who created the request"
+                }
+              }
+            },
+            "email_updates": {
+              "type": "boolean",
+              "default": true,
+              "description": "Indicates if email alerts are enabled. If `true`, alerts will be emailed to the owner when the job is accepted, completed, or has failed."
+            },
+            "note": {
+              "type": "string",
+              "maxLength": 300,
+              "example": "Requested by Jennifer at OR control desk",
+              "description": "A brief note or summary of the request"
+            },
+            "overdue": {
+              "type": "boolean",
+              "description": "Indicates if the release job is overdue. Overdue means the release timestamp has been reached and the job is still pending.",
+              "readOnly": true
+            }
+          }
+        },
       "Report": {
         "title": "Report",
         "type": "object",
@@ -5262,6 +7304,18 @@
         },
         "x-tags": [
           "Room"
+        ]
+      },
+      "Schedule": {
+        "title": "Schedule Object",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          }
+        },
+        "x-tags": [
+          "Schedule"
         ]
       },
       "Site": {
@@ -7206,6 +9260,85 @@
       }
     },
     "parameters": {
+        "pointId": {
+            "name": "pointId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "example": "168a3e32-996f-410a-a06c-c4cdc10fa362"
+            },
+            "description": "A valid point UUID"
+          },
+          "collectorId": {
+            "name": "collectorId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "A valid collector UUID"
+          },
+          "authorization": {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          "@controllerId": {
+            "name": "@controller",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "Filter results by their associated controller UUID"
+          },
+          "@gatewayId": {
+            "name": "@gateway",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "Filter results by their associated gateway UUID"
+          },
+          "@pointId": {
+            "name": "@point",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "Filter results by their associated point UUID"
+          },
+          "scheduleId": {
+            "name": "scheduleId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "A valid schedule UUID"
+          },
+          "releaseId": {
+            "name": "releaseId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "A valid release job UUID"
+          },
       "gatewayId": {
         "name": "gatewayId",
         "in": "path",
@@ -7296,8 +9429,8 @@
         },
         "description": "A valid report group UUID"
       },
-      "scheduleId": {
-        "name": "scheduleId",
+      "scheduledReportId": {
+        "name": "scheduledReportId",
         "in": "path",
         "required": true,
         "schema": {
@@ -7406,6 +9539,361 @@
       }
     },
     "examples": {
+        "Get-Collector-Samples": {
+            "value": {
+              "count": 335,
+              "range": {
+                "start": 1614163800,
+                "end": 1614264720
+              },
+              "integrity": {
+                "sample_duration": 100920,
+                "expected_samples": 336,
+                "missing_samples": 1,
+                "quality": 99
+              },
+              "statistics": {
+                "min": 63.9,
+                "max": 154.4,
+                "mean": 101.9
+              },
+              "health": {
+                "event_state_distribution": {
+                  "normal": {
+                    "sample_count": 142,
+                    "percent_total": 100
+                  },
+                  "offnormal": {
+                    "sample_count": 0,
+                    "percent_total": 0
+                  },
+                  "fault": {
+                    "sample_count": 0,
+                    "percent_total": 0
+                  }
+                },
+                "status_distribution": {
+                  "fault": {
+                    "sample_count": 0,
+                    "percent_total": 0
+                  },
+                  "in_alarm": {
+                    "sample_count": 0,
+                    "percent_total": 0
+                  },
+                  "overridden": {
+                    "sample_count": 0,
+                    "percent_total": 0
+                  },
+                  "out_of_service": {
+                    "sample_count": 3,
+                    "percent_total": 2
+                  }
+                }
+              },
+              "data": [
+                {
+                  "id": "6fc988a0f34126693318d2df9247f8cc",
+                  "timestamp": "1614264600",
+                  "value": 62.6,
+                  "feedback_value": null,
+                  "state_text": null,
+                  "event_state": "normal",
+                  "priority_array": null,
+                  "status_flags": {
+                    "fault": false,
+                    "in_alarm": false,
+                    "overridden": false,
+                    "out_of_service": false
+                  }
+                },
+                {
+                  "id": "bbd4e6fb74ad710553100aace78636ce",
+                  "timestamp": "1614264300",
+                  "value": 62.6,
+                  "feedback_value": null,
+                  "state_text": null,
+                  "event_state": "normal",
+                  "priority_array": null,
+                  "status_flags": {
+                    "fault": false,
+                    "in_alarm": false,
+                    "overridden": false,
+                    "out_of_service": false
+                  }
+                }
+              ]
+            }
+          },
+          "Put-Relinquish-Point": {
+            "value": {
+              "operation": "relinquish",
+              "priority": 8
+            }
+          },
+          "Put-Command-Point": {
+            "value": {
+              "operation": "command",
+              "value": 1,
+              "priority": 8
+            }
+          },
+          "Get-Analog-Input-Point-Online": {
+            "value": {
+              "id": "139e612c-83fa-4cc9-8634-834395899346",
+              "@controller": "d1ae9060-b89c-48e8-abae-0f78d8f6af9d",
+              "created": "2021-06-22T01:36:30+0000",
+              "name": "SEA.AH1.SAT",
+              "description": "AH-1 SUPPLY TEMPERATURE",
+              "instance_id": 5,
+              "object_type": 0,
+              "collector_count": 0,
+              "@site": "82478e3a-a212-41bf-9e2b-7522a1504a6b",
+              "is_online": true,
+              "bacnet": {
+                "object": {
+                  "instance": 5,
+                  "type": 0,
+                  "name": "SEA.AH1.SAT",
+                  "description": "AH-1 SUPPLY TEMPERATURE"
+                },
+                "telemetry": {
+                  "present_value": 109.2,
+                  "reliability": "no fault detected",
+                  "device_type": "10k Thermister",
+                  "event_state": "normal",
+                  "units": {
+                    "raw": "degrees fahrenheit",
+                    "formatted": "DEG F"
+                  }
+                },
+                "status": {
+                  "in_alarm": false,
+                  "fault": false,
+                  "out_of_service": false,
+                  "overridden": false
+                },
+                "alarming": {
+                  "enabled": true,
+                  "acked_transitions": {
+                    "to_normal": true,
+                    "to_offnormal": true,
+                    "to_fault": true
+                  },
+                  "notify": {
+                    "type": "alarm",
+                    "notification_class": 0
+                  },
+                  "time_delay": 30,
+                  "limits": {
+                    "high": 160,
+                    "low": 45
+                  },
+                  "deadband": 1,
+                  "event_timestamps": {
+                    "to_off_normal": 5838048000,
+                    "to_normal": 5838048000,
+                    "to_fault": 5838048000
+                  }
+                },
+                "totalization": {
+                  "enabled": true,
+                  "elapsed_active_time": 0,
+                  "last_reset": 0,
+                  "ealpsed_inactive_time": 0
+                }
+              }
+            }
+          },
+          "Get-Binary-Output-Point-Online": {
+            "value": {
+              "id": "139e612c-83fa-4cc9-8634-834395899346",
+              "@controller": "d1ae9060-b89c-48e8-abae-0f78d8f6af9d",
+              "created": "2021-06-22T01:36:30+0000",
+              "name": "SEA.AH1.ENA",
+              "description": "AH-1 ENABLE",
+              "instance_id": 0,
+              "object_type": 5,
+              "collector_count": 0,
+              "@site": "82478e3a-a212-41bf-9e2b-7522a1504a6b",
+              "is_online": true,
+              "bacnet": {
+                "object": {
+                  "instance": 5,
+                  "type": 4,
+                  "name": "SEA.SRV.ALARM",
+                  "description": "SRV ALARM LIGHT"
+                },
+                "telemetry": {
+                  "present_value": 0,
+                  "reliability": "no fault detected",
+                  "device_type": "LDO",
+                  "event_state": "normal",
+                  "state_text": [
+                    "NORMAL",
+                    "ALARM"
+                  ],
+                  "polarity": "normal",
+                  "feedback_value": 0,
+                  "relinquish_default": 0
+                },
+                "status": {
+                  "in_alarm": false,
+                  "fault": false,
+                  "out_of_service": false,
+                  "overridden": false
+                },
+                "priority_array": [
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null
+                ],
+                "alarming": {
+                  "enabled": true,
+                  "acked_transitions": {
+                    "to_normal": true,
+                    "to_offnormal": true,
+                    "to_fault": true
+                  },
+                  "notify": {
+                    "type": "alarm",
+                    "notification_class": 0
+                  },
+                  "time_delay": 0
+                },
+                "totalization": {
+                  "enabled": true,
+                  "elapsed_active_time": 0,
+                  "last_reset": 0,
+                  "ealpsed_inactive_time": 0
+                }
+              }
+            }
+          },
+          "Get-Analog-Input-Point": {
+            "value": {
+              "id": "139e612c-83fa-4cc9-8634-834395899346",
+              "@controller": "d1ae9060-b89c-48e8-abae-0f78d8f6af9d",
+              "created": "2021-06-22T01:36:30+0000",
+              "name": "SEA.AH1.ENA",
+              "description": "AH-1 ENABLE",
+              "instance_id": 0,
+              "object_type": 5,
+              "collector_count": 0,
+              "@site": "82478e3a-a212-41bf-9e2b-7522a1504a6b",
+              "is_online": null,
+              "bacnet": null
+            }
+          },
+          "Get-Point-List": {
+            "value": {
+              "count": 13,
+              "data": [
+                {
+                  "id": "0247cd05-409b-4c20-ade8-56d170fb9970",
+                  "controller": "48f6bef2-1d57-4333-b9af-be687876e997",
+                  "created": 1614381639,
+                  "name": "SEA.EF1.SS",
+                  "description": "",
+                  "object_type": 4,
+                  "instance_id": 2,
+                  "site": "82478e3a-a212-41bf-9e2b-7522a1504a6b",
+                  "bacnet": null
+                },
+                {
+                  "id": "15732bb9-22f6-4fac-a66a-deb342cbce54",
+                  "controller": "4f668b28-c30d-4fc1-b751-7cc30dcc4964",
+                  "created": 1613745322,
+                  "name": "SEA.LGT2.DO",
+                  "description": "",
+                  "object_type": 4,
+                  "instance_id": 4,
+                  "site": "82478e3a-a212-41bf-9e2b-7522a1504a6b",
+                  "bacnet": null
+                },
+                {
+                  "...": null
+                }
+              ]
+            }
+          },
+          "Get-Collector-Details": {
+            "value": {
+              "id": "7a3795f5-9ce4-49d5-a8ff-8d8bb96d6f38",
+              "created": "2021-05-27T23:50:17+0000",
+              "expires": null,
+              "enabled": true,
+              "interval": 300,
+              "sample_count": 19034,
+              "source": {
+                "point": {
+                  "id": "32481fc1-a14e-44e7-a459-9259820b0d96",
+                  "object_type": 4,
+                  "instance_id": 0,
+                  "name": "SEA.AH1.SS",
+                  "description": "AH-1 FAN S/S"
+                },
+                "controller": {
+                  "id": "5a9d2264-72aa-4ec8-bfe5-98ecd4173dda",
+                  "device_id": 10200,
+                  "name": "USSEA-HVAC-BMSNODE02"
+                },
+                "gateway": {
+                  "id": "7a3795f5-9ce4-49d5-a8ff-8d8bb96d6f38"
+                }
+              },
+              "@site": null
+            }
+          },
+          "Create-Point-Body": {
+            "value": {
+              "description": "Example shared example",
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "id"
+              ]
+            }
+          },
+          "Update-Release-Body": {
+            "value": {
+              "description": "Example shared example",
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "id"
+              ]
+            }
+          },
+          "Get-Release-Job": {
+            "value": {}
+          },
+          "Get-Collector-Stats": {
+            "value": {
+              "sample_count": 145250
+            }
+          },
       "Get-Gateway": {
         "value": {
           "id": "539fea81-d151-46e1-b1f6-36e3864ebeff",
@@ -8710,6 +11198,260 @@
       }
     },
     "requestBodies": {
+        "Create-Point": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "object_type": {
+                      "type": "number",
+                      "enum": [
+                        0,
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        14,
+                        17,
+                        19
+                      ],
+                      "format": "double"
+                    },
+                    "instance_id": {
+                      "type": "string"
+                    },
+                    "@site": {
+                      "type": "string",
+                      "format": "uuid"
+                    },
+                    "controller": {
+                      "type": "string",
+                      "format": "uuid",
+                      "example": "48f6bef2-1d57-4333-b9af-be687876e997"
+                    },
+                    "units": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "object_type",
+                    "instance_id",
+                    "controller"
+                  ]
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "name": "string",
+                      "description": "string",
+                      "object_type": "0",
+                      "instance": "string",
+                      "@site": "451f769d-1122-4c11-a645-7d2ed505aa0b",
+                      "controller": "48f6bef2-1d57-4333-b9af-be687876e997",
+                      "units": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "Create-Collector": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "@point": {
+                      "type": "string",
+                      "format": "uuid",
+                      "description": "The UUID of the point to be collected"
+                    },
+                    "interval": {
+                      "type": "number",
+                      "format": "double",
+                      "default": 300,
+                      "enum": [
+                        300,
+                        900,
+                        1800,
+                        3600
+                      ],
+                      "description": "The frequency in which to sample the point"
+                    },
+                    "enabled": {
+                      "type": "boolean",
+                      "default": true,
+                      "description": "Sets the status of the collector. Set to `false` to create the collector but disable data collection."
+                    }
+                  },
+                  "required": [
+                    "@point"
+                  ]
+                },
+                "examples": {
+                  "Example": {
+                    "value": {
+                      "@point": "52aa66de-e553-4383-9e16-52bfcd0efb0f",
+                      "interval": 300
+                    }
+                  }
+                }
+              }
+            },
+            "description": ""
+          },
+          "Command-Point": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "operation": {
+                      "type": "string",
+                      "description": "The desired operation, either `command` or `relinquish`",
+                      "enum": [
+                        "command",
+                        "relinquish"
+                      ],
+                      "example": "command"
+                    },
+                    "value": {
+                      "type": "number",
+                      "description": "The integer or float value to set. Use `1` or `0` for binary point states"
+                    },
+                    "priority": {
+                      "type": "number",
+                      "description": "The target command priority",
+                      "format": "double",
+                      "example": 8,
+                      "minimum": 1,
+                      "maximum": 16,
+                      "enum": [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16
+                      ]
+                    },
+                    "scheduled_release": {
+                      "type": "object",
+                      "description": "Schedule an automatic release of the command. Only available if `operation` is set to `command`",
+                      "additionalProperties": false,
+                      "properties": {
+                        "release_timestamp": {
+                          "type": "string",
+                          "format": "date-time",
+                          "example": "2022-02-23T08:00:00+0000",
+                          "description": "Provide a date and time the release job will be executed, submitted in ISO 8601 format"
+                        },
+                        "email_updates": {
+                          "type": "boolean",
+                          "default": true,
+                          "description": "*Optional* Enable email alerts for this scheduled release"
+                        },
+                        "note": {
+                          "type": "string",
+                          "description": "*Optional* Provide a brief note or summary about the command",
+                          "maxLength": 300,
+                          "example": "Requested by Jennifer at OR control desk"
+                        }
+                      },
+                      "required": [
+                        "release_timestamp"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "operation",
+                    "priority"
+                  ]
+                },
+                "examples": {
+                  "Command Point Example": {
+                    "$ref": "#/components/examples/Put-Command-Point"
+                  },
+                  "Relinquish Point Example": {
+                    "$ref": "#/components/examples/Put-Relinquish-Point"
+                  }
+                }
+              }
+            }
+          },
+          "Update-Point": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "Update-Release": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "release_timestamp": {
+                      "type": "string",
+                      "format": "date-time",
+                      "example": "2022-02-23T08:00:00+0000",
+                      "description": "Change the date and time the release job will be executed, submitted in ISO 8601 format"
+                    },
+                    "note": {
+                      "type": "string",
+                      "description": "Change the note or summary of the request",
+                      "maxLength": 300
+                    },
+                    "email_updates": {
+                      "type": "boolean",
+                      "description": "Change whether email updates are sent for this job. Set to `false` to disable email alerts."
+                    }
+                  }
+                }
+              }
+            },
+            "description": "These are the parameters of a scheduled release job that can be updated"
+          },
+          "Update-Collector": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "enabled": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "enabled"
+                  ]
+                }
+              }
+            },
+            "description": ""
+          },
       "Create-Gateway": {
         "content": {
           "application/json": {
