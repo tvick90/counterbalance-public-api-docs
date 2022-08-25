@@ -25,7 +25,7 @@
         ],
         "responses": {
           "200": {
-            "$ref": "#/components/responses/Get-Tenant-Account"
+            "$ref": "#/components/responses/Retrieve-Tenant-Account"
           }
         },
         "operationId": "get-tenant",
@@ -128,10 +128,92 @@
       }
     },
     "schemas": {
+      "Address": {
+        "description": "",
+        "type": "object",
+        "title": "Address Object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "readOnly": true
+          },
+          "created": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "last_modified": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true,
+            "readOnly": true
+          },
+          "@site": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "lines": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          },
+          "locality": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string"
+          },
+          "county": {
+            "type": "string"
+          },
+          "state": {
+            "type": "string"
+          },
+          "postcode": {
+            "type": "number"
+          },
+          "country": {
+            "type": "string"
+          },
+          "formatted": {
+            "type": "string"
+          },
+          "geolocation": {
+            "type": "object",
+            "properties": {
+              "latitude": {
+                "type": "number"
+              },
+              "longitude": {
+                "type": "number"
+              }
+            }
+          },
+          "timezone": {
+            "type": "string"
+          },
+          "designations": {
+            "type": "object",
+            "properties": {
+              "primary_mailing": {
+                "type": "boolean"
+              },
+              "primary_billing": {
+                "type": "boolean"
+              }
+            }
+          }
+        },
+        "x-tags": [
+          "Address"
+        ]
+      },
       "Tenant-Account": {
         "description": "",
         "type": "object",
-        "title": "Tenant Account Object",
+        "title": "Tenant Account",
         "x-examples": {
           "Example": {
             "id": "d6797ebf-5b00-4a59-b3e5-19711b4c55bb",
@@ -406,7 +488,7 @@
       "Site": {
         "description": "",
         "type": "object",
-        "title": "Site Object",
+        "title": "Site",
         "x-tags": [
           "Site"
         ],
@@ -586,6 +668,177 @@
             }
           }
         }
+      },
+      "Timezone-Object": {
+        "description": "",
+        "type": "object",
+        "title": "Timezone Object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "effective_coordinates": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          },
+          "current": {
+            "type": "object",
+            "properties": {
+              "wall_time": {
+                "type": "string"
+              },
+              "utc_offset": {
+                "type": "number"
+              },
+              "is_dst": {
+                "type": "boolean"
+              },
+              "tag": {
+                "type": "string"
+              }
+            }
+          },
+          "names": {
+            "type": "object",
+            "properties": {
+              "ISO6391_language_code": {
+                "type": "string"
+              },
+              "generic": {
+                "type": "string"
+              },
+              "standard": {
+                "type": "string"
+              },
+              "daylight": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "x-tags": [
+          "Utilities"
+        ]
+      },
+      "Floor": {
+        "description": "",
+        "type": "object",
+        "title": "Floor Object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "readOnly": true
+          },
+          "created": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "last_modified": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true,
+            "readOnly": true
+          },
+          "@site": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "code": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "attributes": {
+            "type": "object",
+            "properties": {
+              "below_grade": {
+                "type": "boolean"
+              },
+              "gross_floor_area": {
+                "type": "number",
+                "readOnly": true
+              },
+              "room_count": {
+                "type": "number",
+                "readOnly": true
+              },
+              "net_room_area": {
+                "type": "number",
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "x-tags": [
+          "Floor"
+        ]
+      },
+      "Room": {
+        "description": "",
+        "type": "object",
+        "title": "Room Object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1,
+            "format": "uuid",
+            "readOnly": true
+          },
+          "created": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "last_modified": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true,
+            "readOnly": true
+          },
+          "@site": {
+            "type": "string",
+            "format": "uuid",
+            "readOnly": true
+          },
+          "@floor": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "number": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "attributes": {
+            "type": "object",
+            "properties": {
+              "occupancy": {
+                "type": "string"
+              },
+              "area": {
+                "type": "number"
+              },
+              "ceiling_height": {
+                "type": "number"
+              },
+              "volume": {
+                "type": "integer"
+              }
+            }
+          }
+        },
+        "x-tags": [
+          "Room"
+        ]
       }
     },
     "parameters": {
