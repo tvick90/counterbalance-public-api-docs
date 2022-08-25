@@ -17,29 +17,632 @@
     }
   ],
   "paths": {
-    "/controller": {
-      "get": {
-        "summary": "Retrieve Controller",
-        "tags": [
-          "Controller"
-        ],
-        "responses": {},
-        "operationId": "get-controller"
-      },
-      "post": {
-        "summary": "Register Controller",
-        "operationId": "register-controller",
-        "responses": {
-          "200": {
-            "description": "OK"
+    "/v1/controller": {
+        "get": {
+          "summary": "List Controllers",
+          "responses": {
+            "200": {
+              "$ref": "#/components/responses/200-Get-Controller-Listing"
+            }
+          },
+          "operationId": "get-controller-list",
+          "description": "Retrieve a list of controllers\n\n**Required Permissions:** `*`,`infrastructure:*`,`infrastructure:controller:*`,`infrastructure:controller:list`",
+          "security": [
+            {
+              "Bearer Token": []
+            }
+          ],
+          "parameters": [
+            {
+              "$ref": "#/components/parameters/@gateway"
+            },
+            {
+              "$ref": "#/components/parameters/@site"
+            }
+          ],
+          "tags": [
+            "Controller"
+          ]
+        },
+        "post": {
+          "summary": "Register Controller",
+          "operationId": "create-controller",
+          "responses": {
+            "201": {
+              "$ref": "#/components/responses/200-Get-Controller"
+            }
+          },
+          "description": "Register a new BACnet controller\n\n**Required Permissions:** `*`,`infrastructure:*`,`infrastructure:controller:*`,`infrastructure:controller:register`\n\n### Compatible BACnet Field Controllers\nMost BACnet automation devices are compatible with Counterbalance. The complete list of compatible devices is available in the support portal.\n\n* [Compatible BACnet Devices](https://counterbalance.zendesk.com/hc/en-us/articles/360063269913)",
+          "security": [
+            {
+              "Bearer Token": []
+            }
+          ],
+          "tags": [
+            "Controller"
+          ],
+          "requestBody": {
+            "$ref": "#/components/requestBodies/Create-Controller"
           }
         },
-        "description": "",
-        "tags": [
-          "Controller"
-        ]
-      }
-    },
+        "parameters": []
+      },
+      "/v1/controller/{controllerId}": {
+        "parameters": [
+          {
+            "name": "controllerId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "A valid controller UUID"
+          }
+        ],
+        "get": {
+          "summary": "Get Controller",
+          "responses": {
+            "200": {
+              "$ref": "#/components/responses/200-Get-Controller"
+            },
+            "404": {
+              "$ref": "#/components/responses/404-Controller-Not-Found"
+            }
+          },
+          "operationId": "get-controller",
+          "description": "Retrieve a controller\n\n**Required Permissions:** `*`,`infrastructure:*`,`infrastructure:controller:*`,`infrastructure:controller:read`",
+          "security": [
+            {
+              "Bearer Token": []
+            }
+          ],
+          "parameters": [
+            {
+              "schema": {
+                "type": "boolean",
+                "default": "false"
+              },
+              "in": "query",
+              "name": "bacnet",
+              "description": "Include online and BACnet data"
+            }
+          ],
+          "tags": [
+            "Controller"
+          ]
+        },
+        "patch": {
+          "summary": "Update Controller",
+          "operationId": "update-controller",
+          "responses": {
+            "200": {
+              "$ref": "#/components/responses/200-Get-Controller"
+            },
+            "404": {
+              "$ref": "#/components/responses/404-Controller-Not-Found"
+            }
+          },
+          "description": "Update a field controller\n\n**Required Permissions:** `*`,`infrastructure:*`,`infrastructure:controller:*`,`infrastructure:controller:update`",
+          "requestBody": {
+            "$ref": "#/components/requestBodies/Update-Controller"
+          },
+          "security": [
+            {
+              "Bearer Token": []
+            }
+          ],
+          "tags": [
+            "Controller"
+          ]
+        },
+        "delete": {
+          "summary": "Delete Field Controller",
+          "operationId": "delete-controller",
+          "responses": {
+            "204": {
+              "description": "No Content",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "null"
+                  }
+                }
+              }
+            },
+            "404": {
+              "$ref": "#/components/responses/404-Controller-Not-Found"
+            }
+          },
+          "description": "### Synopsis\nDelete a controller\n\n**Required Permissions:** `*`,`infrastructure:*`,`infrastructure:controller:*`,`infrastructure:controller:delete`\n\n<!-- theme: danger -->\n> **Danger!** Deleting a field controller will also remove its associated telemetry (points, schedules, etc) and all associated meters and collectors",
+          "tags": [
+            "Controller"
+          ]
+        }
+      },"/v1/gateway": {
+        "get": {
+          "summary": "List Gateways",
+          "responses": {
+            "200": {
+              "$ref": "#/components/responses/200-Get-Gateway-Listing"
+            }
+          },
+          "operationId": "get-gateway-list",
+          "description": "Retrieve a list of gateway devices\n\n**Required Permissions:** `*`,`infrastructure:*`,`infrastructure:gateway:*`,`infrastructure:gateway:list`",
+          "security": [
+            {
+              "Bearer Token": []
+            }
+          ],
+          "tags": [
+            "Gateway"
+          ]
+        },
+        "post": {
+          "summary": "Activate Gateway",
+          "operationId": "create-gateway",
+          "responses": {
+            "201": {
+              "$ref": "#/components/responses/200-Get-Gateway"
+            }
+          },
+          "description": "Activate a gateway device and register it with a tenant account\n\n**Required Permissions:** `*`,`infrastructure:*`,`infrastructure:gateway:*`,`infrastructure:gateway:register`\n\n> **Heads Up** This endpoint is subject to `gateway` quota availabilty\n\n### Prerequisite Setup\nThe target gateway device must be fully configured on a network with Internet access before it can be registered. Registration will fail if the device cannot be contacted. \n\n##### Helpful Support Articles\n* [How to Purchase a Gateway Device]()\n* [Configure Gateway Networking & BACnet](https://counterbalance.zendesk.com/hc/en-us/articles/360063269293)\n* [Gateway Architecture & Specifications]()\n\n### Gateway Serial Number\nThe gateway serial number is required in order to activate it. The serial number is found on the bottom of the device or by loading the local web GUI of the gateway.",
+          "security": [
+            {
+              "Bearer Token": []
+            }
+          ],
+          "parameters": [
+            {
+              "$ref": "#/components/parameters/Content-Type"
+            }
+          ],
+          "requestBody": {
+            "$ref": "#/components/requestBodies/Create-Gateway"
+          },
+          "tags": [
+            "Gateway"
+          ]
+        },
+        "parameters": []
+      },
+      "/v1/gateway/{gatewayId}": {
+        "parameters": [
+          {
+            "name": "gatewayId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "example": "539fea81-d151-46e1-b1f6-36e3864ebeff"
+            },
+            "description": "A valid gateway UUID"
+          }
+        ],
+        "get": {
+          "summary": "Get Gateway",
+          "responses": {
+            "200": {
+              "$ref": "#/components/responses/200-Get-Gateway"
+            },
+            "404": {
+              "$ref": "#/components/responses/404-Gateway-Not-Found"
+            }
+          },
+          "operationId": "get-gateway",
+          "description": "Retrieve a gateway device by ID\n\n**Required Permissions:** `*`,`infrastructure:*`,`infrastructure:gateway:*`,`infrastructure:gateway:read`",
+          "parameters": [],
+          "security": [
+            {
+              "Bearer Token": []
+            }
+          ],
+          "tags": [
+            "Gateway"
+          ]
+        },
+        "patch": {
+          "summary": "Update Gateway",
+          "operationId": "update-gateway",
+          "responses": {
+            "200": {
+              "$ref": "#/components/responses/200-Get-Gateway"
+            },
+            "404": {
+              "$ref": "#/components/responses/404-Gateway-Not-Found"
+            }
+          },
+          "description": "Update a gateway device\n\n**Required Permissions:** `*`,`infrastructure:*`,`infrastructure:gateway:*`,`infrastructure:gateway:update`",
+          "security": [
+            {
+              "Bearer Token": []
+            }
+          ],
+          "parameters": [
+            {
+              "schema": {
+                "type": "string"
+              },
+              "in": "header",
+              "name": "Content-Type",
+              "description": "application/json",
+              "required": true
+            }
+          ],
+          "requestBody": {
+            "$ref": "#/components/requestBodies/Update-Gateway"
+          },
+          "tags": [
+            "Gateway"
+          ]
+        },
+        "delete": {
+          "summary": "Delete Gateway",
+          "operationId": "delete-gateway",
+          "responses": {
+            "204": {
+              "description": "No Content",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "null"
+                  },
+                  "examples": {}
+                }
+              }
+            },
+            "404": {
+              "$ref": "#/components/responses/404-Gateway-Not-Found"
+            }
+          },
+          "description": "Delete a gateway device\n\n**Required Permissions:** `*`,`infrastructure:*`,`infrastructure:gateway:*`,`infrastructure:gateway:delete`\n\n### Connected Controllers\nWhen a gateway is deleted, the connected controllers are retained but all data collection activities will stop, building intelligence rules will be unavailable, and any associated meters will be in fault. \n\nA controller can be re-associated with an active gateway via the [Update Controller](/reference/Infrastructure.v1.json/paths/~1v1~1infrastructure~1gateway~1%7BgatewayId%7D/patch) endpoint.\n\n### Deleting an Offline Gateway\nBy default, when a gateway is deleted, the system will attempt to contact and initialize it. If the gateway cannot be contacted, the delete operation will fail. \n\nTo override this default action, set the `force` query parameter to `true`. This will require an additional manual reset in the local web GUI of the gateway device before the device can be registered again.\n\nRefer to support article [Manually Resetting a Gateway Device]() for additional information.",
+          "security": [
+            {
+              "Bearer Token": []
+            }
+          ],
+          "parameters": [
+            {
+              "schema": {
+                "type": "boolean"
+              },
+              "in": "query",
+              "name": "force",
+              "description": "Force the delete of a gateway that is offline"
+            }
+          ],
+          "tags": [
+            "Gateway"
+          ]
+        }
+      },
+      "/v1/gateway/{gatewayId}/status": {
+        "parameters": [
+          {
+            "name": "gatewayId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "example": "539fea81-d151-46e1-b1f6-36e3864ebeff"
+            },
+            "description": "A valid gateway UUID"
+          }
+        ],
+        "get": {
+          "summary": "Get Gateway Status",
+          "responses": {
+            "200": {
+              "$ref": "#/components/responses/200-Get-Gateway-Status"
+            },
+            "404": {
+              "$ref": "#/components/responses/404-Gateway-Not-Found"
+            }
+          },
+          "operationId": "get-gateway",
+          "description": "Retrieve a gateway device status details\n\n**Required Permissions:** `*`,`infrastructure:*`,`infrastructure:gateway:*`,`infrastructure:gateway:read`",
+          "parameters": [],
+          "security": [
+            {
+              "Bearer Token": []
+            }
+          ],
+          "tags": [
+            "Gateway"
+          ]
+        }
+      },
+      "/v1/gateway/{gatewayId}/devices": {
+        "parameters": [
+          {
+            "name": "gatewayId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "example": "539fea81-d151-46e1-b1f6-36e3864ebeff"
+            },
+            "description": "A valid gateway UUID"
+          }
+        ],
+        "get": {
+          "summary": "List Available Controllers",
+          "responses": {
+            "200": {
+              "$ref": "#/components/responses/200-Get-Gateway-Devices"
+            },
+            "404": {
+              "$ref": "#/components/responses/404-Gateway-Not-Found"
+            }
+          },
+          "operationId": "get-gateway-devices",
+          "description": "Retrieve a list of available controllers connected via the specified gateway\n\n**Required Permissions:** `*`,`infrastructure:*`,`infrastructure:gateway:*`,`infrastructure:gateway:query`",
+          "security": [
+            {
+              "Bearer Token": []
+            }
+          ],
+          "tags": [
+            "Gateway Administration"
+          ]
+        }
+      },
+      "/v1/gateway/{gatewayId}/whois": {
+        "parameters": [
+          {
+            "name": "gatewayId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "example": "539fea81-d151-46e1-b1f6-36e3864ebeff"
+            },
+            "description": "A valid gateway UUID"
+          }
+        ],
+        "post": {
+          "summary": "Send BACnet Who-Is",
+          "operationId": "send-whois",
+          "responses": {
+            "200": {
+              "$ref": "#/components/responses/200-Gateway-Whois"
+            },
+            "404": {
+              "$ref": "#/components/responses/404-Gateway-Not-Found"
+            }
+          },
+          "description": "Send a BACnet Who-Is to the network and review responsive field controllers\n\n**Required Permissions:** `*`,`infrastructure:*`,`infrastructure:gateway:*`,`infrastructure:gateway:query`\n",
+          "security": [
+            {
+              "Bearer Token": []
+            }
+          ],
+          "tags": [
+            "BACnet"
+          ]
+        }
+      },
+      "/v1/gateway/{gatewayId}/admin/service": {
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/gatewayId"
+          }
+        ],
+        "put": {
+          "summary": "Start/Stop Gateway Service",
+          "operationId": "toggle-gateway-service",
+          "responses": {
+            "200": {
+              "$ref": "#/components/responses/200-Gateway-Generic-Operation"
+            }
+          },
+          "tags": [
+            "Gateway Administration"
+          ],
+          "description": "Start and stop gateway services\n\n**Required Permissions:** `*`,`infrastructure:*`,`infrastructure:gateway:*`,`infrastructure:gateway:service`\n\n > **Note:** *This endpoint is intended for advanced troubleshooting and **should not be used** without advice from Counterbalance support.*\n <!-- theme: danger -->\n > **Warning:** *Improper use of this endpoint may sever communication to the device and may require the gateway to be reset to factory defaults.*\n\n## Services Available\n\n| Service ID | Name | Description |\n|:-|:-|:-|\n| `bacnet` | **BACnet Middleware** | Toggles the BACnet middleware daemon for communicating with the BACnet network\n| `ssh` | **Secure Shell (SSH)** | Toggles SSH access to the device locally. By default, SSH is enabled.\n| `tunnel` | **Tunnel Middleware** | Toggles the secure tunnel service for remote device access <br>***Caution:** Stopping this service will sever remote access to the gateway from the cloud. This can be restarted using the local GUI of the gateway.*\n",
+          "security": [
+            {
+              "Bearer Token": []
+            }
+          ],
+          "requestBody": {
+            "$ref": "#/components/requestBodies/Cycle-Gateway-Service"
+          }
+        }
+      },
+      "/v1/gateway/{gatewayId}/admin/ethernet": {
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/gatewayId"
+          }
+        ],
+        "put": {
+          "summary": "Configure Gateway Network",
+          "operationId": "config-gateway-network",
+          "responses": {
+            "200": {
+              "$ref": "#/components/responses/200-Gateway-Generic-Operation"
+            }
+          },
+          "tags": [
+            "Gateway Administration"
+          ],
+          "description": "Configure a gateway network interfce IP address, DNS servers, and DHCP\n\n**Required Permissions:** `*`,`infrastructure:*`,`infrastructure:gateway:*`,`infrastructure:gateway:network`\n\n## Specifying the Interface\nYou must specify which interface to update by setting the `interface` request body parameter to one of the values in the following table.\n\n| Interface | Description |\n|:-|:-|\n| **`eth0`** | Primary ethernet port\n\n## Supported Network Configurations\nThe gateway device currently supports one ethernet interface, `eth0`, and can be configured for dynamic addressing with DHCP, or a static IP address (recommended). \n\n### Configuring a Static IP Address\nTo configure an interface with a static IP address, set the `address`, `mask`, and `gateway` request body parameters, set the `dhcp` request body parameter to `false`, and provide at least one DNS server address.\n\n```json\n{\n  \"interface\": \"eth0\",\n  \"dhcp\": false,\n  \"address\": \"192.168.1.100\",\n  \"mask\": \"255.255.255.0\",\n  \"gateway\": \"192.168.1.254\",\n  \"dns\": [\n    \"1.1.1.1\"\n  ]\n}\n``` \n\n### Configuring DHCP\nTo configure the interface to use DHCP, set the `dhcp` request body parameter to `true`. You can provide up to four DNS servers with the `dns` paramater to overwrite the DNS servers provided from the DHCP server. In this mode, all other address parameters are ignored.\n\n```json\n{\n  \"interface\": \"eth0\",\n  \"dhcp\": true\n}\n```\n",
+          "security": [
+            {
+              "Bearer Token": []
+            }
+          ],
+          "requestBody": {
+            "$ref": "#/components/requestBodies/Update-Gateway-Network"
+          }
+        }
+      },
+      "/v1/gateway/{gatewayId}/admin/hostname": {
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/gatewayId"
+          }
+        ],
+        "put": {
+          "summary": "Configure Gateway Hostname",
+          "operationId": "config-gateway-hostname",
+          "tags": [
+            "Gateway Administration"
+          ],
+          "description": "Configure a gateway hostname\n\n**Required Permissions:** `*`,`infrastructure:*`,`infrastructure:gateway:*`,`infrastructure:gateway:hostname`",
+          "security": [
+            {
+              "Bearer Token": []
+            }
+          ],
+          "requestBody": {
+            "$ref": "#/components/requestBodies/Update-Gateway-Hostname"
+          },
+          "responses": {
+            "200": {
+              "$ref": "#/components/responses/200-Gateway-Generic-Operation"
+            }
+          }
+        }
+      },
+      "/v1/gateway/{gatewayId}/admin/restart": {
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/gatewayId"
+          }
+        ],
+        "put": {
+          "summary": "Restart Gateway",
+          "operationId": "restart-gateway",
+          "tags": [
+            "Gateway Administration"
+          ],
+          "description": "Restart a gateway device\n\n**Required Permissions:** `*`,`infrastructure:*`,`infrastructure:gateway:*`,`infrastructure:gateway:manage`\n\nThere is no request body for this endpoint.",
+          "security": [
+            {
+              "Bearer Token": []
+            }
+          ],
+          "responses": {
+            "200": {
+              "$ref": "#/components/responses/200-Gateway-Generic-Operation"
+            },
+            "": {
+              "$ref": "#/components/responses/200-Configure-Network"
+            }
+          }
+        }
+      },
+      "/v1/network": {
+        "get": {
+          "summary": "List Networks",
+          "tags": [
+            "Network"
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            }
+          },
+          "operationId": "list-networks",
+          "security": [
+            {
+              "Bearer Token": []
+            }
+          ]
+        },
+        "post": {
+          "summary": "Create Network",
+          "operationId": "create-network",
+          "responses": {
+            "201": {
+              "description": "Created"
+            }
+          },
+          "tags": [
+            "Network"
+          ],
+          "security": [
+            {
+              "Bearer Token": []
+            }
+          ]
+        },
+        "parameters": []
+      },
+      "/v1/network/{networkId}": {
+        "parameters": [
+          {
+            "name": "networkId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "A valid network UUID"
+          }
+        ],
+        "get": {
+          "summary": "Get Network",
+          "tags": [
+            "Network"
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            }
+          },
+          "operationId": "get-network",
+          "description": "",
+          "security": [
+            {
+              "Bearer Token": []
+            }
+          ]
+        },
+        "patch": {
+          "summary": "Update Network",
+          "operationId": "update-network",
+          "responses": {
+            "200": {
+              "description": "OK"
+            }
+          },
+          "security": [
+            {
+              "Bearer Token": []
+            }
+          ],
+          "tags": [
+            "Network"
+          ],
+          "description": ""
+        },
+        "delete": {
+          "summary": "Delete Network",
+          "operationId": "delete-network",
+          "responses": {
+            "204": {
+              "description": "No Content"
+            }
+          },
+          "security": [
+            {
+              "Bearer Token": []
+            }
+          ],
+          "tags": [
+            "Network"
+          ],
+          "description": ""
+        }
+      },
     "/reporting/report": {
         "get": {
             "summary": "List Reports",
@@ -1587,7 +2190,7 @@
     },
     "/tenant/preferences": {
       "get": {
-        "summary": "RetrieveTenant Preferences",
+        "summary": "Retrieve Tenant Preferences",
         "responses": {
           "200": {
             "$ref": "#/components/responses/200-Tenant-Preferences"
@@ -3133,6 +3736,395 @@
             }
           }
         }
+      },
+      "200-Get-Gateway": {
+        "description": "Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Gateway"
+            },
+            "examples": {
+              "Response": {
+                "$ref": "#/components/examples/Get-Gateway"
+              }
+            }
+          }
+        },
+        "headers": {}
+      },
+      "404-Gateway-Not-Found": {
+        "description": "Not Found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            },
+            "examples": {
+              "Response": {
+                "value": {
+                  "error": {
+                    "message": "Gateway not found",
+                    "console": "Please check the gateway ID and try your request again",
+                    "code": 404
+                  },
+                  "logging_hash": "..."
+                }
+              }
+            }
+          }
+        },
+        "headers": {}
+      },
+      "200-Get-Gateway-Listing": {
+        "description": "Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "count": {
+                  "type": "number"
+                },
+                "index": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "data": {
+                  "type": "array",
+                  "uniqueItems": true,
+                  "minItems": 1,
+                  "items": {
+                    "$ref": "#/components/schemas/Gateway"
+                  }
+                }
+              }
+            },
+            "examples": {
+              "Response": {
+                "$ref": "#/components/examples/Get-Gateway-List"
+              }
+            }
+          }
+        },
+        "headers": {}
+      },
+      "200-Gateway-Whois": {
+        "description": "Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "count": {
+                  "type": "number"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "responses": {
+                      "type": "array",
+                      "uniqueItems": true,
+                      "minItems": 1,
+                      "items": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "properties": {
+                          "device_id": {
+                            "type": "string"
+                          },
+                          "device_name": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    },
+                    "online_devices": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "examples": {
+              "Response": {
+                "$ref": "#/components/examples/Gateway-Whois"
+              }
+            }
+          }
+        }
+      },
+      "200-Get-Gateway-Devices": {
+        "description": "Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "count": {
+                  "type": "number",
+                  "description": "The number of devices available"
+                },
+                "data": {
+                  "type": "object",
+                  "required": [
+                    "managed_devices",
+                    "unmanaged_devices",
+                    "online_devices",
+                    "offline_devices",
+                    "new_devices_available"
+                  ],
+                  "properties": {
+                    "managed_devices": {
+                      "type": "array",
+                      "uniqueItems": true,
+                      "minItems": 1,
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "name": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "description": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "location": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "site": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "online": {
+                            "type": "boolean"
+                          },
+                          "bacnet": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "number"
+                              },
+                              "name": {
+                                "type": "string",
+                                "minLength": 1
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "name"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "name",
+                          "description",
+                          "location",
+                          "site",
+                          "online"
+                        ]
+                      }
+                    },
+                    "unmanaged_devices": {
+                      "type": "array",
+                      "uniqueItems": true,
+                      "minItems": 1,
+                      "description": "An array of devies available but not yet managed",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "device_id": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "device_name": {
+                            "type": "string",
+                            "minLength": 1
+                          }
+                        },
+                        "required": [
+                          "device_id",
+                          "device_name"
+                        ]
+                      }
+                    },
+                    "online_devices": {
+                      "type": "array",
+                      "description": "A list of BACnet device instance IDs that are online",
+                      "items": {
+                        "type": "object"
+                      }
+                    },
+                    "offline_devices": {
+                      "type": "array",
+                      "description": "A list of BACnet device instance IDs that are managed and not responding",
+                      "items": {
+                        "type": "object"
+                      }
+                    },
+                    "new_devices_available": {
+                      "type": "boolean",
+                      "description": "Indicates if new devices are available for management"
+                    }
+                  }
+                }
+              }
+            },
+            "examples": {
+              "Response": {
+                "$ref": "#/components/examples/Get-Gateway-Devices"
+              }
+            }
+          }
+        }
+      },
+      "200-Get-Controller-Listing": {
+        "description": "Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "count": {
+                  "type": "integer"
+                },
+                "index": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Controller"
+                  }
+                }
+              }
+            },
+            "examples": {
+              "Response": {
+                "$ref": "#/components/examples/Get-Controller-Listing"
+              }
+            }
+          }
+        }
+      },
+      "404-Controller-Not-Found": {
+        "description": "Not Found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            },
+            "examples": {
+              "Response": {
+                "value": {
+                  "error": {
+                    "message": "Controller not found",
+                    "console": "The controller ID ... could not be found in the database",
+                    "code": 404
+                  },
+                  "logging_hash": "..."
+                }
+              }
+            }
+          }
+        }
+      },
+      "200-Get-Controller": {
+        "description": "Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Controller"
+            },
+            "examples": {
+              "Response": {
+                "$ref": "#/components/examples/Get-Controller-Details"
+              },
+              "Response w/ BACnet Details": {
+                "$ref": "#/components/examples/Get-Controller-Details-Online"
+              }
+            }
+          }
+        }
+      },
+      "200-Get-Network": {
+        "description": "Example response",
+        "content": {
+          "application/json": {
+            "schema": {
+              "properties": {
+                "id": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "200-Get-Network-Listing": {
+        "description": "Example response",
+        "content": {
+          "application/json": {
+            "schema": {
+              "properties": {
+                "id": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "200-Gateway-Generic-Operation": {
+        "description": "Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "boolean",
+                  "description": "The result of the command. If `true`, command was successful. If `false`, command failed."
+                }
+              }
+            },
+            "examples": {
+              "Response": {
+                "$ref": "#/components/examples/Generic-Gateway-Operation"
+              }
+            }
+          }
+        }
+      },
+      "200-Get-Gateway-Status": {
+        "description": "Ok",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Gateway-Status"
+            },
+            "examples": {
+              "Response": {
+                "$ref": "#/components/examples/Get-Gateway-Status"
+              }
+            }
+          }
+        }
       }
     },
     "schemas": {
@@ -3428,6 +4420,393 @@
           }
         }
       },
+      "Controller": {
+        "description": "",
+        "type": "object",
+        "title": "Controller",
+        "x-examples": {},
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "created": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "last_modified": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "@gateway": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "location": {
+            "type": "string"
+          },
+          "instance_id": {
+            "type": "number"
+          },
+          "@site": {
+            "type": "string"
+          },
+          "is_online": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "is_ostracized": {
+            "type": "boolean"
+          },
+          "point_count": {
+            "type": "integer",
+            "description": "The number of points that are connected to this controller",
+            "readOnly": true
+          },
+          "bacnet": {
+            "type": "object",
+            "properties": {
+              "object": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "instance": {
+                    "type": "string"
+                  }
+                }
+              },
+              "protocol": {
+                "type": "object",
+                "properties": {
+                  "version": {
+                    "type": "number"
+                  },
+                  "revision": {
+                    "type": "number"
+                  },
+                  "max_master": {
+                    "type": "number"
+                  },
+                  "device_id": {
+                    "type": "string"
+                  },
+                  "max_segments_accepted": {
+                    "type": "number"
+                  },
+                  "apdu": {
+                    "type": "object",
+                    "properties": {
+                      "timeout": {
+                        "type": "number"
+                      },
+                      "retries": {
+                        "type": "number"
+                      },
+                      "segment_timeout": {
+                        "type": "number"
+                      },
+                      "max_length": {
+                        "type": "number"
+                      }
+                    }
+                  },
+                  "services_supported": {
+                    "type": "object",
+                    "properties": {
+                      "atomic-read-file": {
+                        "type": "boolean"
+                      },
+                      "confirmed-text-message": {
+                        "type": "boolean"
+                      },
+                      "unconfirmed-text-message": {
+                        "type": "boolean"
+                      },
+                      "time-synchronization": {
+                        "type": "boolean"
+                      },
+                      "confirmed-event-notification": {
+                        "type": "boolean"
+                      },
+                      "reinitialize-device": {
+                        "type": "boolean"
+                      },
+                      "who-is": {
+                        "type": "boolean"
+                      },
+                      "who-has": {
+                        "type": "boolean"
+                      },
+                      "unconfirmed-event-notification": {
+                        "type": "boolean"
+                      },
+                      "subscribe-cov-property": {
+                        "type": "boolean"
+                      },
+                      "vt-data": {
+                        "type": "boolean"
+                      },
+                      "unconfirmed-private-transfer": {
+                        "type": "boolean"
+                      },
+                      "create-object": {
+                        "type": "boolean"
+                      },
+                      "delete-object": {
+                        "type": "boolean"
+                      },
+                      "read-property-conditional": {
+                        "type": "boolean"
+                      },
+                      "add-list-element": {
+                        "type": "boolean"
+                      },
+                      "vt-open": {
+                        "type": "boolean"
+                      },
+                      "remove-list-element": {
+                        "type": "boolean"
+                      },
+                      "get-event-information": {
+                        "type": "boolean"
+                      },
+                      "confirmed-cov-notification": {
+                        "type": "boolean"
+                      },
+                      "i-am": {
+                        "type": "boolean"
+                      },
+                      "device-communication-control": {
+                        "type": "boolean"
+                      },
+                      "acknowledge-alarm": {
+                        "type": "boolean"
+                      },
+                      "get-alarm-summary": {
+                        "type": "boolean"
+                      },
+                      "i-have": {
+                        "type": "boolean"
+                      },
+                      "subscribe-cov": {
+                        "type": "boolean"
+                      },
+                      "confirmed-private-transfer": {
+                        "type": "boolean"
+                      },
+                      "vt-close": {
+                        "type": "boolean"
+                      },
+                      "request-key": {
+                        "type": "boolean"
+                      },
+                      "read-property-multiple": {
+                        "type": "boolean"
+                      },
+                      "write-property": {
+                        "type": "boolean"
+                      },
+                      "life-safety-operation": {
+                        "type": "boolean"
+                      },
+                      "read-property": {
+                        "type": "boolean"
+                      },
+                      "atomic-write-file": {
+                        "type": "boolean"
+                      },
+                      "utc-time-synchronization": {
+                        "type": "boolean"
+                      },
+                      "get-enrollment-summary": {
+                        "type": "boolean"
+                      },
+                      "write-property-multiple": {
+                        "type": "boolean"
+                      },
+                      "unconfirmed-cov-notification": {
+                        "type": "boolean"
+                      },
+                      "read-range": {
+                        "type": "boolean"
+                      },
+                      "authenticate": {
+                        "type": "boolean"
+                      }
+                    }
+                  },
+                  "object_types_supported": {
+                    "type": "object",
+                    "properties": {
+                      "averaging": {
+                        "type": "boolean"
+                      },
+                      "multi-state-input": {
+                        "type": "boolean"
+                      },
+                      "schedule": {
+                        "type": "boolean"
+                      },
+                      "multi-state-output": {
+                        "type": "boolean"
+                      },
+                      "binary-output": {
+                        "type": "boolean"
+                      },
+                      "analog-value": {
+                        "type": "boolean"
+                      },
+                      "life-safety-point": {
+                        "type": "boolean"
+                      },
+                      "group": {
+                        "type": "boolean"
+                      },
+                      "notification-class": {
+                        "type": "boolean"
+                      },
+                      "analog-input": {
+                        "type": "boolean"
+                      },
+                      "file": {
+                        "type": "boolean"
+                      },
+                      "command": {
+                        "type": "boolean"
+                      },
+                      "life-safety-zone": {
+                        "type": "boolean"
+                      },
+                      "binary-input": {
+                        "type": "boolean"
+                      },
+                      "loop": {
+                        "type": "boolean"
+                      },
+                      "multi-state-value": {
+                        "type": "boolean"
+                      },
+                      "analog-output": {
+                        "type": "boolean"
+                      },
+                      "calendar": {
+                        "type": "boolean"
+                      },
+                      "event-enrollment": {
+                        "type": "boolean"
+                      },
+                      "pulse-converter": {
+                        "type": "boolean"
+                      },
+                      "device": {
+                        "type": "boolean"
+                      },
+                      "trend-log": {
+                        "type": "boolean"
+                      },
+                      "binary-value": {
+                        "type": "boolean"
+                      },
+                      "program": {
+                        "type": "boolean"
+                      },
+                      "accumulator": {
+                        "type": "boolean"
+                      }
+                    }
+                  }
+                }
+              },
+              "hardware": {
+                "type": "object",
+                "properties": {
+                  "make": {
+                    "type": "string"
+                  },
+                  "model": {
+                    "type": "string"
+                  },
+                  "vendor_id": {
+                    "type": "number"
+                  },
+                  "location": {
+                    "type": "string"
+                  },
+                  "firmware_revision": {
+                    "type": "string"
+                  }
+                }
+              },
+              "system": {
+                "type": "object",
+                "properties": {
+                  "application_software_version": {
+                    "type": "string"
+                  },
+                  "status": {
+                    "type": "string"
+                  },
+                  "date": {
+                    "type": "string"
+                  },
+                  "time": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-tags": [
+          "Controller"
+        ]
+      },
+      "Error": {
+        "title": "Typical Error Response",
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "object",
+            "properties": {
+              "message": {
+                "type": "string",
+                "description": "The error that occurred"
+              },
+              "console": {
+                "type": "string",
+                "description": "Additional error output and further instruction"
+              },
+              "code": {
+                "type": "number",
+                "description": "The HTTP error code"
+              }
+            },
+            "required": [
+              "message",
+              "console",
+              "code"
+            ]
+          },
+          "logging_hash": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "A logging entry ID for debugging"
+          }
+        }
+      },
       "Floor": {
         "description": "",
         "type": "object",
@@ -3484,40 +4863,262 @@
           "Floor"
         ]
       },
-      "Error": {
-        "title": "Typical Error Response",
+      "Gateway": {
+        "title": "Gateway",
         "type": "object",
+        "description": "",
+        "x-examples": {},
+        "x-tags": [
+          "Gateway"
+        ],
         "properties": {
-          "error": {
-            "type": "object",
-            "properties": {
-              "message": {
-                "type": "string",
-                "description": "The error that occurred"
-              },
-              "console": {
-                "type": "string",
-                "description": "Additional error output and further instruction"
-              },
-              "code": {
-                "type": "number",
-                "description": "The HTTP error code"
-              }
-            },
-            "required": [
-              "message",
-              "console",
-              "code"
-            ]
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The gateway UUID"
           },
-          "logging_hash": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "description": "A logging entry ID for debugging"
+          "created": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The timestamp the gateway was created",
+            "readOnly": true
+          },
+          "last_modified": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The timestamp the gateway was last modified",
+            "readOnly": true
+          },
+          "serial": {
+            "type": "string",
+            "description": "The serial number of the gateway"
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the gateway"
+          },
+          "description": {
+            "type": "string",
+            "description": "A brief description of the gateway"
           }
         }
+      },
+      "Gateway-Network-Interface": {
+        "title": "Gateway Network Interface",
+        "type": "object",
+        "x-tags": [
+          "Gateway"
+        ],
+        "properties": {
+          "dhcp": {
+            "type": "boolean"
+          },
+          "mac": {
+            "type": "string",
+            "example": "2C:54:91:88:C9:E3",
+            "description": "The physical MAC address of the interface",
+            "readOnly": true
+          },
+          "address": {
+            "type": "string"
+          },
+          "subnet": {
+            "type": "string",
+            "description": "The IPv4 subnet mask of the interface"
+          },
+          "gateway": {
+            "type": "string",
+            "description": "The IPv4 gateway address of the interface"
+          },
+          "cidr": {
+            "type": "string",
+            "description": "The CIDR mask length of the interface",
+            "readOnly": true
+          },
+          "dns": {
+            "type": "array",
+            "uniqueItems": true,
+            "minItems": 1,
+            "maxItems": 4,
+            "description": "An array of IPv4 DNS server addresses used with the interface",
+            "items": {
+              "type": "string",
+              "format": "ipv4"
+            }
+          }
+        }
+      },
+      "Gateway-Status": {
+        "title": "Gateway Status",
+        "type": "object",
+        "properties": {
+          "hostname": {
+            "type": "string",
+            "description": "The hostname of the gateway device",
+            "format": "hostname"
+          },
+          "serial": {
+            "type": "string",
+            "description": "The serial number of the gateway device",
+            "format": "hostname"
+          },
+          "registration": {
+            "type": "object",
+            "properties": {
+              "tenant": {
+                "type": "string",
+                "description": "The registered tenant ID",
+                "format": "uuid",
+                "readOnly": true
+              },
+              "timestamp": {
+                "type": "string",
+                "format": "date-time",
+                "description": "The timestamp of device registration in ISO8601 format",
+                "readOnly": true
+              }
+            }
+          },
+          "uptime": {
+            "type": "string",
+            "description": "The uptime of the gateway device",
+            "readOnly": true
+          },
+          "services": {
+            "type": "object",
+            "additionalProperties": false,
+            "description": "Details about the services running on the gateway device",
+            "properties": {
+              "running": {
+                "type": "number",
+                "description": "The number of services running",
+                "readOnly": true
+              },
+              "status": {
+                "type": "object",
+                "description": "The status of key gateway services",
+                "properties": {
+                  "web_server": {
+                    "type": "boolean",
+                    "readOnly": true
+                  },
+                  "cache": {
+                    "type": "boolean",
+                    "readOnly": true
+                  },
+                  "ssh": {
+                    "type": "boolean",
+                    "readOnly": true
+                  },
+                  "bacnet": {
+                    "type": "boolean"
+                  },
+                  "tunnel": {
+                    "type": "boolean"
+                  }
+                },
+                "readOnly": true
+              }
+            },
+            "readOnly": true
+          },
+          "network": {
+            "type": "object",
+            "description": "An object describing the gateway's physical network interfaces",
+            "properties": {
+              "eth0": {
+                "$ref": "#/components/schemas/Gateway-Network-Interface"
+              }
+            }
+          },
+          "config": {
+            "type": "object",
+            "description": "Details about the gateway configuration",
+            "properties": {
+              "hosts": {
+                "type": "object",
+                "properties": {
+                  "api": {
+                    "type": "string"
+                  },
+                  "data": {
+                    "type": "string"
+                  }
+                }
+              },
+              "cache": {
+                "type": "object",
+                "properties": {
+                  "aging": {
+                    "type": "object",
+                    "properties": {
+                      "max_object_age": {
+                        "type": "number"
+                      },
+                      "max_controller_age": {
+                        "type": "number"
+                      },
+                      "max_objectlist_age": {
+                        "type": "number"
+                      },
+                      "max_controllerlist_age": {
+                        "type": "number"
+                      }
+                    }
+                  }
+                }
+              },
+              "network_scanning": {
+                "type": "object",
+                "properties": {
+                  "limits": {
+                    "type": "object",
+                    "properties": {
+                      "controllers": {
+                        "type": "integer"
+                      },
+                      "collectors": {
+                        "type": "integer"
+                      }
+                    }
+                  },
+                  "bounce": {
+                    "type": "object",
+                    "properties": {
+                      "group": {
+                        "type": "integer"
+                      },
+                      "collector": {
+                        "type": "integer"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "firmware": {
+            "type": "object",
+            "description": "Details about the gateway firmware",
+            "properties": {
+              "revision": {
+                "type": "string",
+                "description": "The firmware revision string"
+              },
+              "release": {
+                "type": "string",
+                "description": "The release revision of the gateway firmware"
+              },
+              "architecture": {
+                "type": "string",
+                "description": "The architecture of the gateway firmware"
+              }
+            }
+          }
+        },
+        "x-tags": [
+          "Gateway"
+        ]
       },
       "Geocode-Search": {
         "description": "",
@@ -3550,6 +5151,18 @@
         "title": "Geocode Search",
         "x-tags": [
           "Utilities"
+        ]
+      },
+      "Network": {
+        "title": "Network",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          }
+        },
+        "x-tags": [
+          "Network"
         ]
       },
       "Report": {
@@ -5592,6 +7205,66 @@
       }
     },
     "parameters": {
+        "gatewayId": {
+            "name": "gatewayId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "example": "539fea81-d151-46e1-b1f6-36e3864ebeff"
+            },
+            "description": "A valid gateway UUID"
+          },
+          "Content-Type": {
+            "name": "Content-Type",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "application/json"
+            },
+            "description": "application/json"
+          },
+          "controllerId": {
+            "name": "controllerId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "A valid controller UUID"
+          },
+          "networkId": {
+            "name": "networkId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "A valid network UUID"
+          },
+          "@gateway": {
+            "name": "@gateway",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter controllers by assigned gateway ID"
+          },
+          "@site": {
+            "name": "@site",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "Filter results by assigned site ID"
+          },
         "reportId": {
             "name": "reportId",
             "in": "path",
@@ -5732,6 +7405,368 @@
       }
     },
     "examples": {
+        "Get-Gateway": {
+            "value": {
+              "id": "539fea81-d151-46e1-b1f6-36e3864ebeff",
+              "created": "2021-02-21T17:49:36+0000",
+              "last_modified": null,
+              "serial": "dca6327364b3",
+              "name": "Gateway SEA-BMS",
+              "description": "Main gateway",
+              "location": "Seattle Office MDF, Rack #2",
+              "is_registered": true,
+              "vitals": null
+            }
+          },
+          "Get-Gateway-Status": {
+            "value": {
+              "hostname": "ussea-bms-gw01",
+              "serial": "dca6327364b3",
+              "registration": {
+                "tenant": "7d5a9e81-0902-4137-b71e-40ea913b5bfa",
+                "timestamp": null
+              },
+              "uptime": "29 days",
+              "services": {
+                "running": 150,
+                "status": {
+                  "web_server": true,
+                  "cache": true,
+                  "ssh": true,
+                  "bacnet": true,
+                  "tunnel": true
+                }
+              },
+              "config": {
+                "hosts": {
+                  "api": "https://funnel.counterbalance.io",
+                  "data": "https://funnel.counterbalance.io"
+                },
+                "cache": {
+                  "aging": {
+                    "max_object_age": 5,
+                    "max_controller_age": 30,
+                    "max_objectlist_age": 10,
+                    "max_controllerlist_age": 0
+                  }
+                },
+                "network_scanning": {
+                  "limits": {
+                    "controllers": 5,
+                    "collectors": 5
+                  },
+                  "bounce": {
+                    "group": 0,
+                    "collector": 1
+                  }
+                }
+              },
+              "firmware": {
+                "revision": "0.2.0",
+                "street_date": "2022-03-20T07:00:00+0000",
+                "installation_timestamp": "2022-03-05T02:34:45+0000",
+                "release": "5.8.0-1032-raspi",
+                "architecture": "aarch64",
+                "update_available": false,
+                "last_update_check": "2022-03-05T02:34:45+0000"
+              }
+            }
+          },
+          "Create-Gateway-Body": {
+            "value": {
+              "serial": "b821eb530b5e",
+              "name": "Primary Gateway"
+            }
+          },
+          "Get-Gateway-List": {
+            "value": {
+              "count": 1,
+              "index": [
+                "539fea81-d151-46e1-b1f6-36e3864ebeff"
+              ],
+              "data": [
+                {
+                  "id": "539fea81-d151-46e1-b1f6-36e3864ebeff",
+                  "created": "2021-02-21T17:49:36+0000",
+                  "last_modified": null,
+                  "serial": "dca6327364b3",
+                  "name": "Gateway SEA-BMS",
+                  "description": "Test gateway",
+                  "location": "Seattle Office MDF, Rack #2",
+                  "is_registered": true,
+                  "vitals": null
+                }
+              ]
+            }
+          },
+          "Update-Gateway-Body": {
+            "value": {
+              "name": "Primary Gateway",
+              "description": "The primary gateway we use",
+              "location": "BAS Panel for RTU-1"
+            }
+          },
+          "Gateway-Whois": {
+            "value": {
+              "count": 2,
+              "data": {
+                "responses": [
+                  {
+                    "device_id": "10100",
+                    "device_name": "USSEA-HVAC-BMSNODE01"
+                  },
+                  {
+                    "device_id": "10200",
+                    "device_name": "USSEA-HVAC-BMSNODE02"
+                  }
+                ],
+                "online_devices": [
+                  "10100",
+                  "10200"
+                ]
+              }
+            }
+          },
+          "Get-Gateway-Devices": {
+            "value": {
+              "count": 2,
+              "data": {
+                "managed_devices": [
+                  {
+                    "id": "4f668b28-c30d-4fc1-b751-7cc30dcc4964",
+                    "name": "USSEA-HVAC-BMSNODE01",
+                    "description": "",
+                    "location": "",
+                    "@site": "82478e3a-a212-41bf-9e2b-7522a1504a6b",
+                    "online": true,
+                    "bacnet": {
+                      "id": 10100,
+                      "name": "USSEA-HVAC-BMSNODE01"
+                    }
+                  }
+                ],
+                "unmanaged_devices": [
+                  {
+                    "device_id": "10200",
+                    "device_name": "USSEA-HVAC-BMSNODE02"
+                  }
+                ],
+                "online_devices": [
+                  "10100",
+                  "10200"
+                ],
+                "offline_devices": [],
+                "new_devices_available": true
+              }
+            }
+          },
+          "Get-Controller-Listing": {
+            "value": {
+              "count": 2,
+              "index": [
+                "48f6bef2-1d57-4333-b9af-be687876e997",
+                "4f668b28-c30d-4fc1-b751-7cc30dcc4964"
+              ],
+              "data": [
+                {
+                  "id": "48f6bef2-1d57-4333-b9af-be687876e997",
+                  "created": 1614139068,
+                  "last_modified": null,
+                  "@gateway": "539fea81-d151-46e1-b1f6-36e3864ebeff",
+                  "name": "USSEA-HVAC-BMSNODE02",
+                  "description": "",
+                  "location": "",
+                  "instance_id": 10200,
+                  "is_ostracized": false,
+                  "point_count": 1,
+                  "@site": "82478e3a-a212-41bf-9e2b-7522a1504a6b"
+                },
+                {
+                  "id": "4f668b28-c30d-4fc1-b751-7cc30dcc4964",
+                  "created": 1613717286,
+                  "last_modified": null,
+                  "@gateway": "539fea81-d151-46e1-b1f6-36e3864ebeff",
+                  "name": "USSEA-HVAC-BMSNODE01",
+                  "description": "",
+                  "location": "",
+                  "instance_id": 10100,
+                  "is_ostracized": false,
+                  "point_count": 19,
+                  "@site": "82478e3a-a212-41bf-9e2b-7522a1504a6b"
+                }
+              ]
+            }
+          },
+          "Get-Controller-Details": {
+            "value": {
+              "id": "d4cf4450-b314-420d-b8e9-243b56330acc",
+              "created": "2021-05-27T21:30:02+0000",
+              "last_modified": "2021-09-26T04:55:36+0000",
+              "@gateway": "539fea81-d151-46e1-b1f6-36e3864ebeff",
+              "name": "SEA-BMS Node #01",
+              "description": "Central plant controller",
+              "location": "Mech Room 126",
+              "instance_id": 10100,
+              "@site": "82478e3a-a212-41bf-9e2b-7522a1504a6b",
+              "is_online": false,
+              "is_ostracized": false,
+              "point_count": 29,
+              "bacnet": null
+            }
+          },
+          "Create-Controller-Body": {
+            "value": {
+              "name": "USSEA-HVAC-BMSNODE01",
+              "gateway": "539fea81-d151-46e1-b1f6-36e3864ebeff",
+              "instance": "10100"
+            }
+          },
+          "Get-Controller-Details-Online": {
+            "value": {
+              "id": "d4cf4450-b314-420d-b8e9-243b56330acc",
+              "created": "2021-05-27T21:30:02+0000",
+              "last_modified": "2021-09-26T04:55:36+0000",
+              "@gateway": "539fea81-d151-46e1-b1f6-36e3864ebeff",
+              "name": "SEA-BMS Node #01",
+              "description": "Central plant controller",
+              "location": "Mech Room 126",
+              "instance_id": 10100,
+              "@site": "82478e3a-a212-41bf-9e2b-7522a1504a6b",
+              "is_online": true,
+              "is_ostracized": false,
+              "point_count": 29,
+              "bacnet": {
+                "object": {
+                  "name": "USSEA-HVAC-BMSNODE02",
+                  "description": "AHU-1",
+                  "instance": "10200"
+                },
+                "protocol": {
+                  "version": 1,
+                  "revision": 7,
+                  "max_master": 127,
+                  "device_id": "10200",
+                  "max_segments_accepted": 16,
+                  "apdu": {
+                    "timeout": 15000,
+                    "retries": 1,
+                    "segment_timeout": 15000,
+                    "max_length": 1476
+                  },
+                  "services_supported": {
+                    "atomic-read-file": true,
+                    "confirmed-text-message": true,
+                    "unconfirmed-text-message": true,
+                    "time-synchronization": true,
+                    "confirmed-event-notification": true,
+                    "reinitialize-device": true,
+                    "who-is": true,
+                    "who-has": true,
+                    "unconfirmed-event-notification": true,
+                    "subscribe-cov-property": false,
+                    "vt-data": false,
+                    "unconfirmed-private-transfer": false,
+                    "create-object": true,
+                    "delete-object": true,
+                    "read-property-conditional": false,
+                    "add-list-element": true,
+                    "vt-open": false,
+                    "remove-list-element": true,
+                    "get-event-information": true,
+                    "confirmed-cov-notification": true,
+                    "i-am": true,
+                    "device-communication-control": true,
+                    "acknowledge-alarm": true,
+                    "get-alarm-summary": true,
+                    "i-have": true,
+                    "subscribe-cov": true,
+                    "confirmed-private-transfer": true,
+                    "vt-close": false,
+                    "request-key": false,
+                    "read-property-multiple": true,
+                    "write-property": true,
+                    "life-safety-operation": false,
+                    "read-property": true,
+                    "atomic-write-file": true,
+                    "utc-time-synchronization": false,
+                    "get-enrollment-summary": true,
+                    "write-property-multiple": true,
+                    "unconfirmed-cov-notification": true,
+                    "read-range": true,
+                    "authenticate": false
+                  },
+                  "object_types_supported": {
+                    "averaging": false,
+                    "multi-state-input": false,
+                    "schedule": true,
+                    "multi-state-output": true,
+                    "binary-output": true,
+                    "analog-value": true,
+                    "life-safety-point": false,
+                    "group": false,
+                    "notification-class": true,
+                    "analog-input": true,
+                    "file": true,
+                    "command": true,
+                    "life-safety-zone": false,
+                    "binary-input": true,
+                    "loop": false,
+                    "multi-state-value": true,
+                    "analog-output": true,
+                    "calendar": true,
+                    "event-enrollment": true,
+                    "pulse-converter": false,
+                    "device": true,
+                    "trend-log": true,
+                    "binary-value": true,
+                    "program": false,
+                    "accumulator": false
+                  }
+                },
+                "hardware": {
+                  "make": "Siemens Industry Inc., Bldg Tech",
+                  "model": "Siemens BACnet Field Panel",
+                  "vendor_id": 7,
+                  "location": "MAINT SHOP",
+                  "firmware_revision": "PXCE V3.4 BACnet 4.3g"
+                },
+                "system": {
+                  "application_software_version": "BCE1265_0039",
+                  "status": "operational",
+                  "date": "2021-02-23",
+                  "time": "20:58:26.18"
+                }
+              }
+            }
+          },
+          "Update-Controller-Body": {
+            "value": {
+              "name": "New Name"
+            }
+          },
+          "Get-Network": {
+            "value": {
+              "eth0": {
+                "dhcp": false,
+                "mac": "dc:a6:32:73:64:b3",
+                "speed": 1000,
+                "duplex": "full",
+                "address": "10.12.32.239",
+                "mask": "255.255.255.0",
+                "gateway": "10.12.32.254",
+                "dns": [
+                  "1.1.1.1",
+                  "8.8.8.8"
+                ],
+                "cidr": 24
+              }
+            }
+          },
+          "Generic-Gateway-Operation": {
+            "value": {
+              "status": true
+            }
+          },
         "Plot-Object": {
             "value": {
               "id": "bc7c1276-c623-4bc6-99e5-d00f49e972d8",
@@ -6674,6 +8709,286 @@
       }
     },
     "requestBodies": {
+        "Create-Gateway": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "serial": {
+                      "type": "string",
+                      "description": "The physical device serial number",
+                      "minLength": 12,
+                      "maxLength": 12,
+                      "example": "b821eb530b5e"
+                    },
+                    "name": {
+                      "type": "string",
+                      "example": "New Gateway",
+                      "minLength": 1,
+                      "maxLength": 96,
+                      "description": "A display name for the new gateway"
+                    },
+                    "location": {
+                      "type": "string",
+                      "minLength": 0,
+                      "maxLength": 120,
+                      "example": "In BMS panel for RTU-1",
+                      "description": "A brief description of the device (location, config, etc)"
+                    }
+                  },
+                  "required": [
+                    "serial",
+                    "name"
+                  ]
+                },
+                "examples": {
+                  "Example": {
+                    "$ref": "#/components/examples/Create-Gateway-Body"
+                  }
+                }
+              }
+            },
+            "description": ""
+          },
+          "Update-Gateway": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "A name for the gateway"
+                    },
+                    "description": {
+                      "type": "string",
+                      "description": "A brief description of the gateway"
+                    },
+                    "location": {
+                      "type": "string",
+                      "description": "The installed location of the device"
+                    }
+                  }
+                },
+                "examples": {
+                  "Example": {
+                    "$ref": "#/components/examples/Update-Gateway-Body"
+                  }
+                }
+              }
+            }
+          },
+          "Create-Controller": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "gateway": {
+                      "type": "string"
+                    },
+                    "site": {
+                      "type": "string"
+                    },
+                    "location": {
+                      "type": "string"
+                    },
+                    "ostracized": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "Example": {
+                    "$ref": "#/components/examples/Create-Controller-Body"
+                  }
+                }
+              }
+            }
+          },
+          "Update-Controller": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "gateway": {
+                      "type": "string"
+                    },
+                    "site": {
+                      "type": "string"
+                    },
+                    "location": {
+                      "type": "string"
+                    },
+                    "ostracized": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "Example": {
+                    "$ref": "#/components/examples/Update-Controller-Body"
+                  }
+                }
+              }
+            }
+          },
+          "Cycle-Gateway-Service": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "service": {
+                      "type": "string",
+                      "enum": [
+                        "ssh",
+                        "tunnel",
+                        "bacnet"
+                      ],
+                      "description": "The ID of the service to command"
+                    },
+                    "command": {
+                      "type": "string",
+                      "enum": [
+                        "start",
+                        "stop",
+                        "restart"
+                      ],
+                      "example": "restart",
+                      "description": "The command to execute"
+                    }
+                  },
+                  "required": [
+                    "service",
+                    "command"
+                  ]
+                }
+              }
+            }
+          },
+          "Update-Gateway-Network": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "interface": {
+                      "type": "string",
+                      "enum": [
+                        "eth0"
+                      ],
+                      "description": "The target interface name to apply the configuration"
+                    },
+                    "dhcp": {
+                      "type": "boolean",
+                      "default": false,
+                      "description": "Toggles DHCP on the interface. If `true`, the supplied address, mask, gateway are ignored. You may supply DNS servers to override DHCP if desired. If `false` or omitted, the address, mask paramaters become required."
+                    },
+                    "address": {
+                      "type": "string",
+                      "format": "ipv4",
+                      "description": "The IPv4 IP address for the interface. ***Note:** Required if `dhcp` set to `false`.*",
+                      "example": "192.168.1.100"
+                    },
+                    "mask": {
+                      "type": "string",
+                      "description": "The IPv4 subnet mask for the interface. ***Note:** Required if `dhcp` set to `false`.*",
+                      "format": "ipv4",
+                      "example": "255.255.255.0"
+                    },
+                    "gateway": {
+                      "type": "string",
+                      "description": "The IPv4 gateway IP address for the interface. ***Note:** A Gateway IP address and DNS servers are required for internet connectivity.*",
+                      "format": "ipv4",
+                      "example": "192.168.1.254"
+                    },
+                    "dns": {
+                      "type": "array",
+                      "minItems": 1,
+                      "maxItems": 4,
+                      "uniqueItems": true,
+                      "description": "An array of up to four IPv4 DNS server addresses. ***Note:** At least one DNS server is required for internet connectivity on an interface.*",
+                      "items": {
+                        "type": "string",
+                        "format": "ipv4",
+                        "example": "1.1.1.1"
+                      }
+                    }
+                  },
+                  "required": [
+                    "interface"
+                  ]
+                },
+                "examples": {
+                  "Static IP Address": {
+                    "value": {
+                      "interface": "eth0",
+                      "dhcp": false,
+                      "address": "192.168.1.100",
+                      "mask": "255.255.255.0",
+                      "gateway": "192.168.1.254",
+                      "dns": [
+                        "1.1.1.1"
+                      ]
+                    }
+                  },
+                  "Dynamic Address with DHCP": {
+                    "value": {
+                      "interface": "eth0",
+                      "dhcp": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "Update-Gateway-Hostname": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "hostname": {
+                      "type": "string",
+                      "format": "hostname",
+                      "example": "sea-bms-gtwy-01.peterbalance.com",
+                      "description": "The local or fully qualified hostname the gateway device will use on the network"
+                    }
+                  },
+                  "required": [
+                    "hostname"
+                  ]
+                }
+              }
+            },
+            "description": ""
+          },
+          "Restart-Gateway": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
         "Create-Plot": {
             "content": {
               "application/json": {
