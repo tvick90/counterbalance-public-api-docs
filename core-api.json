@@ -512,7 +512,7 @@
               }
             ],
             "get": {
-              "summary": "Get Department",
+              "summary": "Retrieve Department",
               "tags": [
                 "Department"
               ],
@@ -944,11 +944,11 @@
                 }
             }
         },
-    "/v1/group": {
+    "/group": {
       "get": {
-        "summary": "List Groups",
+        "summary": "List User Groups",
         "tags": [
-          "Groups"
+          "User Group"
         ],
         "responses": {
           "200": {
@@ -991,7 +991,7 @@
         ]
       },
       "post": {
-        "summary": "Create Group",
+        "summary": "Create User Group",
         "operationId": "create-group",
         "responses": {
           "201": {
@@ -999,7 +999,7 @@
           }
         },
         "tags": [
-          "Groups"
+          "User Group"
         ],
         "security": [
           {
@@ -1013,11 +1013,11 @@
       },
       "parameters": []
     },
-    "/v1/group/{groupId}": {
+    "/group/{groupId}": {
       "get": {
-        "summary": "Get Group",
+        "summary": "Retrieve User Group",
         "tags": [
-          "Groups"
+          "User Group"
         ],
         "responses": {
           "200": {
@@ -1045,7 +1045,7 @@
         }
       ],
       "patch": {
-        "summary": "Update Group",
+        "summary": "Update User Group",
         "operationId": "update-group",
         "responses": {
           "200": {
@@ -1053,7 +1053,7 @@
           }
         },
         "tags": [
-          "Groups"
+          "User Group"
         ],
         "description": "Update a group\n\n**Required Permissions:** `*`,`user:*`,`user:group:*`,`user:group:update`",
         "security": [
@@ -1074,7 +1074,7 @@
           }
         },
         "tags": [
-          "Groups"
+          "User Group"
         ],
         "description": "Delete a group\n\n**Required Permissions:** `*`,`user:*`,`user:group:*`,`user:group:delete`",
         "security": [
@@ -1084,11 +1084,11 @@
         ]
       }
     },
-    "/v1/group/{groupId}/members": {
+    "/group/{groupId}/members": {
       "get": {
-        "summary": "Get Group Members",
+        "summary": "Retrieve User Group Members",
         "tags": [
-          "Groups"
+          "User Group"
         ],
         "responses": {
           "200": {
@@ -1124,7 +1124,7 @@
           }
         },
         "tags": [
-          "Groups"
+          "User Group"
         ],
         "description": "Delete a group\n\n**Required Permissions:** `*`,`user:*`,`user:group:*`,`user:group:delete`",
         "security": [
@@ -1142,7 +1142,7 @@
           }
         },
         "tags": [
-          "Groups"
+          "User Group"
         ],
         "security": [
           {
@@ -3477,9 +3477,9 @@
         },
         "/user": {
             "get": {
-              "summary": "List User",
+              "summary": "List Users",
               "tags": [
-                "User Accounts"
+                "User"
               ],
               "responses": {
                 "200": {
@@ -3784,7 +3784,7 @@
                 }
               ],
               "tags": [
-                "User Accounts"
+                "User"
               ]
             },
             "parameters": []
@@ -3803,7 +3803,7 @@
               }
             ],
             "get": {
-              "summary": "Get User Account",
+              "summary": "Retrieve User Account",
               "tags": [
                 "User"
               ],
@@ -4336,7 +4336,7 @@
                 }
               },
               "tags": [
-                "User Licensing"
+                "User"
               ]
             }
           },
@@ -4354,9 +4354,9 @@
               }
             ],
             "get": {
-              "summary": "Get User Photo",
+              "summary": "Retrieve User Photo",
               "tags": [
-                "User Photo"
+                "User"
               ],
               "responses": {
                 "200": {
@@ -4402,7 +4402,7 @@
                 "description": "POST a JPEG or PNG fle as binary data"
               },
               "tags": [
-                "User Photo"
+                "User"
               ]
             }
           },
@@ -4528,7 +4528,7 @@
               }
             ],
             "get": {
-              "summary": "Get User Permissions",
+              "summary": "Retrieve User Permissions",
               "tags": [
                 "User"
               ],
@@ -4575,7 +4575,7 @@
               }
             ],
             "get": {
-              "summary": "Get User's Assigned Roles",
+              "summary": "Retrieve User's Assigned Roles",
               "tags": [
                 "Roles"
               ],
@@ -10338,7 +10338,7 @@
                 "type": "object",
                 "description": "",
                 "x-tags": [
-                  "Groups"
+                  "User Group"
                 ],
                 "properties": {
                   "id": {
@@ -10410,7 +10410,7 @@
                 },
                 "title": "User Group Member",
                 "x-tags": [
-                  "Groups"
+                  "User Group"
                 ]
               },
               "User-Permissions": {
