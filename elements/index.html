@@ -7,12 +7,13 @@
     <link rel="icon" type="image/x-icon" href="https://static-assets.counterbalance.io/public/brand/icons/favicon.png">
 
     <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://use.typekit.net/ojh6bxj.css">
     <link href="https://cbstatic.io/public/brand/fonts/jetbrains-mono.css" rel="stylesheet">
   
     <script src="https://unpkg.com/@stoplight/elements/web-components.min.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/@stoplight/elements/styles.min.css">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://static-assets.counterbalance.io/public/styles/api-docs/styles.css">
   </head>
   <body>
 
@@ -21,7 +22,8 @@
         <elements-api
           apiDescriptionUrl="https://raw.githubusercontent.com/tvick90/counterbalance-public-api-docs/main/core-api.json"
           logo="https://static-assets.counterbalance.io/public/brand/icons/console/console-icon.png"
-          router="hash"
+          router="history"
+          basePath="/v1/reference"
         />
 
     </div>
