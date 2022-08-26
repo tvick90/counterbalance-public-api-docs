@@ -4,58 +4,20 @@
         "title": "Core API Reference",
         "version": "1.0",
         "description": "The Counterbalance Core API provides powerful, programmatic access to the Counterbalance platform and powers its feature-rich building management UI. Everything that is possible via the Counterbalance System Console is powered by this API.\n\nThis documentation walks through the API endpoints and their usage.\n\n## Supported HTTP Operations\nOur APIs supports the `GET`,`POST`,`PUT`,`PATCH`,`DELETE`, & `OPTIONS` verbs. General usage of these verbs is outlined in the following table.\n\nVerb | Description\n-----|------------\n`GET`     | Retrieves existing resources\n`POST`    | Creates a new resource and returns it\n`PUT`     | Creates a new resource within or attached to an existing resource and returns the new resource\n`PATCH`   | Updates an existing resource and returns the updated resource\n`DELETE`  | Removes an existing resource and returns nothing\n`OPTIONS` | List available verbs against a resource\n\n## Status Codes\n\nOur APIs return standard HTTP status codes. All status codes used are outlined below. \n\n### Success Codes\n\nCode | Response | Description\n-----|----------|---------\n**200** | `Ok` | The request was completed successfully. Response body will vary.\n**201** | `Created` | In response to a PUT or POST request, the resource was created successfully. The new resource's ID will be returned in the response body.\n**204** | `No Content` | The request was completed successfully and there is no response body to return. Such as when an object has been deleted. The response body will be _null_.\n\n### Error Codes\n\nCode | Response | Description\n-----|----------|---------\n**400** | `Bad Request` | The request was malformed, provided incorrect/incomplete/conflicting parameters, or the requested endpoint does not exist. The response body will contain additional information about why the error has occurred. Do not repeat the request without modifying it first.\n**401** | `Unauthorized` | The request requires an Authorization header and a valid token but either neither was provided or the provided token has expired. Refer to the error message provided to determine the proper course of action. \n**403** | `Forbidden` | The API authentication was successful but the user does not have adequate permissions to satisfy the request or the tenant account is locked.\n**404** | `Not Found` | The resource requested does not exist or was not found.\n**409** | `Conflict` | The provided combination of parameters results in a conflict and the resource cannot be updated. The error message output will provide additional information as to why the call cannot be completed.\n**5XX** | _`varies`_ | The API encountered an internal error when processing the request. The error message provided may provide additional information. Retrying the request after a few minutes may be successful.\n\n## Authenticating Requests\nThe authentication requirement for each API varies, but in general, most endpoints will require authentication. \n\nTo authenticate, add an `Authorization` header with a valid **Bearer** token.\n```\nAuthorization: Bearer eyJg...fw5c\n```\n\n### Obtaining an Access Token\nFollow the steps below to obtain an access token for use with these docs.\n1. Open [Counterbalance Single Sign-On](https://sso.counterbalance.io) and login when prompted\n2. Click **Copy Token** to copy an access token to your clipboard\n\n### Request Authorization\nSome API endpoints require a paid subscription. If a request is made to a paid feature that is not available, a `403 Forbidden` response will be returned. \n\nAdditionally, some platform resources and features are measured against a licensed quota limit. If an attempt is made to add additional resources once a quota limit has been reached, a `403 Forbidden` response will be returned.\n\n## Submitting Data\nWhen submitting non-binary data via a `POST`, `PUT`, or `PATCH` endpoint, the data payload must be in JSON.\n\nProcedures for submitting other types of data to platform APIs are documented on a per-endpoint basis. \n\n## Handling Errors\nAll API errors will return a common error response format. The response will provide an \n\n### Error Logging\n\nMost errors are automatically logged and reported. These errors will return a `logging_hash` entry ID in the error response body.\n\n```json\n{\n    \"error\": {\n        ...\n    },\n    \"logging_hash\": \"034dd6ad00770337bb07e906d919ed50f8884e86\"\n}\n```\n\nThis entry ID is also added as a header in the response.\n\n```\nX-Counterbalance-Log-Hash: 034dd6ad00770337bb07e906d919ed50f8884e86\n```\n",
-        "termsOfService": "https://www.counterbalance.io/legal/api-terms",
-        "contact": {
-            "name": "Counterbalance Support",
-            "email": "support@counterbalance.io"
-        }
+        "contact": {}
     },
     "servers": [
         {
             "url": "https://api.counterbalance.io/v1",
             "description": "Production API"
+        },
+        {
+            "description": "Staging",
+            "url": "https://api-staging.counterbalance.io/v1"
         }
     ],
     "paths": {
         "/collector": {
-            "get": {
-                "summary": "List Collectors",
-                "responses": {
-                    "200": {
-                        "$ref": "#/components/responses/200-Get-Collector-Listing"
-                    }
-                },
-                "operationId": "list-collectors",
-                "description": "Retrieve a list of point collectors\n\n**Required Permissions:** `*`,`telemetry:*`,`telemetry:collector:*`,`telemetry:collector:read`",
-                "security": [
-                    {
-                        "Bearer Token": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "$ref": "#/components/parameters/Content-Type"
-                    },
-                    {
-                        "$ref": "#/components/parameters/@controllerId"
-                    },
-                    {
-                        "$ref": "#/components/parameters/@gatewayId"
-                    },
-                    {
-                        "$ref": "#/components/parameters/@siteId"
-                    },
-                    {
-                        "$ref": "#/components/parameters/@pointId"
-                    }
-                ],
-                "tags": [
-                    "Collector"
-                ],
-                "requestBody": {
-                    "$ref": "#/components/requestBodies/Create-Collector"
-                }
-            },
             "post": {
                 "summary": "Create Collector",
                 "operationId": "create-collector",
@@ -121,6 +83,44 @@
                 "tags": [
                     "Collector"
                 ]
+            },
+            "get": {
+                "summary": "List Collectors",
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/200-Get-Collector-Listing"
+                    }
+                },
+                "operationId": "list-collectors",
+                "description": "Retrieve a list of point collectors\n\n**Required Permissions:** `*`,`telemetry:*`,`telemetry:collector:*`,`telemetry:collector:read`",
+                "security": [
+                    {
+                        "Bearer Token": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/Content-Type"
+                    },
+                    {
+                        "$ref": "#/components/parameters/@controllerId"
+                    },
+                    {
+                        "$ref": "#/components/parameters/@gatewayId"
+                    },
+                    {
+                        "$ref": "#/components/parameters/@siteId"
+                    },
+                    {
+                        "$ref": "#/components/parameters/@pointId"
+                    }
+                ],
+                "tags": [
+                    "Collector"
+                ],
+                "requestBody": {
+                    "$ref": "#/components/requestBodies/Create-Collector"
+                }
             },
             "parameters": []
         },
