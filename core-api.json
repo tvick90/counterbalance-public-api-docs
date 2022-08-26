@@ -19,7 +19,7 @@
   "paths": {
     "/billing/account": {
       "get": {
-        "summary": "Get Billing Account",
+        "summary": "Retrieve Billing Account",
         "tags": [
           "Billing Account"
         ],
@@ -138,7 +138,7 @@
         }
       ],
       "get": {
-        "summary": "Get Payment Source",
+        "summary": "Retrieve Payment Source",
         "responses": {
           "200": {
             "$ref": "#/components/responses/200-Get-Payment-Source"
@@ -219,7 +219,7 @@
         }
       ],
       "get": {
-        "summary": "Get Invoice",
+        "summary": "Retrieve Invoice",
         "tags": [
           "Invoice"
         ],
@@ -282,7 +282,7 @@
         }
       ],
       "get": {
-        "summary": "Get Subscription",
+        "summary": "Retrieve Subscription",
         "tags": [
           "Subscription"
         ],
@@ -343,7 +343,7 @@
         }
       ],
       "get": {
-        "summary": "Get Upcoming Invoice",
+        "summary": "Retrieve Upcoming Invoice",
         "tags": [
           "Subscription"
         ],
@@ -353,7 +353,7 @@
           }
         },
         "operationId": "get-subscription-upcoming-invoice",
-        "description": "Get upcoming invoice\n\n**Required Permissions:** `*`,`billing:*`,`billing:invoice:*`,`billing:invoice:read`",
+        "description": "Retrieve upcoming invoice\n\n**Required Permissions:** `*`,`billing:*`,`billing:invoice:*`,`billing:invoice:read`",
         "security": [
           {
             "Bearer Token": []
@@ -1049,7 +1049,7 @@
         }
       ],
       "get": {
-        "summary": "Get Equipment Node",
+        "summary": "Retrieve Equipment Node",
         "tags": [
           "Equipment"
         ],
@@ -1178,7 +1178,7 @@
         }
       ],
       "get": {
-        "summary": "Get Telemetry Relationship",
+        "summary": "Retrieve Telemetry Relationship",
         "tags": [
           "Equipment"
         ],
